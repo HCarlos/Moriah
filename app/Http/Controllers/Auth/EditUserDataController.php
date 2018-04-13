@@ -46,9 +46,11 @@ class EditUserDataController extends Controller
         ]);
 
         if ($validator->fails()) {
+
             return redirect($this->redirectToError)
                         ->withErrors($validator)
                         ->withInput();
+
         }else{
             $user = Auth::user();
             // $input = $request->only('nombre_completo', 'twitter', 'facebook', 'instagram');
