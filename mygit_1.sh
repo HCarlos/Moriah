@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-git remote set-url origin https://github.com/HCarlos/lati.git
+git remote set-url origin https://github.com/HCarlos/Moriah.git
 git config --global user.email "r0@tecnointel.mx"
 git config --global user.name "HCarlos"
 git config --global color.ui true
