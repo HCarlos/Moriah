@@ -1,0 +1,22 @@
+# .env
+# .env.example
+# .gitattributes
+# .gitignore
+# *.sh
+# .sh
+# .git
+# .ftpconfig
+# .ftpignore
+# .md
+# .idea
+# storage/app/public
+# storage/app/public/
+# /storage/app/public/
+# /storage/app/public
+# /otros
+# otros/
+# composer.json
+# composer.lock
+
+
+
