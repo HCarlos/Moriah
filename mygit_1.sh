@@ -24,7 +24,7 @@ git rm -r --cached composer.lock
 
 git add .
 
-git commit -m "Lati - 3Db | Alfa"
+git commit -m "Moriah - Aa | Alfa"
 
 ## git push -u origin master
 git push -u origin master --force
