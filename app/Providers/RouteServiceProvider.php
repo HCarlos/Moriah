@@ -24,7 +24,11 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-
+        Route::macro('catch', function ($action){
+            $this->any('{anything}',$action)
+                ->where('anything','.*')
+                ->fallback();
+        });
         parent::boot();
     }
 
@@ -39,6 +43,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapAdminRoutes();
         //
     }
 
@@ -52,8 +57,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -66,8 +71,18 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
+
+    protected function mapAdminRoutes()
+    {
+        Route::prefix('/admin')
+            ->middleware(['web','auth','admin'])
+            ->namespace($this->namespace.'\Admin')
+            ->group(base_path('routes/admin.php'));
+    }
+
+
 }

@@ -68,14 +68,15 @@ class RegisterController extends Controller
         $host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $idemp = 1;
         $user = User::create([
+            'name' => $data['username'],
             'username' => strtolower($data['username']),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'idemp' => $idemp,
             'ip' => $ip,
-            'host' => $host
+            'host' => $host,
         ]);
-        $role = Role::where('name', 'alumno')->first();
+        $role = Role::where('name', 'user')->first();
         $user->roles()->attach($role);
         return $user;
 
