@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
+
 /*@import url('https://fonts.googleapis.com/css?family=Varela+Round');*/
 
 html, body {
@@ -82,7 +83,7 @@ ul.role-list-hrz li a {
 	font-weight: bold !important;
 	mso-ansi-font-weight: bold !important;
 	mso-bidi-font-weight: bold !important;
-	color: #ffffff !important;
+	color: #000000 !important;
 }
 
 .green{
@@ -112,14 +113,14 @@ ul.role-list-hrz li a {
 	color: seagreen !important;
 }
 
-.bg-coral-lati-bib{
+.bg-coral-moriah-bib{
 	background-color: coral !important;
 	color: ghostwhite !important;
 	font-weight: bold !important;
 	padding: 0.3em !important;
 }
 
-.bg-seagreen-lati-bib{
+.bg-seagreen-moriah-bib{
 	background-color: seagreen !important;
 	color: ghostwhite !important;
 	font-weight: bold !important;
@@ -171,32 +172,32 @@ ul.role-list-hrz li a {
 	right:10px;
 }
 
-.navbar-lati{
-	background-color: #6ba462 !important;
+.navbar-moriah{
+	background-color: darkcyan !important;
 	height: 40px !important;
 }
 
-.menu-principal-lati{
+.menu-principal-moriah{
 	height: 40px !important;
-	padding-top: 5px !important;
-	color: white !important;
+	padding-top: 0px !important;
+	color: whitesmoke !important;
 	font-weight: bolder !important;
 }
 
 .dropdown-menu > a:hover{
-	background-color: #6ba462 !important;
-	color: white !important;
-	font-weight: bolder !important;
+	background-color: darkcyan !important;
+	color: whitesmoke !important;
+	/*font-weight: bolder !important;*/
 }
 
-.separator-lati-2em{
+.separator-moriah-2em{
 	display:inline-block !important;
 	height: 2em !important;
 	width: 100% !important;
 }
 
-.links-lati > a {
-	color: #ffffff !important;
+.links-moriah > a {
+	color: whitesmoke !important;
 	font-size: 12px !important;
 	font-weight: 600 !important;
 	letter-spacing: .1rem !important;
@@ -204,12 +205,59 @@ ul.role-list-hrz li a {
 	text-transform: uppercase !important;
 }
 
-.ancho-busqueda-Lati{
+.ancho-busqueda-moriah{
 	width: 460px !important;
 	margin-top: 1em !important;
 }
 
-.paginas-lati{
+.paginas-moriah{
 	background-color: lightcoral !important;
 	color: white;
+}
+.texto-black{
+	color: black !important;
+}
+
+.title-app-moriah{
+	color: whitesmoke !important;
+	font-weight: 600 !important;
+	letter-spacing: .1em !important;
+	text-decoration: none !important;
+	text-transform: uppercase !important;
+}
+.border-white-moriah{
+	border: whitesmoke solid 3px !important;
+}
+
+.panel-moriah {
+	border-color: darkcyan !important;
+}
+.panel-moriah > .panel-heading {
+	color: whitesmoke !important;
+	background-color: darkcyan !important;
+	border-color: darkcyan !important;
+	font-weight: bolder;
+}
+.panel-moriah > .panel-heading + .panel-collapse .panel-body {
+	border-top-color: darkcyan !important;
+}
+.panel-moriah > .panel-footer + .panel-collapse .panel-body {
+	border-bottom-color: darkcyan !important;
+}
+
+.card-moriah {
+	border-color: darkcyan !important;
+}
+.card-moriah > .card-header {
+	color: whitesmoke !important;
+	background-color: darkcyan !important;
+	border-color: darkcyan !important;
+	font-weight: bolder;
+}
+.card-moriah > .card-body {
+	border-top-color: darkcyan !important;
+}
+
+.card-moriah > .card-boy > form > label {
+	color: darkcyan !important;
 }

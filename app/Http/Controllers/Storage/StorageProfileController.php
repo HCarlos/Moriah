@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Storage;
 
-use App\Http\Controllers\Funciones\FuncionesController;
 use http\Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,6 +23,7 @@ class StorageProfileController extends Controller
         $host   = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $idemp  = 1;
         $data    = $request->all();
+        $user = Auth::User();
 
         try {
             $validator = Validator::make($data, [
@@ -35,7 +35,6 @@ class StorageProfileController extends Controller
                     ->withInput();
 
             }
-            $user = Auth::User();
             $file = $request->file('photo');
             $ext = $file->extension();
             $fileName = $user->id.'.' . $ext;
@@ -46,12 +45,15 @@ class StorageProfileController extends Controller
             $user->host = $host;
             $user->idemp = $idemp;
             $user->save();
+            return redirect($this->redirectTo);
 
         }catch (Exception $e){
             dd($e);
         }
         if ($user->hasRole('user') || $user->hasRole('administrator') || $user->hasRole('alumno') ) {
             return redirect($this->redirectTo);
+        }else{
+           //dd( $user->hasRole('administrator') );
         }
 
     }

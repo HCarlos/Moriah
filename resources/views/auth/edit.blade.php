@@ -2,10 +2,11 @@
 
 @section('content')
 
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-primary">
+                <div class="panel panel-moriah">
                     <div class="panel-heading">Perfil | {{$user->username}}</div>
 
                     <div class="panel-body">

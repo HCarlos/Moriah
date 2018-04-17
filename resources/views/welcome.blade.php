@@ -72,6 +72,7 @@
             margin-bottom: 30px;
         }
     </style>
+
 </head>
 
 <body>
@@ -80,7 +81,7 @@
             <div class="top-right links">
                 @auth
                     @role('alumno')
-                        <a href="/home_alumno">Realizar búsqueda</a>
+                        {{--<a href="/home_alumno">Realizar búsqueda</a>--}}
                     @else
                         <a href="{{ url('/home') }}">Entrar</a>
                     @endrole
@@ -92,7 +93,7 @@
         @endif
 
         <div class="content">
-            <img src="{{asset('assets/img/biblioteca_virtual_logo_1.png')}}" /><br/>
+            <img src="{{asset('assets/img/moriah_logo_1.png')}}" /><br/>
         </div>
     </div>
 </body>
