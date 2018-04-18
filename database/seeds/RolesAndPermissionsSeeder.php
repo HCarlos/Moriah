@@ -15,6 +15,10 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
 
+        $ip   = 'root_init';//$_SERVER['REMOTE_ADDR'];
+        $host = 'root_init';//gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $idemp = 1;
+
         Permission::create(['name' => 'all']);
         Permission::create(['name' => 'editar_registro']);
 
@@ -33,20 +37,26 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_user->givePermissionTo('editar_registro');
 
         $user = new User();
-        $user->name = 'Administrador';
+        $user->nombre = 'Administrador';
         $user->username = 'Admin';
         $user->email = 'admin@example.com';
         $user->password = bcrypt('secret');
         $user->admin = true;
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user);
         $user->roles()->attach($role_admin);
 
         $user = new User();
-        $user->name = 'Usuario';
+        $user->nombre = 'Usuario';
         $user->username = 'User';
         $user->email = 'user@example.com';
         $user->password = bcrypt('secret');
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user);
 

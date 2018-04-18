@@ -20,13 +20,15 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'username', 'email', 'password','admin','nombre_completo',
-        'filename','root','idemp','ip','host',
-        'name',
+        'username', 'email', 'password',
+        'admin','alumno','foraneo','exalumno','credito',
+        'filename','root',
+        'idemp','ip','host',
+        'nombre','ap_paterno','ap_materno','celular','telefono',
     ];
 
     protected $hidden = ['password', 'remember_token',];
-    protected $casts = ['admin'=>'boolean'];
+    protected $casts = ['admin'=>'boolean','alumno'=>'boolean','foraneo'=>'boolean','exalumno'=>'boolean','credito'=>'credito',];
 
     public function permissions() {
 //        return $this->hasAnyPermission(Permission::class);
@@ -41,6 +43,22 @@ class User extends Authenticatable
         return $this->admin;
     }
 
+    public function isAlumno(){
+        return $this->alumno;
+    }
+
+    public function isForaneo(){
+        return $this->foraneo;
+    }
+
+    public function isExalumno(){
+        return $this->exalumno;
+    }
+
+    public function isCredito(){
+        return $this->credito;
+    }
+
     public function IsEmptyPhoto(){
         return $this->filename == '' ? true : false;
     }
@@ -50,12 +68,14 @@ class User extends Authenticatable
         $this->notify(new MyResetPassword($token));
     }
 
-    public static function findOrCreateUserWithRole(string $username, string $nombre_completo, string $email, string $password, int $iduser_ps, int $idemp, Role $role){
+    public static function findOrCreateUserWithRole(string $username, string $nombre, string $ap_paterno, string $ap_materno, string $email, string $password, int $iduser_ps, int $idemp, Role $role){
         $user = static::all()->where('username', $username)->where('email', $email)->first();
         if (!$user) {
             return static::create([
                 'username'=>$username,
-                'nombre_completo'=>$nombre_completo,
+                'nombre'=>$nombre,
+                'ap_paterno'=>$ap_paterno,
+                'ap_materno'=>$ap_materno,
                 'email'=>$email,
                 'password' => bcrypt($password),
                 'iduser_ps' => 0,
