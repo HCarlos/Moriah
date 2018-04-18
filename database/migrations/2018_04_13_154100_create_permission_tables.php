@@ -61,21 +61,21 @@ class CreatePermissionTables extends Migration
 
 //        Schema::create('role_user', function (Blueprint $table) {
         Schema::create($tableNames['role_user'], function (Blueprint $table) use ($tableNames) {
-                $table->increments('id');
-                $table->integer('user_id');
-                $table->integer('role_id');
-                $table->timestamps();
-                $table->unique(['user_id', 'role_id']);
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('role_id');
+            $table->timestamps();
+            $table->unique(['user_id', 'role_id']);
 
-                $table->foreign('user_id')
-                    ->references('id')
-                    ->on($tableNames['users'])
-                    ->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
 
-                $table->foreign('role_id')
-                    ->references('id')
-                    ->on($tableNames['roles'])
-                    ->onDelete('cascade');
+            $table->foreign('role_id')
+                ->references('id')
+                ->on($tableNames['roles'])
+                ->onDelete('cascade');
 
         });
 
@@ -127,12 +127,12 @@ class CreatePermissionTables extends Migration
     {
         $tableNames = config('permission.table_names');
 
-        Schema::drop($tableNames['role_has_permissions']);
-        Schema::drop($tableNames['model_has_roles']);
-        Schema::drop($tableNames['model_has_permissions']);
-        Schema::drop($tableNames['role_user']);
-        Schema::drop($tableNames['permission_user']);
-        Schema::drop($tableNames['roles']);
-        Schema::drop($tableNames['permissions']);
+        Schema::dropIfExists($tableNames['role_has_permissions']);
+        Schema::dropIfExists($tableNames['model_has_roles']);
+        Schema::dropIfExists($tableNames['model_has_permissions']);
+        Schema::dropIfExists($tableNames['role_user']);
+        Schema::dropIfExists($tableNames['permission_user']);
+        Schema::dropIfExists($tableNames['roles']);
+        Schema::dropIfExists($tableNames['permissions']);
     }
 }
