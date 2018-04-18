@@ -55,10 +55,11 @@ class EditUserDataController extends Controller
             $user = Auth::user();
             // $input = $request->only('nombre_completo', 'twitter', 'facebook', 'instagram');
             $input = $request->all();
-            $user->nombre_completo = $request->input('nombre_completo');
-            $user->twitter = $request->input('twitter');
-            $user->facebook = $request->input('facebook');
-            $user->instagram = $request->input('instagram');
+            $user->nombre = $request->input('nombre');
+            $user->ap_paterno = $request->input('ap_paterno');
+            $user->ap_materno = $request->input('ap_materno');
+            $user->celular = $request->input('celular');
+            $user->telefono = $request->input('telefono');
             $user->idemp = $idemp;
             $user->ip = $ip;
             $user->host = $host;
@@ -95,7 +96,7 @@ class EditUserDataController extends Controller
             return redirect(
                 $user->hasRole('alumno') ?
                     $this->redirectToAlumno :
-                    $this->redirectTo
+                    $this->redirectToChangeEmail
             );
         }
 

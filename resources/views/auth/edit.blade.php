@@ -13,13 +13,37 @@
                         <form class="form-horizontal" method="POST" action="{{ route('Edit') }}">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
-                            <div class="form-group{{ $errors->has('nombre_completo') ? ' has-error' : '' }}">
-                                <label for="nombre_completo" class="col-md-4 control-label">Nombre Completo</label>
+                            <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
+                                <label for="nombre" class="col-md-4 control-label">Nombre</label>
                                 <div class="col-md-6">
-                                    <input id="nombre_completo" type="text" class="form-control" name="nombre_completo" value="{{ old('nombre_completo',$user->nombre_completo) }}" autofocus>
-                                    @if ($errors->has('nombre_completo'))
+                                    <input id="nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre',$user->nombre) }}" autofocus>
+                                    @if ($errors->has('nombre'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('nombre_completo') }}</strong>
+                                        <strong>{{ $errors->first('nombre') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('ap_paterno') ? ' has-error' : '' }}">
+                                <label for="ap_paterno" class="col-md-4 control-label">Apellido Paterno</label>
+                                <div class="col-md-6">
+                                    <input id="ap_paterno" type="text" class="form-control" name="ap_paterno" value="{{ old('ap_paterno',$user->ap_paterno) }}" autofocus>
+                                    @if ($errors->has('ap_paterno'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('ap_paterno') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('ap_materno') ? ' has-error' : '' }}">
+                                <label for="ap_materno" class="col-md-4 control-label">Apellido Materno</label>
+                                <div class="col-md-6">
+                                    <input id="ap_materno" type="text" class="form-control" name="ap_materno" value="{{ old('ap_materno',$user->ap_materno) }}" autofocus>
+                                    @if ($errors->has('ap_materno'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('ap_materno') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -32,37 +56,25 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('twitter') ? ' has-error' : '' }}">
-                                <label for="twitter" class="col-md-4 control-label">Twitter</label>
+                            <div class="form-group{{ $errors->has('celular') ? ' has-error' : '' }}">
+                                <label for="celular" class="col-md-4 control-label">Celular</label>
                                 <div class="col-md-6">
-                                    <input id="twitter" type="text" class="form-control" name="twitter" id="twitter" value="{{ old('twitter',$user->twitter) }}"  >
-                                    @if ($errors->has('twitter'))
+                                    <input id="celular" type="text" class="form-control" name="celular" id="celular" value="{{ old('celular',$user->celular) }}"  >
+                                    @if ($errors->has('celular'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('twitter') }}</strong>
+                                        <strong>{{ $errors->first('celular') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('facebook') ? ' has-error' : '' }}">
-                                <label for="facebook" class="col-md-4 control-label">Facebook</label>
+                            <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
+                                <label for="telefono" class="col-md-4 control-label">Teléfono</label>
                                 <div class="col-md-6">
-                                    <input id="facebook" type="text" class="form-control" name="facebook" value="{{ old('facebook',$user->facebook) }}"  >
-                                    @if ($errors->has('facebook'))
+                                    <input id="telefono" type="text" class="form-control" name="telefono" value="{{ old('telefono',$user->telefono) }}"  >
+                                    @if ($errors->has('telefono'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('facebook') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('instagram') ? ' has-error' : '' }}">
-                                <label for="instagram" class="col-md-4 control-label">Instagram</label>
-                                <div class="col-md-6">
-                                    <input id="instagram" type="text" class="form-control" name="instagram" value="{{ old('instagram',$user->instagram) }}"  >
-                                    @if ($errors->has('instagram'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('instagram') }}</strong>
+                                        <strong>{{ $errors->first('telefono') }}</strong>
                                     </span>
                                     @endif
                                 </div>
