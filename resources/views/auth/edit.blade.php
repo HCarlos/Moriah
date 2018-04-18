@@ -81,6 +81,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="email_old" class="col-md-4 control-label">Rol</label>
+                                <div class="col-md-6">
+                                    @foreach(\Spatie\Permission\Models\Role::all() as $role)
+                                        <span class="label label-default">{{ $role->name }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Guardar
