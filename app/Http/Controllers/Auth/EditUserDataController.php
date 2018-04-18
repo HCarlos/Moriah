@@ -42,7 +42,8 @@ class EditUserDataController extends Controller
         $idemp  = 1;
 
         $validator = Validator::make($request->all(), [
-            'nombre_completo' => 'required|string|max:255',
+            'nombre' => 'required|string|max:100',
+            'ap_paterno' => 'required|string|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -67,7 +68,7 @@ class EditUserDataController extends Controller
             return redirect(
                 $user->hasRole('alumno') ?
                     $this->redirectToAlumno :
-                    $this->redirectTo
+                    $this->redirectToError
             );
         }
 
