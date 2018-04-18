@@ -87,7 +87,7 @@
                     @endrole
                 @else
                     <a href="{{ route('login') }}">Iniciar sesión</a>
-                    {{--<a href="{{ route('register') }}">Regístrate</a>--}}
+                    <a href="{{ route('register') }}">Regístrate</a>
                 @endauth
             </div>
         @endif

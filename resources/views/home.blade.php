@@ -3,6 +3,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
+            @admin
+            <a data-toggle="modal" href=" route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" data-target="#myModal">Dashboard</a>
+            @endadmin
 
             {{--<div class="col-md-3">--}}
                 {{--<div class="panel panel-primary">--}}

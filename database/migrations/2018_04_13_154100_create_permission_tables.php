@@ -18,6 +18,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description',30)->nullable();
             $table->string('guard_name');
             $table->timestamps();
         });
@@ -25,6 +26,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description',30)->nullable();
             $table->string('guard_name');
             $table->timestamps();
         });
@@ -55,6 +57,45 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade');
 
             $table->primary(['role_id', 'model_id', 'model_type']);
+        });
+
+//        Schema::create('role_user', function (Blueprint $table) {
+        Schema::create($tableNames['role_user'], function (Blueprint $table) use ($tableNames) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->integer('role_id');
+                $table->timestamps();
+                $table->unique(['user_id', 'role_id']);
+
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on($tableNames['users'])
+                    ->onDelete('cascade');
+
+                $table->foreign('role_id')
+                    ->references('id')
+                    ->on($tableNames['roles'])
+                    ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['permission_user'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('permission_id');
+            $table->timestamps();
+            $table->unique(['user_id', 'permission_id']);
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+
+            $table->foreign('permission_id')
+                ->references('id')
+                ->on($tableNames['permissions'])
+                ->onDelete('cascade');
+
         });
 
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
@@ -89,6 +130,8 @@ class CreatePermissionTables extends Migration
         Schema::drop($tableNames['role_has_permissions']);
         Schema::drop($tableNames['model_has_roles']);
         Schema::drop($tableNames['model_has_permissions']);
+        Schema::drop($tableNames['role_user']);
+        Schema::drop($tableNames['permission_user']);
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
     }

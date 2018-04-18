@@ -13,7 +13,7 @@ use App\Notifications\MyResetPassword;
 class User extends Authenticatable
 {
     use Notifiable;
-    use \Illuminate\Auth\Passwords\CanResetPassword;
+//    use CanResetPassword;
     use HasRoles;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
