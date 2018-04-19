@@ -90,6 +90,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="email_old" class="col-md-4 control-label">Permisos</label>
+                                <div class="col-md-6">
+                                    @foreach(Auth()->user()->permissions()->get() as $permiso)
+                                        <span class="label label-default">{{ $permiso->name }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Guardar

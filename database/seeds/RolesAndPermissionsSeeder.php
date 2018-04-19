@@ -19,8 +19,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $host = 'root_init';//gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $idemp = 1;
 
-        Permission::create(['name' => 'all']);
-        Permission::create(['name' => 'editar_registro']);
+        $P0 = Permission::create(['name' => 'all']);
+        $P1 = Permission::create(['name' => 'editar_registro']);
 
         $role_admin = Role::create([
             'name' => 'administrator',
@@ -48,6 +48,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_user);
         $user->roles()->attach($role_admin);
+        $user->permissions()->attach($P0);
+
 
         $user = new User();
         $user->nombre = 'Usuario';
@@ -59,6 +61,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user);
+        $user->permissions()->attach($P1);
 
     }
 

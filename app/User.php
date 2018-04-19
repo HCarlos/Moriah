@@ -2,6 +2,12 @@
 
 namespace App;
 
+use App\Models\SIIFAC\Cuenta_Por_Cobrar;
+use App\Models\SIIFAC\Ingreso;
+use App\Models\SIIFAC\Movimiento;
+use App\Models\SIIFAC\Paquete_;
+use App\Models\SIIFAC\Pedido;
+use App\Models\SIIFAC\Pedido_Detalle;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Models\Permission;
@@ -31,12 +37,43 @@ class User extends Authenticatable
     protected $casts = ['admin'=>'boolean','alumno'=>'boolean','foraneo'=>'boolean','exalumno'=>'boolean','credito'=>'credito',];
 
     public function permissions() {
-//        return $this->hasAnyPermission(Permission::class);
+        // Contiene muchos Permisos
         return $this->belongsToMany(Permission::class);
     }
 
     public function roles(){
+        // Contiene muchos Roles
         return $this->belongsToMany(Role::class);
+    }
+
+    public function cuentas_por_cobrar(){
+        // Contiene muchos Cuentas_por_Cobrar
+        return $this->belongsToMany(Cuenta_Por_Cobrar::class);
+    }
+
+    public function ingresos(){
+        // Contiene muchos Ingresos
+        return $this->belongsToMany(Ingreso::class);
+    }
+
+    public function paquetes_productos(){
+        // Contiene muchos Ingresos
+        return $this->belongsToMany(Paquete_::class);
+    }
+
+    public function pedidos(){
+        // Contiene muchos Ingresos
+        return $this->belongsToMany(Pedido::class);
+    }
+
+    public function pedidos_detalles(){
+        // Contiene muchos Ingresos
+        return $this->belongsToMany(Pedido_Detalle::class);
+    }
+
+    public function movimientos(){
+        // Contiene muchos Ingresos
+        return $this->belongsToMany(Movimiento::class);
     }
 
     public function isAdmin(){

@@ -18,10 +18,12 @@ class Permission extends Model
     protected $table = 'permissions';
 
     public function roles() {
+        // Esta en muchos Roles
         return $this->hasMany(Role::class);
     }
 
     public function users() {
+        // Esta en muchos Roles
         return $this->hasMany(User::class);
     }
 
