@@ -25,4 +25,19 @@ class Familia_Producto extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public static function findOrCreateProducto($clave, $descripcion, $porcdescto, $moneycli, $empresa_id){
+        $obj = static::all()->where('clave', $clave)->where('descripcion', $descripcion)->first();
+        if (!$obj) {
+            return static::create([
+                'clave'=>$clave,
+                'descripcion'=>$descripcion,
+                'porcdescto'=>$porcdescto,
+                'moneycli'=>$moneycli,
+                'empresa_id'=>$empresa_id,
+            ]);
+        }
+        return $obj;
+    }
+
+
 }

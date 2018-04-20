@@ -31,5 +31,19 @@ class Paquete extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public static function findOrCreatePraquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
+        $obj = static::all()->where('clave', $descripcion_paquete)->first();
+        if (!$obj) {
+            return static::create([
+                'user_id'=>$user_id,
+                'codigo'=>$codigo,
+                'descripcion_paquete'=>$descripcion_paquete,
+                'importe'=>$importe,
+                'empresa_id'=>$empresa_id,
+            ]);
+        }
+        return $obj;
+    }
+
 
 }

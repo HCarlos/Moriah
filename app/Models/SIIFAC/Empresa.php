@@ -107,7 +107,7 @@ class Empresa extends Model
         return $this->hasMany(Proveedor::class);
     }
 
-    public static function findOrCreateEmpresa(string $rs, string $ncomer, string $df, string $rfc){
+    public static function findOrCreateEmpresa($rs, $ncomer, $df, $rfc){
         $emresa = static::all()->where('rs', $rs)->where('ncomer', $ncomer)->first();
         if (!$emresa) {
             return static::create([

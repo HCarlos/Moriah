@@ -522,7 +522,9 @@ class CreateSiifacTables extends Migration
         Schema::create($tableNames['paquetes'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('user_id')->default(0)->nullable();
+            $table->string('codigo',16)->default('')->nullable();
             $table->string('descripcion_paquete',150)->default('')->nullable();
+            $table->decimal('importe',10,2)->default(0)->nullable();
             $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_paquete')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
