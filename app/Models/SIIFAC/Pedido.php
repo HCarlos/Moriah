@@ -3,35 +3,42 @@
 namespace App\Models\SIIFAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pedido extends Model
 {
+    use SoftDeletes;
+
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'proveedores';
 
     protected $fillable = [
-        'clave_proveedor', 'nombre_proveedor', 'contacto_proveedor','domicilio_fiscal_proveedor',
+        'clave_proveedor', 'nombre_proveedor', 'contacto_proveedor','domicilio_fiscal_proveedor','empresa_id',
         'status_proveedores','idemp','ip','host',
     ];
 
-    public function proveedores(){
+    public function proveedor(){
         // Esta en muchas Compras
-        return $this->hasMany(Compra::class);
+        return $this->belongsTo(Compra::class);
     }
 
-    public function users(){
+    public function user(){
         // Esta en muchos Usuarios
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function detalles(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Pedido_Detalle::class);
+        return $this->hasMany(Pedido_Detalle::class);
     }
 
     public function movimientos(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Movimiento::class);
+        return $this->hasMany(Movimiento::class);
+    }
+
+    public function empresa(){
+        return $this->belongsTo(Empresa::class);
     }
 
 }

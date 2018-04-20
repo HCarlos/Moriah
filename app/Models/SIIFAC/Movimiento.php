@@ -3,9 +3,12 @@
 namespace App\Models\SIIFAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Movimiento extends Model
 {
+    use SoftDeletes;
+
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'movimientos';
 
@@ -14,50 +17,54 @@ class Movimiento extends Model
         'user_id', 'compra_id', 'producto_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
         'folio', 'clave', 'codigo', 'ejercicio', 'periodo', 'fecha', 'foliofac', 'nota', 'entrada',
         'salida', 'exlocal', 'existencia', 'pu', 'cu', 'debe', 'haber', 'descto', 'importe', 'iva', 'sllocal', 'saldo',
-        'tipo', 'status', 'tipoinv',
+        'tipo', 'status', 'tipoinv','empresa_id',
         'status_movimiento', 'idemp', 'ip', 'host',
     ];
 
-    public function users()
+    public function user()
     {
         // Esta en muchos Almacenes
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function compras()
+    public function compra()
     {
         // Esta en muchos Almacenes
-        return $this->hasMany(Compra::class);
+        return $this->belongsTo(Compra::class);
     }
 
-    public function productos()
+    public function producto()
     {
         // Esta en muchos familia de productos
-        return $this->hasMany(Producto::class);
+        return $this->belongsTo(Producto::class);
     }
 
-    public function pedidos()
+    public function pedido()
     {
         // Esta en muchos familia de productos
-        return $this->hasMany(Pedido_Detalle::class);
+        return $this->belongsTo(Pedido_Detalle::class);
     }
 
-    public function proveedores()
+    public function proveedore()
     {
         // Esta en muchos familia de productos
-        return $this->hasMany(Proveedor::class);
+        return $this->belongsTo(Proveedor::class);
     }
 
-    public function almacenes()
+    public function almacen()
     {
         // Esta en muchos Almacenes
-        return $this->hasMany(Almacen::class);
+        return $this->belongsTo(Almacen::class);
     }
 
-    public function medidas()
+    public function medida()
     {
         // Esta en muchos medidas
-        return $this->hasMany(Medida::class);
+        return $this->belongsTo(Medida::class);
+    }
+
+    public function empresa(){
+        return $this->belongsTo(Empresa::class);
     }
 
 }

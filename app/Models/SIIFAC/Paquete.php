@@ -3,25 +3,32 @@
 namespace App\Models\SIIFAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Paquete_ extends Model
+class Paquete extends Model
 {
+    use SoftDeletes;
+
     protected $guard_name = 'web'; // or whatever guard you want to use
-    protected $table = 'paquetes_producto';
+    protected $table = 'paquetes';
 
     protected $fillable = [
-        'user_id', 'descripcion_paquete',
+        'user_id', 'descripcion_paquete','empresa_id',
         'status_paquete','idemp','ip','host',
     ];
 
-    public function users(){
+    public function user(){
         // Esta en muchos Usuarios
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function detalles(){
         // Contiene muchos Roles
-        return $this->belongsToMany(Paquete__Detalle::class);
+        return $this->hasMany(Paquete__Detalle::class);
+    }
+
+    public function empresa(){
+        return $this->belongsTo(Empresa::class);
     }
 
 

@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

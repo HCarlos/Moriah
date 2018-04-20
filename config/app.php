@@ -175,6 +175,7 @@ return [
         yajra\Datatables\DatatablesServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Geocoder\Laravel\Providers\GeocoderService::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -230,7 +231,9 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'SSH' => Collective\Remote\RemoteFacade::class,
         'Datatables' => yajra\Datatables\Datatables::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
+
 
 ];

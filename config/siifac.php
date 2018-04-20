@@ -46,6 +46,9 @@ return [
         'movimiento_pedido' => 'movimiento_pedido',
         'movimiento_almacen' => 'movimiento_almacen',
         'movimiento_medida' => 'movimiento_medida',
+        'notas_credito' => 'notas_credito',
+        'nota_credito_detalle' => 'nota_credito_detalle',
+
     ],
 
     ];

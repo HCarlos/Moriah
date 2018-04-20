@@ -20,6 +20,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');
             $table->string('description',30)->nullable();
             $table->string('guard_name');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -28,6 +29,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');
             $table->string('description',30)->nullable();
             $table->string('guard_name');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -64,6 +66,7 @@ class CreatePermissionTables extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('role_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->unique(['user_id', 'role_id']);
 
@@ -83,6 +86,7 @@ class CreatePermissionTables extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('permission_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->unique(['user_id', 'permission_id']);
 

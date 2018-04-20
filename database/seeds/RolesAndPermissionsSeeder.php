@@ -20,21 +20,32 @@ class RolesAndPermissionsSeeder extends Seeder
         $idemp = 1;
 
         $P0 = Permission::create(['name' => 'all']);
-        $P1 = Permission::create(['name' => 'editar_registro']);
+        $P1 = Permission::create(['name' => 'crear']);
+        $P2 = Permission::create(['name' => 'editar']);
+        $P3 = Permission::create(['name' => 'eliminar']);
+        $P4 = Permission::create(['name' => 'consultar']);
+        $P5 = Permission::create(['name' => 'imprimir']);
 
         $role_admin = Role::create([
             'name' => 'administrator',
             'description' => 'administrator',
             'guard_name' => 'web',
         ]);
-        $role_admin->givePermissionTo('all');
+        $role_admin->givePermissionTo($P0);
 
-        $role_user = Role::create([
-            'name' => 'user',
-            'description' => 'user',
+        $role_user_libros = Role::create([
+            'name' => 'usuarios_libros',
+            'description' => 'usuario libros',
             'guard_name' => 'web',
         ]);
-        $role_user->givePermissionTo('editar_registro');
+        $role_user_libros->givePermissionTo($P4);
+
+        $role_user_uniformes = Role::create([
+            'name' => 'usuario_uniformes',
+            'description' => 'usuario uniformes',
+            'guard_name' => 'web',
+        ]);
+        $role_user_uniformes->givePermissionTo($P4);
 
         $user = new User();
         $user->nombre = 'Administrador';
@@ -46,22 +57,32 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->ip = $ip;
         $user->host = $host;
         $user->save();
-        $user->roles()->attach($role_user);
         $user->roles()->attach($role_admin);
         $user->permissions()->attach($P0);
 
-
         $user = new User();
-        $user->nombre = 'Usuario';
-        $user->username = 'User';
-        $user->email = 'user@example.com';
+        $user->nombre = 'Usuario de los Libros';
+        $user->username = 'usuario_libros';
+        $user->email = 'usuario_libro@example.com';
         $user->password = bcrypt('secret');
         $user->idemp = $idemp;
         $user->ip = $ip;
         $user->host = $host;
         $user->save();
-        $user->roles()->attach($role_user);
-        $user->permissions()->attach($P1);
+        $user->roles()->attach($role_user_libros);
+        $user->permissions()->attach($P4);
+
+        $user = new User();
+        $user->nombre = 'Usuario de Uniformes';
+        $user->username = 'usuario_uniformes';
+        $user->email = 'usuario_uniforme@example.com';
+        $user->password = bcrypt('secret');
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
+        $user->save();
+        $user->roles()->attach($role_user_uniformes);
+        $user->permissions()->attach($P4);
 
     }
 

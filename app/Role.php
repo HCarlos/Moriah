@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
     use HasPermissions;
+    use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'roles';
@@ -27,7 +29,7 @@ class Role extends Model
 
     public function users(){
         // Esta en muchos Usuarios
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 
 }

@@ -15,41 +15,80 @@ class CreateSiifacTables extends Migration
     {
        $tableNames = config('siifac.table_names');
 
-        Schema::create($tableNames['familia_cliente'], function (Blueprint $table) {
+        Schema::create($tableNames['empresas'], function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion')->default('');
-            $table->unsignedSmallInteger('status_familia_cliente')->default(1)->nullable();
-            $table->unsignedSmallInteger('idemp')->default(1)->nullable();
+            $table->string('rs',150)->default('')->nullable();
+            $table->string('ncomer',100)->default('')->nullable();
+            $table->string('df',200)->default('')->nullable();
+            $table->string('rfc',20)->default('')->nullable();
+            $table->unsignedSmallInteger('status_empresa')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create($tableNames['familia_cliente'], function (Blueprint $table) use ($tableNames) {
+                $table->increments('id');
+                $table->string('descripcion',50)->default('');
+                $table->unsignedInteger('empresa_id')->default(0)->nullable();
+                $table->unsignedSmallInteger('status_familia_cliente')->default(1)->nullable();
+                $table->unsignedSmallInteger('idemp')->default(1)->nullable();
+                $table->string('ip',150)->default('')->nullable();
+                $table->string('host',150)->default('')->nullable();
+                $table->softDeletes();
+                $table->timestamps();
+
+                $table->index('empresa_id');
+                $table->foreign('empresa_id')
+                    ->references('id')
+                    ->on($tableNames['empresas'])
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+        });
+
 
         Schema::create($tableNames['almacenes'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->unsignedInteger('clave_almacen')->default(0);
-            $table->string('descripcion')->default('');
-            $table->string('responsable')->default('');
+            $table->string('descripcion',50)->default('');
+            $table->string('responsable',50)->default('');
             $table->unsignedTinyInteger('tipoinv')->default(0);
             $table->char('prefijo',3)->default('GEN');
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_almacen')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->index('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
-        Schema::create($tableNames['proveedores'], function (Blueprint $table) {
+        Schema::create($tableNames['proveedores'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->unsignedInteger('clave_proveedor')->default(0);
             $table->string('nombre_proveedor',150);
-            $table->string('contacto_proveedor')->defaul('');
-            $table->string('domicilio_fiscal_proveedor')->default('');
+            $table->string('contacto_proveedor',150)->defaul('');
+            $table->string('domicilio_fiscal_proveedor',250)->default('');
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_proveedores')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->index('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
         Schema::create($tableNames['compras'], function (Blueprint $table) use ($tableNames) {
@@ -67,14 +106,23 @@ class CreateSiifacTables extends Migration
             $table->unsignedTinyInteger('tipo')->default(0);
             $table->boolean('credito')->default(false);
             $table->string('observaciones')->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_compras')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('almacen_id');
             $table->index('proveedor_id');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('almacen_id')
                 ->references('id')
@@ -92,6 +140,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('almacen_id');
             $table->integer('compra_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['almacen_id', 'compra_id']);
 
@@ -111,6 +160,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('proveedor_id');
             $table->integer('compra_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['proveedor_id', 'compra_id']);
 
@@ -125,28 +175,44 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::create($tableNames['conceptos'], function (Blueprint $table) {
+        Schema::create($tableNames['conceptos'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->boolean('isiva')->default(false);
             $table->unsignedInteger('factor')->default(1)->nullable();
-            $table->string('descripcion')->default('');
+            $table->string('descripcion',150)->default('');
             $table->decimal('importe',10,2)->default(0.00);
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_concepto')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->index('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
-        Schema::create($tableNames['config'], function (Blueprint $table) {
+        Schema::create($tableNames['config'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->string('key',25)->nullable();
             $table->string('value',100)->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_config')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->index('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
         Schema::create($tableNames['cuentas_por_cobrar'], function (Blueprint $table) use ($tableNames) {
@@ -162,14 +228,23 @@ class CreateSiifacTables extends Migration
             $table->decimal('intereses',10,2)->default(0.00);
             $table->dateTime('pagado_el')->nullable();
             $table->string('observaciones',150)->default('');
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_cxc')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->index('user_id');
             $table->index('cuenta');
             $table->index('folio');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -182,6 +257,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('cuenta_por_cobrar_id');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['cuenta_por_cobrar_id', 'user_id']);
 
@@ -194,18 +270,6 @@ class CreateSiifacTables extends Migration
                 ->references('id')
                 ->on($tableNames['users'])
                 ->onDelete('cascade');
-        });
-
-        Schema::create($tableNames['empresas'], function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('rs',150)->default('')->nullable();
-            $table->string('ncomer',100)->default('')->nullable();
-            $table->string('df',200)->default('')->nullable();
-            $table->string('rfc',20)->default('')->nullable();
-            $table->unsignedSmallInteger('status_empresa')->default(1)->nullable();
-            $table->string('ip',150)->default('')->nullable();
-            $table->string('host',150)->default('')->nullable();
-            $table->timestamps();
         });
 
         Schema::create($tableNames['ingresos'], function (Blueprint $table) use ($tableNames) {
@@ -226,15 +290,24 @@ class CreateSiifacTables extends Migration
             $table->string('cheque',15)->default('');
             $table->dateTime('fc_aplica')->nullable();
             $table->unsignedInteger('nota_credito')->default(0);
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_ingreso')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->index('user_id');
             $table->index('cuenta_por_cobrar_id');
             $table->index('cuenta');
             $table->index('folio');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -252,6 +325,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('ingreso_id');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['ingreso_id', 'user_id']);
 
@@ -270,6 +344,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('ingreso_id');
             $table->integer('cuenta_por_cobrar_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['ingreso_id', 'cuenta_por_cobrar_id']);
 
@@ -284,28 +359,44 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::create($tableNames['medidas'], function (Blueprint $table) {
+        Schema::create($tableNames['medidas'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->string('desc1',20)->default('')->nullable();
             $table->string('desc2',20)->default('')->nullable();
             $table->unsignedInteger('clave')->default(0)->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_medida')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->index('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
-        Schema::create($tableNames['familia_producto'], function (Blueprint $table) {
+        Schema::create($tableNames['familia_producto'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->unsignedInteger('clave')->default(0)->nullable();
             $table->string('descripcion',75)->default('');
             $table->decimal('porcdescto',10,2)->default(0.00)->nullable();
             $table->unsignedTinyInteger('moneycli')->default(0);
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_familia_producto')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->index('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
         Schema::create($tableNames['productos'], function (Blueprint $table) use ($tableNames) {
@@ -333,10 +424,12 @@ class CreateSiifacTables extends Migration
             $table->text('propiedades_producto')->default('');
             $table->string('filename',50)->nullable();
             $table->string('root',150)->default('')->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_producto')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('almacen_id');
@@ -344,6 +437,13 @@ class CreateSiifacTables extends Migration
             $table->index('medida_id');
             $table->index('clave');
             $table->index('codigo');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('almacen_id')
                 ->references('id')
@@ -366,6 +466,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('almacen_id');
             $table->integer('producto_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['almacen_id', 'producto_id']);
 
@@ -384,6 +485,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('almacen_id');
             $table->integer('familia_producto_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['almacen_id', 'familia_producto_id']);
 
@@ -402,6 +504,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('almacen_id');
             $table->integer('medida_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['almacen_id', 'medida_id']);
 
@@ -420,12 +523,23 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('user_id')->default(0)->nullable();
             $table->string('descripcion_paquete',150)->default('')->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_paquete')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
             $table->index('user_id');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on($tableNames['users'])
@@ -436,7 +550,9 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('paquete_id');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
+
             $table->index(['paquete_id', 'user_id']);
 
             $table->foreign('paquete_id')
@@ -460,16 +576,25 @@ class CreateSiifacTables extends Migration
             $table->decimal('cant',10,2)->default(0)->nullable();
             $table->decimal('pv',10,2)->default(0)->nullable();
             $table->decimal('comp1',10,2)->default(0)->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_paquete_detalle')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('paquete_id');
             $table->index('producto_id');
             $table->index('medida_id');
             $table->index('codigo');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('paquete_id')
                 ->references('id')
@@ -492,6 +617,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('paquete_detalle_id');
             $table->integer('paquete_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['paquete_detalle_id', 'paquete_id']);
 
@@ -510,6 +636,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('paquete_detalle_id');
             $table->integer('producto_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['paquete_detalle_id', 'producto_id']);
 
@@ -528,6 +655,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('paquete_detalle_id');
             $table->integer('medida_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['paquete_detalle_id', 'medida_id']);
 
@@ -550,14 +678,23 @@ class CreateSiifacTables extends Migration
             $table->integer('paquete_id')->default(0)->nullable();
             $table->string('descripcion_pedido',150)->default('');
             $table->dateTime('fecha')->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_pedido')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('user_id');
             $table->index('paquete_id');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -575,6 +712,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('pedido_id');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['pedido_id', 'user_id']);
 
@@ -593,6 +731,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('pedido_id');
             $table->integer('paquete_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['pedido_id', 'paquete_id']);
 
@@ -620,10 +759,12 @@ class CreateSiifacTables extends Migration
             $table->decimal('cant',10,2)->default(0)->nullable();
             $table->decimal('pv',10,2)->default(0)->nullable();
             $table->decimal('comp1',10,2)->default(0)->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_pedido_detalle')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('pedido_id');
@@ -631,6 +772,13 @@ class CreateSiifacTables extends Migration
             $table->index('producto_id');
             $table->index('medida_id');
             $table->index('codigo');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('pedido_id')
                 ->references('id')
@@ -658,6 +806,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('pedido_id');
             $table->integer('pedido_detalle_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['pedido_id', 'pedido_detalle_id']);
 
@@ -676,6 +825,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('pedido_detalle_id');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['pedido_detalle_id', 'user_id']);
 
@@ -695,6 +845,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('pedido_detalle_id');
             $table->integer('producto_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['pedido_detalle_id', 'producto_id']);
 
@@ -714,6 +865,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('pedido_detalle_id');
             $table->integer('medida_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['pedido_detalle_id', 'medida_id']);
 
@@ -728,7 +880,6 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
 
         });
-
 
         Schema::create($tableNames['movimientos'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
@@ -763,10 +914,12 @@ class CreateSiifacTables extends Migration
             $table->unsignedTinyInteger('tipo')->default(0);
             $table->unsignedTinyInteger('status')->default(0);
             $table->unsignedTinyInteger('tipoinv')->default(0);
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_movimiento')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->index('user_id');
             $table->index('compra_id');
@@ -778,6 +931,13 @@ class CreateSiifacTables extends Migration
             $table->index('codigo');
             $table->index('folio');
             $table->index('clave');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -821,6 +981,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'user_id']);
 
@@ -840,6 +1001,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('compra_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'compra_id']);
 
@@ -859,6 +1021,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('producto_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'producto_id']);
 
@@ -878,6 +1041,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('pedido_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'pedido_id']);
 
@@ -897,6 +1061,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('proveedor_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'proveedor_id']);
 
@@ -916,6 +1081,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('almacen_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'almacen_id']);
 
@@ -935,6 +1101,7 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('movimiento_id');
             $table->integer('medida_id');
+            $table->softDeletes();
             $table->timestamps();
             $table->index(['movimiento_id', 'medida_id']);
 
@@ -949,6 +1116,101 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
 
         });
+
+        Schema::create($tableNames['notas_credito'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('user_id')->default(0)->nullable();
+            $table->unsignedInteger('clave')->default(0)->nullable();
+            $table->string('cuenta',16)->default('');
+            $table->integer('folio')->default(0)->nullable();
+            $table->date('fecha')->nullabled();
+            $table->decimal('importe',10,2)->default(0.00)->nullable();
+            $table->unsignedTinyInteger('isprint')->default(0)->nullabled();
+            $table->unsignedTinyInteger('status')->default(0)->nullabled();
+            $table->unsignedTinyInteger('tipo')->default(0)->nullabled();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
+            $table->unsignedTinyInteger('status_nota_credito')->default(1)->nullable();
+            $table->unsignedSmallInteger('idemp')->default(1)->nullable();
+            $table->string('ip',150)->default('')->nullable();
+            $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('clave');
+            $table->index('cuenta');
+            $table->index('folio');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+        });
+
+        Schema::create($tableNames['nota_credito_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('nota_credito_id')->default(0)->nullable();
+            $table->integer('user_id')->default(0)->nullable();
+            $table->integer('producto_id')->default(0)->nullable();
+            $table->date('fecha')->nullabled();
+            $table->integer('folio')->default(0)->nullable();
+            $table->string('cuenta',16)->default('');
+            $table->string('codigo',13)->default('');
+            $table->string('descripcion_producto',150)->default('')->nullable();
+            $table->decimal('cant',10,2)->default(0.00)->nullable();
+            $table->decimal('pv',10,2)->default(0.00)->nullable();
+            $table->decimal('importe',10,2)->default(0.00)->nullable();
+            $table->unsignedInteger('empresa_id')->default(0)->nullable();
+            $table->unsignedTinyInteger('status_nota_credito_detalle')->default(1)->nullable();
+            $table->unsignedSmallInteger('idemp')->default(1)->nullable();
+            $table->string('ip',150)->default('')->nullable();
+            $table->string('host',150)->default('')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->index('nota_credito_id');
+            $table->index('user_id');
+            $table->index('producto_id');
+            $table->index('cuenta');
+            $table->index('folio');
+            $table->index('codigo');
+            $table->index('empresa_id');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('nota_credito_id')
+                ->references('id')
+                ->on($tableNames['notas_credito'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on($tableNames['productos'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+        });
+
 
     }
 
@@ -991,6 +1253,8 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['movimiento_medida']);
 
         Schema::dropIfExists($tableNames['movimientos']);
+        Schema::dropIfExists($tableNames['nota_credito_detalle']);
+        Schema::dropIfExists($tableNames['notas_credito']);
 
         Schema::dropIfExists($tableNames['pedido_detalle']);
         Schema::dropIfExists($tableNames['pedidos']);
@@ -1002,7 +1266,6 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['familia_cliente']);
         Schema::dropIfExists($tableNames['conceptos']);
         Schema::dropIfExists($tableNames['config']);
-        Schema::dropIfExists($tableNames['empresas']);
         Schema::dropIfExists($tableNames['ingresos']);
         Schema::dropIfExists($tableNames['cuentas_por_cobrar']);
         Schema::dropIfExists($tableNames['productos']);
@@ -1011,6 +1274,7 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['medidas']);
         Schema::dropIfExists($tableNames['almacenes']);
 
+        Schema::dropIfExists($tableNames['empresas']);
 
     }
 }
