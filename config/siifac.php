@@ -6,6 +6,7 @@ return [
         'users' => 'users',
         'almacenes' => 'almacenes',
         'familia_cliente' => 'familia_cliente',
+        'familia_cliente_user' => 'familia_cliente_user',
         'familia_producto' => 'familia_producto',
         'proveedores' => 'proveedores',
         'compras' => 'compras',
@@ -48,7 +49,8 @@ return [
         'movimiento_medida' => 'movimiento_medida',
         'notas_credito' => 'notas_credito',
         'nota_credito_detalle' => 'nota_credito_detalle',
-
+        'ventas' => 'ventas',
+        'venta_detalle' => 'venta_detalle',
     ],
 
     ];

@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->boolean('foraneo')->default(false);
             $table->boolean('exalumno')->default(false);
             $table->boolean('credito')->default(false);
+            $table->unsignedTinyInteger('familia_cliente_id')->default(1)->nullable();
             $table->unsignedSmallInteger('status_user')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(0)->nullable();
             $table->string('ip',150)->default('')->nullable();
@@ -38,6 +39,14 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
+            $table->index('familia_cliente_id');
+            $table->index('idemp');
+
+//            $table->foreign('familia_cliente_id')
+//                ->references('id')
+//                ->on('familia_cliente')
+//                ->onDelete('cascade');
+
         });
     }
 

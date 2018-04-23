@@ -2,12 +2,13 @@
 
 namespace App;
 
-use App\Models\SIIFAC\Cuenta_Por_Cobrar;
+use App\Models\SIIFAC\CuentaPorCobrar;
+use App\Models\SIIFAC\FamiliaCliente;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Paquete_;
 use App\Models\SIIFAC\Pedido;
-use App\Models\SIIFAC\Pedido_Detalle;
+use App\Models\SIIFAC\PedidoDetalle;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Models\Permission;
@@ -30,7 +31,7 @@ class User extends Authenticatable
     protected $fillable = [
         'username', 'email', 'password',
         'admin','alumno','foraneo','exalumno','credito',
-        'filename','root',
+        'filename','root','familia_cliente_id',
         'idemp','ip','host',
         'nombre','ap_paterno','ap_materno','celular','telefono',
     ];
@@ -48,34 +49,39 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function familiasClientes(){
+        // Contiene muchos Ingresos
+        return $this->belongsToMany(FamiliaCliente::class);
+    }
+
     public function cuentas_por_cobrar(){
         // Contiene muchos Cuentas_por_Cobrar
-        return $this->belongsToMany(Cuenta_Por_Cobrar::class);
+        return $this->hasMany(CuentaPorCobrar::class);
     }
 
     public function ingresos(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Ingreso::class);
+        return $this->hasMany(Ingreso::class);
     }
 
     public function paquetes_productos(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Paquete_::class);
+        return $this->hasMany(Paquete_::class);
     }
 
     public function pedidos(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Pedido::class);
+        return $this->hasMany(Pedido::class);
     }
 
     public function pedidos_detalles(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Pedido_Detalle::class);
+        return $this->hasMany(PedidoDetalle::class);
     }
 
     public function movimientos(){
         // Contiene muchos Ingresos
-        return $this->belongsToMany(Movimiento::class);
+        return $this->hasMany(Movimiento::class);
     }
 
     public function isAdmin(){

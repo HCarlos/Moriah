@@ -5,7 +5,7 @@ namespace App\Models\SIIFAC;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Familia_Producto extends Model
+class FamiliaProducto extends Model
 {
     use SoftDeletes;
 
@@ -25,7 +25,7 @@ class Familia_Producto extends Model
         return $this->belongsTo(Empresa::class);
     }
 
-    public static function findOrCreateProducto($clave, $descripcion, $porcdescto, $moneycli, $empresa_id){
+    public static function findOrCreateFamiliaProducto($clave, $descripcion, $porcdescto, $moneycli, $empresa_id){
         $obj = static::all()->where('clave', $clave)->where('descripcion', $descripcion)->first();
         if (!$obj) {
             return static::create([

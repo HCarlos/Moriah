@@ -29,9 +29,9 @@ class Producto extends Model
         return $this->hasMany(Almacen::class);
     }
 
-    public function familia_producto(){
+    public function familiaProducto(){
         // Esta en muchos familia de productos
-        return $this->belongsTo(Familia_Producto::class);
+        return $this->belongsTo(FamiliaProducto::class);
     }
 
     public function medida(){
@@ -39,14 +39,14 @@ class Producto extends Model
         return $this->belongsTo(Medida::class);
     }
 
-    public function paquete_detalles(){
+    public function paqueteDetalles(){
         // Contiene muchos Ingresos
-        return $this->hasMany(Paquete__Detalle::class);
+        return $this->hasMany(PaqueteDetalle::class);
     }
 
-    public function pedidos_detalles(){
+    public function pedidosDetalles(){
         // Contiene muchos Ingresos
-        return $this->hasMany(Pedido_Detalle::class);
+        return $this->hasMany(PedidoDetalle::class);
     }
 
     public function movimientos(){
@@ -56,6 +56,45 @@ class Producto extends Model
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
+    }
+
+    public static function findOrCreateProducto(
+        $almacen_id, $familia_producto_id, $medida_id,
+        $clave, $codigo, $descripcion, $shortdesc,$maximo,$minimo,
+        $isiva, $fecha, $tipo, $pv, $porcdescto,$moneycli,$exist,$cu,$saldo,
+        $empresa_id){
+        $obj = static::all()
+            ->where('almacen_id', $almacen_id)
+            ->where('familia_producto_id', $familia_producto_id)
+            ->where('medida_id', $medida_id)
+            ->where('clave', $clave)
+            ->where('codigo', $codigo)
+            ->where('descripcion', $descripcion)
+            ->first();
+        if (!$obj) {
+            return static::create([
+                'almacen_id'=>$almacen_id,
+                'familia_producto_id'=>$familia_producto_id,
+                'medida_id'=>$medida_id,
+                'clave'=>$clave,
+                'codigo'=>$codigo,
+                'descripcion'=>$descripcion,
+                'shortdesc'=>$shortdesc,
+                'maximo'=>$maximo,
+                'minimo'=>$minimo,
+                'isiva'=>$isiva,
+                'fecha'=>$fecha,
+                'tipo'=>$tipo,
+                'pv'=>$pv,
+                'porcdescto'=>$porcdescto,
+                'moneycli'=>$moneycli,
+                'exist'=>$exist,
+                'cu'=>$cu,
+                'saldo'=>$saldo,
+                'empresa_id'=>$empresa_id,
+            ]);
+        }
+        return $obj;
     }
 
 }

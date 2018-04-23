@@ -31,4 +31,20 @@ class Almacen extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public static function findOrCreateAlmacen($clave_almacen, $descripcion, $responsable, $tipoinv, $prefijo, $empresa_id){
+        $obj = static::all()->where('clave_almacen', $clave_almacen)->where('descripcion', $descripcion)->first();
+        if (!$obj) {
+            return static::create([
+                'clave_almacen'=>$clave_almacen,
+                'descripcion'=>$descripcion,
+                'responsable'=>$responsable,
+                'tipoinv'=>$tipoinv,
+                'prefijo'=>$prefijo,
+                'empresa_id'=>$empresa_id,
+            ]);
+        }
+        return $obj;
+    }
+
+
 }

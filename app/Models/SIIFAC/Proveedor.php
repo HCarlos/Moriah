@@ -31,4 +31,18 @@ class Proveedor extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public static function findOrCreateProveedor($clave_proveedor, $nombre_proveedor, $contacto_proveedor, $domicilio_fiscal_proveedor,$empresa_id){
+        $obj = static::all()->where('nombre_proveedor', $nombre_proveedor)->first();
+        if (!$obj) {
+            return static::create([
+                'clave_proveedor'=>$clave_proveedor,
+                'nombre_proveedor'=>$nombre_proveedor,
+                'contacto_proveedor'=>$contacto_proveedor,
+                'domicilio_fiscal_proveedor'=>$domicilio_fiscal_proveedor,
+                'empresa_id'=>$empresa_id,
+            ]);
+        }
+        return $obj;
+    }
+
 }

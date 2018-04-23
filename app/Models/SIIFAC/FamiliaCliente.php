@@ -5,36 +5,32 @@ namespace App\Models\SIIFAC;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Concepto extends Model
+class FamiliaCliente extends Model
 {
     use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
-    protected $table = 'conceptos';
+    protected $table = 'familia_cliente';
 
     protected $fillable = [
-        'isiva','factor','descripcion','importe','empresa_id',
-        'status_concepto','idemp','ip','host',
+        'descripcion','empresa_id',
+        'status_familia_cliente','idemp','ip','host',
     ];
-
-    protected $casts = ['isiva'=>'boolean',];
-
-    public function isIVA(){
-        return $this->isiva;
-    }
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
 
-    public static function findOrCreateConcepto($isiva, $factor, $descripcion, $importe, $empresa_id){
+    public function users(){
+        // Esta en muchos Usuarios
+        return $this->belongsToMany(User::class);
+    }
+
+    public static function findOrCreateFamiliaCliente($descripcion, $empresa_id){
         $obj = static::all()->where('descripcion', $descripcion)->first();
         if (!$obj) {
             return static::create([
-                'isiva'=>$isiva,
                 'descripcion'=>$descripcion,
-                'factor'=>$factor,
-                'importe'=>$importe,
                 'empresa_id'=>$empresa_id,
             ]);
         }

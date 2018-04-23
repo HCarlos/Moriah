@@ -27,14 +27,14 @@ class Medida extends Model
         return $this->hasMany(Pedido::class);
     }
 
-    public function paquete_detalles(){
+    public function paqueteDetalles(){
         // Contiene muchos Roles
-        return $this->hasMany(Paquete__Detalle::class);
+        return $this->hasMany(PaqueteDetalle::class);
     }
 
-    public function medidas_detalles(){
+    public function medidasDetalles(){
         // Contiene muchos Roles
-        return $this->hasMany(Pedido_Detalle::class);
+        return $this->hasMany(PedidoDetalle::class);
     }
 
     public function movimientos(){
@@ -46,5 +46,17 @@ class Medida extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public static function findOrCreateMedida($desc1, $desc2, $clave, $empresa_id){
+        $obj = static::all()->where('desc1', $desc1)->first();
+        if (!$obj) {
+            return static::create([
+                'desc1'=>$desc1,
+                'desc2'=>$desc2,
+                'clave'=>$clave,
+                'empresa_id'=>$empresa_id,
+            ]);
+        }
+        return $obj;
+    }
 
 }

@@ -5,7 +5,7 @@ namespace App\Models\SIIFAC;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cuenta_Por_Cobrar extends Model
+class CuentaPorCobrar extends Model
 {
     use SoftDeletes;
 

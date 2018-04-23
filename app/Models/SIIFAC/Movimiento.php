@@ -42,10 +42,10 @@ class Movimiento extends Model
     public function pedido()
     {
         // Esta en muchos familia de productos
-        return $this->belongsTo(Pedido_Detalle::class);
+        return $this->belongsTo(PedidoDetalle::class);
     }
 
-    public function proveedore()
+    public function proveedor()
     {
         // Esta en muchos familia de productos
         return $this->belongsTo(Proveedor::class);

@@ -29,7 +29,7 @@ class Pedido extends Model
 
     public function detalles(){
         // Contiene muchos Ingresos
-        return $this->hasMany(Pedido_Detalle::class);
+        return $this->hasMany(PedidoDetalle::class);
     }
 
     public function movimientos(){

@@ -5,7 +5,7 @@ namespace App\Models\SIIFAC;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Paquete_Detalle extends Model
+class PaqueteDetalle extends Model
 {
     use SoftDeletes;
 

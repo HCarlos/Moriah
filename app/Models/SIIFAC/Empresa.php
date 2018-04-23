@@ -37,19 +37,19 @@ class Empresa extends Model
         return $this->hasMany(Config::class);
     }
 
-    public function cuentas_por_cobrar()
+    public function cuentasPorCobrar()
     {
-        return $this->hasMany(Cuenta_Por_Cobrar::class);
+        return $this->hasMany(CuentaPorCobrar::class);
     }
 
-    public function familias_cliente()
+    public function familiasCliente()
     {
-        return $this->hasMany(Familia_Cliente::class);
+        return $this->hasMany(FamiliaCliente::class);
     }
 
-    public function familias_producto()
+    public function familiasProducto()
     {
-        return $this->hasMany(Familia_Producto::class);
+        return $this->hasMany(FamiliaProducto::class);
     }
 
     public function ingresos()
@@ -67,14 +67,14 @@ class Empresa extends Model
         return $this->hasMany(Movimiento::class);
     }
 
-    public function notas_credito()
+    public function notasCredito()
     {
-        return $this->hasMany(Nota_Credito::class);
+        return $this->hasMany(NotaCredito::class);
     }
 
-    public function nota_credito_detalles()
+    public function notaCreditoDetalles()
     {
-        return $this->hasMany(Nota_Credito_Detalle::class);
+        return $this->hasMany(NotaCreditoDetalle::class);
     }
 
     public function paquetes()
@@ -82,9 +82,9 @@ class Empresa extends Model
         return $this->hasMany(Paquete::class);
     }
 
-    public function paquete_detalles()
+    public function paqueteDetalles()
     {
-        return $this->hasMany(Paquete_Detalle::class);
+        return $this->hasMany(PaqueteDetalle::class);
     }
 
     public function pedidos()
@@ -92,9 +92,9 @@ class Empresa extends Model
         return $this->hasMany(Pedido::class);
     }
 
-    public function pedido_detalles()
+    public function pedidoDetalles()
     {
-        return $this->hasMany(Pedido_Detalle::class);
+        return $this->hasMany(PedidoDetalle::class);
     }
 
     public function productos()

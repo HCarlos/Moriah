@@ -5,7 +5,7 @@ namespace App\Models\SIIFAC;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Nota_Credito extends Model
+class NotaCredito extends Model
 {
     use SoftDeletes;
 
@@ -23,9 +23,9 @@ class Nota_Credito extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function datalles(){
+    public function notaCreditoDatalles(){
         // Tiene muchos en detalles
-        return $this->hasMany(Nota_Credito_Detalle::class);
+        return $this->hasMany(NotaCreditoDetalle::class);
     }
 
     public function empresa(){

@@ -23,9 +23,9 @@ class Ingreso extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function cuentas_por_cobrar(){
+    public function cuentasPorCobrar(){
         // Esta en muchos Usuarios
-        return $this->belongsToMany(Cuenta_Por_Cobrar::class);
+        return $this->belongsToMany(CuentaPorCobrar::class);
     }
 
     public function empresa(){

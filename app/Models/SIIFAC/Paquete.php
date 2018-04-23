@@ -24,14 +24,14 @@ class Paquete extends Model
 
     public function detalles(){
         // Contiene muchos Roles
-        return $this->hasMany(Paquete__Detalle::class);
+        return $this->hasMany(PaqueteDetalle::class);
     }
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
 
-    public static function findOrCreatePraquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
+    public static function findOrCreatePaquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
         $obj = static::all()->where('clave', $descripcion_paquete)->first();
         if (!$obj) {
             return static::create([
