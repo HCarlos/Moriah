@@ -1407,6 +1407,8 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['nota_credito_detalle']);
         Schema::dropIfExists($tableNames['notas_credito']);
 
+        Schema::dropIfExists($tableNames['venta_detalle']);
+
         Schema::dropIfExists($tableNames['pedido_detalle']);
         Schema::dropIfExists($tableNames['pedidos']);
         Schema::dropIfExists($tableNames['paquete_detalle']);
@@ -1420,13 +1422,12 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['ingresos']);
         Schema::dropIfExists($tableNames['cuentas_por_cobrar']);
         Schema::dropIfExists($tableNames['productos']);
+        Schema::dropIfExists($tableNames['ventas']);
 
         Schema::dropIfExists($tableNames['familia_producto']);
         Schema::dropIfExists($tableNames['medidas']);
         Schema::dropIfExists($tableNames['almacenes']);
 
-        Schema::dropIfExists($tableNames['venta_detalle']);
-        Schema::dropIfExists($tableNames['ventas']);
 
         Schema::dropIfExists($tableNames['empresas']);
 

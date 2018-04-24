@@ -2,13 +2,17 @@
 
 namespace App;
 
+use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\CuentaPorCobrar;
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaCliente;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Movimiento;
-use App\Models\SIIFAC\Paquete_;
+use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\PedidoDetalle;
+use App\Models\SIIFAC\Venta;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Models\Permission;
@@ -29,11 +33,12 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password','cuenta',
         'admin','alumno','foraneo','exalumno','credito',
-        'filename','root','familia_cliente_id',
+        'dias_credito','limite_credito','saldo_a_favor','saldo_en_contra',
+        'root','filename','familia_cliente_id',
         'idemp','ip','host',
-        'nombre','ap_paterno','ap_materno','celular','telefono',
+        'nombre','ap_paterno','ap_materno','domicilio','celular','telefono',
     ];
 
     protected $hidden = ['password', 'remember_token',];
@@ -66,7 +71,7 @@ class User extends Authenticatable
 
     public function paquetes_productos(){
         // Contiene muchos Ingresos
-        return $this->hasMany(Paquete_::class);
+        return $this->hasMany(Paquete::class);
     }
 
     public function pedidos(){
@@ -82,6 +87,21 @@ class User extends Authenticatable
     public function movimientos(){
         // Contiene muchos Ingresos
         return $this->hasMany(Movimiento::class);
+    }
+
+    public function empresas(){
+        // Contiene muchos Ingresos
+        return $this->hasMany(Empresa::class);
+    }
+
+    public function almacenes(){
+        // Contiene muchos Ingresos
+        return $this->hasMany(Almacen::class);
+    }
+
+    public function ventas(){
+        // Contiene muchos Ingresos
+        return $this->hasMany(Venta::class);
     }
 
     public function isAdmin(){
@@ -108,26 +128,63 @@ class User extends Authenticatable
         return $this->filename == '' ? true : false;
     }
 
+    public function scopeMyID(){
+        return $this->id;
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MyResetPassword($token));
     }
 
-    public static function findOrCreateUserWithRole(string $username, string $nombre, string $ap_paterno, string $ap_materno, string $email, string $password, int $iduser_ps, int $idemp, Role $role){
-        $user = static::all()->where('username', $username)->where('email', $email)->first();
+    public static function findOrCreateUserWithRole3(
+        string $cuenta, string $username, string $nombre, string $ap_paterno, string $ap_materno, string $email, string $password,
+        bool $admin, bool $alumno, bool $foraneo, bool $exalumno, bool $credito, int $dias_credito, float $limite_credito,
+        string $domicilio, string $celular, string $telefono,
+        float $saldo_a_favor, float $saldo_en_contra, int $familia_cliente_id,
+        int $iduser_ps, int $idemp, Role $role1, Role $role2, Role $role3){
+        $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
         if (!$user) {
-            return static::create([
+            if ($cuenta == ''){
+                $timex  = Carbon::now()->format('ymdHisu');
+                $cuenta =  substr($timex,0,16);
+            }
+            if ($email == ''){
+                $email = $username.'@example.com';
+            }
+            if ($password == ''){
+                $password = $username;
+            }
+            $user = static::create([
+                'cuenta' => $cuenta,
                 'username'=>$username,
                 'nombre'=>$nombre,
                 'ap_paterno'=>$ap_paterno,
                 'ap_materno'=>$ap_materno,
                 'email'=>$email,
                 'password' => bcrypt($password),
-                'iduser_ps' => 0,
+                'domicilio' => $domicilio,
+                'celular' => $celular,
+                'telefono' => $telefono,
+                'admin' => $admin,
+                'alumno' => $alumno,
+                'foraneo' => $foraneo,
+                'exalumno' => $exalumno,
+                'credito' => $credito,
+                'dias_credito' => $dias_credito,
+                'limite_credito' => $limite_credito,
+                'saldo_a_favor' => $saldo_a_favor,
+                'saldo_en_contra' => $saldo_en_contra,
+                'iduser_ps' => $iduser_ps,
+                'familia_cliente_id' => $familia_cliente_id,
                 'idemp' => $idemp,
-            ])->roles()->attach($role);
+            ]);
+            $user->roles()->attach($role1);
+            $user->roles()->attach($role2);
+            $user->roles()->attach($role3);
         }
         return $user;
+
     }
 
 

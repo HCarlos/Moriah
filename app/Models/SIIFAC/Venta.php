@@ -3,6 +3,7 @@
 namespace App\Models\SIIFAC;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Venta extends Model
 {

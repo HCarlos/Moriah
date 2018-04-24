@@ -47,10 +47,26 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
         $role_user_uniformes->givePermissionTo($P4);
 
+        $role_user_cuadernos = Role::create([
+            'name' => 'usuario_cuadernos',
+            'description' => 'usuario cuadernos',
+            'guard_name' => 'web',
+        ]);
+        $role_user_cuadernos->givePermissionTo($P4);
+
+        $role_user_servicios = Role::create([
+            'name' => 'usuario_servicios',
+            'description' => 'usuario servicios',
+            'guard_name' => 'web',
+        ]);
+        $role_user_servicios->givePermissionTo($P4);
+
+
         $user = new User();
         $user->nombre = 'Administrador';
         $user->username = 'Admin';
         $user->email = 'admin@example.com';
+        $user->cuenta = '20182404130814';
         $user->password = bcrypt('secret');
         $user->admin = true;
         $user->idemp = $idemp;
@@ -64,6 +80,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->nombre = 'Usuario de los Libros';
         $user->username = 'usuario_libros';
         $user->email = 'usuario_libro@example.com';
+        $user->cuenta = '20182404130901';
         $user->password = bcrypt('secret');
         $user->idemp = $idemp;
         $user->ip = $ip;
@@ -76,6 +93,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->nombre = 'Usuario de Uniformes';
         $user->username = 'usuario_uniformes';
         $user->email = 'usuario_uniforme@example.com';
+        $user->cuenta = '20182404130937';
         $user->password = bcrypt('secret');
         $user->idemp = $idemp;
         $user->ip = $ip;
