@@ -47,12 +47,19 @@ class LoginController extends Controller
     public function redirectPath()
     {
         $user = Auth::user();
-        if ( $user->hasRole('user') ){
+        if ( $user->hasRole(['administrator',
+            'usuario_venta_libros','usuario_admin_venta_libros',
+            'usuario_venta_uniformes','usuario_admin_venta_uniformess',
+            'usuario_venta_cuadernos','usuario_admin_venta_cuadernos'
+        ]) ){
             $this->redirectTo = '/home';
             return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
-        }elseif( $user->hasRole('alumno') ){
-            $this->redirectTo = '/home_alumno';
-            return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home_alumno';
+//        }elseif( $user->hasRole('alumno') ){
+//            $this->redirectTo = '/home_alumno';
+//            return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home_alumno';
+//        }elseif( $user->hasRole('administrator') ){
+//            $this->redirectTo = '/home';
+//            return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
         }
 
 

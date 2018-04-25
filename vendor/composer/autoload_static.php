@@ -20,12 +20,13 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
+        '229f88ef45cd176e7c17c2fe35042836' => __DIR__ . '/..' . '/styde/html/src/helpers.php',
         '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
     );
 
@@ -68,6 +69,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
+            'Styde\\Html\\' => 11,
             'Spatie\\Permission\\' => 18,
         ),
         'R' => 
@@ -246,6 +248,10 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'Styde\\Html\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/styde/html/src',
         ),
         'Spatie\\Permission\\' => 
         array (
@@ -4295,6 +4301,27 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Spatie\\Permission\\Traits\\HasPermissions' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/HasPermissions.php',
         'Spatie\\Permission\\Traits\\HasRoles' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/HasRoles.php',
         'Spatie\\Permission\\Traits\\RefreshesPermissionCache' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/RefreshesPermissionCache.php',
+        'Styde\\Html\\Access\\AccessHandler' => __DIR__ . '/..' . '/styde/html/src/Access/AccessHandler.php',
+        'Styde\\Html\\Access\\BasicAccessHandler' => __DIR__ . '/..' . '/styde/html/src/Access/BasicAccessHandler.php',
+        'Styde\\Html\\Access\\MissingGateException' => __DIR__ . '/..' . '/styde/html/src/Access/MissingGateException.php',
+        'Styde\\Html\\Access\\VerifyAccess' => __DIR__ . '/..' . '/styde/html/src/Access/VerifyAccess.php',
+        'Styde\\Html\\Alert\\Container' => __DIR__ . '/..' . '/styde/html/src/Alert/Container.php',
+        'Styde\\Html\\Alert\\Handler' => __DIR__ . '/..' . '/styde/html/src/Alert/Handler.php',
+        'Styde\\Html\\Alert\\Message' => __DIR__ . '/..' . '/styde/html/src/Alert/Message.php',
+        'Styde\\Html\\Alert\\Middleware' => __DIR__ . '/..' . '/styde/html/src/Alert/Middleware.php',
+        'Styde\\Html\\Alert\\SessionHandler' => __DIR__ . '/..' . '/styde/html/src/Alert/SessionHandler.php',
+        'Styde\\Html\\Facades\\Access' => __DIR__ . '/..' . '/styde/html/src/Facades/Access.php',
+        'Styde\\Html\\Facades\\Alert' => __DIR__ . '/..' . '/styde/html/src/Facades/Alert.php',
+        'Styde\\Html\\Facades\\Field' => __DIR__ . '/..' . '/styde/html/src/Facades/Field.php',
+        'Styde\\Html\\Facades\\Menu' => __DIR__ . '/..' . '/styde/html/src/Facades/Menu.php',
+        'Styde\\Html\\FieldBuilder' => __DIR__ . '/..' . '/styde/html/src/FieldBuilder.php',
+        'Styde\\Html\\FormBuilder' => __DIR__ . '/..' . '/styde/html/src/FormBuilder.php',
+        'Styde\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/styde/html/src/HtmlBuilder.php',
+        'Styde\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/styde/html/src/HtmlServiceProvider.php',
+        'Styde\\Html\\Menu\\Menu' => __DIR__ . '/..' . '/styde/html/src/Menu/Menu.php',
+        'Styde\\Html\\Menu\\MenuGenerator' => __DIR__ . '/..' . '/styde/html/src/Menu/MenuGenerator.php',
+        'Styde\\Html\\Str' => __DIR__ . '/..' . '/styde/html/src/Str.php',
+        'Styde\\Html\\Theme' => __DIR__ . '/..' . '/styde/html/src/Theme.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => __DIR__ . '/..' . '/symfony/console/CommandLoader/CommandLoaderInterface.php',
         'Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader' => __DIR__ . '/..' . '/symfony/console/CommandLoader/ContainerCommandLoader.php',

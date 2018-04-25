@@ -61,6 +61,48 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
         $role_user_servicios->givePermissionTo($P4);
 
+        $role_uv_libros = Role::create([
+            'name' => 'usuario_venta_libros',
+            'description' => 'usuario de venta de libros',
+            'guard_name' => 'web',
+        ]);
+        $role_uv_libros->givePermissionTo($P4);
+
+        $role_ua_libros = Role::create([
+            'name' => 'usuario_admin_venta_libros',
+            'description' => 'usuario de venta de libros',
+            'guard_name' => 'web',
+        ]);
+        $role_ua_libros->givePermissionTo($P4);
+
+        $role_uv_uniformes = Role::create([
+            'name' => 'usuario_venta_uniformes',
+            'description' => 'usuario de venta de uniformes',
+            'guard_name' => 'web',
+        ]);
+        $role_uv_uniformes->givePermissionTo($P4);
+
+        $role_ua_uniformes = Role::create([
+            'name' => 'usuario_admin_venta_uniformes',
+            'description' => 'usuario de venta de uniformes',
+            'guard_name' => 'web',
+        ]);
+        $role_ua_uniformes->givePermissionTo($P4);
+
+        $role_uv_cuadernos = Role::create([
+            'name' => 'usuario_venta_cuadernos',
+            'description' => 'usuario de venta de cuadernos',
+            'guard_name' => 'web',
+        ]);
+        $role_uv_cuadernos->givePermissionTo($P4);
+
+        $role_ua_cuadernos = Role::create([
+            'name' => 'usuario_admin_venta_cuadernos',
+            'description' => 'usuario de venta de cuadernos',
+            'guard_name' => 'web',
+        ]);
+        $role_ua_cuadernos->givePermissionTo($P4);
+
 
         $user = new User();
         $user->nombre = 'Administrador';
@@ -101,6 +143,47 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_user_uniformes);
         $user->permissions()->attach($P4);
+
+        $user = new User();
+        $user->nombre = 'Usuario de Cuadernos';
+        $user->username = 'usuario_cuadernos';
+        $user->email = 'usuario_cuaderno@example.com';
+        $user->cuenta = '20182404130947';
+        $user->password = bcrypt('secret');
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
+        $user->save();
+        $user->roles()->attach($role_user_cuadernos);
+        $user->permissions()->attach($P4);
+
+
+        $user = new User();
+        $user->nombre = 'Usuario de Servicios';
+        $user->username = 'usuario_servicios';
+        $user->email = 'usuario_servicio@example.com';
+        $user->cuenta = '20182404130957';
+        $user->password = bcrypt('secret');
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
+        $user->save();
+        $user->roles()->attach($role_user_servicios);
+        $user->permissions()->attach($P4);
+
+        $user = new User();
+        $user->nombre = 'Usuario Venta Servicios';
+        $user->username = 'uv_libros';
+        $user->email = 'uv_libro@example.com';
+        $user->cuenta = '20182404130967';
+        $user->password = bcrypt('secret');
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
+        $user->save();
+        $user->roles()->attach($role_uv_libros);
+        $user->permissions()->attach($P4);
+
 
     }
 

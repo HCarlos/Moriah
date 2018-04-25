@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cfaa314dfe3920a4141b7a28130e682",
+    "content-hash": "e710b8c90e5e63200073b75e6c594094",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -2932,6 +2932,67 @@
                 "spatie"
             ],
             "time": "2018-04-23T19:06:39+00:00"
+        },
+        {
+            "name": "styde/html",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/StydeNet/html.git",
+                "reference": "dc33031083082a2d0c59527771df51504b2b29b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/StydeNet/html/zipball/dc33031083082a2d0c59527771df51504b2b29b7",
+                "reference": "dc33031083082a2d0c59527771df51504b2b29b7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/translation": "5.6.*",
+                "laravelcollective/html": "5.6.*",
+                "php": ">=7.1.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Styde\\Html\\HtmlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Field": "Styde\\Html\\Facades\\Field",
+                        "Alert": "Styde\\Html\\Facades\\Alert",
+                        "Menu": "Styde\\Html\\Facades\\Menu",
+                        "Form": "Collective\\Html\\FormFacade",
+                        "Html": "Collective\\Html\\HtmlFacade"
+                    },
+                    "dont-discover": [
+                        "laravelcollective/html"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Styde\\Html\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Duilio Palacios",
+                    "email": "admin@styde.net"
+                }
+            ],
+            "description": "Build form fields, menus, alert messages and other view components quickly",
+            "time": "2018-02-11T15:07:52+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
