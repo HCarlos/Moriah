@@ -4,8 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e710b8c90e5e63200073b75e6c594094",
+    "content-hash": "04139006b8019dea15716731b27fdb5b",
     "packages": [
+        {
+            "name": "acacha/ace-template-laravel",
+            "version": "0.1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/acacha/ace_template_laravel.git",
+                "reference": "1b378445b73c86c77fe72533ed6376cf0bcca3a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/acacha/ace_template_laravel/zipball/1b378445b73c86c77fe72533ed6376cf0bcca3a6",
+                "reference": "1b378445b73c86c77fe72533ed6376cf0bcca3a6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Acacha\\AceTemplateLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergi Tur Badenas",
+                    "email": "sergiturbadenas@gmail.com"
+                }
+            ],
+            "description": "Ace template applied to Laravel Scaffolding",
+            "time": "2015-05-14T15:26:02+00:00"
+        },
         {
             "name": "clue/stream-filter",
             "version": "v1.4.0",

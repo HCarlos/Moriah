@@ -177,7 +177,7 @@ return [
         Geocoder\Laravel\Providers\GeocoderService::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Styde\Html\HtmlServiceProvider::class,
-
+        Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
     ],
 
     /*

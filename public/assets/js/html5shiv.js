@@ -234,7 +234,7 @@
    * @type Object
    * @example
    *
-   * // options can be changed before the script is included
+   * // options can be changed before the scripts is included
    * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
    */
   var html5 = {

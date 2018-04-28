@@ -2142,14 +2142,14 @@ Makes editable any HTML element on the page. Applied as jQuery method.
         For example, to display currency sign:
         @example
         <a id="price" data-type="text" data-value="100"></a>
-        <script>
+        <scripts>
         $('#price').editable({
             ...
             display: function(value) {
               $(this).text(value + '$');
             } 
         }) 
-        </script>
+        </scripts>
                 
         @property value 
         @type mixed
@@ -2232,13 +2232,13 @@ Makes editable any HTML element on the page. Applied as jQuery method.
           <a href="#" data-name="group" data-type="select" data-source="/groups" data-value="1" class="editable-click" title="Group">Operator</a>
         </div>     
         
-        <script>
+        <scripts>
         $('#user').editable({
             selector: 'a',
             url: '/post',
             pk: 1
         });
-        </script>
+        </scripts>
         **/         
         selector: null,
         /**
@@ -2792,14 +2792,14 @@ Text input
 @final
 @example
 <a href="#" id="username" data-type="text" data-pk="1">awesome</a>
-<script>
+<scripts>
 $(function(){
     $('#username').editable({
         url: '/post',
         title: 'Enter username'
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -2927,7 +2927,7 @@ Textarea input
 @final
 @example
 <a href="#" id="comments" data-type="textarea" data-pk="1">awesome comment!</a>
-<script>
+<scripts>
 $(function(){
     $('#comments').editable({
         url: '/post',
@@ -2935,7 +2935,7 @@ $(function(){
         rows: 10
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -3039,7 +3039,7 @@ Select (dropdown)
 @final
 @example
 <a href="#" id="status" data-type="select" data-pk="1" data-url="/post" data-original-title="Select status"></a>
-<script>
+<scripts>
 $(function(){
     $('#status').editable({
         value: 2,    
@@ -3050,7 +3050,7 @@ $(function(){
            ]
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -3136,7 +3136,7 @@ Internally value stored as javascript array of values.
 @final
 @example
 <a href="#" id="options" data-type="checklist" data-pk="1" data-url="/post" data-original-title="Select options"></a>
-<script>
+<scripts>
 $(function(){
     $('#options').editable({
         value: [2, 3],    
@@ -3147,7 +3147,7 @@ $(function(){
            ]
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -3303,14 +3303,14 @@ https://developer.mozilla.org/en-US/docs/HTML/Element/Input
 @since 1.3.0
 @example
 <a href="#" id="email" data-type="email" data-pk="1">admin@example.com</a>
-<script>
+<scripts>
 $(function(){
     $('#email').editable({
         url: '/post',
         title: 'Enter email'
     });
 });
-</script>
+</scripts>
 **/
 
 /**
@@ -3506,7 +3506,7 @@ Compatible **select2 version is 3.4.1**!
 You should manually download and include select2 distributive:  
 
     <link href="select2/select2.css" rel="stylesheet" type="text/css"></link>  
-    <script src="select2/select2.js"></script>  
+    <scripts src="select2/select2.js"></scripts>
     
 To make it **bootstrap-styled** you can use css from [here](https://github.com/t0m/select2-bootstrap-css): 
 
@@ -3524,7 +3524,7 @@ You need initially put both `data-value` and element's text youself:
 @final
 @example
 <a href="#" id="country" data-type="select2" data-pk="1" data-value="ru" data-url="/post" data-title="Select country"></a>
-<script>
+<scripts>
 $(function(){
     //local source
     $('#country').editable({
@@ -3574,7 +3574,7 @@ $(function(){
         }  
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -4281,7 +4281,7 @@ $(function(){
 Combodate input - dropdown date and time picker.    
 Based on [combodate](http://vitalets.github.com/combodate) plugin (included). To use it you should manually include [momentjs](http://momentjs.com).
 
-    <script src="js/moment.min.js"></script>
+    <scripts src="js/moment.min.js"></scripts>
    
 Allows to input:
 
@@ -4298,7 +4298,7 @@ Internally value stored as `momentjs` object.
 @since 1.4.0
 @example
 <a href="#" id="dob" data-type="combodate" data-pk="1" data-url="/post" data-value="1984-05-15" data-original-title="Select date"></a>
-<script>
+<scripts>
 $(function(){
     $('#dob').editable({
         format: 'YYYY-MM-DD',    
@@ -4312,7 +4312,7 @@ $(function(){
         }
     });
 });
-</script>
+</scripts>
 **/
 
 /*global moment*/
@@ -5936,7 +5936,7 @@ Since 1.4.0 date has different appearance in **popup** and **inline** modes.
 @final
 @example
 <a href="#" id="dob" data-type="date" data-pk="1" data-url="/post" data-original-title="Select date">15/05/1984</a>
-<script>
+<scripts>
 $(function(){
     $('#dob').editable({
         format: 'yyyy-mm-dd',    
@@ -5947,7 +5947,7 @@ $(function(){
         }
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -6241,7 +6241,7 @@ Based on [smalot bootstrap-datetimepicker plugin](https://github.com/smalot/boot
 Before usage you should manually include dependent js and css:
 
     <link href="css/datetimepicker.css" rel="stylesheet" type="text/css"></link> 
-    <script src="js/bootstrap-datetimepicker.js"></script>
+    <scripts src="js/bootstrap-datetimepicker.js"></scripts>
 
 For **i18n** you should include js file from here: https://github.com/smalot/bootstrap-datetimepicker/tree/master/js/locales
 and set `language` option.  
@@ -6252,7 +6252,7 @@ and set `language` option.
 @since 1.4.4
 @example
 <a href="#" id="last_seen" data-type="datetime" data-pk="1" data-url="/post" title="Select date & time">15/03/2013 12:45</a>
-<script>
+<scripts>
 $(function(){
     $('#last_seen').editable({
         format: 'yyyy-mm-dd hh:ii',    
@@ -6263,7 +6263,7 @@ $(function(){
         }
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";
@@ -6574,7 +6574,7 @@ Depending on `source` format typeahead operates in two modes:
 @final
 @example
 <a href="#" id="country" data-type="typeahead" data-pk="1" data-url="/post" data-original-title="Input country"></a>
-<script>
+<scripts>
 $(function(){
     $('#country').editable({
         value: 'ru',    
@@ -6585,7 +6585,7 @@ $(function(){
            ]
     });
 });
-</script>
+</scripts>
 **/
 (function ($) {
     "use strict";

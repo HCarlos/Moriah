@@ -81,7 +81,7 @@ call_user_func(function () {
 });
 
 // We didn't find an autoloader for a local version, so use the autoloader that
-// came with this script.
+// came with this scripts.
 if (!class_exists('Psy\Shell')) {
 /* <<< */
     if (is_file(__DIR__ . '/../vendor/autoload.php')) {

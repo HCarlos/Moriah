@@ -297,7 +297,7 @@ Markdown.dialects = {};
  *
  * The default dialect that follows the rules set out by John Gruber's
  * markdown.pl as closely as possible. Well actually we follow the behaviour of
- * that script which in some places is not exactly what the syntax web page
+ * that scripts which in some places is not exactly what the syntax web page
  * says.
  **/
 Markdown.dialects.Gruber = {

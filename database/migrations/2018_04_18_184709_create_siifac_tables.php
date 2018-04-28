@@ -70,8 +70,8 @@ class CreateSiifacTables extends Migration
 
         Schema::create($tableNames['almacenes'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
-            $table->unsignedInteger('clave_almacen')->default(0);
-            $table->string('descripcion',50)->default('');
+            $table->unsignedInteger('clave_almacen')->unique()->nullable();
+            $table->string('descripcion',50)->default('')->unique()->nullable();
             $table->string('responsable',50)->default('');
             $table->unsignedTinyInteger('tipoinv')->default(0);
             $table->char('prefijo',3)->default('GEN');
@@ -424,9 +424,9 @@ class CreateSiifacTables extends Migration
             $table->integer('almacen_id')->default(0)->nullable();
             $table->integer('familia_producto_id')->default(0)->nullable();
             $table->integer('medida_id')->default(0)->nullable();
-            $table->unsignedInteger('clave')->default(0)->nullable();
-            $table->string('codigo',16)->default('')->nullable();
-            $table->string('descripcion',150)->default('')->nullable();
+            $table->unsignedInteger('clave')->default(0)->unique()->nullable();
+            $table->string('codigo',16)->default('')->unique()->nullable();
+            $table->string('descripcion',150)->default('')->unique()->nullable();
             $table->string('shortdesc',75)->default('')->nullable();
             $table->decimal('maximo',10,2)->default(0)->nullable();
             $table->decimal('minimo',10,2)->default(0)->nullable();

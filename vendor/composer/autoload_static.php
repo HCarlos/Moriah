@@ -159,6 +159,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'A' => 
         array (
             'App\\' => 4,
+            'Acacha\\AceTemplateLaravel\\' => 26,
         ),
     );
 
@@ -442,6 +443,10 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Acacha\\AceTemplateLaravel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/acacha/ace-template-laravel/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -492,18 +497,43 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
     );
 
     public static $classMap = array (
+        'Acacha\\AceTemplateLaravel\\Providers\\AceTemplateLaravelServiceProvider' => __DIR__ . '/..' . '/acacha/ace-template-laravel/src/Providers/AceTemplateLaravelServiceProvider.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
+        'App\\Http\\Controllers\\Asignaciones\\AsignacionListController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/AsignacionListController.php',
+        'App\\Http\\Controllers\\Asignaciones\\PermisoRoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/PermisoRoleController.php',
+        'App\\Http\\Controllers\\Asignaciones\\RoleUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/RoleUsuarioController.php',
         'App\\Http\\Controllers\\Auth\\EditUserDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EditUserDataController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
+        'App\\Http\\Controllers\\BlankonController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BlankonController.php',
+        'App\\Http\\Controllers\\BlogController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BlogController.php',
+        'App\\Http\\Controllers\\Catalogos\\CatalogosController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalogos/CatalogosController.php',
+        'App\\Http\\Controllers\\Catalogos\\CatalogosListController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalogos/CatalogosListController.php',
+        'App\\Http\\Controllers\\Catalogos\\FichaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalogos/FichaController.php',
+        'App\\Http\\Controllers\\Catalogos\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalogos/PermissionController.php',
+        'App\\Http\\Controllers\\Catalogos\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalogos/RoleController.php',
+        'App\\Http\\Controllers\\Catalogos\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalogos/UsuarioController.php',
+        'App\\Http\\Controllers\\ChartController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ChartController.php',
+        'App\\Http\\Controllers\\ComponentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ComponentController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\FormController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FormController.php',
         'App\\Http\\Controllers\\Funciones\\FuncionesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Funciones/FuncionesController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\LayoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LayoutController.php',
+        'App\\Http\\Controllers\\MailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MailController.php',
+        'App\\Http\\Controllers\\MapController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MapController.php',
+        'App\\Http\\Controllers\\Multimedia\\BusquedaMultimediaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Multimedia/BusquedaMultimediaController.php',
+        'App\\Http\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PageController.php',
+        'App\\Http\\Controllers\\SIIFAC\\AlmacenController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/AlmacenController.php',
+        'App\\Http\\Controllers\\SIIFAC\\EmpresaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/EmpresaController.php',
+        'App\\Http\\Controllers\\SIIFAC\\ProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/ProductoController.php',
         'App\\Http\\Controllers\\Storage\\StorageProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Storage/StorageProfileController.php',
+        'App\\Http\\Controllers\\TableController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TableController.php',
+        'App\\Http\\Controllers\\WidgetController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/WidgetController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Admin' => __DIR__ . '/../..' . '/app/Http/Middleware/Admin.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',

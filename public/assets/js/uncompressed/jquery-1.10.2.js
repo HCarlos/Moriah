@@ -600,7 +600,7 @@ jQuery.extend({
 
 	noop: function() {},
 
-	// Evaluates a script in a global context
+	// Evaluates a scripts in a global context
 	// Workarounds based on findings by Jim Driscoll
 	// http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
 	globalEval: function( data ) {
@@ -6023,7 +6023,7 @@ var nodeNames = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figca
 		col: [ 2, "<table><tbody></tbody><colgroup>", "</colgroup></table>" ],
 		td: [ 3, "<table><tbody><tr>", "</tr></tbody></table>" ],
 
-		// IE6-8 can't serialize link, script, style, or any html5 (NoScope) tags,
+		// IE6-8 can't serialize link, scripts, style, or any html5 (NoScope) tags,
 		// unless wrapped in a div with non-breaking characters in front of it.
 		_default: jQuery.support.htmlSerialize ? [ 0, "", "" ] : [ 1, "X<div>", "</div>"  ]
 	},
@@ -6304,7 +6304,7 @@ function manipulationTarget( elem, content ) {
 		elem;
 }
 
-// Replace/restore the type attribute of script elements for safe DOM manipulation
+// Replace/restore the type attribute of scripts elements for safe DOM manipulation
 function disableScript( elem ) {
 	elem.type = (jQuery.find.attr( elem, "type" ) !== null) + "/" + elem.type;
 	return elem;
@@ -6522,7 +6522,7 @@ jQuery.extend({
 			}
 		}
 
-		// Preserve script evaluation history
+		// Preserve scripts evaluation history
 		destElements = getAll( clone, "script" );
 		if ( destElements.length > 0 ) {
 			setGlobalEval( destElements, !inPage && getAll( elem, "script" ) );
@@ -6640,7 +6640,7 @@ jQuery.extend({
 			// Append to fragment
 			tmp = getAll( safe.appendChild( elem ), "script" );
 
-			// Preserve script evaluation history
+			// Preserve scripts evaluation history
 			if ( contains ) {
 				setGlobalEval( tmp );
 			}
@@ -8438,7 +8438,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 
 	return { state: "success", data: response };
 }
-// Install script dataType
+// Install scripts dataType
 jQuery.ajaxSetup({
 	accepts: {
 		script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
@@ -8465,7 +8465,7 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 	}
 });
 
-// Bind script tag hack transport
+// Bind scripts tag hack transport
 jQuery.ajaxTransport( "script", function(s) {
 
 	// This transport only deals with cross domain requests
@@ -8496,12 +8496,12 @@ jQuery.ajaxTransport( "script", function(s) {
 						// Handle memory leak in IE
 						script.onload = script.onreadystatechange = null;
 
-						// Remove the script
+						// Remove the scripts
 						if ( script.parentNode ) {
 							script.parentNode.removeChild( script );
 						}
 
-						// Dereference the script
+						// Dereference the scripts
 						script = null;
 
 						// Callback if not abort
@@ -8561,7 +8561,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			s.url += ( ajax_rquery.test( s.url ) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
 		}
 
-		// Use data converter to retrieve json after script execution
+		// Use data converter to retrieve json after scripts execution
 		s.converters["script json"] = function() {
 			if ( !responseContainer ) {
 				jQuery.error( callbackName + " was not called" );
@@ -8600,7 +8600,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			responseContainer = overwritten = undefined;
 		});
 
-		// Delegate to script
+		// Delegate to scripts
 		return "script";
 	}
 });
@@ -9775,7 +9775,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 	window.jQuery = window.$ = jQuery;
 
 	// Register as a named AMD module, since jQuery can be concatenated with other
-	// files that may use define, but not via a proper concatenation script that
+	// files that may use define, but not via a proper concatenation scripts that
 	// understands anonymous AMD modules. A named AMD is safest and most robust
 	// way to register. Lowercase jquery is used because AMD module names are
 	// derived from file names, and jQuery is normally delivered in a lowercase

@@ -25,8 +25,11 @@ class Producto extends Model
     }
 
     public function almacenes(){
-        // Esta en muchos Almacenes
         return $this->hasMany(Almacen::class);
+    }
+
+    public function almacen(){
+        return $this->belongsTo(Almacen::class);
     }
 
     public function familiaProducto(){

@@ -524,7 +524,7 @@ jQuery.extend({
 
 	noop: function() {},
 
-	// Evaluates a script in a global context
+	// Evaluates a scripts in a global context
 	globalEval: function( code ) {
 		var script,
 				indirect = eval;
@@ -534,7 +534,7 @@ jQuery.extend({
 		if ( code ) {
 			// If the code includes a valid, prologue position
 			// strict mode pragma, execute code by injecting a
-			// script tag into the document.
+			// scripts tag into the document.
 			if ( code.indexOf("use strict") === 1 ) {
 				script = document.createElement("script");
 				script.text = code;
@@ -5746,7 +5746,7 @@ jQuery.extend({
 			}
 		}
 
-		// Preserve script evaluation history
+		// Preserve scripts evaluation history
 		destElements = getAll( clone, "script" );
 		if ( destElements.length > 0 ) {
 			setGlobalEval( destElements, !inPage && getAll( elem, "script" ) );
@@ -5824,7 +5824,7 @@ jQuery.extend({
 			// Append to fragment
 			tmp = getAll( fragment.appendChild( elem ), "script" );
 
-			// Preserve script evaluation history
+			// Preserve scripts evaluation history
 			if ( contains ) {
 				setGlobalEval( tmp );
 			}
@@ -5899,7 +5899,7 @@ function manipulationTarget( elem, content ) {
 		elem;
 }
 
-// Replace/restore the type attribute of script elements for safe DOM manipulation
+// Replace/restore the type attribute of scripts elements for safe DOM manipulation
 function disableScript( elem ) {
 	elem.type = (elem.getAttribute("type") !== null) + "/" + elem.type;
 	return elem;
@@ -7604,7 +7604,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 
 	return { state: "success", data: response };
 }
-// Install script dataType
+// Install scripts dataType
 jQuery.ajaxSetup({
 	accepts: {
 		script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
@@ -7630,14 +7630,14 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 	}
 });
 
-// Bind script tag hack transport
+// Bind scripts tag hack transport
 jQuery.ajaxTransport( "script", function( s ) {
 	// This transport only deals with cross domain requests
 	if ( s.crossDomain ) {
 		var script, callback;
 		return {
 			send: function( _, complete ) {
-				script = jQuery("<script>").prop({
+				script = jQuery("<scripts>").prop({
 					async: true,
 					charset: s.scriptCharset,
 					src: s.url
@@ -7698,7 +7698,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			s.url += ( ajax_rquery.test( s.url ) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
 		}
 
-		// Use data converter to retrieve json after script execution
+		// Use data converter to retrieve json after scripts execution
 		s.converters["script json"] = function() {
 			if ( !responseContainer ) {
 				jQuery.error( callbackName + " was not called" );
@@ -7737,7 +7737,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			responseContainer = overwritten = undefined;
 		});
 
-		// Delegate to script
+		// Delegate to scripts
 		return "script";
 	}
 });
@@ -8809,7 +8809,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 	module.exports = jQuery;
 } else {
 	// Register as a named AMD module, since jQuery can be concatenated with other
-	// files that may use define, but not via a proper concatenation script that
+	// files that may use define, but not via a proper concatenation scripts that
 	// understands anonymous AMD modules. A named AMD is safest and most robust
 	// way to register. Lowercase jquery is used because AMD module names are
 	// derived from file names, and jQuery is normally delivered in a lowercase

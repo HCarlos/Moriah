@@ -21,10 +21,14 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $P0 = Permission::create(['name' => 'all']);
         $P1 = Permission::create(['name' => 'crear']);
-        $P2 = Permission::create(['name' => 'editar']);
-        $P3 = Permission::create(['name' => 'eliminar']);
-        $P4 = Permission::create(['name' => 'consultar']);
-        $P5 = Permission::create(['name' => 'imprimir']);
+        $P2 = Permission::create(['name' => 'guardar']);
+        $P3 = Permission::create(['name' => 'editar']);
+        $P4 = Permission::create(['name' => 'modificar']);
+        $P5 = Permission::create(['name' => 'eliminar']);
+        $P6 = Permission::create(['name' => 'consultar']);
+        $P7 = Permission::create(['name' => 'imprimir']);
+        $P8 = Permission::create(['name' => 'asignar']);
+        $P9 = Permission::create(['name' => 'desasignar']);
 
         $role_admin = Role::create([
             'name' => 'administrator',
@@ -34,74 +38,74 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin->givePermissionTo($P0);
 
         $role_user_libros = Role::create([
-            'name' => 'usuarios_libros',
+            'name' => 'usuario_libros',
             'description' => 'usuario libros',
             'guard_name' => 'web',
         ]);
-        $role_user_libros->givePermissionTo($P4);
+        $role_user_libros->givePermissionTo($P6);
 
         $role_user_uniformes = Role::create([
             'name' => 'usuario_uniformes',
             'description' => 'usuario uniformes',
             'guard_name' => 'web',
         ]);
-        $role_user_uniformes->givePermissionTo($P4);
+        $role_user_uniformes->givePermissionTo($P6);
 
         $role_user_cuadernos = Role::create([
             'name' => 'usuario_cuadernos',
             'description' => 'usuario cuadernos',
             'guard_name' => 'web',
         ]);
-        $role_user_cuadernos->givePermissionTo($P4);
+        $role_user_cuadernos->givePermissionTo($P6);
 
         $role_user_servicios = Role::create([
             'name' => 'usuario_servicios',
             'description' => 'usuario servicios',
             'guard_name' => 'web',
         ]);
-        $role_user_servicios->givePermissionTo($P4);
+        $role_user_servicios->givePermissionTo($P6);
 
         $role_uv_libros = Role::create([
             'name' => 'usuario_venta_libros',
             'description' => 'usuario de venta de libros',
             'guard_name' => 'web',
         ]);
-        $role_uv_libros->givePermissionTo($P4);
+        $role_uv_libros->givePermissionTo($P6);
 
         $role_ua_libros = Role::create([
             'name' => 'usuario_admin_venta_libros',
             'description' => 'usuario de venta de libros',
             'guard_name' => 'web',
         ]);
-        $role_ua_libros->givePermissionTo($P4);
+        $role_ua_libros->givePermissionTo($P6);
 
         $role_uv_uniformes = Role::create([
             'name' => 'usuario_venta_uniformes',
             'description' => 'usuario de venta de uniformes',
             'guard_name' => 'web',
         ]);
-        $role_uv_uniformes->givePermissionTo($P4);
+        $role_uv_uniformes->givePermissionTo($P6);
 
         $role_ua_uniformes = Role::create([
             'name' => 'usuario_admin_venta_uniformes',
             'description' => 'usuario de venta de uniformes',
             'guard_name' => 'web',
         ]);
-        $role_ua_uniformes->givePermissionTo($P4);
+        $role_ua_uniformes->givePermissionTo($P6);
 
         $role_uv_cuadernos = Role::create([
             'name' => 'usuario_venta_cuadernos',
             'description' => 'usuario de venta de cuadernos',
             'guard_name' => 'web',
         ]);
-        $role_uv_cuadernos->givePermissionTo($P4);
+        $role_uv_cuadernos->givePermissionTo($P6);
 
         $role_ua_cuadernos = Role::create([
             'name' => 'usuario_admin_venta_cuadernos',
             'description' => 'usuario de venta de cuadernos',
             'guard_name' => 'web',
         ]);
-        $role_ua_cuadernos->givePermissionTo($P4);
+        $role_ua_cuadernos->givePermissionTo($P6);
 
 
         $user = new User();
@@ -129,7 +133,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user_libros);
-        $user->permissions()->attach($P4);
+        $user->permissions()->attach($P6);
 
         $user = new User();
         $user->nombre = 'Usuario de Uniformes';
@@ -142,7 +146,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user_uniformes);
-        $user->permissions()->attach($P4);
+        $user->permissions()->attach($P6);
 
         $user = new User();
         $user->nombre = 'Usuario de Cuadernos';
@@ -155,7 +159,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user_cuadernos);
-        $user->permissions()->attach($P4);
+        $user->permissions()->attach($P6);
 
 
         $user = new User();
@@ -169,10 +173,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->host = $host;
         $user->save();
         $user->roles()->attach($role_user_servicios);
-        $user->permissions()->attach($P4);
+        $user->permissions()->attach($P6);
 
         $user = new User();
-        $user->nombre = 'Usuario Venta Servicios';
+        $user->nombre = 'Usuario Venta Libros';
         $user->username = 'uv_libros';
         $user->email = 'uv_libro@example.com';
         $user->cuenta = '20182404130967';
@@ -182,7 +186,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->host = $host;
         $user->save();
         $user->roles()->attach($role_uv_libros);
-        $user->permissions()->attach($P4);
+        $user->permissions()->attach($P6);
 
 
     }

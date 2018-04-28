@@ -8,23 +8,13 @@ $(document).ready(function() {
     if ( $(".btnAction2") ){
         $('.btnAction2').on('click', function(event) {
             event.preventDefault();
-            //alert(event.currentTarget.id);
             var aID = event.currentTarget.id.split('-');
             var x = confirm("Desea eliminar el registro: "+aID[1]);
             if (!x){
                 return false;
             }
+            var Url = '/'+aID[4]+'_'+aID[0]+'/'+aID[1];
 
-            // alert(aID.length);
-            //editorial-44-2-0-1-1-2-/destroy_editorial/
-            if (aID.length == 7){
-                var Url = aID[6]+aID[1]+"/"+aID[2]+"/"+aID[3]+"/"+aID[4];
-            }else if(aID.length == 8){
-                var Url = aID[7]+aID[1]+"/"+aID[3]+"/"+aID[6];
-            }else{
-                var Url = aID[5]+aID[1]+"/"+aID[3]+"/"+aID[6];
-            }
-            // alert(Url);
             $(function() {
                 $.ajax({
                     method: "GET",
@@ -32,13 +22,7 @@ $(document).ready(function() {
                 })
                     .done(function( response ) {
                         if (response.data == 'OK'){
-                            if (aID.length == 7){
-                                window.location.href = '/index/'+aID[3]+'/'+aID[4]+'/'+aID[5];
-                            }else if(aID.length == 8){
-                                window.location.href = '/index/'+aID[3]+'/'+aID[4]+'/'+aID[5];
-                            }else{
-                                window.location.href = '/index/'+aID[3]+'/'+aID[4]+'/'+aID[5];
-                            }
+                            window.location.href = '/index_'+aID[0]+'/'+aID[2]+'/'+aID[3];
                         }else{
                             alert(response.mensaje);
                         }

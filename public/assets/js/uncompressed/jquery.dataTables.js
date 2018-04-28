@@ -34,7 +34,7 @@
 		define( ['jquery'], factory );
 	}
 	/* Define using browser globals otherwise
-	 * Prevent multiple instantiations if the script is loaded twice
+	 * Prevent multiple instantiations if the scripts is loaded twice
 	 */
 	else if ( jQuery && !jQuery.fn.dataTable )
 	{
