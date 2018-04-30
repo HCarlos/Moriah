@@ -146,8 +146,6 @@ class User extends Authenticatable
         $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
         if (!$user) {
             if ($cuenta == ''){
-                $timex  = Carbon::now()->format('ymdHisu');
-                $cuenta =  substr($timex,0,16);
             }
             if ($email == ''){
                 $email = $username.'@example.com';

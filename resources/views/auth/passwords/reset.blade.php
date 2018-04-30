@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.app_base')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card card-moriah">
-                    <div class="card-header">Restablecer Password</div>
+                <div class="panel panel-moriah">
+                    <div class="panel-heading">Restablecer Password</div>
 
-                    <div class="card-body">
+                    <div class="panel-body">
                         <form method="POST" action="{{ route('password.request') }}">
                             @csrf
 

@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.app_base')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card card-moriah">
-                    <div class="card-header">Restablecer Password</div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-moriah">
+                    <div class="panel-heading">Restablecer Password</div>
 
-                    <div class="card-body">
+                    <div class="panel-body">
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
@@ -21,7 +21,7 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback">

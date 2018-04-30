@@ -27,7 +27,7 @@
                         @if( Auth::user()->IsEmptyPhoto() )
                             <img src="{{ asset('assets/img/empty_user.png')  }}" class="nav-user-photo" alt="{{ Auth::user()->username }}">
                         @else
-                            <img src="{{ asset('storage/'.Auth::user()->root.Auth::user()->filename)  }}" class="nav-user-photo" alt="{{ Auth::user()->username }}">
+                            <img src="{{ asset('storage/'.Auth::user()->root.Auth::user()->filename)  }}" class="nav-user-photo" alt="{{ Auth::user()->username }}" width="40" height="40">
                         @endif
                         {{--<img class="nav-user-photo" src="{{ asset('/avatars/user.jpg') }}" alt="Jason's Photo" />--}}
 								<span class="user-info">
@@ -40,7 +40,7 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="#">
+                            <a href="{{ route('showEditProfilePhoto/') }}">
                                 <i class="ace-icon fa fa-picture-o"></i>
                                 Cambiar foto
                             </a>
@@ -56,10 +56,15 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="{{ url('/auth/logout') }}">
-                                <i class="ace-icon fa fa-power-off"></i>
-                                Logout
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                Cerrar sesión
                             </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+
                         </li>
                     </ul>
 

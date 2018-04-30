@@ -1,94 +1,70 @@
-@extends('auth.auth')
+@extends('layouts.app_base')
+
 
 @section('content')
-<div id="login-box" class="login-box visible widget-box no-border">
-    <div class="widget-body">
-        <div class="widget-main">
-            <h4 class="header blue lighter bigger">
-                <i class="ace-icon fa fa-coffee green"></i>
-                Please Enter Your Information
-            </h4>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-moriah">
+                <div class="panel-heading ">Ingresar</div>
 
-            <div class="space-6"></div>
+                <div class="panel-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-            <form role="form" method="POST" action="{{ url('/auth/login') }}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <fieldset>
-                    <label class="block clearfix">
-                        <span class="block input-icon input-icon-right">
-                            <input type="email" class="form-control"
-                                   placeholder="Email" name="email"
-                                   value="{{ old('email') }}"/>
-                            <i class="ace-icon fa fa-envelope"></i>
-                        </span>
-                    </label>
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-4 col-form-label text-md-right">Username </label>
 
-                    <label class="block clearfix">
-                            <span class="block input-icon input-icon-right">
-                                <input type="password" class="form-control"
-                                       placeholder="Password" name="password"/>
-                                <i class="ace-icon fa fa-lock"></i>
-                            </span>
-                    </label>
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
 
-                    <div class="space"></div>
+                                @if ($errors->has('username'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
-                    <div class="clearfix">
-                        <label class="inline">
-                            <input type="checkbox" class="ace" name="remember"/>
-                            <span class="lbl"> Remember Me</span>
-                        </label>
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
-                        <button type="submit"
-                                class="width-35 pull-right btn btn-sm btn-primary">
-                            <i class="ace-icon fa fa-key"></i>
-                            <span class="bigger-110">Login</span>
-                        </button>
-                    </div>
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
-                    <div class="space-4"></div>
-                </fieldset>
-            </form>
+                                @if ($errors->has('password'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
-            <div class="social-or-login center">
-                <span class="bigger-110">Or Login Using</span>
-            </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Recúerdame
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="space-6"></div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Ingresar
+                                </button>
 
-            <div class="social-login center">
-                <a class="btn btn-primary">
-                    <i class="ace-icon fa fa-facebook"></i>
-                </a>
-
-                <a class="btn btn-info">
-                    <i class="ace-icon fa fa-twitter"></i>
-                </a>
-
-                <a class="btn btn-danger">
-                    <i class="ace-icon fa fa-google-plus"></i>
-                </a>
-            </div>
-        </div>
-        <!-- /.widget-main -->
-
-        <div class="toolbar clearfix">
-            <div>
-                <a href="{{ url('/password/email') }}" data-target="#forgot-box" class="forgot-password-link">
-                    <i class="ace-icon fa fa-arrow-left"></i>
-                    I forgot my password
-                </a>
-            </div>
-
-            <div>
-                <a href="{{ url('/auth/register') }}" data-target="#signup-box" class="user-signup-link">
-                    I want to register
-                    <i class="ace-icon fa fa-arrow-right"></i>
-                </a>
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Olvidaste tu Password?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <!-- /.widget-body -->
 </div>
-<!-- /.login-box -->
 @endsection
