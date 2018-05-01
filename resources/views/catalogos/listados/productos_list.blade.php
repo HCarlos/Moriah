@@ -4,11 +4,11 @@
     <div class="panel panel-moriah" id="catalogosList0">
         <div class="panel-heading">
             <span id="titulo_catalogo">Catálogos </span> |
-            <a href="{{ route('productoNew', array('idItem' => 0)) }}" class="btn btn-info btn-sm " target="_blank" title="Agregar nuevo registro">
-                <i class="fa fa-plus-circle "></i>
+            <a href="{{ route('productoNew', array('idItem' => 0)) }}" class="btn btn-info btn-xs" target="_blank" title="Agregar nuevo registro">
+                <i class="fa fa-plus-circle bigger-150"></i>
             </a>
-            <a href="{{ route('productoIndex', array('npage' => 1, 'tpaginas' => 0, 'tpaginator' => 0)) }}" class="btn btn-info btn-sm " title="Actualizar">
-                <i class="fas fa-sync-alt"></i>
+            <a href="{{ route('productoIndex', array('npage' => 1, 'tpaginas' => 0, 'tpaginator' => 0)) }}" class="btn btn-info btn-xs " title="Actualizar">
+                <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
         </div>
 

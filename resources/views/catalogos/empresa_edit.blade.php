@@ -1,6 +1,6 @@
-@extends('home')
+@extends('layouts.app')
 
-@section('content_form_permisions')
+@section('main-content')
 <div class="panel panel-moriah" id="frmEdit0">
     <div class="panel-heading">
             <span><strong>{{ ucwords($titulo) }}</strong> | Editando registro {{$idItem}}

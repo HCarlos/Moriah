@@ -40,6 +40,12 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
+                            <a href="{{ route('edit') }}">
+                                <i class="ace-icon fa fa-user"></i>
+                                Ver Perfil
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('showEditProfilePhoto/') }}">
                                 <i class="ace-icon fa fa-picture-o"></i>
                                 Cambiar foto
@@ -47,9 +53,9 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('edit') }}">
-                                <i class="ace-icon fa fa-user"></i>
-                                Ver Perfil
+                            <a  class="dropdown-item" href="{{ route('showEditProfileEmail/') }}">
+                                <i class="ace-icon fas fa-at"></i>
+                                Cambiar Email
                             </a>
                         </li>
 
