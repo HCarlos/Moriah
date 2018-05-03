@@ -1,10 +1,10 @@
-<div class="footer">
+<div class="footer" style="position: relative !important; width: 100% !important; height: 2em !important; background-color: white !important; ">
     <div class="footer-inner">
         <!-- #section:basics/footer -->
-        <div class="footer-content">
+        <div class="footer-content" >
 						<span class="bigger-120">
 							<span class="blue bolder">Tecnologías Inteligentes S.A. de C.V.</span>
-							Application &copy; {{ date('Y') }}
+                            &copy; {{ date('Y') }}
 						</span>
 
             &nbsp; &nbsp;
@@ -27,6 +27,6 @@
     </div>
 </div>
 
-<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-</a>
+{{--<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">--}}
+    {{--<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>--}}
+{{--</a>--}}

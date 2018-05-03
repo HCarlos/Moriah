@@ -8,6 +8,7 @@ use App\Models\SIIFAC\FamiliaProducto;
 use App\Models\SIIFAC\Medida;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Producto;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -114,9 +115,12 @@ class ProductoController extends Controller
         $idItem     = $data['idItem'];
 
         $validator = Validator::make($data, [
-            'clave' => "required|unique:productos,clave",
-            'codigo' => "required|unique:productos,codigo",
+            'clave' => "required|unique:productos,clave|min:1|max:10",
+            'codigo' => "required|unique:productos,codigo|min:12|max:16",
             'descripcion' => "required|unique:productos,descripcion|max:100",
+            'cu' => "required|numeric|regex:'\d{0,2}(\.\d{1,2})?' ",
+            'exist' => "required|numeric|regex:'\d{0,2}(\.\d{1,2})?' ",
+            'pv' => "required|numeric|regex:'\d{0,2}(\.\d{1,2})?' ",
         ]);
 
         if ($validator->fails()) {
@@ -128,11 +132,18 @@ class ProductoController extends Controller
         $F = (new FuncionesController);
 
         $descripcion = $F->toMayus($data['descripcion']);
-
+        $shortdesc = $F->toMayus($data['shortdesc']);
         $data['descripcion'] = $descripcion;
+        $data['shortdesc']   = $shortdesc;
+        $data['descripcion'] = $descripcion;
+        $data['isiva']       = isset($data['isiva']) ? true : false;
+        $data['saldo']       = $data['cu'] * $data['exist'];
+        $data['empresa_id']  = $data['almacen_id'];
+        $data["idemp"]       = $F->getIHE(0);
+        $data["ip"]          = $F->getIHE(1);
+        $data["host"]        = $F->getIHE(2);
 
         Producto::create($data);
-
         return redirect('/new_producto/'.$idItem);
     }
 
@@ -143,9 +154,12 @@ class ProductoController extends Controller
         $idItem     = $data['idItem'];
 
         $validator = Validator::make($data, [
-            'clave' => "required|unique:productos,clave,",$idItem,
-            'codigo' => "required|unique:productos,codigo,".$idItem,
+            'clave' => "required|unique:productos,clave,".$idItem.'|min:1|max:10',
+            'codigo' => "required|unique:productos,codigo,".$idItem.'|min:12|max:16',
             'descripcion' => "required|unique:productos,descripcion,".$idItem."|max:100",
+            'cu' => "required|numeric|regex:'\d{0,2}(\.\d{1,2})?' ",
+            'exist' => "required|numeric|regex:'\d{0,2}(\.\d{1,2})?' ",
+            'pv' => "required|numeric|regex:'\d{0,2}(\.\d{1,2})?' ",
         ]);
 
         if ($validator->fails()) {
@@ -156,8 +170,16 @@ class ProductoController extends Controller
         $F = (new FuncionesController);
 
         $descripcion = $F->toMayus($data['descripcion']);
-
+        $shortdesc = $F->toMayus($data['shortdesc']);
         $data['descripcion'] = $descripcion;
+        $data['shortdesc'] = $shortdesc;
+        //dd($data['isiva']);
+        $data['isiva']       = isset($data['isiva']) ? true : false;
+        $data['saldo']       = $data['cu'] * $data['exist'];
+        $data['empresa_id']  = $data['almacen_id'];
+        $data["idemp"]       = $F->getIHE(0);
+        $data["ip"]          = $F->getIHE(1);
+        $data["host"]        = $F->getIHE(2);
 
         $prod->update($data);
 

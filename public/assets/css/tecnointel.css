@@ -14,7 +14,7 @@ body {
 .main-container:before {
   display: block;
   content: "";
-  position: absolute;
+  /*position: absolute;*/
   z-index: -2;
   width: 100%;
   max-width: inherit;
@@ -2169,7 +2169,7 @@ body.mob-safari .sidebar.sidebar-fixed {
     margin-left: auto;
   }
   .main-container .menu-toggler.fixed {
-    position: fixed;
+    /*position: fixed;*/
     left: auto;
     z-index: 1026;
     -moz-backface-visibility: hidden;

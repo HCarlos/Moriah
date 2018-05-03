@@ -1961,6 +1961,7 @@ pre.prettyprint {
 }
 .sidebar {
   width: 190px;
+  height: auto;
   float: left;
   position: static;
   padding-left: 0;
@@ -3343,7 +3344,7 @@ body.mob-safari .sidebar.sidebar-fixed {
     -ms-transform: none !important;
     transform: none !important;
     overflow: visible;
-    max-height: 2000px;
+    max-height: 5000px;
     transition-delay: 0s;
   }
   .sidebar.responsive.push_away {

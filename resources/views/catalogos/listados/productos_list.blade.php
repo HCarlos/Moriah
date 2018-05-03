@@ -7,13 +7,13 @@
             <a href="{{ route('productoNew', array('idItem' => 0)) }}" class="btn btn-info btn-xs" target="_blank" title="Agregar nuevo registro">
                 <i class="fa fa-plus-circle bigger-150"></i>
             </a>
-            <a href="{{ route('productoIndex', array('npage' => 1, 'tpaginas' => 0, 'tpaginator' => 0)) }}" class="btn btn-info btn-xs " title="Actualizar">
+            <a href="{{ route('productoIndex', array('npage' => 1, 'tpaginas' => 0)) }}" class="btn btn-info btn-xs " title="Actualizar">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
+            @include('catalogos.listados.paginate_list')
         </div>
 
         <div class="panel-body">
-            @include('catalogos.listados.paginate_list')
             <div class="fa-2x" id="preloaderLocal">
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
@@ -26,8 +26,8 @@
                             <th aria-label="clave" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Clave</th>
                             <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
-                            <th aria-label="pv" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">PV</th>
-                            <th aria-label="exist" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Existencia</th>
+                            <th aria-label="pv" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting text-right">PV</th>
+                            <th aria-label="exist" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Existencia</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
@@ -38,8 +38,8 @@
                                 <td>{{ $item->clave }}</td>
                                 <td>{{ $item->codigo }}</td>
                                 <td>{{ $item->descripcion }}</td>
-                                <td>{{ $item->pv}} </td>
-                                <td>{{ $item->exist}} </td>
+                                <td class="text-right">{{ $item->pv}} </td>
+                                <td class="text-right">{{ $item->exist}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                     @if ($user->hasAnyPermission(['consultar','all']) )
@@ -62,10 +62,10 @@
                 @else
                     <div class="alert alert-danger" role="alert">No se encontraron datos</div>
                 @endif
-
             </div>
         </div>
     </div>
+
 
 @endsection
 
