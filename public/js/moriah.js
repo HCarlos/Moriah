@@ -113,24 +113,10 @@ $(document).ready(function() {
         });
     }
 
-
-    if ( $(".apartame") ){
-        $(".apartame").on('click', function(event) {
+    if ( $("#btnRefreshNavigator") ){
+        $("#btnRefreshNavigator").on('click', function(event) {
             event.preventDefault();
-            var IdArr  = this.id.split('-');
-            var Ida    = IdArr[1];
-            var Url = '/apartame/'+IdArr[1]+'/'+IdArr[2];
-            // alert(Url);
-            $(function() {
-                $.ajax({
-                    method: "GET",
-                    url: Url
-                })
-                    .done(function( response ) {
-                        alert(response.mensaje);
-                        window.location.reload();
-                    });
-            });
+            window.location.reload();
         });
     }
 

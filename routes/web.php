@@ -84,9 +84,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_producto/{id}', 'SIIFAC\ProductoController@destroy')->name('productoDestroy/');
 
     // Fichas Usuarios
-    Route::post('/create_usuario','Catalogos\UsuarioController@create')->name('usuarioCreate/');
-    Route::put('/update_usuario/{usr}','Catalogos\UsuarioController@update')->name('usuarioUpdate/');
-    Route::get('/destroy_usuario/{id}/{idItem}/{action}', 'Catalogos\UsuarioController@destroy')->name('usuarioDestroy/');
+    Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');
+    Route::get('/new_usuario/{idItem}', 'SIIFAC\UsuarioController@new')->name('usuarioNew');
+    Route::get('/edit_usuario/{idItem}', 'SIIFAC\UsuarioController@edit')->name('usuarioEdit');
+    Route::post('/store_usuario','SIIFAC\UsuarioController@store')->name('usuarioStore/');
+    Route::put('/update_usuario/{user}','SIIFAC\UsuarioController@update')->name('usuarioUpdate/');
+    Route::get('/destroy_usuario/{id}', 'SIIFAC\UsuarioController@destroy')->name('usuarioDestroy/');
 
     // Fichas Roles
     Route::post('/create_role','Catalogos\RoleController@create')->name('roleCreate/');

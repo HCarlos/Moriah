@@ -93,6 +93,9 @@ class User extends Authenticatable
         // Contiene muchos Ingresos
         return $this->hasMany(Empresa::class);
     }
+    public function empresa(){
+        return $this->belongsTo(Empresa::class);
+    }
 
     public function almacenes(){
         // Contiene muchos Ingresos

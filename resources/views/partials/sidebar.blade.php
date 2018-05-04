@@ -63,6 +63,13 @@
 
             <ul class="submenu">
                 <li class="">
+                    <a href="{{ route('usuarioIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                        <i class="menu-icon fa fa-book red"></i>
+                        Usuarios
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
                     <a href="#">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Asignar Permisos a Roles

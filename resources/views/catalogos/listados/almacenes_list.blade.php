@@ -7,7 +7,7 @@
             <a href="{{ route('almacenNew', array('idItem' => 0)) }}" class="btn btn-info btn-xs " target="_blank" title="Agregar nuevo registro">
                 <i class="fa fa-plus-circle bigger-150"></i>
             </a>
-            <a href="{{ route('almacenIndex', array('npage' => 1, 'tpaginas' => 0)) }}" class="btn btn-info btn-xs " title="Actualizar">
+            <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
         </div>
