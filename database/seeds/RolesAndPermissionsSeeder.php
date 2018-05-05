@@ -29,6 +29,9 @@ class RolesAndPermissionsSeeder extends Seeder
         $P7 = Permission::create(['name' => 'imprimir']);
         $P8 = Permission::create(['name' => 'asignar']);
         $P9 = Permission::create(['name' => 'desasignar']);
+        $P10 = Permission::create(['name' => 'apartar']);
+        $P11 = Permission::create(['name' => 'pedir']);
+        $P12 = Permission::create(['name' => 'comprar']);
 
         $role_admin = Role::create([
             'name' => 'administrator',

@@ -51,6 +51,7 @@ return [
         'nota_credito_detalle' => 'nota_credito_detalle',
         'ventas' => 'ventas',
         'venta_detalle' => 'venta_detalle',
+        'empresa_producto' => 'empresa_producto',
     ],
 
     ];

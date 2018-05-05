@@ -25,36 +25,43 @@ class Producto extends Model
     }
 
     public function almacenes(){
-        return $this->hasMany(Almacen::class);
+        return $this->belongsToMany(Almacen::class);
     }
 
     public function almacen(){
         return $this->belongsTo(Almacen::class);
     }
 
+    public function familiaProductos(){
+        return $this->belongsToMany(FamiliaProducto::class);
+    }
+
     public function familiaProducto(){
-        // Esta en muchos familia de productos
         return $this->belongsTo(FamiliaProducto::class);
     }
 
+    public function medidas(){
+        return $this->belongsToMany(Medida::class);
+    }
+
     public function medida(){
-        // Esta en muchos medidas
         return $this->belongsTo(Medida::class);
     }
 
     public function paqueteDetalles(){
-        // Contiene muchos Ingresos
         return $this->hasMany(PaqueteDetalle::class);
     }
 
     public function pedidosDetalles(){
-        // Contiene muchos Ingresos
         return $this->hasMany(PedidoDetalle::class);
     }
 
     public function movimientos(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Movimiento::class);
+    }
+
+    public function empresas(){
+        return $this->belongsToMany(Empresa::class);
     }
 
     public function empresa(){

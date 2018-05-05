@@ -26,10 +26,6 @@
                         @endif
 
                         <div class="form-group row">
-                            <label for = "empresa_id" class="col-md-1 col-form-label text-md-left">Empresa</label>
-                            <div class="col-md-2">
-                                {{ Form::select('empresa_id', $Empresas, $items->empresa_id, ['id' => 'empresa_id','class'=>'form-control']) }}
-                            </div>
                             <label for = "familia_cliente_id" class="col-md-1 col-form-label text-md-left">Categoría</label>
                             <div class="col-md-2">
                                 {{ Form::select('familia_cliente_id', $FamClis, $items->familia_cliente_id, ['id' => 'familia_cliente_id','class'=>'form-control']) }}
@@ -42,6 +38,7 @@
                             <div class="col-md-2">
                                 <input type="text" name="username" id="username" value="{{ old('username',$items->username) }}" min="1" max="999999" class="form-control" readonly />
                             </div>
+                            <div class="col-md-3"></div>
                         </div>
 
                         <div class="form-group row">
@@ -84,6 +81,25 @@
                                 <input type="text" name="iduser_ps" id="iduser_ps" value="{{ old('iduser_ps',$items->iduser_ps) }}" class="form-control" />
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for = "celular" class="col-md-1 col-form-label text-md-left">Roles</label>
+                            <div class="col-md-11">
+                                @foreach($items->roles as $role)
+                                    <span class="badge">{{ $role->name }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for = "celular" class="col-md-1 col-form-label text-md-left">Permisos</label>
+                            <div class="col-md-11">
+                                @foreach($items->permissions as $permission)
+                                    <span class="badge">{{ $permission->name }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <hr>
                         <div>
                             <label class="col-md-2 col-form-label text-md-right"></label>

@@ -34,16 +34,17 @@ class UsuarioController extends Controller
         if ( $page ) $npage = $page;
 
         $this->tableName = 'usuarios';
-        $items = User::with('empresa','roles')
+        $items = User::with('roles')
             ->select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
             ->orderBy('id','desc')
-            ->get()
-            ->forPage($npage,$this->itemPorPagina);
+            ->forPage($npage,$this->itemPorPagina)
+            ->get();
         $tpaginator = User::paginate($this->itemPorPagina,['*'],'p');
-        //dd($npage);
+        //dd($items);
         $user = Auth::User();
         $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
         $tpaginator->withPath("/index_usuario/$npage/$tpaginas");
+
         return view ('catalogos.listados.usuarios_list',
             [
                 'items' => $items,
@@ -62,7 +63,6 @@ class UsuarioController extends Controller
         $views  = 'usuario_new';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
         $Familia_Cliente = FamiliaCliente::all()->sortBy('descripcion')->pluck('descripcion', 'id');
         $timex  = Carbon::now()->format('ymdHisu');
 
@@ -71,7 +71,6 @@ class UsuarioController extends Controller
                 'idItem' => $idItem,
                 'titulo' => 'users',
                 'user' => $user,
-                'Empresas' => $Empresas,
                 'FamClis' => $Familia_Cliente,
             ]
         );
@@ -82,7 +81,7 @@ class UsuarioController extends Controller
     {
         $views  = 'usuario_edit';
         $items = User::findOrFail($idItem);
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+//        dd($items);
         $Familia_Cliente = FamiliaCliente::all()->sortBy('descripcion')->pluck('descripcion', 'id');
         $user = Auth::User();
         $oView = 'catalogos.' ;
@@ -93,7 +92,6 @@ class UsuarioController extends Controller
                 'titulo' => 'users',
                 'items' => $items,
                 'user' => $user,
-                'Empresas' => $Empresas,
                 'FamClis' => $Familia_Cliente,
             ]
         );
@@ -108,7 +106,6 @@ class UsuarioController extends Controller
         $validator = Validator::make($data, [
             'username' => "required|unique:users,username",
             'email' => "required|email|unique:users,email",
-            'cuenta' => "required|unique:users,cuenta|min:12|max:16",
         ]);
 
         if ($validator->fails()) {
@@ -157,6 +154,7 @@ class UsuarioController extends Controller
     {
 
         $data = $request->all();
+//        dd($data);
         $idItem     = $data['idItem'];
 
         $validator = Validator::make($data, [

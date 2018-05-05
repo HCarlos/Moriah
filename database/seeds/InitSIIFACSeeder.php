@@ -397,14 +397,12 @@ class InitSIIFACSeeder extends Seeder
         $Paq168 = Paquete::findOrCreatePaquete(1,'978968569848','ABRAPALABRA 5',0,$IdEmp);
         $Paq169 = Paquete::findOrCreatePaquete(1,'978968569849','ABRAPALABRA 6',0,$IdEmp);
 
+
+
         $role1 = Role::find(2);
         $role2 = Role::find(3);
         $role3 = Role::find(4);
-/*
-        $IdUser1 = User::findOrCreateUserWithRole3('','alu1234','PUBLICO','EN','GENERAL','alu1234@example.com','alu1234',false,true,false,false,false,0,0,'domicilio conocido','9999 999999','9999 999999',0,0,1,0000,$IdEmp,$role1,$role2,$role3);
-        $IdUser2 = User::findOrCreateUserWithRole3('','alu4321','PUBLICO','EN','GENERAL 2','alu4321@example.com','alu4321',false,true,false,false,false,0,0,'domicilio conocido','9999 999999','9999 999999',0,0,1,0000,$IdEmp,$role1,$role2,$role3);
-        $IdUser3 = User::findOrCreateUserWithRole3('','alu5555','PUBLICO','EN','GENERAL 3','','',false,true,false,false,false,0,0,'domicilio conocido','9999 999999','9999 999999',0,0,1,0000,$IdEmp,$role1,$role2,$role3);
-*/
+
 
         $IdUser1 = User::findOrCreateUserWithRole3('7335154428393856','exa02295','CAROLINA MARIELA','HERRERA','GARCIA','exa02295@example.com','exa02295',false,false,false,true,false,0,0,'','','',0,0,1,6538,$IdEmp,$role1,$role2,$role3);
         $IdUser2 = User::findOrCreateUserWithRole3('7335155828362482','exa02305','ELENA','ALCANTARA','OLAN','exa02305@example.com','exa02305',false,false,false,true,false,0,0,'','','',0,0,1,6526,$IdEmp,$role1,$role2,$role3);
@@ -807,6 +805,7 @@ class InitSIIFACSeeder extends Seeder
         $IdUser398 = User::findOrCreateUserWithRole3('7335155322612674','alu4034','MANUEL','SANDERS','LORENZO','alu4034@example.com','alu4034',false,true,false,false,false,0,0,'','','',0,0,1,2192,$IdEmp,$role1,$role2,$role3);
         $IdUser399 = User::findOrCreateUserWithRole3('7335166422608251','alu3129','ALEJANDRA','SALCIDOS','BRINDIS','alu3129@example.com','alu3129',false,true,false,false,false,0,0,'','','',0,0,1,2191,$IdEmp,$role1,$role2,$role3);
         $IdUser400 = User::findOrCreateUserWithRole3('7335163722595266','alu3106','DANIELA','CALZADA','FERNANDEZ','alu3106@example.com','alu3106',false,true,false,false,false,0,0,'','','',0,0,1,2249,$IdEmp,$role1,$role2,$role3);
+/*
         $IdUser401 = User::findOrCreateUserWithRole3('7335152322585580','alu3701','JOSE ALEJANDRO','SAINT MARTIN','LARA','alu3701@example.com','alu3701',false,true,false,false,false,0,0,'','','',0,0,1,2217,$IdEmp,$role1,$role2,$role3);
         $IdUser402 = User::findOrCreateUserWithRole3('7335152722575591','alu3097','EMILIANO','RUEDA','DEL RIO','alu3097@example.com','alu3097',false,true,false,false,false,0,0,'','','',0,0,1,2266,$IdEmp,$role1,$role2,$role3);
         $IdUser403 = User::findOrCreateUserWithRole3('7335159222561237','alu4026','CARLOS ARTURO','ROMELLON','LEON','alu4026@example.com','alu4026',false,true,false,false,false,0,0,'','','',0,0,1,2265,$IdEmp,$role1,$role2,$role3);
@@ -5129,6 +5128,12 @@ class InitSIIFACSeeder extends Seeder
         $IdUser4704 = User::findOrCreateUserWithRole3('','exa02537','CABALLERO','ANETTE MELISSA','SILVA','exa02537@example.com','exa02537',false,false,false,true,false,0,0,'','','',0,0,1,7154,$IdEmp,$role1,$role2,$role3);
         $IdUser4705 = User::findOrCreateUserWithRole3('','exa00930','GAUDIANO','PACHELA','ROVIROSA','exa00930@example.com','exa00930',false,false,false,true,false,0,0,'','','',0,0,1,7299,$IdEmp,$role1,$role2,$role3);
         $IdUser4706 = User::findOrCreateUserWithRole3('','exa00451','D´ARGENCE','RICARDO','PEREZ','exa00451@example.com','exa00451',false,false,false,true,false,0,0,'','','',0,0,1,4943,$IdEmp,$role1,$role2,$role3);
+
+*/
+
+
+
+
 
 
 

@@ -35,8 +35,9 @@ class AlmacenController extends Controller
         $items = Almacen::with('empresa')
             ->select('id','clave_almacen','descripcion','responsable','tipoinv','prefijo','empresa_id')
             ->orderBy('id','desc')
-            ->get()
-            ->forPage($npage,$this->itemPorPagina);
+            ->forPage($npage,$this->itemPorPagina)
+            ->get();
+
         $tpaginator = Almacen::paginate($this->itemPorPagina,['*'],'p');
         $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
         $tpaginator->withPath("/index_almacen/$npage/$tpaginas");

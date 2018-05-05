@@ -25,10 +25,6 @@
                         @endif
 
                         <div class="form-group row">
-                            <label for = "empresa_id" class="col-md-1 col-form-label text-md-left">Empresa</label>
-                            <div class="col-md-2">
-                                {{ Form::select('empresa_id', $Empresas, 1, ['id' => 'empresa_id','class'=>'form-control']) }}
-                            </div>
                             <label for = "familia_cliente_id" class="col-md-1 col-form-label text-md-left">Categoría</label>
                             <div class="col-md-2">
                                 {{ Form::select('familia_cliente_id', $FamClis, 1, ['id' => 'familia_cliente_id','class'=>'form-control']) }}
@@ -41,6 +37,7 @@
                             <div class="col-md-2">
                                 <input type="text" name="username" id="username" value="{{ old('username') }}" min="1" max="999999" class="form-control"  />
                             </div>
+                            <div class="col-md-3"></div>
                         </div>
 
                         <div class="form-group row">
