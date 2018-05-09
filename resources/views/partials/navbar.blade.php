@@ -47,14 +47,14 @@
                         </li>
                         <li>
                             <a href="{{ route('showEditProfilePhoto/') }}">
-                                <i class="ace-icon fa fa-picture-o"></i>
+                                <i class="ace-icon fa fa-file-picture-o "></i>
                                 Cambiar foto
                             </a>
                         </li>
 
                         <li>
                             <a  class="dropdown-item" href="{{ route('showEditProfileEmail/') }}">
-                                <i class="ace-icon fas fa-at"></i>
+                                <i class="ace-icon fa fa-envelope-o "></i>
                                 Cambiar Email
                             </a>
                         </li>
