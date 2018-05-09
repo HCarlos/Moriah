@@ -1,7 +1,7 @@
-@extends('home')
+@extends('layouts.app')
 
-@section('content_form_permisions')
-<div class="panel panel-primary  panel-fill" id="frmEdit0">
+@section('main-content')
+<div class="panel panel-moriah  panel-fill" id="frmEdit0">
     <div class="panel-heading">
             <span>{{ $titulo }}</span>
     </div>
@@ -12,7 +12,7 @@
 
         <div class="row panel-fill">
             <div class="col-xs-6 col-sm-4 panel-fill">
-                <div class="panel panel-success panel-fill">
+                <div class="panel panel-primary panel-fill">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{ $xTit[0]  }}</h3>
                     </div>
@@ -23,17 +23,17 @@
             <div class="col-xs-6 col-sm-4  panel-fill  vertical-center">
                 <div class="panel panel-fill  jumbotron vertical-center">
                     <div class="panel-body panel-fill ">
-                        @if ($user->hasAnyPermission(['asignar_permisos_role','all']))
-                            <a class="btn btn-default btnAsign0 form-control" id="{{ 'btnAsign0-'.$id.'-'.$iduser }}" href="#" role="button">Asignar <i class="fas fa-angle-right"></i></a><br/><br/>
+                        @if ($user->hasAnyPermission(['asignar','desasignar','all']))
+                            <a class="btn btn-primary btn-block btnAsign0" id="{{ 'btnAsign0-'.$id.'-'.$iduser }}" href="#" role="button">Asignar <i class="glyphicon glyphicon-chevron-right"></i></a><br/><br/>
                         @endif
-                        @if ($user->hasAnyPermission(['eliminar_permisos_role','all']))
-                            <a class="btn btn-default btnUnasign0 form-control" id="{{ 'btnUnasign0-'.$id.'-'.$iduser }}" href="#" role="button"><i class="fas fa-angle-left"></i> Quitar</a>
+                        @if ($user->hasAnyPermission(['asignar','desasignar','all']))
+                            <a class="btn btn-primary btn-block btnUnasign0" id="{{ 'btnUnasign0-'.$id.'-'.$iduser }}" href="#" role="button"><i class="glyphicon glyphicon-chevron-left"></i> Quitar</a>
                         @endif
                     </div>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-4  panel-fill-86">
-                <div class="panel panel-success panel-fill">
+                <div class="panel panel-primary panel-fill">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{ $xTit[1]  }}</h3>
                     </div>
