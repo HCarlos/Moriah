@@ -35,7 +35,7 @@ Please refer to documentation for more info.
 		$.ajax({
 			'url': stylesheet_url
 		}).done(function() {
-			var new_link = jQuery('<link />', {type : 'text/css', rel: 'stylesheet', 'id': 'ace-rtl-stylesheet'})
+			var new_link = jQuery('<link />', {type : 'text/css', rel: 'stylesheet', 'id': 'ace-rtl-stylesheet'});
 			if(ace_skins.length > 0) {
 				new_link.insertAfter(ace_skins);
 			}
@@ -114,7 +114,7 @@ Please refer to documentation for more info.
 			for(var i = 0 ; i < l ; i++) {
 				var val = this.attributes[i].value;
 				if(val.match(/fa\-(?:[\w\-]+)\-left/)) 
-					this.attributes[i].value = val.replace(/fa\-([\w\-]+)\-(left)/i , 'fa-$1-right')
+					this.attributes[i].value = val.replace(/fa\-([\w\-]+)\-(left)/i , 'fa-$1-right');
 				 else if(val.match(/fa\-(?:[\w\-]+)\-right/)) 
 					this.attributes[i].value = val.replace(/fa\-([\w\-]+)\-(right)/i , 'fa-$1-left')
 			}
@@ -135,7 +135,7 @@ Please refer to documentation for more info.
 			.find('.make-rtl').children().unwrap();
 			$('.sidebar[data-sidebar-hover=true]').ace_sidebar_hover('changeDir', 'left');
 		}
-		if($.fn.ace_scroll) $container.find('.scroll-hz').ace_scroll('reset') //to reset scrollLeft
+		if($.fn.ace_scroll) $container.find('.scroll-hz').ace_scroll('reset'); //to reset scrollLeft
 
 		//redraw the traffic pie chart on homepage with a different parameter
 		try {

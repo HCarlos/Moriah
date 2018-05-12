@@ -43,8 +43,62 @@
                 "bDestroy": false
             });
 
+            $('.btnAction1').on('click', function(event) {
+                event.preventDefault();
+
+                $("#myModal").modal('show');
+                var aID = event.currentTarget.id.split('-');
+                var Url = "/edit_paquete_detalle_ajax/" + aID[1] + "/" + aID[2];
+
+                $(function () {
+                    $.ajax({
+                        method: "GET",
+                        url: Url
+                    })
+                        .done(function (response) {
+
+                            $("#myModal").html(response);
+
+                                //
+                                //
+                                // $("#frm1Edit").on("submit", function (event) {
+                                //     event.preventDefault();
+                                //     var queryString = $(this).serialize();
+                                //     var data = new FormData();
+                                //     data.append('request', queryString);
+                                //
+                                //         $.ajax({
+                                //             url:"/update_paquete_detalle_ajax/",
+                                //             data: data,
+                                //             cache: false,
+                                //             contentType: false,
+                                //             processData: false,
+                                //             dataType: 'json',
+                                //             type: 'PUT'
+                                //         })
+                                //             .done(function (response) {
+                                //                 alert(response);
+                                //             })
+                                //             .success(function (response) {
+                                //                 alert(response);
+                                //             });
+                                //
+                                // });
+
+
+
+
+
+                        });
+                });
+
+
+            });
+
+
 
         });
     });
+
 </script>
 @endsection

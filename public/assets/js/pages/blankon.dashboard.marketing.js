@@ -274,7 +274,7 @@ var BlankonDashboardMarketing = function () {
                     normalizeFunction: 'polynomial',
                     onLabelShow: function(event, label, code)
                     {
-                        console.log(code)
+                        console.log(code);
                         label.html('<div class="map-tooltip"><h4 class="header" style="margin: 0 0 5px 0;">'+code.toUpperCase()+' : '+sample_data[code]+'</h4><p class="description" style="margin-bottom: 0;">Customer ID (Click for detail)</p></div>');
                     },
                     onRegionClick: function(element, code, region)
@@ -299,7 +299,7 @@ var BlankonDashboardMarketing = function () {
                     normalizeFunction: 'polynomial',
                     onLabelShow: function(event, label, code)
                     {
-                        console.log(code)
+                        console.log(code);
                         label.html('<div class="map-tooltip"><h4 class="header" style="margin: 0 0 5px 0;">'+code.toUpperCase()+' : '+sample_data[code]+'</h4><p class="description" style="margin-bottom: 0;">Customer ID (Click for detail)</p></div>');
                     },
                     onRegionClick: function(element, code, region)
@@ -324,7 +324,7 @@ var BlankonDashboardMarketing = function () {
                     normalizeFunction: 'polynomial',
                     onLabelShow: function(event, label, code)
                     {
-                        console.log(code)
+                        console.log(code);
                         label.html('<div class="map-tooltip"><h4 class="header" style="margin: 0 0 5px 0;">'+code.toUpperCase()+' : '+sample_data[code]+'</h4><p class="description" style="margin-bottom: 0;">Customer ID (Click for detail)</p></div>');
                     },
                     onRegionClick: function(element, code, region)
@@ -349,7 +349,7 @@ var BlankonDashboardMarketing = function () {
                     normalizeFunction: 'polynomial',
                     onLabelShow: function(event, label, code)
                     {
-                        console.log(code)
+                        console.log(code);
                         label.html('<div class="map-tooltip"><h4 class="header" style="margin: 0 0 5px 0;">'+code.toUpperCase()+' : '+sample_data[code]+'</h4><p class="description" style="margin-bottom: 0;">Customer ID (Click for detail)</p></div>');
                     },
                     onRegionClick: function(element, code, region)
@@ -374,7 +374,7 @@ var BlankonDashboardMarketing = function () {
                     normalizeFunction: 'polynomial',
                     onLabelShow: function(event, label, code)
                     {
-                        console.log(code)
+                        console.log(code);
                         label.html('<div class="map-tooltip"><h4 class="header" style="margin: 0 0 5px 0;">'+code.toUpperCase()+' : '+sample_data[code]+'</h4><p class="description" style="margin-bottom: 0;">Customer ID (Click for detail)</p></div>');
                     },
                     onRegionClick: function(element, code, region)
@@ -399,7 +399,7 @@ var BlankonDashboardMarketing = function () {
                     normalizeFunction: 'polynomial',
                     onLabelShow: function(event, label, code)
                     {
-                        console.log(code)
+                        console.log(code);
                         label.html('<div class="map-tooltip"><h4 class="header" style="margin: 0 0 5px 0;">'+code.toUpperCase()+' : '+sample_data[code]+'</h4><p class="description" style="margin-bottom: 0;">Customer ID (Click for detail)</p></div>');
                     },
                     onRegionClick: function(element, code, region)

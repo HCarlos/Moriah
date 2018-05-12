@@ -7,7 +7,7 @@
 (function($ , undefined) {
 	//if( !$.fn.ace_scroll ) return;
 
-	var old_safari = ace.vars['safari'] && navigator.userAgent.match(/version\/[1-5]/i)
+	var old_safari = ace.vars['safari'] && navigator.userAgent.match(/version\/[1-5]/i);
 	//NOTE
 	//Safari on windows has not been updated for a long time.
 	//And it has a problem when sidebar is fixed & scrollable and there is a CSS3 animation inside page content.
@@ -18,7 +18,7 @@
 	//el.offsetHeight is used to force redraw and recalculate 'el.style.position' esp. for webkit!
 	function(el, pos) { el.offsetHeight; return window.getComputedStyle(el).position == pos }
 	:
-	function(el, pos) { el.offsetHeight; return $(el).css('position') == pos }
+	function(el, pos) { el.offsetHeight; return $(el).css('position') == pos };
 	
 		
 	function Sidebar_Scroll(sidebar , settings) {
@@ -64,10 +64,10 @@
 			if(self.sidebar_fixed) offset.top -= ace.helper.scrollTop();
 
 			return $window.innerHeight() - offset.top - ( self.settings.include_toggle ? 0 : $toggle.outerHeight() );
-		}
+		};
 		var content_height = function() {
 			return nav.clientHeight;//we don't use nav.scrollHeight here, because hover submenus are considered in calculating scrollHeight despite position=absolute!
-		}
+		};
 
 		
 		
@@ -167,7 +167,7 @@
 					
 					var distance = event.dy;
 					
-					distance = parseInt(Math.min($avail_height, distance))
+					distance = parseInt(Math.min($avail_height, distance));
 					if(Math.abs(distance) > 2) distance = distance * 2;
 					
 					if(distance != 0) {
@@ -216,8 +216,8 @@
 			
 			
 			if( typeof self.settings.smooth_scroll === 'number' && self.settings.smooth_scroll > 0) {
-				$nav.css({'transition-property': 'top', 'transition-duration': (self.settings.smooth_scroll / 1000).toFixed(2)+'s'})
-				bar.css({'transition-property': 'top', 'transition-duration': (self.settings.smooth_scroll / 1500).toFixed(2)+'s'})
+				$nav.css({'transition-property': 'top', 'transition-duration': (self.settings.smooth_scroll / 1000).toFixed(2)+'s'});
+				bar.css({'transition-property': 'top', 'transition-duration': (self.settings.smooth_scroll / 1500).toFixed(2)+'s'});
 				
 				scroll_div
 				.on('drag.start', function(e) {
@@ -251,7 +251,7 @@
 					}
 				});
 			}
-		}
+		};
 		
 		
 		
@@ -262,14 +262,14 @@
 				//sometimes there's no active item or not 'offsetTop' property
 				var $active;
 				
-				var vars = ace_sidebar['vars']()
+				var vars = ace_sidebar['vars']();
 
-				var nav_list = $sidebar.find('.nav-list')
+				var nav_list = $sidebar.find('.nav-list');
 				if(vars['minimized'] && !vars['collapsible']) {
 					$active = nav_list.find('> .active')
 				}
 				else {
-					$active = $nav.find('> .active.hover')
+					$active = $nav.find('> .active.hover');
 					if($active.length == 0)	$active = $nav.find('.active:not(.open)')
 				}
 
@@ -288,7 +288,7 @@
 					scroll_content.scrollTop(scroll_amount);
 				}
 			}catch(e){}
-		}
+		};
 		
 		
 		
@@ -324,8 +324,8 @@
 			this.is_scrolling = true;
 			if( enable_scroll ) {
 				scroll_content_div.css({height: $content_height, width: 8});
-				scroll_div.prev().css({'max-height' : $avail_height})
-				ace_scroll.update({size: $avail_height})
+				scroll_div.prev().css({'max-height' : $avail_height});
+				ace_scroll.update({size: $avail_height});
 				ace_scroll.enable();
 				ace_scroll.reset();
 			}
@@ -337,7 +337,7 @@
 			}
 			
 			//return this.is_scrolling;
-		}
+		};
 		
 		
 		
@@ -346,7 +346,7 @@
 			if(scroll_div) {
 				scroll_div.css({'height' : '', 'max-height' : ''});
 				scroll_content_div.css({height: '', width: ''});//otherwise it will have height and takes up some space even when invisible
-				scroll_div.prev().css({'max-height' : ''})
+				scroll_div.prev().css({'max-height' : ''});
 				ace_scroll.disable();
 			}
 
@@ -360,7 +360,7 @@
 			}
 
 			nav.style.top = 0;
-		}
+		};
 		
 		this.prehide = function(height_change) {
 			if(!this.is_scrolling || ace_sidebar.get('minimized')) return;//when minimized submenu's toggle should have no effect
@@ -371,12 +371,12 @@
 			else if(height_change < 0) {
 				//if content height is decreasing
 				//let's move nav down while a submenu is being hidden
-				var scroll_top = scroll_content.scrollTop() + height_change
+				var scroll_top = scroll_content.scrollTop() + height_change;
 				if(scroll_top < 0) return;
 
 				nav.style.top = (-1 * scroll_top) + 'px';
 			}
-		}
+		};
 		
 		
 		this._reset = function(recalc) {
@@ -387,28 +387,28 @@
 			if(ace.vars['webkit']) 
 				setTimeout(function() { self.reset() } , 0);
 			else this.reset();
-		}
+		};
 		
 		
 		this.set_hover = function() {
 			if(track) track.addClass('scroll-hover');
-		}
+		};
 		
 		this.get = function(name) {
 			if(this.hasOwnProperty(name)) return this[name];
-		}
+		};
 		this.set = function(name, value) {
 			if(this.hasOwnProperty(name)) this[name] = value;
-		}
+		};
 		this.ref = function() {
 			//return a reference to self
 			return this;
-		}
+		};
 		
 		this.updateStyle = function(styleClass) {
 			if(ace_scroll == null) return;
 			ace_scroll.update({styleClass: styleClass});
-		}
+		};
 
 		
 		//change scrollbar size after a submenu is hidden/shown
@@ -441,7 +441,7 @@
 			}
 			else if( event_name === 'sidebar_fixed' || event_name === 'navbar_fixed' ) {
 				var is_scrolling = sidebar_scroll.get('is_scrolling');
-				var sidebar_fixed = is_element_pos(this, 'fixed')
+				var sidebar_fixed = is_element_pos(this, 'fixed');
 				sidebar_scroll.set('sidebar_fixed', sidebar_fixed);
 
 				if(sidebar_fixed && !is_scrolling) {
@@ -462,11 +462,11 @@
 			/////////////
 			var sidebar_scroll = $(this).ace_sidebar_scroll('ref');
 			
-			var sidebar_fixed = is_element_pos(this, 'fixed')
+			var sidebar_fixed = is_element_pos(this, 'fixed');
 			sidebar_scroll.set('sidebar_fixed', sidebar_fixed);
 			sidebar_scroll._reset();
 		});
-	})
+	});
 	
 
 	
@@ -488,7 +488,7 @@
 		});
 
 		return (method_call === undefined) ? $set : method_call;
-	 }
+	 };
 	 
 	 
 	 $.fn.ace_sidebar_scroll.defaults = {

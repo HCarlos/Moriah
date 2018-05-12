@@ -4,7 +4,7 @@
 <div class="panel panel-moriah" id="frmEdit0">
     <div class="panel-heading">
             <span><strong>{{ ucwords($titulo) }}</strong> | Editando registro {{$idItem}}
-                <a class="btn btn-info btn-minier pull-right" href="#" onclick="javascript:window.close();">
+                <a class="btn btn-info btn-minier pull-right" href="#" onclick="window.close();">
                    Cerrar
                 </a>
             </span>
@@ -58,7 +58,7 @@
                                 </button>
                             </div>
                             {{--<a class="btn btn-info float-md-right " href="{{ "/index/$id" }}">--}}
-                            <a class="btn btn-info float-md-right " href="#" onclick="javascript:window.close();">
+                            <a class="btn btn-info float-md-right " href="#" onclick="window.close();">
                                 Cerrar
                             </a>
                         </div>

@@ -40,7 +40,7 @@
 	{
 		factory( jQuery );
 	}
-}
+};
 (/** @lends <global> */function( $ ) {
 	"use strict";
 	/** 
@@ -4716,7 +4716,7 @@
 				{
 					throw new Error(sAlert);
 				}
-				return;
+
 			}
 			else if ( window.console && console.log )
 			{

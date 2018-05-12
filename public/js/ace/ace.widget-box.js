@@ -21,7 +21,7 @@
 				$box.find('.widget-box-overlay').remove();
 				if($remove_position) $box.removeClass('position-relative');
 			});
-		}
+		};
 
 		this.close = function() {
 			var $box = this.$box;
@@ -31,7 +31,7 @@
 					$box.remove();
 				}
 			)
-		}
+		};
 		
 		this.toggle = function(type, button) {
 			var $box = this.$box;
@@ -49,14 +49,14 @@
 			if(button) {
 				$icon = button.find(ace.vars['.icon']).eq(0);
 
-				var $match
-				var $icon_down = null
-				var $icon_up = null
+				var $match;
+				var $icon_down = null;
+				var $icon_up = null;
 				if( ($icon_down = $icon.attr('data-icon-show')) ) {
 					$icon_up = $icon.attr('data-icon-hide')
 				}
 				else if( $match = $icon.attr('class').match(/fa\-(.*)\-(up|down)/) ) {
-					$icon_down = 'fa-'+$match[1]+'-down'
+					$icon_down = 'fa-'+$match[1]+'-down';
 					$icon_up = 'fa-'+$match[1]+'-up'
 				}
 			}
@@ -76,25 +76,25 @@
 			else {
 				if($icon) $icon.removeClass($icon_up).addClass($icon_down);
 				$body.slideUp(collapseSpeed, function(){
-						$box.addClass('collapsed')
+						$box.addClass('collapsed');
 						$box.trigger(event_complete_name+'.ace.widget')
 					}
 				);
 			}
-		}
+		};
 		
 		this.hide = function() {
 			this.toggle('hide');
-		}
+		};
 		this.show = function() {
 			this.toggle('show');
-		}
+		};
 		
 		
 		this.fullscreen = function() {
 			var $icon = this.$box.find('> .widget-header a[data-action=fullscreen]').find(ace.vars['.icon']).eq(0);
-			var $icon_expand = null
-			var $icon_compress = null
+			var $icon_expand = null;
+			var $icon_compress = null;
 			if( ($icon_expand = $icon.attr('data-icon1')) ) {
 				$icon_compress = $icon.attr('data-icon2')
 			}
@@ -120,7 +120,7 @@
 			this.$box.trigger('fullscreened.ace.widget')
 		}
 
-	}
+	};
 	
 	$.fn.widget_box = function (option, value) {
 		var method_call;
@@ -154,31 +154,31 @@
 		if($action == 'collapse') {
 			var event_name = $box.hasClass('collapsed') ? 'show' : 'hide';
 
-			var event
-			$box.trigger(event = $.Event(event_name+'.ace.widget'))
-			if (event.isDefaultPrevented()) return
+			var event;
+			$box.trigger(event = $.Event(event_name+'.ace.widget'));
+			if (event.isDefaultPrevented()) return;
 
 			$widget_box.toggle(event_name, $this);
 		}
 		else if($action == 'close') {
-			var event
-			$box.trigger(event = $.Event('close.ace.widget'))
-			if (event.isDefaultPrevented()) return
+			var event;
+			$box.trigger(event = $.Event('close.ace.widget'));
+			if (event.isDefaultPrevented()) return;
 
 			$widget_box.close();
 		}
 		else if($action == 'reload') {
 			$this.blur();
-			var event
-			$box.trigger(event = $.Event('reload.ace.widget'))
-			if (event.isDefaultPrevented()) return
+			var event;
+			$box.trigger(event = $.Event('reload.ace.widget'));
+			if (event.isDefaultPrevented()) return;
 
 			$widget_box.reload();
 		}
 		else if($action == 'fullscreen') {
-			var event
-			$box.trigger(event = $.Event('fullscreen.ace.widget'))
-			if (event.isDefaultPrevented()) return
+			var event;
+			$box.trigger(event = $.Event('fullscreen.ace.widget'));
+			if (event.isDefaultPrevented()) return;
 		
 			$widget_box.fullscreen();
 		}

@@ -8,7 +8,7 @@
 (function($ , undefined) {
 	//if( !$.fn.ace_scroll ) return;
 
-	var old_safari = ace.vars['safari'] && navigator.userAgent.match(/version\/[1-5]/i)
+	var old_safari = ace.vars['safari'] && navigator.userAgent.match(/version\/[1-5]/i);
 	//NOTE
 	//Safari on windows has not been updated for a long time.
 	//And it has a problem when sidebar is fixed&scrollable and there is a CSS3 animation inside page content.
@@ -21,7 +21,7 @@
 	//el.offsetHeight is used to force redraw and recalculate 'el.style.position' esp. for webkit!
 	function(el, pos) { el.offsetHeight; return window.getComputedStyle(el).position == pos }
 	:
-	function(el, pos) { el.offsetHeight; return $(el).css('position') == pos }
+	function(el, pos) { el.offsetHeight; return $(el).css('position') == pos };
 
 	
 	function Sidebar_Scroll(sidebar , settings) {
@@ -52,7 +52,7 @@
 
 		var submenu_hover = function() {
 			return $sidebar.first('li.hover > .submenu').css('position') == 'absolute'
-		}
+		};
 		
 		
 		var scroll_div = null,
@@ -73,10 +73,10 @@
 			if(self.sidebar_fixed) offset.top -= ace.helper.scrollTop();
 
 			return $window.innerHeight() - offset.top - ( self.settings.include_toggle ? 0 : $toggle.outerHeight() );
-		}
+		};
 		var content_height = function() {
 			return nav.scrollHeight;
-		}
+		};
 		
 		var initiate = function(on_page_load) {
 			if( _initiated ) return;
@@ -122,7 +122,7 @@
 				}
 				scroll_to_active = false;
 			}
-		}
+		};
 		
 		
 		this.scroll_to_active = function() {
@@ -133,12 +133,12 @@
 				
 				var vars = ace_sidebar['vars']();
 
-				var nav_list = $sidebar.find('.nav-list')
+				var nav_list = $sidebar.find('.nav-list');
 				if(vars['minimized'] && !vars['collapsible']) {
 					$active = nav_list.find('> .active')
 				}
 				else {
-					$active = $nav.find('> .active.hover')
+					$active = $nav.find('> .active.hover');
 					if($active.length == 0)	$active = $nav.find('.active:not(.open)')
 				}
 
@@ -159,7 +159,7 @@
 			
 			
 			
-		}
+		};
 		
 		
 		this.reset = function(recalc) {
@@ -201,14 +201,14 @@
 				if(this.is_scrolling) this.disable();
 			}
 			//return is_scrolling;
-		}
+		};
 		
 		this.disable = function() {
 			this.is_scrolling = false;
 			if(ace_scroll) ace_scroll.disable();
 			
 			$sidebar.removeClass('sidebar-scroll');
-		}
+		};
 		
 		this.prehide = function(height_change) {
 			if(!this.is_scrolling || ace_sidebar.get('minimized')) return;//when minimized submenu's toggle should have no effect
@@ -219,12 +219,12 @@
 			else if(height_change < 0) {
 				//if content height is decreasing
 				//let's move nav down while a submenu is being hidden
-				var scroll_top = scroll_content.scrollTop() + height_change
+				var scroll_top = scroll_content.scrollTop() + height_change;
 				if(scroll_top < 0) return;
 
 				scroll_content.scrollTop(scroll_top);
 			}
-		}
+		};
 		
 		this._reset = function(recalc) {
 			if(recalc === true) {
@@ -234,23 +234,23 @@
 			if(ace.vars['webkit']) 
 				setTimeout(function() { self.reset() } , 0);
 			else this.reset();
-		}
+		};
 		
 		this.get = function(name) {
 			if(this.hasOwnProperty(name)) return this[name];
-		}
+		};
 		this.set = function(name, value) {
 			if(this.hasOwnProperty(name)) this[name] = value;
-		}
+		};
 		this.ref = function() {
 			//return a reference to self
 			return this;
-		}
+		};
 		
 		this.updateStyle = function(styleClass) {
 			if(ace_scroll == null) return;
 			ace_scroll.update({styleClass: styleClass});
-		}
+		};
 		
 		
 		//change scrollbar size after a submenu is hidden/shown
@@ -262,7 +262,7 @@
 				//webkit has a little bit of a glitch!!!
 				self._reset();
 			}
-		})
+		});
 
 		initiate(true);//true = on_page_load
 	}
@@ -283,7 +283,7 @@
 			}
 			else if( event_name === 'sidebar_fixed' || event_name === 'navbar_fixed' ) {
 				var is_scrolling = sidebar_scroll.get('is_scrolling');
-				var sidebar_fixed = is_element_pos(this, 'fixed')
+				var sidebar_fixed = is_element_pos(this, 'fixed');
 				sidebar_scroll.set('sidebar_fixed', sidebar_fixed);
 
 				if(sidebar_fixed && !is_scrolling) {
@@ -294,17 +294,17 @@
 				}
 			}		
 		})
-	})
+	});
 
 	$(window).on('resize.ace.sidebar_scroll', function(){
 		$('.sidebar[data-sidebar-scroll=true]').each(function() {
 			var sidebar_scroll = $(this).ace_sidebar_scroll('ref');
 			
-			var sidebar_fixed = is_element_pos(this, 'fixed')
+			var sidebar_fixed = is_element_pos(this, 'fixed');
 			sidebar_scroll.set('sidebar_fixed', sidebar_fixed);
 			sidebar_scroll.reset();
 		});
-	})
+	});
 	
 	
 	
@@ -325,7 +325,7 @@
 		});
 
 		return (method_call === undefined) ? $set : method_call;
-	 }
+	 };
 	 
 	  $.fn.ace_sidebar_scroll.defaults = {
 		'scroll_to_active': true,

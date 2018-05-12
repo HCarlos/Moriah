@@ -12,7 +12,7 @@
 			'selected-icon' : ace.vars['icon'] + 'fa fa-check',
 			'unselected-icon' : ace.vars['icon'] + 'fa fa-times',
 			'loadingHTML': 'Loading...'
-		}
+		};
 
 		this.each(function() {
 		

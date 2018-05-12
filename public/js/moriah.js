@@ -10,6 +10,7 @@ $(document).ready(function() {
             event.preventDefault();
             var aID = event.currentTarget.id.split('-');
             var x = confirm("Desea eliminar el registro: "+aID[1]);
+
             if (!x){
                 return false;
             }
@@ -22,7 +23,7 @@ $(document).ready(function() {
                 })
                     .done(function( response ) {
                         if (response.data == 'OK'){
-                            window.location.href = '/index_'+aID[0]+'/'+aID[2]+'/'+aID[3];
+                            window.location.reload();
                         }else{
                             alert(response.mensaje);
                         }
@@ -117,6 +118,63 @@ $(document).ready(function() {
         $("#btnRefreshNavigator").on('click', function(event) {
             event.preventDefault();
             window.location.reload();
+        });
+    }
+
+    $('#myModal').on('shown.bs.modal', function () {
+        //alert('Hola');
+    })
+
+    // $('#myModal').modal({
+    //     backdrop: true
+    // });
+
+    if ( $(".btnAction1") ){
+
+        $('.btnAction1').on('click', function(event) {
+            event.preventDefault();
+
+//            $( "#myModal" ).modal('show');
+
+            var aID = event.currentTarget.id.split('-');
+
+            // var Url = "/edit_paquete_detalle_ajax/" + aID[1] + "/" + aID[2];
+            // $( "#myModal" ).load( Url, function() {
+            //     // alert( "Load was performed." );
+            //     $(this).modal('show');
+            // });
+
+            //alert(Url);
+            /*
+            $(function () {
+                $.ajax({
+                    method: "GET",
+                    url: Url
+                })
+                    .done(function (response) {
+                        // alert(response);
+
+                        $("#myModal").html(response);
+                        //alert($("#myModal"));
+                        $("#myModal").modal('show');
+
+                        // $('#myModal').on('shown.bs.modal', function () {
+                        //     $('#myInput').focus()
+                        // })
+
+                    });
+            });
+            */
+
+        });
+    }
+
+
+
+    if ( $("#frm1Edit") ) {
+        $('#frm1Edit').on('submit', function (event) {
+            event.preventDefault();
+            alert("Datos guardados con éxito")
         });
     }
 

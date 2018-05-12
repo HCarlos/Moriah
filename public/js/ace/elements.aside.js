@@ -80,7 +80,7 @@
 			if( this.settings.backdrop == false ) {
 				$modal.addClass('no-backdrop');
 			}
-		}
+		};
 		
 		
 		this.show = function() {
@@ -91,10 +91,10 @@
 			}
 	
 			if(this.container) $(this.container).addClass('overflow-hidden');
-			else $modal.css('position', 'fixed')
+			else $modal.css('position', 'fixed');
 			
 			$modal.removeClass('aside-hidden');
-		}
+		};
 		
 		this.hide = function() {
 			if(this.container) {
@@ -116,7 +116,7 @@
 					if(self.container) self.container.removeClass('overflow-hidden');
 				}).emulateTransitionEnd(delay);
 			}
-		}
+		};
 		
 		this.shown = function() {
 			toggleButton();
@@ -168,18 +168,18 @@
 					self.container.removeClass('overflow-hidden')
 				}).emulateTransitionEnd(delay);
 			}
-		}
+		};
 		
 		
 		this.hidden = function() {
-			$window.off('.aside')
+			$window.off('.aside');
 			//$modal.off('.aside')
 			//			
 			if( !ace.vars['transition'] || hasFade ) {
 				$modal.addClass('aside-hidden');
 				$modal.css('position', '');
 			}
-		}
+		};
 		
 		
 		this.insideContainer = function() {
@@ -200,13 +200,13 @@
 					ace.helper.redraw(container[0]);
 				}
 			}
-		}
+		};
 		
 		this.flip = function() {
 			var flipSides = {right : 'left', left : 'right', top: 'bottom', bottom: 'top'};
 			$modal.removeClass('aside-'+placement).addClass('aside-'+flipSides[placement]);
 			placement = flipSides[placement];
-		}
+		};
 
 		var toggleButton = function() {
 			var btn = $modal.find('.aside-trigger');
@@ -216,7 +216,7 @@
 			var icon = btn.find(ace.vars['.icon']);
 			if(icon.length == 0) return;
 			icon.toggleClass(icon.attr('data-icon1') + " " + icon.attr('data-icon2'));
-		}
+		};
 		
 
 		this.initiate();
@@ -239,7 +239,7 @@
 	})
 	.on('hidden.bs.modal', '.modal.aside', function(e) {
 		$(this).ace_aside('hidden');
-	})
+	});
 	
 	
 
@@ -267,7 +267,7 @@
 		});
 
 		return (method_call === undefined) ? $set : method_call;
-	}
+	};
 	
 	$.fn.ace_aside.defaults = {
 		fixed: false,

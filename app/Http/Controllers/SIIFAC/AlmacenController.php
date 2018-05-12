@@ -120,7 +120,9 @@ class AlmacenController extends Controller
         $data['descripcion'] = $descripcion;
         $data['responsable'] = $responsable;
 
-        Almacen::create($data);
+        $emp = Empresa::find($data['empresa_id']);
+        $alma = Almacen::create($data);
+        $alma->empresas()->attach($emp);
 
         return redirect('/new_almacen/'.$idItem);
     }
@@ -151,7 +153,10 @@ class AlmacenController extends Controller
         $data['descripcion'] = $descripcion;
         $data['responsable'] = $responsable;
 
+        $emp = Empresa::find($data['empresa_id']);
         $alma->update($data);
+        $alma->empresas()->detach();
+        $alma->empresas()->attach($emp);
 
         return redirect('/edit_almacen/'.$idItem);
 

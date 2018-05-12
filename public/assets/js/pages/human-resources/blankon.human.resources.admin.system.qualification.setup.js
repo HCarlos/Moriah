@@ -18,7 +18,7 @@ var BlankonHumanResourcesAdminSystemQualificationSetup = function () {
         // =========================================================================
         handleBtnAdd: function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href") // activated tab
+                var target = $(e.target).attr("href"); // activated tab
                 if(target == '#tab-skills'){
                     $('.btn-add-skills').show();
                     $('.btn-add-education').hide();

@@ -18,7 +18,7 @@
 	var breadcrumbs = $('.breadcrumbs').eq(0);
 	var page_content = $('.page-content').get(0);
 	
-	var default_padding = 8
+	var default_padding = 8;
 
 	if(navbar.length > 0) {
 	  $(window).on('resize.auto_padding', function() {

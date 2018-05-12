@@ -24,7 +24,7 @@
             <!-- /main-content-inner -->
         </div>
         <!-- /main-content -->
-
+        @include('partials.modal')
         @include('partials.footer')
 
     </div>

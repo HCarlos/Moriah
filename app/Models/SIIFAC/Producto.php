@@ -82,7 +82,12 @@ class Producto extends Model
             ->where('descripcion', $descripcion)
             ->first();
         if (!$obj) {
-            return static::create([
+            $alma = Almacen::find($almacen_id);
+            $fp   = FamiliaProducto::find($familia_producto_id);
+            $med  = Medida::find($medida_id);
+            $emp = Empresa::find($empresa_id);
+
+            $prod =  static::create([
                 'almacen_id'=>$almacen_id,
                 'familia_producto_id'=>$familia_producto_id,
                 'medida_id'=>$medida_id,
@@ -103,6 +108,13 @@ class Producto extends Model
                 'saldo'=>$saldo,
                 'empresa_id'=>$empresa_id,
             ]);
+
+            $prod->almacenes()->attach($alma);
+            $prod->familiaProductos()->attach($fp);
+            $prod->medidas()->attach($med);
+            $prod->empresas()->attach($emp);
+
+            return $prod;
         }
         return $obj;
     }

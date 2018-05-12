@@ -8,9 +8,9 @@
 		var attrib_values = ace.helper.getAttrSettings(element, $.fn.ace_spinner.defaults);
 		var options = $.extend({}, $.fn.ace_spinner.defaults, _options, attrib_values);
 	
-		var max = options.max
-		max = (''+max).length
-		var width = parseInt(Math.max((max * 20 + 40) , 90))
+		var max = options.max;
+		max = (''+max).length;
+		var width = parseInt(Math.max((max * 20 + 40) , 90));
 
 		var $element = $(element);
 		
@@ -28,9 +28,9 @@
 		if(sizing == 2) width += 25;
 		else if(sizing == 3) width += 50;
 		
-		$element.addClass('spinbox-input form-control text-center').wrap('<div class="ace-spinner middle">')
+		$element.addClass('spinbox-input form-control text-center').wrap('<div class="ace-spinner middle">');
 
-		var $parent_div = $element.closest('.ace-spinner').spinbox(options).wrapInner("<div class='input-group'></div>")
+		var $parent_div = $element.closest('.ace-spinner').spinbox(options).wrapInner("<div class='input-group'></div>");
 		var $spinner = $parent_div.data('fu.spinbox');
 		
 		if(options.on_sides)
@@ -47,7 +47,7 @@
 					</button>\
 				</div>');
 
-			$parent_div.addClass('touch-spinner')
+			$parent_div.addClass('touch-spinner');
 			$parent_div.css('width' , width+'px')
 		}
 		else {
@@ -59,10 +59,10 @@
 					<button type="button" class="btn spinbox-down '+btn_class+' '+options.btn_down_class+'">\
 						<i class="icon-only '+ ace.vars['icon'] + options.icon_down+'"></i>\
 					</button>\
-				</div>')
+				</div>');
 
 			if(ace.vars['touch'] || options.touch_spinner) {
-				$parent_div.addClass('touch-spinner')
+				$parent_div.addClass('touch-spinner');
 				$parent_div.css('width' , width+'px')
 			}
 			else {
@@ -97,7 +97,7 @@
 		});
 
 		return (retval === undefined) ? $set : retval;
-	}
+	};
 	
 	$.fn.ace_spinner.defaults = {
 		'icon_up' : 'fa fa-chevron-up',

@@ -146,7 +146,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				}
 				move_bar = false;
 				if(trigger_scroll) this.$element.trigger('scroll', [content_wrap]);
-			})
+			});
 
 
 			if(settings.mouseWheel) {
@@ -162,15 +162,15 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
 					if(mouse_track) {
 						mouse_track = false;
-						$('html').off('.ace_scroll')
+						$('html').off('.ace_scroll');
 						$(mouse_release_target).off('.ace_scroll');
 						if(dragEvent) self.$element.trigger('drag.end');
 					}
 					
 
 					event.deltaY = event.deltaY || 0;
-					var delta = (event.deltaY > 0 || event.originalEvent.detail < 0 || event.originalEvent.wheelDelta > 0) ? 1 : -1
-					var scrollEnd = false//have we reached the end of scrolling?
+					var delta = (event.deltaY > 0 || event.originalEvent.detail < 0 || event.originalEvent.wheelDelta > 0) ? 1 : -1;
+					var scrollEnd = false;//have we reached the end of scrolling?
 					
 					var clientSize = content_wrap[client_size], scrollAmount = content_wrap[scroll_direction];
 					if( !self.lock ) {
@@ -195,7 +195,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			
 			
 			//swipe not available yet
-			var touchDrag = ace.vars['touch'] && 'ace_drag' in $.event.special && settings.touchDrag //&& !settings.touchSwipe;
+			var touchDrag = ace.vars['touch'] && 'ace_drag' in $.event.special && settings.touchDrag; //&& !settings.touchSwipe;
 			//add drag event for touch devices to scroll
 			if(touchDrag/** || ($.fn.swipe && settings.touchSwipe)*/) {
 				var dir = '', event_name = touchDrag ? 'ace_drag' : 'swipe';
@@ -267,20 +267,20 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			
 			disabled = false;
 			created = true;
-		}
+		};
 		this.is_active = function() {
 			return active;
-		}
+		};
 		this.is_enabled = function() {
 			return !disabled;
-		}
+		};
 		this.move_bar = function($move) {
 			move_bar = $move;
-		}
+		};
 		
 		this.get_track = function() {
 			return track;
-		}
+		};
 
 		this.reset = function(innert_call) {
 			if(disabled) return;// this;
@@ -302,7 +302,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			if( (vertical && content_size == 0) || (!vertical && this.element.scrollWidth == 0) ) {
 				//element is hidden
 				//this.$element.addClass('scroll-hidden');
-				$track.removeClass('scroll-active')
+				$track.removeClass('scroll-active');
 				return;// this;
 			}
 
@@ -316,7 +316,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				active = true;
 				$track.css(css_size, available_space).show();
 
-				ratio = parseFloat((available_space / content_size).toFixed(5))
+				ratio = parseFloat((available_space / content_size).toFixed(5));
 				
 				bar_size = parseInt(Math.round(available_space * ratio));
 				bar_size_2 = parseInt(Math.round(bar_size / 2));
@@ -351,8 +351,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				$content_wrap.css(max_css_size , '');
 			}
 
-			return;// this;
-		}
+			// this;
+		};
 		this.disable = function() {
 			content_wrap[scroll_direction] = 0;
 			bar_style[css_pos] = 0;
@@ -365,18 +365,18 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			
 			$track.removeClass('scroll-active');
 			$content_wrap.css(max_css_size , '');
-		}
+		};
 		this.enable = function() {
 			disabled = false;
 			this.$element.removeClass('scroll-disabled');
-		}
+		};
 		this.destroy = function() {
 			active = false;
 			disabled = false;
 			created = false;
 			
 			this.$element.removeClass('ace-scroll scroll-disabled scroll-active');
-			this.$element.off('.ace_scroll')
+			this.$element.off('.ace_scroll');
 
 			if(!detached) {
 				if(!vertical) {
@@ -395,7 +395,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				clearTimeout(idleTimer);
 				idleTimer = null;
 			}
-		}
+		};
 		this.modify = function(_settings) {
 			if(_settings) settings = $.extend({}, settings, _settings);
 			
@@ -403,7 +403,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			this.create();
 			is_dirty = true;
 			this.reset(true);
-		}
+		};
 		this.update = function(_settings) {
 			if(_settings) settings = $.extend({}, settings, _settings);
 		
@@ -418,28 +418,28 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				if(styleClass) $track.addClass(styleClass);
 				trackFlip = !!styleClass.match(/scroll\-left|scroll\-top/);
 			}
-		}
+		};
 		
 		this.start = function() {
 			content_wrap[scroll_direction] = 0;
-		}
+		};
 		this.end = function() {
 			content_wrap[scroll_direction] = content_wrap[scroll_size];
-		}
+		};
 		
 		this.hide = function() {
 			$track.hide();
-		}
+		};
 		this.show = function() {
 			$track.show();
-		}
+		};
 
 		
 		this.update_scroll = function() {
 			move_bar = false;
 			bar_style[css_pos] = bar_pos + 'px';
 			content_wrap[scroll_direction] = parseInt(Math.round(bar_pos / ratio));
-		}
+		};
 
 		function mouse_down_track(e) {
 			e.preventDefault();
@@ -475,7 +475,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			}
 
 			mouse_track = true;
-			$('html').off('mousemove.ace_scroll').on('mousemove.ace_scroll', mouse_move_bar)
+			$('html').off('mousemove.ace_scroll').on('mousemove.ace_scroll', mouse_move_bar);
 			$(mouse_release_target).off('mouseup.ace_scroll').on('mouseup.ace_scroll', mouse_up_bar);
 			
 			$track.addClass('active');
@@ -515,7 +515,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			e.stopPropagation();
 			
 			mouse_track = false;
-			$('html').off('.ace_scroll')
+			$('html').off('.ace_scroll');
 			$(mouse_release_target).off('.ace_scroll');
 
 			$track.removeClass('active');
@@ -577,7 +577,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		this.track_size = function() {
 			if(trackSize == 0) getTrackSize();
 			return trackSize;
-		}
+		};
 		
 		//for detached scrollbars
 		function setTrackPos() {
@@ -611,7 +611,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		prevContentSize = content_wrap[scroll_size];
 
 		return this;
-	}
+	};
 
 	
 	$.fn.ace_scroll = function (option,value) {
@@ -669,7 +669,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		'thin': false,
 		'position': 'right'
 		*/
-     }
+     };
 
 	/**
 	$(document).on('ace.settings.ace_scroll', function(e, name) {
@@ -680,7 +680,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 	});
 	*/
 
-})(window.jQuery);;/**
+})(window.jQuery);
+/**
  <b>Custom color picker element</b>. Converts html select elements to a dropdown color picker.
 */
 (function($ , undefined) {
@@ -704,7 +705,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				$class += ' selected';
 				color_selected = color;
 			}
-			color_array.push(color)
+			color_array.push(color);
 			color_list += '<li><a class="'+$class+'" href="#" style="background-color:'+color+';" data-color="'+color+'"></a></li>';
 		}).
 		end()
@@ -712,10 +713,10 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			$element.next().find('.btn-colorpicker').css('background-color', this.value);
 		})
 		.after('<div class="dropdown dropdown-colorpicker">\
-		<a data-toggle="dropdown" class="dropdown-toggle" '+(options.auto_pos ? 'data-position="auto"' : '')+' href="#"><span class="btn-colorpicker" style="background-color:'+color_selected+'"></span></a><ul class="dropdown-menu'+(options.caret? ' dropdown-caret' : '')+(options.pull_right ? ' dropdown-menu-right' : '')+'">'+color_list+'</ul></div>')
+		<a data-toggle="dropdown" class="dropdown-toggle" '+(options.auto_pos ? 'data-position="auto"' : '')+' href="#"><span class="btn-colorpicker" style="background-color:'+color_selected+'"></span></a><ul class="dropdown-menu'+(options.caret? ' dropdown-caret' : '')+(options.pull_right ? ' dropdown-menu-right' : '')+'">'+color_list+'</ul></div>');
 
 		
-		var dropdown = $element.next().find('.dropdown-menu')
+		var dropdown = $element.next().find('.dropdown-menu');
 		dropdown.on(ace.click_event, function(e) {
 			var a = $(e.target);
 			if(!a.is('.colorpick-btn')) return false;
@@ -729,7 +730,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
 			e.preventDefault();
 			return true;//to hide dropdown
-		})
+		});
 		selection = $element.next().find('a.selected');
 
 		this.pick = function(index, insert) {
@@ -760,14 +761,14 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				if(index == -1) return;
 				dropdown.find('a:eq('+index+')').trigger(ace.click_event);
 			}
-		}
+		};
 
 		this.destroy = function() {
 			$element.removeClass('hide').off('change.color')
 			.next().remove();
 			color_array = [];
 		}
-	}
+	};
 
 
 	$.fn.ace_colorpicker = function(option, value) {
@@ -783,15 +784,16 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		});
 
 		return (retval === undefined) ? $set : retval;
-	}
+	};
 	
 	$.fn.ace_colorpicker.defaults = {
 		'pull_right' : false,
 		'caret': true,
 		'auto_pos': true
 	}
-	
-})(window.jQuery);;/**
+
+})(window.jQuery);
+/**
  <b>Ace file input element</b>. Custom, simple file input element to style browser's default file input.
 */
 (function($ , undefined) {
@@ -822,13 +824,13 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			//if(ret === false) e.preventDefault();
 		});
 
-		var parent_label = this.$element.closest('label').css({'display':'block'})
+		var parent_label = this.$element.closest('label').css({'display':'block'});
 		var tagName = parent_label.length == 0 ? 'label' : 'span';//if not inside a "LABEL" tag, use "LABEL" tag, otherwise use "SPAN"
 		this.$element.wrap('<'+tagName+' class="ace-file-input" />');
 
 		this.apply_settings();
 		this.reset_input_field();//for firefox as it keeps selected file after refresh
-	}
+	};
 	Ace_File_Input.error = {
 		'FILE_LOAD_FAILED' : 1,
 		'IMAGE_LOAD_FAILED' : 2,
@@ -874,7 +876,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		if(this.settings.droppable && hasFileList) {
 			enable_drop_functionality.call(this);
 		}
-	}
+	};
 
 	Ace_File_Input.prototype.show_file_list = function($files , inner_call) {
 		var files = typeof $files === "undefined" ? this.$element.data('ace_input_files') : $files;
@@ -932,7 +934,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				var type = (inner_call === true && hasFile && files[i] instanceof File) ? $.trim(files[i].type) : '';
 				var can_preview = hasFileReader && this.settings.thumbnail 
 						&&
-						( (type.length > 0 && type.match('image')) || (type.length == 0 && format == 'image') )//the second one is for older Android's default browser which gives an empty text for file.type
+						( (type.length > 0 && type.match('image')) || (type.length == 0 && format == 'image') );//the second one is for older Android's default browser which gives an empty text for file.type
 				if(can_preview) {
 					var self = this;
 					$.when(preview_image.call(this, files[i])).fail(function(result){
@@ -944,12 +946,12 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		}
 		
 		return true;
-	}
+	};
 	
 	Ace_File_Input.prototype.reset_input = function() {
 	    this.reset_input_ui();
 		this.reset_input_field();
-	}
+	};
 	
 	Ace_File_Input.prototype.reset_input_ui = function() {
 		 this.$label.attr({'data-title':this.settings.btn_choose, 'class':'ace-file-container'})
@@ -963,7 +965,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		this.reset_input_data();
 		
 		//if(ace.vars['old_ie']) ace.helper.redraw(this.$container[0]);
-	}
+	};
 	Ace_File_Input.prototype.reset_input_field = function() {
 		//http://stackoverflow.com/questions/1043957/clearing-input-type-file-using-jquery/13351234#13351234
 		this.$element.wrap('<form>').parent().get(0).reset();
@@ -976,38 +978,38 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		//thus calling reset again and again and again
 		//so because when "reset" button of outer form is hit, file input is automatically reset
 		//we just reset_input_ui to avoid recursion
-	}
+	};
 	Ace_File_Input.prototype.reset_input_data = function() {
 		if(this.$element.data('ace_input_files')) {
 			this.$element.removeData('ace_input_files');
 			this.$element.removeData('ace_input_method');
 		}
-	}
+	};
 
 	Ace_File_Input.prototype.enable_reset = function(can_reset) {
 		this.can_reset = can_reset;
-	}
+	};
 
 	Ace_File_Input.prototype.disable = function() {
 		this.disabled = true;
 		this.$element.attr('disabled', 'disabled').addClass('disabled');
-	}
+	};
 	Ace_File_Input.prototype.enable = function() {
 		this.disabled = false;
 		this.$element.removeAttr('disabled').removeClass('disabled');
-	}
+	};
 
 	Ace_File_Input.prototype.files = function() {
 		return $(this).data('ace_input_files') || null;
-	}
+	};
 	Ace_File_Input.prototype.method = function() {
 		return $(this).data('ace_input_method') || '';
-	}
+	};
 	
 	Ace_File_Input.prototype.update_settings = function(new_settings) {
 		this.settings = $.extend({}, this.settings, new_settings);
 		this.apply_settings();
-	}
+	};
 	
 	Ace_File_Input.prototype.loading = function(is_loading) {
 		if(is_loading === false) {
@@ -1029,7 +1031,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			}
 			loader.empty().append(inside);
 		}
-	}
+	};
 
 
 
@@ -1075,7 +1077,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			self.$element.triggerHandler('change' , [true]);//true means ace_inner_call
 			return true;
 		});
-	}
+	};
 	
 	
 	var handle_on_change = function() {
@@ -1090,7 +1092,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		this.show_file_list(file_list , true);
 		
 		return true;
-	}
+	};
 
 
 
@@ -1111,7 +1113,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			});
 
 			img.src = src;
-		}
+		};
 		var imgLoaded = function(img) {
 			//if image loaded successfully
 			var size = 50;
@@ -1128,29 +1130,31 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			}
 
 			var w = thumb.w, h = thumb.h;
-			if(self.settings.thumbnail == 'small') {w=h=size;};
-			$(img).css({'background-image':'url('+thumb.src+')' , width:w, height:h})
+            if (self.settings.thumbnail == 'small') {
+                w = h = size;
+            }
+            $(img).css({'background-image':'url('+thumb.src+')' , width:w, height:h})
 					.data('thumb', thumb.src)
 					.attr({src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=='})
-					.show()
+					.show();
 
 			///////////////////
 			deferred.resolve();
-		}
+		};
 		var imgFailed = function(img) {
 			//for example when a file has image extenstion, but format is something else
 			$span.find('img').remove();
 			deferred.reject({code:Ace_File_Input.error['IMAGE_LOAD_FAILED']});
-		}
+		};
 		
 		if(hasFile && file instanceof File) {
 			var reader = new FileReader();
 			reader.onload = function (e) {
 				getImage(e.target.result);
-			}
+			};
 			reader.onerror = function (e) {
 				deferred.reject({code:Ace_File_Input.error['FILE_LOAD_FAILED']});
-			}
+			};
 			reader.readAsDataURL(file);
 		}
 		else {
@@ -1160,14 +1164,14 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		}
 		
 		return deferred.promise();
-	}
+	};
 
 	var get_thumbnail = function(img, size, type) {
 		var w = img.width, h = img.height;
 		
 		//**IE10** is not giving correct width using img.width so we use $(img).width()
-		w = w > 0 ? w : $(img).width()
-		h = h > 0 ? h : $(img).height()
+		w = w > 0 ? w : $(img).width();
+		h = h > 0 ? h : $(img).height();
 
 		if(w > size || h > size) {
 		  if(w > h) {
@@ -1180,7 +1184,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		}
 
 
-		var dataURL
+		var dataURL;
 		try {
 			var canvas = document.createElement('canvas');
 			canvas.width = w; canvas.height = h;
@@ -1199,7 +1203,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		
 
 		return {src: dataURL, w:w, h:h};
-	}
+	};
 	
 
 	
@@ -1233,7 +1237,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		if (ret instanceof Array || (hasFileList && ret instanceof FileList)) file_list = ret;
 		
 		return file_list;
-	}
+	};
 	
 	
 	var getExtRegex = function(ext) {
@@ -1241,13 +1245,13 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		if(typeof ext === 'string') ext = [ext];
 		if(ext.length == 0) return null;
 		return new RegExp("\.(?:"+ext.join('|')+")$", "i");
-	}
+	};
 	var getMimeRegex = function(mime) {
 		if(!mime) return null;
 		if(typeof mime === 'string') mime = [mime];
 		if(mime.length == 0) return null;
 		return new RegExp("^(?:"+mime.join('|').replace(/\//g, "\\/")+")$", "i");
-	}
+	};
 	var checkFileList = function(files, dropped) {
 		var allowExt   = getExtRegex(this.settings.allowExt);
 
@@ -1263,7 +1267,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
 
 		var safe_files = [];
-		var error_list = {}
+		var error_list = {};
 		for(var f = 0; f < files.length; f++) {
 			var file = files[f];
 			
@@ -1320,12 +1324,12 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		if(safe_files.length == files.length) return files;//return original file list if all are valid
 
 		/////////
-		var error_count = {'ext': 0, 'mime': 0, 'size': 0}
+		var error_count = {'ext': 0, 'mime': 0, 'size': 0};
 		if( 'ext' in error_list ) error_count['ext'] = error_list['ext'].length;
 		if( 'mime' in error_list ) error_count['mime'] = error_list['mime'].length;
 		if( 'size' in error_list ) error_count['size'] = error_list['size'].length;
 		
-		var event
+		var event;
 		this.$element.trigger(
 			event = new $.Event('file.error.ace'), 
 			{
@@ -1340,7 +1344,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		//////////
 
 		return safe_files;//return safe_files
-	}
+	};
 
 
 
@@ -1385,8 +1389,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
 
 })(window.jQuery);
-;/**
-  <b>Bootstrap 2 typeahead plugin.</b> With Bootstrap <u>3</u> it's been dropped in favor of a more advanced separate plugin.
+/**
+ <b>Bootstrap 2 typeahead plugin.</b> With Bootstrap <u>3</u> it's been dropped in favor of a more advanced separate plugin.
   Pretty good for simple cases such as autocomplete feature of the search box and required for <u class="text-danger">Tag input</u> plugin.
 */
 
@@ -1419,27 +1423,27 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
   * ================================= */
 
   var Typeahead = function (element, options) {
-    this.$element = $(element)
-    this.options = $.extend({}, $.fn.bs_typeahead.defaults, options)
-    this.matcher = this.options.matcher || this.matcher
-    this.sorter = this.options.sorter || this.sorter
-    this.highlighter = this.options.highlighter || this.highlighter
-    this.updater = this.options.updater || this.updater
-    this.source = this.options.source
-    this.$menu = $(this.options.menu)
-    this.shown = false
+    this.$element = $(element);
+    this.options = $.extend({}, $.fn.bs_typeahead.defaults, options);
+    this.matcher = this.options.matcher || this.matcher;
+    this.sorter = this.options.sorter || this.sorter;
+    this.highlighter = this.options.highlighter || this.highlighter;
+    this.updater = this.options.updater || this.updater;
+    this.source = this.options.source;
+    this.$menu = $(this.options.menu);
+    this.shown = false;
     this.listen()
-  }
+  };
 
   Typeahead.prototype = {
 
     constructor: Typeahead
 
   , select: function () {
-      var val = this.$menu.find('.active').attr('data-value')
+      var val = this.$menu.find('.active').attr('data-value');
       this.$element
         .val(this.updater(val))
-        .change()
+        .change();
       return this.hide()
     }
 
@@ -1450,7 +1454,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
   , show: function () {
       var pos = $.extend({}, this.$element.position(), {
         height: this.$element[0].offsetHeight
-      })
+      });
 
       this.$menu
         .insertAfter(this.$element)
@@ -1458,40 +1462,40 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
           top: pos.top + pos.height
         , left: pos.left
         })
-        .show()
+        .show();
 
-      this.shown = true
+      this.shown = true;
       return this
     }
 
   , hide: function () {
-      this.$menu.hide()
-      this.shown = false
+      this.$menu.hide();
+      this.shown = false;
       return this
     }
 
   , lookup: function (event) {
-      var items
+      var items;
 
-      this.query = this.$element.val()
+      this.query = this.$element.val();
 
       if (!this.query || this.query.length < this.options.minLength) {
         return this.shown ? this.hide() : this
       }
 
-      items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source
+      items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source;
 
       return items ? this.process(items) : this
     }
 
   , process: function (items) {
-      var that = this
+      var that = this;
 
       items = $.grep(items, function (item) {
         return that.matcher(item)
-      })
+      });
 
-      items = this.sorter(items)
+      items = this.sorter(items);
 
       if (!items.length) {
         return this.shown ? this.hide() : this
@@ -1508,11 +1512,11 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
       var beginswith = []
         , caseSensitive = []
         , caseInsensitive = []
-        , item
+        , item;
 
       while (item = items.shift()) {
-        if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
-        else if (~item.indexOf(this.query)) caseSensitive.push(item)
+        if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item);
+        else if (~item.indexOf(this.query)) caseSensitive.push(item);
         else caseInsensitive.push(item)
       }
 
@@ -1520,29 +1524,29 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
     }
 
   , highlighter: function (item) {
-      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
       return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
         return '<strong>' + match + '</strong>'
       })
     }
 
   , render: function (items) {
-      var that = this
+      var that = this;
 
       items = $(items).map(function (i, item) {
-        i = $(that.options.item).attr('data-value', item)
-        i.find('a').html(that.highlighter(item))
+        i = $(that.options.item).attr('data-value', item);
+        i.find('a').html(that.highlighter(item));
         return i[0]
-      })
+      });
 
-      items.first().addClass('active')
-      this.$menu.html(items)
+      items.first().addClass('active');
+      this.$menu.html(items);
       return this
     }
 
   , next: function (event) {
       var active = this.$menu.find('.active').removeClass('active')
-        , next = active.next()
+        , next = active.next();
 
       if (!next.length) {
         next = $(this.$menu.find('li')[0])
@@ -1553,7 +1557,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
   , prev: function (event) {
       var active = this.$menu.find('.active').removeClass('active')
-        , prev = active.prev()
+        , prev = active.prev();
 
       if (!prev.length) {
         prev = this.$menu.find('li').last()
@@ -1567,7 +1571,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
         .on('focus',    $.proxy(this.focus, this))
         .on('blur',     $.proxy(this.blur, this))
         .on('keypress', $.proxy(this.keypress, this))
-        .on('keyup',    $.proxy(this.keyup, this))
+        .on('keyup',    $.proxy(this.keyup, this));
 
       if (this.eventSupported('keydown')) {
         this.$element.on('keydown', $.proxy(this.keydown, this))
@@ -1580,32 +1584,32 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
     }
 
   , eventSupported: function(eventName) {
-      var isSupported = eventName in this.$element
+      var isSupported = eventName in this.$element;
       if (!isSupported) {
-        this.$element.setAttribute(eventName, 'return;')
+        this.$element.setAttribute(eventName, 'return;');
         isSupported = typeof this.$element[eventName] === 'function'
       }
       return isSupported
     }
 
   , move: function (e) {
-      if (!this.shown) return
+      if (!this.shown) return;
 
       switch(e.keyCode) {
         case 9: // tab
         case 13: // enter
         case 27: // escape
-          e.preventDefault()
-          break
+          e.preventDefault();
+          break;
 
         case 38: // up arrow
-          e.preventDefault()
-          this.prev()
-          break
+          e.preventDefault();
+          this.prev();
+          break;
 
         case 40: // down arrow
-          e.preventDefault()
-          this.next()
+          e.preventDefault();
+          this.next();
           break
       }
 
@@ -1613,12 +1617,12 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
     }
 
   , keydown: function (e) {
-      this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27])
+      this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27]);
       this.move(e)
     }
 
   , keypress: function (e) {
-      if (this.suppressKeyPressRepeat) return
+      if (this.suppressKeyPressRepeat) return;
       this.move(e)
     }
 
@@ -1629,24 +1633,24 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
         case 16: // shift
         case 17: // ctrl
         case 18: // alt
-          break
+          break;
 
         case 9: // tab
         case 13: // enter
-          if (!this.shown) return
-          this.select()
-          break
+          if (!this.shown) return;
+          this.select();
+          break;
 
         case 27: // escape
-          if (!this.shown) return
-          this.hide()
-          break
+          if (!this.shown) return;
+          this.hide();
+          break;
 
         default:
           this.lookup()
       }
 
-      e.stopPropagation()
+      e.stopPropagation();
       e.preventDefault()
   }
 
@@ -1655,45 +1659,45 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
     }
 
   , blur: function (e) {
-      this.focused = false
+      this.focused = false;
       if (!this.mousedover && this.shown) this.hide()
     }
 
   , click: function (e) {
-      e.stopPropagation()
-      e.preventDefault()
-      this.select()
+      e.stopPropagation();
+      e.preventDefault();
+      this.select();
       this.$element.focus()
     }
 
   , mouseenter: function (e) {
-      this.mousedover = true
-      this.$menu.find('.active').removeClass('active')
+      this.mousedover = true;
+      this.$menu.find('.active').removeClass('active');
       $(e.currentTarget).addClass('active')
     }
 
   , mouseleave: function (e) {
-      this.mousedover = false
+      this.mousedover = false;
       if (!this.focused && this.shown) this.hide()
     }
 
-  }
+  };
 
 
   /* TYPEAHEAD PLUGIN DEFINITION
    * =========================== */
 
-  var old = $.fn.bs_typeahead
+  var old = $.fn.bs_typeahead;
 
   $.fn.bs_typeahead = function (option) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('bs_typeahead')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('bs_typeahead', (data = new Typeahead(this, options)))
+        , options = typeof option == 'object' && option;
+      if (!data) $this.data('bs_typeahead', (data = new Typeahead(this, options)));
       if (typeof option == 'string') data[option]()
     })
-  }
+  };
 
   $.fn.bs_typeahead.defaults = {
     source: []
@@ -1701,30 +1705,31 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
   , menu: '<ul class="typeahead dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   , minLength: 1
-  }
+  };
 
-  $.fn.bs_typeahead.Constructor = Typeahead
+  $.fn.bs_typeahead.Constructor = Typeahead;
 
 
  /* TYPEAHEAD NO CONFLICT
   * =================== */
 
   $.fn.bs_typeahead.noConflict = function () {
-    $.fn.bs_typeahead = old
+    $.fn.bs_typeahead = old;
     return this
-  }
+  };
 
 
  /* TYPEAHEAD DATA-API
   * ================== */
 
   $(document).on('focus.bs_typeahead.data-api', '[data-provide="bs_typeahead"]', function (e) {
-    var $this = $(this)
-    if ($this.data('bs_typeahead')) return
+    var $this = $(this);
+    if ($this.data('bs_typeahead')) return;
     $this.bs_typeahead($this.data())
   })
 
-}(window.jQuery);;/**
+}(window.jQuery);
+/**
  <b>Wysiwyg</b>. A wrapper for Bootstrap wyswiwyg plugin.
  It's just a wrapper so you still need to include Bootstrap wysiwyg script first.
 */
@@ -1741,7 +1746,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			'#92e1c0','#9fe1e7','#9fc6e7','#4986e7','#9a9cff','#b99aff',
 			'#c2c2c2','#cabdbf','#cca6ac','#f691b2','#cd74e6','#a47ae2',
 			'#444444'
-		]
+		];
 
 		var button_defaults =
 		{
@@ -1844,7 +1849,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 				icon : 'fa fa-code',
 				title : 'View Source'
 			}
-		}
+		};
 		
 		var toolbar_buttons =
 		options.toolbar ||
@@ -1879,7 +1884,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			'redo',
 			null,
 			'viewSource'
-		]
+		];
 
 
 		this.each(function() {
@@ -1907,7 +1912,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 						toolbar += ' <ul class="dropdown-menu dropdown-light dropdown-caret">';
 						for(var font in button.values)
 							if(button.values.hasOwnProperty(font))
-								toolbar += ' <li><a data-edit="fontName ' + button.values[font] +'" style="font-family:\''+ button.values[font]  +'\'">'+button.values[font]  + '</a></li> '
+								toolbar += ' <li><a data-edit="fontName ' + button.values[font] +'" style="font-family:\''+ button.values[font]  +'\'">'+button.values[font]  + '</a></li> ';
 						toolbar += ' </ul>';
 					break;
 
@@ -1916,7 +1921,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 						toolbar += ' <ul class="dropdown-menu dropdown-light dropdown-caret"> ';
 						for(var size in button.values)
 							if(button.values.hasOwnProperty(size))
-								toolbar += ' <li><a data-edit="fontSize '+size+'"><font size="'+size+'">'+ button.values[size] +'</font></a></li> '
+								toolbar += ' <li><a data-edit="fontSize '+size+'"><font size="'+size+'">'+ button.values[size] +'</font></a></li> ';
 						toolbar += ' </ul> ';
 					break;
 
@@ -1946,7 +1951,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 							 <label class="center block no-margin-bottom">\
 								<button class="btn btn-sm '+button.button_class+' wysiwyg-choose-file" type="button">'+button.button_text+'</button>\
 								<input type="file" data-edit="'+button.name+'" />\
-							  </label>'
+							  </label>';
 						toolbar += ' </div> </div>';
 					break;
 
@@ -2019,7 +2024,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 					$('<textarea />')
 					.css({'width':self.outerWidth(), 'height':self.outerHeight()})
 					.val(self.html())
-					.insertAfter(self)
+					.insertAfter(self);
 					self.hide();
 					
 					$(this).addClass('active');
@@ -2036,7 +2041,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			});
 
 
-			var $options = $.extend({}, { activeToolbarClass: 'active' , toolbarSelector : toolbar }, options.wysiwyg || {})
+			var $options = $.extend({}, { activeToolbarClass: 'active' , toolbarSelector : toolbar }, options.wysiwyg || {});
 			$(this).wysiwyg( $options );
 		});
 
@@ -2046,7 +2051,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
 })(window.jQuery);
 
-;/**
+/**
  <b>Spinner</b>. A wrapper for FuelUX spinner element.
  It's just a wrapper so you still need to include FuelUX spinner script first.
 */
@@ -2056,9 +2061,9 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		var attrib_values = ace.helper.getAttrSettings(element, $.fn.ace_spinner.defaults);
 		var options = $.extend({}, $.fn.ace_spinner.defaults, _options, attrib_values);
 	
-		var max = options.max
-		max = (''+max).length
-		var width = parseInt(Math.max((max * 20 + 40) , 90))
+		var max = options.max;
+		max = (''+max).length;
+		var width = parseInt(Math.max((max * 20 + 40) , 90));
 
 		var $element = $(element);
 		
@@ -2076,9 +2081,9 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		if(sizing == 2) width += 25;
 		else if(sizing == 3) width += 50;
 		
-		$element.addClass('spinbox-input form-control text-center').wrap('<div class="ace-spinner middle">')
+		$element.addClass('spinbox-input form-control text-center').wrap('<div class="ace-spinner middle">');
 
-		var $parent_div = $element.closest('.ace-spinner').spinbox(options).wrapInner("<div class='input-group'></div>")
+		var $parent_div = $element.closest('.ace-spinner').spinbox(options).wrapInner("<div class='input-group'></div>");
 		var $spinner = $parent_div.data('fu.spinbox');
 		
 		if(options.on_sides)
@@ -2095,7 +2100,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 					</button>\
 				</div>');
 
-			$parent_div.addClass('touch-spinner')
+			$parent_div.addClass('touch-spinner');
 			$parent_div.css('width' , width+'px')
 		}
 		else {
@@ -2107,10 +2112,10 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 					<button type="button" class="btn spinbox-down '+btn_class+' '+options.btn_down_class+'">\
 						<i class="icon-only '+ ace.vars['icon'] + options.icon_down+'"></i>\
 					</button>\
-				</div>')
+				</div>');
 
 			if(ace.vars['touch'] || options.touch_spinner) {
-				$parent_div.addClass('touch-spinner')
+				$parent_div.addClass('touch-spinner');
 				$parent_div.css('width' , width+'px')
 			}
 			else {
@@ -2145,7 +2150,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		});
 
 		return (retval === undefined) ? $set : retval;
-	}
+	};
 	
 	$.fn.ace_spinner.defaults = {
 		'icon_up' : 'fa fa-chevron-up',
@@ -2161,7 +2166,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 
 
 })(window.jQuery);
-;/**
+/**
  <b>Treeview</b>. A wrapper for FuelUX treeview element.
  It's just a wrapper so you still need to include FuelUX treeview script first.
 */
@@ -2175,7 +2180,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			'selected-icon' : ace.vars['icon'] + 'fa fa-check',
 			'unselected-icon' : ace.vars['icon'] + 'fa fa-times',
 			'loadingHTML': 'Loading...'
-		}
+		};
 
 		this.each(function() {
 		
@@ -2211,7 +2216,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 	}
 
 })(window.jQuery);
-;/**
+/**
  <b>Wizard</b>. A wrapper for FuelUX wizard element.
  It's just a wrapper so you still need to include FuelUX wizard script first.
 */
@@ -2248,7 +2253,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 	}
 
 })(window.jQuery);
-;/**
+/**
  <b>Content Slider</b>. with custom content and elements based on Bootstrap modals.
 */
 (function($ , undefined) {
@@ -2330,7 +2335,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			if( this.settings.backdrop == false ) {
 				$modal.addClass('no-backdrop');
 			}
-		}
+		};
 		
 		
 		this.show = function() {
@@ -2341,10 +2346,10 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			}
 	
 			if(this.container) $(this.container).addClass('overflow-hidden');
-			else $modal.css('position', 'fixed')
+			else $modal.css('position', 'fixed');
 			
 			$modal.removeClass('aside-hidden');
-		}
+		};
 		
 		this.hide = function() {
 			if(this.container) {
@@ -2366,7 +2371,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 					if(self.container) self.container.removeClass('overflow-hidden');
 				}).emulateTransitionEnd(delay);
 			}
-		}
+		};
 		
 		this.shown = function() {
 			toggleButton();
@@ -2418,18 +2423,18 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 					self.container.removeClass('overflow-hidden')
 				}).emulateTransitionEnd(delay);
 			}
-		}
+		};
 		
 		
 		this.hidden = function() {
-			$window.off('.aside')
+			$window.off('.aside');
 			//$modal.off('.aside')
 			//			
 			if( !ace.vars['transition'] || hasFade ) {
 				$modal.addClass('aside-hidden');
 				$modal.css('position', '');
 			}
-		}
+		};
 		
 		
 		this.insideContainer = function() {
@@ -2450,13 +2455,13 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 					ace.helper.redraw(container[0]);
 				}
 			}
-		}
+		};
 		
 		this.flip = function() {
 			var flipSides = {right : 'left', left : 'right', top: 'bottom', bottom: 'top'};
 			$modal.removeClass('aside-'+placement).addClass('aside-'+flipSides[placement]);
 			placement = flipSides[placement];
-		}
+		};
 
 		var toggleButton = function() {
 			var btn = $modal.find('.aside-trigger');
@@ -2466,7 +2471,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 			var icon = btn.find(ace.vars['.icon']);
 			if(icon.length == 0) return;
 			icon.toggleClass(icon.attr('data-icon1') + " " + icon.attr('data-icon2'));
-		}
+		};
 		
 
 		this.initiate();
@@ -2489,7 +2494,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 	})
 	.on('hidden.bs.modal', '.modal.aside', function(e) {
 		$(this).ace_aside('hidden');
-	})
+	});
 	
 	
 
@@ -2517,7 +2522,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Ace\'s JavaScript requires
 		});
 
 		return (method_call === undefined) ? $set : method_call;
-	}
+	};
 	
 	$.fn.ace_aside.defaults = {
 		fixed: false,

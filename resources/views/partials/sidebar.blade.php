@@ -42,6 +42,13 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li>
+                    <a href="{{ route('paqueteIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                        <i class="menu-icon fa fa-cubes red"></i>
+                        Paquetes
+                    </a>
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 

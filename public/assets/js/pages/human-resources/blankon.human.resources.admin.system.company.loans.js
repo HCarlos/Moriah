@@ -16,7 +16,7 @@ var BlankonHumanResourcesAdminSystemCompanyLoans = function () {
         // =========================================================================
         handleBtnAdd: function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href") // activated tab
+                var target = $(e.target).attr("href"); // activated tab
                 if(target == '#tab-loan-types'){
                     $('.btn-add-loan-types').show();
                     $('.btn-add-employee-loans').hide();

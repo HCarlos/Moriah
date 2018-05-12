@@ -72,11 +72,11 @@ Image editable input.
 
 				if(self.on_success) self.on_success();
 				return true;
-			}
+			};
 			this.options.image.before_remove = this.options.image.before_remove || function() {
 				self.$input.val(null);
 				return true;
-			}
+			};
 
 			this.$file.ace_file_input(this.options.image).on('change', function(){
 				var $rand = (self.$file.val() || self.$file.data('ace_input_files')) ? Math.random() + "" + (new Date()).getTime() : null;

@@ -429,7 +429,7 @@
         this.container.find('.box1, .box2').removeClass('span6').addClass('col-md-6');
         this.container.find('.clear1, .clear2').removeClass('btn-mini').addClass('btn-default btn-xs');
         this.container.find('input, select').addClass('form-control');
-        this.container.find('.btn').addClass(this.settings.buttonClass)//ACE;//s.addClass('btn-default');
+        this.container.find('.btn').addClass(this.settings.buttonClass);//ACE;//s.addClass('btn-default');
         this.container.find('.moveall > i, .move > i').removeClass('icon-arrow-right').addClass('glyphicon glyphicon-arrow-right');
         this.container.find('.removeall > i, .remove > i').removeClass('icon-arrow-left').addClass('glyphicon glyphicon-arrow-left');
       }

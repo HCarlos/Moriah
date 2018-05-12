@@ -7,7 +7,7 @@
                 {{--<a class="btn btn-info btn-xs pull-right" href="{{ "/index/$id" }}">--}}
                     {{--Regresar--}}
                 {{--</a>--}}
-                <a class="btn btn-info btn-xs pull-right" href="#" onclick="javascript:window.close();">
+                <a class="btn btn-info btn-xs pull-right" href="#" onclick="window.close();">
                    Cerrar
                 </a>
             </span>
@@ -43,7 +43,7 @@
                             {{--<a class="btn btn-info float-md-right " href="{{ "/index/$id" }}">--}}
                                 {{--Regresar--}}
                             {{--</a>--}}
-                            <a class="btn btn-info float-md-right " href="#" onclick="javascript:window.close();">
+                            <a class="btn btn-info float-md-right " href="#" onclick="window.close();">
                                 Cerrar
                             </a>
                         </div>

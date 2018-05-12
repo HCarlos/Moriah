@@ -185,7 +185,7 @@ var BlankonChartChartJS = function () {
                         }
                     ]
 
-                }
+                };
 
                 var myRadar = new Chart(document.getElementById("chartjs-radar-chart").getContext("2d")).Radar(radarChartData,{scaleShowLabels : false, pointLabelFontSize : 10});
             }

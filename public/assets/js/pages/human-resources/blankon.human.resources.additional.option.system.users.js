@@ -16,7 +16,7 @@ var BlankonHumanResourcesAdditionalOptionSystemUsers = function () {
         // =========================================================================
         handleBtnAdd: function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href") // activated tab
+                var target = $(e.target).attr("href"); // activated tab
                 if(target == '#tab-users'){
                     $('.btn-add-users').show();
                     $('.btn-add-user-roles').hide();

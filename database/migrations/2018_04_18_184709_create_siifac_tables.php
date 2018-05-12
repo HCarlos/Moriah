@@ -54,7 +54,7 @@ class CreateSiifacTables extends Migration
             $table->integer('familia_cliente_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['user_id', 'familia_cliente_id']);
+            $table->unique(['user_id', 'familia_cliente_id']);
 
             $table->foreign('user_id')
                 ->references('id')
@@ -89,6 +89,27 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
+
+        Schema::create($tableNames['almacen_empresa'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('almacen_id');
+            $table->integer('empresa_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['almacen_id', 'empresa_id']);
+
+            $table->foreign('almacen_id')
+                ->references('id')
+                ->on($tableNames['almacenes'])
+                ->onDelete('cascade');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+
+        });
+
 
         Schema::create($tableNames['proveedores'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
@@ -162,7 +183,7 @@ class CreateSiifacTables extends Migration
             $table->integer('compra_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['almacen_id', 'compra_id']);
+            $table->unique(['almacen_id', 'compra_id']);
 
             $table->foreign('almacen_id')
                 ->references('id')
@@ -182,7 +203,7 @@ class CreateSiifacTables extends Migration
             $table->integer('compra_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['proveedor_id', 'compra_id']);
+            $table->unique(['proveedor_id', 'compra_id']);
 
             $table->foreign('proveedor_id')
                 ->references('id')
@@ -279,7 +300,7 @@ class CreateSiifacTables extends Migration
             $table->integer('user_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['cuenta_por_cobrar_id', 'user_id']);
+            $table->unique(['cuenta_por_cobrar_id', 'user_id']);
 
             $table->foreign('cuenta_por_cobrar_id')
                 ->references('id')
@@ -347,7 +368,7 @@ class CreateSiifacTables extends Migration
             $table->integer('user_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['ingreso_id', 'user_id']);
+            $table->unique(['ingreso_id', 'user_id']);
 
             $table->foreign('ingreso_id')
                 ->references('id')
@@ -366,7 +387,7 @@ class CreateSiifacTables extends Migration
             $table->integer('cuenta_por_cobrar_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['ingreso_id', 'cuenta_por_cobrar_id']);
+            $table->unique(['ingreso_id', 'cuenta_por_cobrar_id']);
 
             $table->foreign('ingreso_id')
                 ->references('id')
@@ -488,7 +509,7 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['empresa_id', 'producto_id']);
+            $table->unique(['empresa_id', 'producto_id']);
 
             $table->foreign('empresa_id')
                 ->references('id')
@@ -508,7 +529,7 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['almacen_id', 'producto_id']);
+            $table->unique(['almacen_id', 'producto_id']);
 
             $table->foreign('almacen_id')
                 ->references('id')
@@ -527,7 +548,7 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['familia_producto_id', 'producto_id']);
+            $table->unique(['familia_producto_id', 'producto_id']);
 
             $table->foreign('familia_producto_id')
                 ->references('id')
@@ -547,7 +568,27 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['medida_id', 'producto_id']);
+            $table->unique(['medida_id', 'producto_id']);
+
+            $table->foreign('medida_id')
+                ->references('id')
+                ->on($tableNames['medidas'])
+                ->onDelete('cascade');
+
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on($tableNames['productos'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['producto_medida'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('producto_id');
+            $table->integer('medida_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['medida_id', 'producto_id']);
 
             $table->foreign('medida_id')
                 ->references('id')
@@ -597,7 +638,7 @@ class CreateSiifacTables extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index(['paquete_id', 'user_id']);
+            $table->unique(['paquete_id', 'user_id']);
 
             $table->foreign('paquete_id')
                 ->references('id')
@@ -607,6 +648,66 @@ class CreateSiifacTables extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on($tableNames['users'])
+                ->onDelete('cascade');
+        });
+
+        Schema::create($tableNames['paquete_producto'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('paquete_id');
+            $table->integer('producto_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->unique(['paquete_id', 'producto_id']);
+
+            $table->foreign('paquete_id')
+                ->references('id')
+                ->on($tableNames['paquetes'])
+                ->onDelete('cascade');
+
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on($tableNames['productos'])
+                ->onDelete('cascade');
+        });
+
+        Schema::create($tableNames['paquete_empresa'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('paquete_id');
+            $table->integer('empresa_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->unique(['paquete_id', 'empresa_id']);
+
+            $table->foreign('paquete_id')
+                ->references('id')
+                ->on($tableNames['paquetes'])
+                ->onDelete('cascade');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+        });
+
+        Schema::create($tableNames['empresa_paquete'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('empresa_id');
+            $table->integer('paquete_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->unique(['paquete_id', 'empresa_id']);
+
+            $table->foreign('paquete_id')
+                ->references('id')
+                ->on($tableNames['paquetes'])
+                ->onDelete('cascade');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
                 ->onDelete('cascade');
         });
 
@@ -657,13 +758,13 @@ class CreateSiifacTables extends Migration
 
         });
 
-        Schema::create($tableNames['paquete_detalle_paquete'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['paquete_paquete_detalle'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('paquete_detalle_id');
             $table->integer('paquete_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['paquete_detalle_id', 'paquete_id']);
+            $table->unique(['paquete_detalle_id', 'paquete_id']);
 
             $table->foreign('paquete_detalle_id')
                 ->references('id')
@@ -682,7 +783,7 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['paquete_detalle_id', 'producto_id']);
+            $table->unique(['paquete_detalle_id', 'producto_id']);
 
             $table->foreign('paquete_detalle_id')
                 ->references('id')
@@ -701,7 +802,7 @@ class CreateSiifacTables extends Migration
             $table->integer('medida_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['paquete_detalle_id', 'medida_id']);
+            $table->unique(['paquete_detalle_id', 'medida_id']);
 
             $table->foreign('paquete_detalle_id')
                 ->references('id')
@@ -758,7 +859,7 @@ class CreateSiifacTables extends Migration
             $table->integer('user_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['pedido_id', 'user_id']);
+            $table->unique(['pedido_id', 'user_id']);
 
             $table->foreign('pedido_id')
                 ->references('id')
@@ -777,7 +878,7 @@ class CreateSiifacTables extends Migration
             $table->integer('paquete_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['pedido_id', 'paquete_id']);
+            $table->unique(['pedido_id', 'paquete_id']);
 
             $table->foreign('pedido_id')
                 ->references('id')
@@ -852,7 +953,7 @@ class CreateSiifacTables extends Migration
             $table->integer('pedido_detalle_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['pedido_id', 'pedido_detalle_id']);
+            $table->unique(['pedido_id', 'pedido_detalle_id']);
 
             $table->foreign('pedido_id')
                 ->references('id')
@@ -871,7 +972,7 @@ class CreateSiifacTables extends Migration
             $table->integer('user_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['pedido_detalle_id', 'user_id']);
+            $table->unique(['pedido_detalle_id', 'user_id']);
 
             $table->foreign('pedido_detalle_id')
                 ->references('id')
@@ -891,7 +992,7 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['pedido_detalle_id', 'producto_id']);
+            $table->unique(['pedido_detalle_id', 'producto_id']);
 
             $table->foreign('pedido_detalle_id')
                 ->references('id')
@@ -911,7 +1012,7 @@ class CreateSiifacTables extends Migration
             $table->integer('medida_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['pedido_detalle_id', 'medida_id']);
+            $table->unique(['pedido_detalle_id', 'medida_id']);
 
             $table->foreign('pedido_detalle_id')
                 ->references('id')
@@ -1027,7 +1128,7 @@ class CreateSiifacTables extends Migration
             $table->integer('user_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'user_id']);
+            $table->unique(['movimiento_id', 'user_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1047,7 +1148,7 @@ class CreateSiifacTables extends Migration
             $table->integer('compra_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'compra_id']);
+            $table->unique(['movimiento_id', 'compra_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1067,7 +1168,7 @@ class CreateSiifacTables extends Migration
             $table->integer('producto_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'producto_id']);
+            $table->unique(['movimiento_id', 'producto_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1087,7 +1188,7 @@ class CreateSiifacTables extends Migration
             $table->integer('pedido_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'pedido_id']);
+            $table->unique(['movimiento_id', 'pedido_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1107,7 +1208,7 @@ class CreateSiifacTables extends Migration
             $table->integer('proveedor_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'proveedor_id']);
+            $table->unique(['movimiento_id', 'proveedor_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1127,7 +1228,7 @@ class CreateSiifacTables extends Migration
             $table->integer('almacen_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'almacen_id']);
+            $table->unique(['movimiento_id', 'almacen_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1147,7 +1248,7 @@ class CreateSiifacTables extends Migration
             $table->integer('medida_id');
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['movimiento_id', 'medida_id']);
+            $table->unique(['movimiento_id', 'medida_id']);
 
             $table->foreign('movimiento_id')
                 ->references('id')
@@ -1401,14 +1502,21 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['ingreso_user']);
         Schema::dropIfExists($tableNames['ingreso_cuenta_por_cobrar']);
         Schema::dropIfExists($tableNames['almacen_producto']);
+        Schema::dropIfExists($tableNames['almacen_empresa']);
         Schema::dropIfExists($tableNames['familia_producto_producto']);
         Schema::dropIfExists($tableNames['medida_producto']);
+        Schema::dropIfExists($tableNames['producto_medida']);
+        Schema::dropIfExists($tableNames['empresa_paquete']);
+
         Schema::dropIfExists($tableNames['familia_cliente_user']);
 
         Schema::dropIfExists($tableNames['paquete_user']);
-        Schema::dropIfExists($tableNames['paquete_detalle_paquete']);
+        Schema::dropIfExists($tableNames['paquete_producto']);
+        Schema::dropIfExists($tableNames['paquete_empresa']);
         Schema::dropIfExists($tableNames['paquete_detalle_producto']);
         Schema::dropIfExists($tableNames['paquete_detalle_medida']);
+        Schema::dropIfExists($tableNames['paquete_paquete_detalle']);
+        Schema::dropIfExists($tableNames['paquete_detalle']);
 
         Schema::dropIfExists($tableNames['pedido_user']);
         Schema::dropIfExists($tableNames['pedido_paquete']);
@@ -1435,9 +1543,7 @@ class CreateSiifacTables extends Migration
 
         Schema::dropIfExists($tableNames['pedido_detalle']);
         Schema::dropIfExists($tableNames['pedidos']);
-        Schema::dropIfExists($tableNames['paquete_detalle']);
         Schema::dropIfExists($tableNames['paquetes']);
-
         Schema::dropIfExists($tableNames['compras']);
         Schema::dropIfExists($tableNames['proveedores']);
         Schema::dropIfExists($tableNames['familia_cliente']);
@@ -1451,6 +1557,7 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['familia_producto']);
         Schema::dropIfExists($tableNames['medidas']);
         Schema::dropIfExists($tableNames['almacenes']);
+
 
 
         Schema::dropIfExists($tableNames['empresas']);

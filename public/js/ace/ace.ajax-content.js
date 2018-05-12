@@ -3,7 +3,7 @@
 */
 
 (function($ , undefined) {
-	var ajax_loaded_scripts = {}
+	var ajax_loaded_scripts = {};
 
 	function AceAjax(contentArea, settings) {
 		var $contentArea = $(contentArea);
@@ -23,24 +23,24 @@
 			var url = false;
 			hash = hash.replace(/^(\#\!)?\#/, '');
 			
-			this.force_reload = (cache === false)
+			this.force_reload = (cache === false);
 			
 			if(typeof this.settings.content_url === 'function') url = this.settings.content_url(hash);
 			if(typeof url === 'string') this.getUrl(url, hash, false);
-		}
+		};
 		
 		this.loadAddr = function(url, hash, cache) {
 			this.force_reload = (cache === false);
 			this.getUrl(url, hash, false);
-		}
+		};
 		
 		this.getUrl = function(url, hash, manual_trigger) {
 			if(working) {
 				return;
 			}
 		
-			var event
-			$contentArea.trigger(event = $.Event('ajaxloadstart'), {url: url, hash: hash})
+			var event;
+			$contentArea.trigger(event = $.Event('ajaxloadstart'), {url: url, hash: hash});
 			if (event.isDefaultPrevented()) return;
 			
 			self.startLoading();
@@ -56,9 +56,9 @@
 			})
 			.done(function(result) {
 				$contentArea.trigger('ajaxloaddone', {url: url, hash: hash});
-				
-				var link_element = null, link_text = '';;
-				if(typeof self.settings.update_active === 'function') {
+
+var link_element = null, link_text = '';
+                if(typeof self.settings.update_active === 'function') {
 					link_element = self.settings.update_active.call(null, hash, url);
 				}
 				else if(self.settings.update_active === true && hash) {
@@ -74,7 +74,7 @@
 								if(self.settings.close_active) {
 									$(this).find(' > .submenu').css('display', '');
 								}
-							})
+							});
 							
 							var active_li = link_element.closest('li').addClass('active').parents('.nav li').addClass('active open');
 							nav.closest('.sidebar[data-sidebar-scroll=true]').each(function() {
@@ -98,7 +98,7 @@
 				//convert "title" and "link" tags to "div" tags for later processing
 				result = String(result)
 					.replace(/<(title|link)([\s\>])/gi,'<div class="hidden ajax-append-$1"$2')
-					.replace(/<\/(title|link)\>/gi,'</div>')
+					.replace(/<\/(title|link)\>/gi,'</div>');
 			
 				
 				$overlay.addClass('content-loaded').detach();
@@ -110,7 +110,7 @@
 				setTimeout(function() {
 					$('head').find('link.ace-ajax-stylesheet').remove();
 
-					var main_selectors = ['link.ace-main-stylesheet', 'link#main-ace-style', 'link[href*="/ace.min.css"]', 'link[href*="/ace.css"]']
+					var main_selectors = ['link.ace-main-stylesheet', 'link#main-ace-style', 'link[href*="/ace.min.css"]', 'link[href*="/ace.css"]'];
 					var ace_style = [];
 					for(var m = 0; m < main_selectors.length; m++) {
 						ace_style = $('head').find(main_selectors[m]).first();
@@ -120,7 +120,7 @@
 					$contentArea.find('.ajax-append-link').each(function(e) {
 						var $link = $(this);
 						if ( $link.attr('href') ) {
-							var new_link = jQuery('<link />', {type : 'text/css', rel: 'stylesheet', 'class': 'ace-ajax-stylesheet'})
+							var new_link = jQuery('<link />', {type : 'text/css', rel: 'stylesheet', 'class': 'ace-ajax-stylesheet'});
 							if( ace_style.length > 0 ) new_link.insertBefore(ace_style);
 							else new_link.appendTo('head');
 							new_link.attr('href', $link.attr('href'));//we set "href" after insertion, for IE to work
@@ -149,7 +149,7 @@
 				
 				self.stopLoading();
 			})
-		}
+		};
 		
 		
 		///////////////////////
@@ -165,7 +165,7 @@
 			}
 				
 			$overlay.remove();
-			$overlay = $('<div class="ajax-loading-overlay"><i class="ajax-loading-icon '+(this.settings.loading_icon || '')+'"></i> '+this.settings.loading_text+'</div>')
+			$overlay = $('<div class="ajax-loading-overlay"><i class="ajax-loading-icon '+(this.settings.loading_icon || '')+'"></i> '+this.settings.loading_text+'</div>');
 
 			if(this.settings.loading_overlay == 'body') $('body').append($overlay.addClass('ajax-overlay-body'));
 			else if(this.settings.loading_overlay) $(this.settings.loading_overlay).append($overlay);
@@ -177,13 +177,13 @@
 				loadTimer = null;
 				if(!working) return;
 				
-				var event
-				$contentArea.trigger(event = $.Event('ajaxloadlong'))
+				var event;
+				$contentArea.trigger(event = $.Event('ajaxloadlong'));
 				if (event.isDefaultPrevented()) return;
 				
 				self.stopLoading(true);
 			 }, this.settings.max_load_wait * 1000);
-		}
+		};
 		
 		this.stopLoading = function(stopNow) {
 			if(stopNow === true) {
@@ -214,11 +214,11 @@
 					*/
 				})
 			}
-		}
+		};
 		
 		this.working = function() {
 			return working;
-		}
+		};
 		///////////////////////
 		
 		
@@ -342,7 +342,7 @@
 				}
 
 			}, 10)
-		}
+		};
 		
 		
 		
@@ -380,7 +380,7 @@
 		});
 
 		return (method_call === undefined) ? $set : method_call;
-	}
+	};
 	
 	
 	

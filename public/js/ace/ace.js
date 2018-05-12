@@ -5,9 +5,9 @@
 
 //some basic variables
 (function(undefined) {
-	if( !('ace' in window) ) window['ace'] = {}
-	if( !('helper' in window['ace']) ) window['ace'].helper = {}
-	if( !('vars' in window['ace']) ) window['ace'].vars = {}
+	if( !('ace' in window) ) window['ace'] = {};
+	if( !('helper' in window['ace']) ) window['ace'].helper = {};
+	if( !('vars' in window['ace']) ) window['ace'].vars = {};
 	window['ace'].vars['icon'] = ' ace-icon ';
 	window['ace'].vars['.icon'] = '.ace-icon';
 
@@ -15,11 +15,11 @@
 	
 	//sometimes the only good way to work around browser's pecularities is to detect them using user-agents
 	//though it's not accurate
-	var agent = navigator.userAgent
-	ace.vars['webkit'] = !!agent.match(/AppleWebKit/i)
+	var agent = navigator.userAgent;
+	ace.vars['webkit'] = !!agent.match(/AppleWebKit/i);
 	ace.vars['safari'] = !!agent.match(/Safari/i) && !agent.match(/Chrome/i);
-	ace.vars['android'] = ace.vars['safari'] && !!agent.match(/Android/i)
-	ace.vars['ios_safari'] = !!agent.match(/OS ([4-9])(_\d)+ like Mac OS X/i) && !agent.match(/CriOS/i)
+	ace.vars['android'] = ace.vars['safari'] && !!agent.match(/Android/i);
+	ace.vars['ios_safari'] = !!agent.match(/OS ([4-9])(_\d)+ like Mac OS X/i) && !agent.match(/CriOS/i);
 	
 	ace.vars['ie'] = window.navigator.msPointerEnabled || (document.all && document.querySelector);//8-11
 	ace.vars['old_ie'] = document.all && !document.addEventListener;//8 and below
@@ -117,7 +117,7 @@ jQuery(function($) {
 				//for example in Ace PHP demo version we convert "ajax.php#page/dashboard" to "ajax.php?page=dashboard" and load it
 				return path + "?" + hash.replace(/\//, "=");
 			  }			  
-		}
+		};
 		   
 		//for IE9 and below we exclude PACE loader (using conditional IE comments)
 		//for other browsers we use the following extra ajax loader options
@@ -126,7 +126,7 @@ jQuery(function($) {
 		}
 
 		//initiate ajax loading on this element( which is .page-content-area[data-ajax-content=true] in Ace's demo)
-		$('[data-ajax-content=true]').ace_ajax(demo_ajax_options)
+		$('[data-ajax-content=true]').ace_ajax(demo_ajax_options);
 
 		//if general error happens and ajax is working, let's stop loading icon & PACE
 		$(window).on('error.ace_ajax', function() {
@@ -145,7 +145,7 @@ jQuery(function($) {
 	function handleScrollbars() {
 		//add scrollbars for navbar dropdowns
 		var has_scroll = !!$.fn.ace_scroll;
-		if(has_scroll) $('.dropdown-content').ace_scroll({reset: false, mouseWheelLock: true})
+		if(has_scroll) $('.dropdown-content').ace_scroll({reset: false, mouseWheelLock: true});
 
 		//reset scrolls bars on window resize
 		if(has_scroll && !ace.vars['old_ie']) {//IE has an issue with widget fullscreen on ajax?!!!
@@ -192,8 +192,8 @@ jQuery(function($) {
 		//prevent dropdowns from hiding when a tab is selected
 		$(document).on('click', '.dropdown-navbar .nav-tabs', function(e){
 			e.stopPropagation();
-			var $this , href
-			var that = e.target
+			var $this , href;
+			var that = e.target;
 			if( ($this = $(e.target).closest('[data-toggle=tab]')) && $this.length > 0) {
 				$this.tab('show');
 				e.preventDefault();
@@ -306,28 +306,28 @@ jQuery(function($) {
 	function bsCollapseToggle() {
 		//bootstrap collapse component icon toggle
 		$(document).on('hide.bs.collapse show.bs.collapse', function (ev) {
-			var panel_id = ev.target.getAttribute('id')
+			var panel_id = ev.target.getAttribute('id');
 			var panel = $('a[href*="#'+ panel_id+'"]');
 			if(panel.length == 0) panel = $('a[data-target*="#'+ panel_id+'"]');
 			if(panel.length == 0) return;
 
 			panel.find(ace.vars['.icon']).each(function(){
-				var $icon = $(this)
+				var $icon = $(this);
 
-				var $match
-				var $icon_down = null
-				var $icon_up = null
+				var $match;
+				var $icon_down = null;
+				var $icon_up = null;
 				if( ($icon_down = $icon.attr('data-icon-show')) ) {
 					$icon_up = $icon.attr('data-icon-hide')
 				}
 				else if( $match = $icon.attr('class').match(/fa\-(.*)\-(up|down)/) ) {
-					$icon_down = 'fa-'+$match[1]+'-down'
+					$icon_down = 'fa-'+$match[1]+'-down';
 					$icon_up = 'fa-'+$match[1]+'-up'
 				}
 
 				if($icon_down) {
-					if(ev.type == 'show') $icon.removeClass($icon_down).addClass($icon_up)
-						else $icon.removeClass($icon_up).addClass($icon_down)
+					if(ev.type == 'show') $icon.removeClass($icon_down).addClass($icon_up);
+						else $icon.removeClass($icon_up).addClass($icon_down);
 						
 					return false;//ignore other icons that match, one is enough
 				}
@@ -349,7 +349,7 @@ jQuery(function($) {
 	  .on('hidden.bs.dropdown.navbar', function(e) {
 		$(window).off('resize.navbar.dropdown');
 		resetNavbarDropdown.call(this);
-	  })
+	  });
 	 
 	  function adjustNavbarDropdown() {
 		var $sub = $(this).find('> .dropdown-menu');
@@ -453,7 +453,7 @@ jQuery(function($) {
 
 				var size = parseInt($(this).attr('data-size') || 0) || $.fn.ace_scroll.defaults.size;
 				$(this).ace_scroll('update', {size: size}).ace_scroll('enable').ace_scroll('reset');
-			})
+			});
 			
 			if( $sub.hasClass('user-menu') ) {
 				var user_info = 
@@ -476,7 +476,7 @@ jQuery(function($) {
 (function($$ , undefined) {//$$ is ace.helper
  $$.unCamelCase = function(str) {
 	return str.replace(/([a-z])([A-Z])/g, function(match, c1, c2){ return c1+'-'+c2.toLowerCase() })
- }
+ };
  $$.strToVal = function(str) {
 	var res = str.match(/^(?:(true)|(false)|(null)|(\-?[\d]+(?:\.[\d]+)?)|(\[.*\]|\{.*\}))$/i);
 
@@ -493,31 +493,31 @@ jQuery(function($) {
 	}
 
 	return val;
- }
+ };
  $$.getAttrSettings = function(el, attr_list, prefix) {
 	var list_type = attr_list instanceof Array ? 1 : 2;
 	//attr_list can be Array or Object(key/value)
 	var prefix = prefix ? prefix.replace(/([^\-])$/ , '$1-') : '';
 	prefix = 'data-' + prefix;
 
-	var settings = {}
+	var settings = {};
 	for(var li in attr_list) if(attr_list.hasOwnProperty(li)) {
 		var name = list_type == 1 ? attr_list[li] : li;
-		var attr_val, attr_name = $$.unCamelCase(name.replace(/[^A-Za-z0-9]{1,}/g , '-')).toLowerCase()
+		var attr_val, attr_name = $$.unCamelCase(name.replace(/[^A-Za-z0-9]{1,}/g , '-')).toLowerCase();
 
 		if( ! ((attr_val = el.getAttribute(prefix + attr_name))  ) ) continue;
 		settings[name] = $$.strToVal(attr_val);
 	}
 
 	return settings;
- }
+ };
 
  $$.scrollTop = function() {
 	return document.scrollTop || document.documentElement.scrollTop || document.body.scrollTop
- }
+ };
  $$.winHeight = function() {
 	return window.innerHeight || document.documentElement.clientHeight;
- }
+ };
  $$.redraw = function(elem, force) {
 	var saved_val = elem.style['display'];
 	elem.style.display = 'none';

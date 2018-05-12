@@ -493,7 +493,7 @@ var BlankonApp = function(){
                         ion.sound.play("bell_ring");
                     }
                     $(this).removeClass('fg-theme');
-                    $(this).attr('data-original-title','Fullscreen')
+                    $(this).attr('data-original-title','Fullscreen');
                     var docElement, request;
                     docElement = document;
                     request = docElement.cancelFullScreen|| docElement.webkitCancelFullScreen || docElement.mozCancelFullScreen || docElement.msCancelFullScreen || docElement.exitFullscreen;
@@ -546,7 +546,7 @@ var BlankonApp = function(){
             $('[data-action=collapse]').on('click', function(e){
                 var targetCollapse = $(this).parents('.panel').find('.panel-body'),
                     targetCollapse2 = $(this).parents('.panel').find('.panel-sub-heading'),
-                    targetCollapse3 = $(this).parents('.panel').find('.panel-footer')
+                    targetCollapse3 = $(this).parents('.panel').find('.panel-footer');
                 if((targetCollapse.is(':visible'))) {
                     $(this).find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
                     targetCollapse.slideUp();

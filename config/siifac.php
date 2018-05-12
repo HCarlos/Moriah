@@ -5,6 +5,7 @@ return [
     'table_names' => [
         'users' => 'users',
         'almacenes' => 'almacenes',
+        'almacen_empresa' => 'almacen_empresa',
         'familia_cliente' => 'familia_cliente',
         'familia_cliente_user' => 'familia_cliente_user',
         'familia_producto' => 'familia_producto',
@@ -22,13 +23,16 @@ return [
         'ingreso_cuenta_por_cobrar' => 'ingreso_cuenta_por_cobrar',
         'medidas' => 'medidas',
         'productos' => 'productos',
+        'producto_medida' => 'producto_medida',
         'almacen_producto' => 'almacen_producto',
         'familia_producto_producto' => 'familia_producto_producto',
         'medida_producto' => 'medida_producto',
         'paquetes' => 'paquetes',
         'paquete_user' => 'paquete_user',
+        'paquete_producto' => 'paquete_producto',
+        'paquete_empresa' => 'paquete_empresa',
         'paquete_detalle' => 'paquete_detalle',
-        'paquete_detalle_paquete' => 'paquete_detalle_paquete',
+        'paquete_paquete_detalle' => 'paquete_paquete_detalle',
         'paquete_detalle_producto' => 'paquete_detalle_producto',
         'paquete_detalle_medida' => 'paquete_detalle_medida',
         'pedidos' => 'pedidos',
@@ -52,6 +56,7 @@ return [
         'ventas' => 'ventas',
         'venta_detalle' => 'venta_detalle',
         'empresa_producto' => 'empresa_producto',
+        'empresa_paquete' => 'empresa_paquete',
     ],
 
     ];

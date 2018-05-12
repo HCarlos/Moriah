@@ -60,7 +60,7 @@ var BlankonChartPeity = function () {
 
             $(".bar-colours-3").peity("bar", {
                 fill: function(_, i, all) {
-                    var g = parseInt((i / all.length) * 255)
+                    var g = parseInt((i / all.length) * 255);
                     return "rgb(255, " + g + ", 0)"
                 }
             });
@@ -71,7 +71,7 @@ var BlankonChartPeity = function () {
 
             $(".pie-colours-2").peity("pie", {
                 fill: function(_, i, all) {
-                    var g = parseInt((i / all.length) * 255)
+                    var g = parseInt((i / all.length) * 255);
                     return "rgb(255, " + g + ", 0)"
                 }
             });
@@ -88,13 +88,13 @@ var BlankonChartPeity = function () {
         // PEITY CHART / UPDATING
         // =========================================================================
         updatingChartPeity: function () {
-            var updatingChart = $(".updating-chart").peity("line", { width: 64 })
+            var updatingChart = $(".updating-chart").peity("line", { width: 64 });
 
             setInterval(function() {
-                var random = Math.round(Math.random() * 10)
-                var values = updatingChart.text().split(",")
-                values.shift()
-                values.push(random)
+                var random = Math.round(Math.random() * 10);
+                var values = updatingChart.text().split(",");
+                values.shift();
+                values.push(random);
 
                 updatingChart
                     .text(values.join(","))

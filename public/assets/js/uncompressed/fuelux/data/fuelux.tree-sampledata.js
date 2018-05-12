@@ -1,7 +1,7 @@
 var DataSourceTree = function(options) {
 	this._data 	= options.data;
 	this._delay = options.delay;
-}
+};
 
 DataSourceTree.prototype.data = function(options, callback) {
 	var self = this;
@@ -33,7 +33,7 @@ var tree_data = {
 	'tickets' : {name: 'Tickets', type: 'item'}	,
 	'services' : {name: 'Services', type: 'item'}	,
 	'personals' : {name: 'Personals', type: 'item'}
-}
+};
 tree_data['for-sale']['additionalParameters'] = {
 	'children' : {
 		'appliances' : {name: 'Appliances', type: 'item'},
@@ -44,14 +44,14 @@ tree_data['for-sale']['additionalParameters'] = {
 		'office-business' : {name: 'Office & Business', type: 'item'},
 		'sports-fitness' : {name: 'Sports & Fitness', type: 'item'}
 	}
-}
+};
 tree_data['vehicles']['additionalParameters'] = {
 	'children' : {
 		'cars' : {name: 'Cars', type: 'folder'},
 		'motorcycles' : {name: 'Motorcycles', type: 'item'},
 		'boats' : {name: 'Boats', type: 'item'}
 	}
-}
+};
 tree_data['vehicles']['additionalParameters']['children']['cars']['additionalParameters'] = {
 	'children' : {
 		'classics' : {name: 'Classics', type: 'item'},
@@ -63,7 +63,7 @@ tree_data['vehicles']['additionalParameters']['children']['cars']['additionalPar
 		'sedans' : {name: 'Sedans', type: 'item'},
 		'trucks' : {name: 'Trucks', type: 'item'}
 	}
-}
+};
 
 tree_data['rentals']['additionalParameters'] = {
 	'children' : {
@@ -71,14 +71,14 @@ tree_data['rentals']['additionalParameters'] = {
 		'office-space-rentals' : {name: 'Office Space', type: 'item'},
 		'vacation-rentals' : {name: 'Vacation Rentals', type: 'item'}
 	}
-}
+};
 tree_data['real-estate']['additionalParameters'] = {
 	'children' : {
 		'apartments' : {name: 'Apartments', type: 'item'},
 		'villas' : {name: 'Villas', type: 'item'},
 		'plots' : {name: 'Plots', type: 'item'}
 	}
-}
+};
 tree_data['pets']['additionalParameters'] = {
 	'children' : {
 		'cats' : {name: 'Cats', type: 'item'},
@@ -86,7 +86,7 @@ tree_data['pets']['additionalParameters'] = {
 		'horses' : {name: 'Horses', type: 'item'},
 		'reptiles' : {name: 'Reptiles', type: 'item'}
 	}
-}
+};
 
 var treeDataSource = new DataSourceTree({data: tree_data});
 
@@ -108,7 +108,7 @@ var tree_data_2 = {
 	'backup' : {name: 'Backup', type: 'folder'}	,
 	'readme' : {name: '<img src="'+$assets+'/icons/txt.png" /> ReadMe.txt', type: 'item'},
 	'manual' : {name: '<img src="'+$assets+'/icons/html.png" /> Manual.html', type: 'item'}
-}
+};
 tree_data_2['music']['additionalParameters'] = {
 	'children' : [
 		{name: '<img src="'+$assets+'/icons/ogg.png" /> song1.ogg', type: 'item'},
@@ -117,7 +117,7 @@ tree_data_2['music']['additionalParameters'] = {
 		{name: '<img src="'+$assets+'/icons/ogg.png" /> song4.ogg', type: 'item'},
 		{name: '<img src="'+$assets+'/icons/ogg.png" /> song5.ogg', type: 'item'}
 	]
-}
+};
 tree_data_2['video']['additionalParameters'] = {
 	'children' : [
 		{name: '<img src="'+$assets+'/icons/divx.png" /> movie1.avi', type: 'item'},
@@ -126,13 +126,13 @@ tree_data_2['video']['additionalParameters'] = {
 		{name: '<img src="'+$assets+'/icons/divx.png" /> movie4.avi', type: 'item'},
 		{name: '<img src="'+$assets+'/icons/divx.png" /> movie5.avi', type: 'item'}
 	]
-}
+};
 tree_data_2['pictures']['additionalParameters'] = {
 	'children' : {
 		'wallpapers' : {name: 'Wallpapers', type: 'folder'},
 		'camera' : {name: 'Camera', type: 'folder'}
 	}
-}
+};
 tree_data_2['pictures']['additionalParameters']['children']['wallpapers']['additionalParameters'] = {
 	'children' : [
 		{name: '<img src="'+$assets+'/icons/jpg.png" /> wallpaper1.jpg', type: 'item'},
@@ -140,7 +140,7 @@ tree_data_2['pictures']['additionalParameters']['children']['wallpapers']['addit
 		{name: '<img src="'+$assets+'/icons/jpg.png" /> wallpaper3.jpg', type: 'item'},
 		{name: '<img src="'+$assets+'/icons/jpg.png" /> wallpaper4.jpg', type: 'item'}
 	]
-}
+};
 tree_data_2['pictures']['additionalParameters']['children']['camera']['additionalParameters'] = {
 	'children' : [
 		{name: '<img src="'+$assets+'/icons/jpg.png" /> photo1.jpg', type: 'item'},
@@ -150,7 +150,7 @@ tree_data_2['pictures']['additionalParameters']['children']['camera']['additiona
 		{name: '<img src="'+$assets+'/icons/jpg.png" /> photo5.jpg', type: 'item'},
 		{name: '<img src="'+$assets+'/icons/jpg.png" /> photo6.jpg', type: 'item'}
 	]
-}
+};
 
 
 tree_data_2['documents']['additionalParameters'] = {
@@ -161,7 +161,7 @@ tree_data_2['documents']['additionalParameters'] = {
 		{name: '<img src="'+$assets+'/icons/pdf.png" /> document4.pdf', type: 'item'},
 		{name: '<img src="'+$assets+'/icons/doc.png" /> document5.doc', type: 'item'}
 	]
-}
+};
 
 tree_data_2['backup']['additionalParameters'] = {
 	'children' : [
@@ -170,5 +170,5 @@ tree_data_2['backup']['additionalParameters'] = {
 		{name: '<img src="'+$assets+'/icons/zip.png" /> backup3.zip', type: 'item'},
 		{name: '<img src="'+$assets+'/icons/zip.png" /> backup4.zip', type: 'item'}
 	]
-}
+};
 var treeDataSource2 = new DataSourceTree({data: tree_data_2});

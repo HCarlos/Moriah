@@ -22,7 +22,7 @@
 				$class += ' selected';
 				color_selected = color;
 			}
-			color_array.push(color)
+			color_array.push(color);
 			color_list += '<li><a class="'+$class+'" href="#" style="background-color:'+color+';" data-color="'+color+'"></a></li>';
 		}).
 		end()
@@ -30,10 +30,10 @@
 			$element.next().find('.btn-colorpicker').css('background-color', this.value);
 		})
 		.after('<div class="dropdown dropdown-colorpicker">\
-		<a data-toggle="dropdown" class="dropdown-toggle" '+(options.auto_pos ? 'data-position="auto"' : '')+' href="#"><span class="btn-colorpicker" style="background-color:'+color_selected+'"></span></a><ul class="dropdown-menu'+(options.caret? ' dropdown-caret' : '')+(options.pull_right ? ' dropdown-menu-right' : '')+'">'+color_list+'</ul></div>')
+		<a data-toggle="dropdown" class="dropdown-toggle" '+(options.auto_pos ? 'data-position="auto"' : '')+' href="#"><span class="btn-colorpicker" style="background-color:'+color_selected+'"></span></a><ul class="dropdown-menu'+(options.caret? ' dropdown-caret' : '')+(options.pull_right ? ' dropdown-menu-right' : '')+'">'+color_list+'</ul></div>');
 
 		
-		var dropdown = $element.next().find('.dropdown-menu')
+		var dropdown = $element.next().find('.dropdown-menu');
 		dropdown.on(ace.click_event, function(e) {
 			var a = $(e.target);
 			if(!a.is('.colorpick-btn')) return false;
@@ -47,7 +47,7 @@
 
 			e.preventDefault();
 			return true;//to hide dropdown
-		})
+		});
 		selection = $element.next().find('a.selected');
 
 		this.pick = function(index, insert) {
@@ -78,14 +78,14 @@
 				if(index == -1) return;
 				dropdown.find('a:eq('+index+')').trigger(ace.click_event);
 			}
-		}
+		};
 
 		this.destroy = function() {
 			$element.removeClass('hide').off('change.color')
 			.next().remove();
 			color_array = [];
 		}
-	}
+	};
 
 
 	$.fn.ace_colorpicker = function(option, value) {
@@ -101,7 +101,7 @@
 		});
 
 		return (retval === undefined) ? $set : retval;
-	}
+	};
 	
 	$.fn.ace_colorpicker.defaults = {
 		'pull_right' : false,

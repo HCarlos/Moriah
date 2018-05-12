@@ -19,7 +19,7 @@ var BlankonInvestorAdditionalOptionSystemGeneral = function () {
         // =========================================================================
         handleBtnAdd: function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href") // activated tab
+                var target = $(e.target).attr("href"); // activated tab
                 if(target == '#tab-setting-company'){
                     $('.btn-add-setting-company').show();
                     $('.btn-add-setting-system').hide();

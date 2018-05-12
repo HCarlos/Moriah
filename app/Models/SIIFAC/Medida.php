@@ -17,7 +17,7 @@ class Medida extends Model
         'status_medida','idemp','ip','host',
     ];
 
-    public function productos(){
+    public function productos_list(){
         // Contiene muchos Roles
         return $this->hasMany(Producto::class);
     }
@@ -44,6 +44,10 @@ class Medida extends Model
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
+    }
+
+    public function productos(){
+        return $this->belongsToMany(Producto::class);
     }
 
     public static function findOrCreateMedida($desc1, $desc2, $clave, $empresa_id){

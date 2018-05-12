@@ -31,10 +31,19 @@ class Almacen extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public function empresas(){
+        return $this->belongsToMany(Empresa::class);
+    }
+
+    public function productos(){
+        return $this->belongsToMany(Producto::class);
+    }
+
     public static function findOrCreateAlmacen($clave_almacen, $descripcion, $responsable, $tipoinv, $prefijo, $empresa_id){
         $obj = static::all()->where('clave_almacen', $clave_almacen)->where('descripcion', $descripcion)->first();
         if (!$obj) {
-            return static::create([
+            $emp = Empresa::find($empresa_id);
+            $alma =  static::create([
                 'clave_almacen'=>$clave_almacen,
                 'descripcion'=>$descripcion,
                 'responsable'=>$responsable,
@@ -42,6 +51,8 @@ class Almacen extends Model
                 'prefijo'=>$prefijo,
                 'empresa_id'=>$empresa_id,
             ]);
+            $alma->empresas()->attach($emp);
+            return $alma;
         }
         return $obj;
     }

@@ -142,7 +142,18 @@ class ProductoController extends Controller
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
 
-        Producto::create($data);
+        $alma = Almacen::find($data['almacen_id']);
+        $fp   = FamiliaProducto::find($data['familia_producto_id']);
+        $med  = Medida::find($data['medida_id']);
+        $emp  = Empresa::find($data['empresa_id']);
+
+        $prod = Producto::create($data);
+
+        $prod->almacenes()->attach($alma);
+        $prod->familiaProductos()->attach($fp);
+        $prod->medidas()->attach($med);
+        $prod->empresas()->attach($emp);
+
         return redirect('/new_producto/'.$idItem);
     }
 
@@ -180,7 +191,22 @@ class ProductoController extends Controller
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
 
+        $alma = Almacen::find($data['almacen_id']);
+        $fp   = FamiliaProducto::find($data['familia_producto_id']);
+        $med  = Medida::find($data['medida_id']);
+        $emp  = Empresa::find($data['empresa_id']);
+
         $prod->update($data);
+
+        $prod->almacenes()->detach();
+        $prod->familiaProductos()->detach();
+        $prod->medidas()->detach();
+        $prod->empresas()->detach();
+
+        $prod->almacenes()->sync($alma);
+        $prod->familiaProductos()->sync($fp);
+        $prod->medidas()->sync($med);
+        $prod->empresas()->sync($emp);
 
         return redirect('/edit_producto/'.$idItem);
 
@@ -200,6 +226,3 @@ class ProductoController extends Controller
     }
 }
 
-
-
-?>
