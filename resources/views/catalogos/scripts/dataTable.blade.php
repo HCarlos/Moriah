@@ -59,36 +59,6 @@
 
                             $("#myModal").html(response);
 
-                                //
-                                //
-                                // $("#frm1Edit").on("submit", function (event) {
-                                //     event.preventDefault();
-                                //     var queryString = $(this).serialize();
-                                //     var data = new FormData();
-                                //     data.append('request', queryString);
-                                //
-                                //         $.ajax({
-                                //             url:"/update_paquete_detalle_ajax/",
-                                //             data: data,
-                                //             cache: false,
-                                //             contentType: false,
-                                //             processData: false,
-                                //             dataType: 'json',
-                                //             type: 'PUT'
-                                //         })
-                                //             .done(function (response) {
-                                //                 alert(response);
-                                //             })
-                                //             .success(function (response) {
-                                //                 alert(response);
-                                //             });
-                                //
-                                // });
-
-
-
-
-
                         });
                 });
 

@@ -138,36 +138,50 @@ class PaqueteDetalleController extends Controller
 
     }
 
+//    public function store(Request $request)
+//    {
+//
+//        $data = $request->all();
+//        $paquete_id  = $data['paquete_id'];
+//        $producto_id = $data['producto_id'];
+//
+//        $pd = PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
+//
+//        return redirect('/edit_paquete_detalle/'.$paquete_id.'/'.$pd->id);
+//
+//    }
+
 
     public function update(Request $request, PaqueteDetalle $pd)
     {
-
         $data = $request->all();
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
         $paquete_detalle_id = $pd->id;
-
         $producto_id_old = $pd->producto_id;
-
         $pd->updatePaqueteDetalle($paquete_id,$paquete_detalle_id,$producto_id,$producto_id_old);
-
         return redirect('/edit_paquete_detalle/'.$paquete_id.'/'.$paquete_detalle_id);
-
     }
 
-    public function updateajax(Request $request, PaqueteDetalle $pd)
+//    public function updateajax(Request $request, PaqueteDetalle $pd)
+    public function updateajax()
     {
 
-        $data = $request->all();
-        $paquete_id  = $data['paquete_id'];
-        $producto_id = $data['producto_id'];
-        $paquete_detalle_id = $pd->id;
+        $paquete_detalle_id = $_GET['paquete_detalle_id'];
+        $paquete_id  = $_GET['paquete_id'];
+        $producto_id = $_GET['producto_id'];
+        $producto_id_old = $_GET['producto_id_old'];
 
-        $producto_id_old = $pd->producto_id;
+        $pd = PaqueteDetalle::find($paquete_detalle_id);
+        try {
+            $mensaje = "OK";
+            $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old);
+        }
+        catch(\Illuminate\Database\QueryException $e){
+            $mensaje = "Error: ".$e->getMessage();
+        }
 
-        $pd->updatePaqueteDetalle($paquete_id,$paquete_detalle_id,$producto_id,$producto_id_old);
-
-        return Response::json(['mensaje' => 'OK---', 'data' => 'OK', 'status' => '200'], 200);
+        return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
 
     }
 

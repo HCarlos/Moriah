@@ -8,9 +8,10 @@
     </div>|
 
     <div class="panel-body">
-        <form id="frm1Edit">
+        {{--<form method="post" action="{{ action('SIIFAC\PaqueteDetalleController@update',['pd'=>$items]) }}"  id="frm1Edit">--}}
+        <form method="post"  id="frm1Edit">
             {{ csrf_field() }}
-            {{ method_field('PUT') }}
+            {{--{{ method_field('PUT') }}--}}
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -42,40 +43,43 @@
                 </a>
             </div>
 
-            <input type="hidden" name="paquete_id" value="{{$paquete_id}}" />
+            <input type="hidden" name="producto_id_old" id="producto_id_old" value="{{$items->producto_id}}" />
+            <input type="hidden" name="paquete_id" id="paquete_id" value="{{$items->paquete_id}}" />
+            <input type="hidden" name="paquete_detalle_id" id="paquete_detalle_id" value="{{$items->id}}" />
 
         </form>
     </div>
 </div>
 <script >
 
+    // $('#btnForm1').on("click", function(event) {
+    //     event.preventDefault();
+    //     $('#myModal').modal( 'hide' );
+    // });
+
     if ( $("#frm1Edit") ) {
         $("#frm1Edit").on("submit", function (event) {
             event.preventDefault();
-            alert("fff");
-            var queryString = $(this).serialize();
-            alert(queryString);
-            var data = new FormData();
-            data.append('pd', {{$items}} );
-            data.append('request', queryString);
 
-            $(function () {
-                $.ajax({
-                    url:"/update_paquete_detalle_ajax/",
-                    data: data,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    sync:false,
-                    type: 'PUT'
-                })
-                .done(function (response) {
-                    alert(response);
-                })
-                .success(function (response) {
-                    alert(response);
-                });
+            var data = {
+                        "producto_id"        : $("#producto_id").val(),
+                        "producto_id_old"   : $("#producto_id_old").val(),
+                        "paquete_id"        : $("#paquete_id").val(),
+                        "paquete_detalle_id": $("#paquete_detalle_id").val()
+                        };
+            $.ajax({
+                cache: false,
+                type: 'get',
+                url: '/update_paquete_detalle_ajax/',
+                data:  data,
+                success: function(data) {
+                    if (data.mensaje == "OK"){
+                        alert('Cambio realizado con éxito');
+                        $("#myModal").modal( 'hide' );
+                    }else{
+                        alert(data.mensaje);
+                    }
+                }
             });
 
         });
