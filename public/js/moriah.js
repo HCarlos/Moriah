@@ -121,56 +121,6 @@ $(document).ready(function() {
         });
     }
 
-    $('#myModal').on('shown.bs.modal', function () {
-        //alert('Hola');
-    })
-
-    // $('#myModal').modal({
-    //     backdrop: true
-    // });
-
-    if ( $(".btnAction1") ){
-
-        $('.btnAction1').on('click', function(event) {
-            event.preventDefault();
-
-//            $( "#myModal" ).modal('show');
-
-            var aID = event.currentTarget.id.split('-');
-
-            // var Url = "/edit_paquete_detalle_ajax/" + aID[1] + "/" + aID[2];
-            // $( "#myModal" ).load( Url, function() {
-            //     // alert( "Load was performed." );
-            //     $(this).modal('show');
-            // });
-
-            //alert(Url);
-            /*
-            $(function () {
-                $.ajax({
-                    method: "GET",
-                    url: Url
-                })
-                    .done(function (response) {
-                        // alert(response);
-
-                        $("#myModal").html(response);
-                        //alert($("#myModal"));
-                        $("#myModal").modal('show');
-
-                        // $('#myModal').on('shown.bs.modal', function () {
-                        //     $('#myInput').focus()
-                        // })
-
-                    });
-            });
-            */
-
-        });
-    }
-
-
-
     if ( $("#frm1Edit") ) {
         $('#frm1Edit').on('submit', function (event) {
             event.preventDefault();

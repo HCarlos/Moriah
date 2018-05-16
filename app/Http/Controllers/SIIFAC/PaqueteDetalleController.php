@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
-use App\Http\Controllers\Funciones\FuncionesController;
-use App\Models\SIIFAC\Medida;
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\Producto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\SIIFAC\Empresa;
-use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Paquete;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use PhpParser\Node\Expr\AssignOp\Concat;
 
 
 class PaqueteDetalleController extends Controller
@@ -61,49 +54,28 @@ class PaqueteDetalleController extends Controller
 
     }
 
-    public function new($paquete_id=0)
+    public function new_ajax($paquete_id=0)
     {
-        $views  = 'paquete_detalle_new';
+        $views  = 'paquete_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::with('medidas')->orderBy('descripcion')->get();
+        $Productos = Producto::with('medidas')->orderBy('descripcion','asc')->get();
         foreach($Productos as $prod){
             $prod['descripcion'] = $prod->descripcion.' '.$prod->medida->desc1;
         }
-
         return view ($oView.$views,
             [
                 'paquete_id' => $paquete_id,
                 'titulo' => 'detalles paquete',
                 'user' => $user,
-                'Productos' => $Productos->pluck('descripcion','id'),
+                'Productos' => $Productos->sortBy('descripcion') ->pluck('descripcion','id'),
+                'Url' => '/store_paquete_detalle_ajax/',
             ]
         );
 
     }
 
-    public function edit($paquete_id=0,$paquete_detalle_id=0)
-    {
-        $views  = 'paquete_detalle_edit';
-        $user = Auth::User();
-        $oView = 'catalogos.' ;
-        $items = PaqueteDetalle::find($paquete_detalle_id);
-        $Productos = Producto::with('medidas')->orderBy('descripcion')->get();
-        foreach($Productos as $prod){
-            $prod['descripcion'] = $prod->descripcion.' '.$prod->medida->desc1;
-        }
-
-        return view ($oView.$views,
-            [   'items' => $items,
-                'paquete_id' => $paquete_id,
-                'titulo' => 'detalles paquete',
-                'user' => $user,
-                'Productos' => $Productos->pluck('descripcion','id'),
-            ]
-        );
-    }
-
-    public function editajax($paquete_id=0,$paquete_detalle_id=0)
+    public function edit_ajax($paquete_id=0,$paquete_detalle_id=0)
     {
         $views  = 'paquete_detalle_edit_ajax';
         $user = Auth::User();
@@ -119,58 +91,36 @@ class PaqueteDetalleController extends Controller
                 'paquete_id' => $paquete_id,
                 'titulo' => 'detalles paquete',
                 'user' => $user,
-                'Productos' => $Productos->pluck('descripcion','id'),
+                'Productos' => $Productos->sortBy('descripcion')->pluck('descripcion','id'),
+                'Url' => '/update_paquete_detalle_ajax/',
             ]
         );
     }
 
 
-    public function store(Request $request)
-    {
-
-        $data = $request->all();
-        $paquete_id  = $data['paquete_id'];
-        $producto_id = $data['producto_id'];
-
-        $pd = PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
-
-        return redirect('/edit_paquete_detalle/'.$paquete_id.'/'.$pd->id);
-
-    }
-
-//    public function store(Request $request)
-//    {
-//
-//        $data = $request->all();
-//        $paquete_id  = $data['paquete_id'];
-//        $producto_id = $data['producto_id'];
-//
-//        $pd = PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
-//
-//        return redirect('/edit_paquete_detalle/'.$paquete_id.'/'.$pd->id);
-//
-//    }
-
-
-    public function update(Request $request, PaqueteDetalle $pd)
+    public function store_ajax(Request $request)
     {
         $data = $request->all();
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
-        $paquete_detalle_id = $pd->id;
-        $producto_id_old = $pd->producto_id;
-        $pd->updatePaqueteDetalle($paquete_id,$paquete_detalle_id,$producto_id,$producto_id_old);
-        return redirect('/edit_paquete_detalle/'.$paquete_id.'/'.$paquete_detalle_id);
+        try {
+            $mensaje = "OK";
+            PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
+        }
+        catch(\Illuminate\Database\QueryException $e){
+            $mensaje = "Error: ".$e->getMessage();
+        }
+
+        return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
 
-//    public function updateajax(Request $request, PaqueteDetalle $pd)
-    public function updateajax()
+    public function update_ajax(Request $request)
     {
-
-        $paquete_detalle_id = $_GET['paquete_detalle_id'];
-        $paquete_id  = $_GET['paquete_id'];
-        $producto_id = $_GET['producto_id'];
-        $producto_id_old = $_GET['producto_id_old'];
+        $data = $request->all();
+        $paquete_detalle_id = $data['paquete_detalle_id'];
+        $paquete_id  = $data['paquete_id'];
+        $producto_id = $data['producto_id'];
+        $producto_id_old = $data['producto_id_old'];
 
         $pd = PaqueteDetalle::find($paquete_detalle_id);
         try {

@@ -1,12 +1,11 @@
     <div class="panel panel-moriah" id="frmEdit0">
     <div class="panel-heading">
-        <span><strong>{{ ucwords($titulo) }}</strong> | Editando registro {{$paquete_id}}</span>
+        <span><strong>{{ ucwords($titulo) }}</strong> | Nuevo registro {{$paquete_id}}</span>
     </div>
 
     <div class="panel-body">
         <form method="post"  id="frm1Edit">
             {{ csrf_field() }}
-            {{ method_field('PUT') }}
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -21,7 +20,7 @@
             <div class="form-group row">
                 <label for = "producto_id" class="col-md-2 col-form-label text-md-left">Producto</label>
                 <div class="col-md-9">
-                    {{ Form::select('producto_id', $Productos, $items->producto_id, ['id' => 'producto_id','class'=>'form-control']) }}
+                    {{ Form::select('producto_id', $Productos, null, ['id' => 'producto_id','class'=>'form-control']) }}
                 </div>
                 <div class="col-md-1"></div>
             </div>
@@ -40,9 +39,7 @@
                     </button>
                 </div>
             </div>
-            <input type="hidden" name="producto_id_old" id="producto_id_old" value="{{$items->producto_id}}" />
-            <input type="hidden" name="paquete_id" id="paquete_id" value="{{$items->paquete_id}}" />
-            <input type="hidden" name="paquete_detalle_id" id="paquete_detalle_id" value="{{$items->id}}" />
+            <input type="hidden" name="paquete_id" id="paquete_id" value="{{$paquete_id}}" />
         </form>
     </div>
 </div>
@@ -53,7 +50,7 @@
             event.preventDefault();
             $.ajax({
                 cache: false,
-                type: 'put',
+                type: 'post',
                 url: Url,
                 data:  $("#frm1Edit").serialize(),
                 dataType: 'json',

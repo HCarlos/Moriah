@@ -4,7 +4,8 @@
     <div class="panel panel-moriah" id="catalogosList0">
         <div class="panel-heading">
             <span id="titulo_catalogo">Cargando... </span> |
-            <a href="{{ route('paqueteDetalleNew', array('idItem' => $idItem)) }}" class="btn btn-info btn-xs" target="_blank" title="Agregar nuevo registro">
+            {{--<a href="{{ route('paqueteDetalleNewAjax', ['paquete_id' => $idItem,'paquete_detalle_id' => 0]) }}" class="btn btn-info btn-xs btnAction1" target="_blank" title="Agregar nuevo registro">--}}
+            <a href="#" id="/new_paquete_detalle_ajax/-{{$idItem}}-0" class="btn btn-info btn-xs btnAction1" data-toggle="modal" data-target="#myModal" title="Agregar nuevo registro">
                 <i class="fa fa-plus-circle bigger-150"></i>
             </a>
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
@@ -44,15 +45,7 @@
                                             </a>
                                         @endif
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            {{--<a href="{{ route('paqueteDetalleEdit', array('paquete_id' => $item->paquete_id,'paquete_detalle_id' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">--}}
-                                                {{--<i class="fa fa-pencil bigger-150 blue"></i>--}}
-                                            {{--</a>--}}
-
-                                            {{--<a href="{{ route('paqueteDetalleEditAjax', array('paquete_id' => $item->paquete_id,'paquete_detalle_id' => $item->id)) }}" class="btn btn-link btn-xs pull-right " title="Editar" data-toggle="modal" data-target="#myModal">--}}
-                                                {{--<i class="fa fa-pencil bigger-150 blue"></i>--}}
-                                            {{--</a>--}}
-
-                                            <a href="#" class="btn btn-link btn-xs pull-right btnAction1" id="paqueteDetalleEditAjax-{{$item->paquete_id.'-'.$item->id}}"  data-toggle="modal" data-target="#myModal" title="Editar" >
+                                            <a href="#" class="btn btn-link btn-xs pull-right btnAction1" id="/edit_paquete_detalle_ajax/-{{$item->paquete_id.'-'.$item->id}}" data-toggle="modal" data-target="#myModal" title="Editar" >
                                                 <i class="fa fa-pencil bigger-150 blue"></i>
                                             </a>
                                         @endif

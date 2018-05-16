@@ -93,15 +93,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Fichas Paquete Detalles
     Route::get('/index_paquete_detalle/{npage}/{tpaginas}/{id}','SIIFAC\PaqueteDetalleController@index')->name('paqueteDetalleIndex');
-    Route::get('/new_paquete_detalle/{paquete_id}', 'SIIFAC\PaqueteDetalleController@new')->name('paqueteDetalleNew');
-    Route::post('/store_paquete_detalle','SIIFAC\PaqueteDetalleController@store')->name('paqueteDetalleStore/');
-    Route::get('/edit_paquete_detalle/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@edit')->name('paqueteDetalleEdit');
-    Route::put('/update_paquete_detalle/{pd}','SIIFAC\PaqueteDetalleController@update')->name('paqueteDetalleUpdate/');
+    Route::get('/new_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@new_ajax')->name('paqueteDetalleNewAjax');
+    Route::post('/store_paquete_detalle_ajax/','SIIFAC\PaqueteDetalleController@store_ajax')->name('paqueteDetalleStoreAjax/');
+    Route::get('/edit_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@edit_ajax')->name('paqueteDetalleEditAjax');
+    Route::put('/update_paquete_detalle_ajax/','SIIFAC\PaqueteDetalleController@update_ajax')->name('paqueteDetalleUpdateAjax/');
     Route::get('/destroy_paquete_detalle/{id}', 'SIIFAC\PaqueteDetalleController@destroy')->name('paqueteDetalleDestroy/');
-
-    Route::get('/edit_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@editajax')->name('paqueteDetalleEditAjax');
-//    Route::put('/update_paquete_detalle_ajax/{pd}','SIIFAC\PaqueteDetalleController@updateajax')->name('paqueteDetalleUpdateAjax/');
-    Route::get('/update_paquete_detalle_ajax/','SIIFAC\PaqueteDetalleController@updateajax')->name('paqueteDetalleUpdateAjax/');
 
     // Fichas Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');

@@ -39,7 +39,6 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            {{--<a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" title="Editar">--}}
                                             <a href="{{ route('paqueteDetalleIndex', ['npage' => 1, 'tpaginas' => 0,'id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Paquete">
                                                 <i class="fa fa-cubes bigger-150 purple"></i>
                                             </a>
@@ -50,7 +49,6 @@
                                             </a>
                                         @endif
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            {{--<a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" title="Editar">--}}
                                             <a href="{{ route('paqueteEdit', ['idItem' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                                 <i class="fa fa-pencil bigger-150 blue"></i>
                                             </a>

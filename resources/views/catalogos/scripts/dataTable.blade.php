@@ -45,28 +45,21 @@
 
             $('.btnAction1').on('click', function(event) {
                 event.preventDefault();
-
+                $("#myModal .modal-body").empty();
+                $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-cog fa-spin"></i> Cargado datos...</div>');
                 $("#myModal").modal('show');
                 var aID = event.currentTarget.id.split('-');
-                var Url = "/edit_paquete_detalle_ajax/" + aID[1] + "/" + aID[2];
-
+                var Url = aID[0] + aID[1] + "/" + aID[2];
                 $(function () {
                     $.ajax({
-                        method: "GET",
+                        method: "get",
                         url: Url
                     })
                         .done(function (response) {
-
-                            $("#myModal").html(response);
-
+                            $("#myModal .modal-body").html(response);
                         });
                 });
-
-
             });
-
-
-
         });
     });
 
