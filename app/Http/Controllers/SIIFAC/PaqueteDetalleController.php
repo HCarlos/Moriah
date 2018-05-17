@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SIIFAC;
 
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\Producto;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
@@ -105,9 +106,9 @@ class PaqueteDetalleController extends Controller
         $producto_id = $data['producto_id'];
         try {
             $mensaje = "OK";
-            PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
+            $pd = PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
         }
-        catch(\Illuminate\Database\QueryException $e){
+        catch(QueryException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
 
@@ -127,7 +128,7 @@ class PaqueteDetalleController extends Controller
             $mensaje = "OK";
             $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old);
         }
-        catch(\Illuminate\Database\QueryException $e){
+        catch(QueryException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
 

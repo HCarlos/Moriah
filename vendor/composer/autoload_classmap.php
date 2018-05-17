@@ -39,6 +39,7 @@ return array(
     'App\\Http\\Controllers\\SIIFAC\\AlmacenController' => $baseDir . '/app/Http/Controllers/SIIFAC/AlmacenController.php',
     'App\\Http\\Controllers\\SIIFAC\\EmpresaController' => $baseDir . '/app/Http/Controllers/SIIFAC/EmpresaController.php',
     'App\\Http\\Controllers\\SIIFAC\\PaqueteController' => $baseDir . '/app/Http/Controllers/SIIFAC/PaqueteController.php',
+    'App\\Http\\Controllers\\SIIFAC\\PaqueteDetalleController' => $baseDir . '/app/Http/Controllers/SIIFAC/PaqueteDetalleController.php',
     'App\\Http\\Controllers\\SIIFAC\\ProductoController' => $baseDir . '/app/Http/Controllers/SIIFAC/ProductoController.php',
     'App\\Http\\Controllers\\SIIFAC\\UsuarioController' => $baseDir . '/app/Http/Controllers/SIIFAC/UsuarioController.php',
     'App\\Http\\Controllers\\Storage\\StorageProfileController' => $baseDir . '/app/Http/Controllers/Storage/StorageProfileController.php',

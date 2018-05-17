@@ -1768,17 +1768,17 @@
     },
     {
         "name": "laravel/framework",
-        "version": "v5.6.21",
-        "version_normalized": "5.6.21.0",
+        "version": "v5.6.22",
+        "version_normalized": "5.6.22.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/framework.git",
-            "reference": "458a89b1c5ff73072c27308566f444c790f76f28"
+            "reference": "637fd797a6dde8d24a9f07da77e375ec251c5d24"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/458a89b1c5ff73072c27308566f444c790f76f28",
-            "reference": "458a89b1c5ff73072c27308566f444c790f76f28",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/637fd797a6dde8d24a9f07da77e375ec251c5d24",
+            "reference": "637fd797a6dde8d24a9f07da77e375ec251c5d24",
             "shasum": ""
         },
         "require": {
@@ -1873,7 +1873,7 @@
             "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~4.0).",
             "symfony/psr-http-message-bridge": "Required to psr7 bridging features (~1.0)."
         },
-        "time": "2018-05-08T13:30:15+00:00",
+        "time": "2018-05-15T13:34:20+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1974,17 +1974,17 @@
     },
     {
         "name": "laravelcollective/html",
-        "version": "v5.6.7",
-        "version_normalized": "5.6.7.0",
+        "version": "v5.6.8",
+        "version_normalized": "5.6.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/LaravelCollective/html.git",
-            "reference": "38f2c6ff0d3dfc497175a5cff5e24b3937f6e2c9"
+            "reference": "42c0854e00d6bb3346883d122b444fbf15a13ecb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/LaravelCollective/html/zipball/38f2c6ff0d3dfc497175a5cff5e24b3937f6e2c9",
-            "reference": "38f2c6ff0d3dfc497175a5cff5e24b3937f6e2c9",
+            "url": "https://api.github.com/repos/LaravelCollective/html/zipball/42c0854e00d6bb3346883d122b444fbf15a13ecb",
+            "reference": "42c0854e00d6bb3346883d122b444fbf15a13ecb",
             "shasum": ""
         },
         "require": {
@@ -2000,7 +2000,7 @@
             "mockery/mockery": "~1.0",
             "phpunit/phpunit": "~7.1"
         },
-        "time": "2018-04-26T16:09:18+00:00",
+        "time": "2018-05-10T17:15:15+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -6203,17 +6203,17 @@
     },
     {
         "name": "yajra/laravel-datatables-oracle",
-        "version": "v8.5.0",
-        "version_normalized": "8.5.0.0",
+        "version": "v8.5.2",
+        "version_normalized": "8.5.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yajra/laravel-datatables.git",
-            "reference": "5fafe67e6c30e7c472a25b4d31b39f6e80ad0982"
+            "reference": "b2d9df3df9315bc1a5d08ac2b88a1e2a15e5ddcb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/5fafe67e6c30e7c472a25b4d31b39f6e80ad0982",
-            "reference": "5fafe67e6c30e7c472a25b4d31b39f6e80ad0982",
+            "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b2d9df3df9315bc1a5d08ac2b88a1e2a15e5ddcb",
+            "reference": "b2d9df3df9315bc1a5d08ac2b88a1e2a15e5ddcb",
             "shasum": ""
         },
         "require": {
@@ -6233,7 +6233,7 @@
             "yajra/laravel-datatables-fractal": "Plugin for server-side response using Fractal.",
             "yajra/laravel-datatables-html": "Plugin for server-side HTML builder of dataTable."
         },
-        "time": "2018-05-10T02:22:47+00:00",
+        "time": "2018-05-15T09:21:17+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

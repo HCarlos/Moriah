@@ -530,6 +530,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Controllers\\SIIFAC\\AlmacenController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/AlmacenController.php',
         'App\\Http\\Controllers\\SIIFAC\\EmpresaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/EmpresaController.php',
         'App\\Http\\Controllers\\SIIFAC\\PaqueteController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PaqueteController.php',
+        'App\\Http\\Controllers\\SIIFAC\\PaqueteDetalleController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PaqueteDetalleController.php',
         'App\\Http\\Controllers\\SIIFAC\\ProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/ProductoController.php',
         'App\\Http\\Controllers\\SIIFAC\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/UsuarioController.php',
         'App\\Http\\Controllers\\Storage\\StorageProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Storage/StorageProfileController.php',
