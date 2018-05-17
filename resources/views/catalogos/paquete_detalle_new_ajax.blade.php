@@ -6,7 +6,6 @@
     <div class="panel-body">
         <form method="post"  id="frm1Edit">
             {{ csrf_field() }}
-            {{ method_field('POST') }}
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -52,11 +51,10 @@
             event.preventDefault();
 
             var frmSerialize = $("#frm1Edit").serialize();
-            // alert(frmSerialize);
-            // cache: false,
 
             $.ajax({
-                type: 'POST',
+                cache: false,
+                type: 'post',
                 url: Url,
                 data:  frmSerialize,
                 dataType: 'json',
