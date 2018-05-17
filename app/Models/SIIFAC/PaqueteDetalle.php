@@ -52,8 +52,8 @@ class PaqueteDetalle extends Model
                 'comp1' => $prod->comp1,
                 'empresa_id' => $prod->empresa_id,
                 'idemp' => 1,
-                'ip' => Request::ip(), //$F->getIHE(1),
-                'host' => Request::getHttpHost(), // $F->getIHE(2),
+                'ip' => Request::ip(),
+                'host' => Request::getHttpHost(),
             ]);
 
             $det->productos()->detach($prod);

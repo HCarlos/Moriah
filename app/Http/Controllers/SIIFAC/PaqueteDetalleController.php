@@ -11,6 +11,7 @@ use App\Models\SIIFAC\Paquete;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use LogicException;
 
 
 class PaqueteDetalleController extends Controller
@@ -101,14 +102,14 @@ class PaqueteDetalleController extends Controller
 
     public function store_ajax(Request $request)
     {
-        $data = $request->all();
+        $data        = $request->all();
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
         try {
             $mensaje = "OK";
-            $pd = PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
+            PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
         }
-        catch(QueryException $e){
+        catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
 
