@@ -94,7 +94,7 @@ class PaqueteDetalleController extends Controller
                 'titulo' => 'detalles paquete',
                 'user' => $user,
                 'Productos' => $Productos->sortBy('descripcion')->pluck('descripcion','id'),
-                'Url' => '/update_paquete_detalle_ajax/',
+                'Url' => '/update_paquete_detalle_ajax',
             ]
         );
     }

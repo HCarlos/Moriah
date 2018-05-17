@@ -96,7 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/new_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@new_ajax')->name('paqueteDetalleNewAjax');
     Route::post('/store_paquete_detalle_ajax','SIIFAC\PaqueteDetalleController@store_ajax')->name('paqueteDetalleStoreAjax/');
     Route::get('/edit_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@edit_ajax')->name('paqueteDetalleEditAjax');
-    Route::put('/update_paquete_detalle_ajax/','SIIFAC\PaqueteDetalleController@update_ajax')->name('paqueteDetalleUpdateAjax/');
+    Route::put('/update_paquete_detalle_ajax','SIIFAC\PaqueteDetalleController@update_ajax')->name('paqueteDetalleUpdateAjax/');
     Route::get('/destroy_paquete_detalle/{id}', 'SIIFAC\PaqueteDetalleController@destroy')->name('paqueteDetalleDestroy/');
 
     // Usuarios
