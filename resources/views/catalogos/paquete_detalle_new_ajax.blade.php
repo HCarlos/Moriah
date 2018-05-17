@@ -45,6 +45,7 @@
 </div>
 <script >
     var Url = "{{$Url}}";
+    // alert(Url);
     if ( $("#frm1Edit") ) {
         $("#frm1Edit").on("submit", function (event) {
             event.preventDefault();

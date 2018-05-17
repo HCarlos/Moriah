@@ -105,13 +105,14 @@ class PaqueteDetalleController extends Controller
         $data        = $request->all();
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
-        try {
+        //dd($paquete_id.', '.$producto_id);
+//        try {
             $mensaje = "OK";
             PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
-        }
-        catch(LogicException $e){
-            $mensaje = "Error: ".$e->getMessage();
-        }
+//        }
+//        catch(LogicException $e){
+//            $mensaje = "Error: ".$e->getMessage();
+//        }
 
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
