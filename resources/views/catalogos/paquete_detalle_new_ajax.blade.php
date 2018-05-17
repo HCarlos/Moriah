@@ -52,11 +52,11 @@
             event.preventDefault();
 
             var frmSerialize = $("#frm1Edit").serialize();
-            alert(frmSerialize);
+            // alert(frmSerialize);
+            // cache: false,
 
             $.ajax({
-                cache: false,
-                type: 'post',
+                type: 'POST',
                 url: Url,
                 data:  frmSerialize,
                 dataType: 'json',
