@@ -42,6 +42,8 @@ return array(
     'App\\Http\\Controllers\\SIIFAC\\PaqueteDetalleController' => $baseDir . '/app/Http/Controllers/SIIFAC/PaqueteDetalleController.php',
     'App\\Http\\Controllers\\SIIFAC\\ProductoController' => $baseDir . '/app/Http/Controllers/SIIFAC/ProductoController.php',
     'App\\Http\\Controllers\\SIIFAC\\UsuarioController' => $baseDir . '/app/Http/Controllers/SIIFAC/UsuarioController.php',
+    'App\\Http\\Controllers\\Storage\\StoragePaqueteController' => $baseDir . '/app/Http/Controllers/Storage/StoragePaqueteController.php',
+    'App\\Http\\Controllers\\Storage\\StorageProductoController' => $baseDir . '/app/Http/Controllers/Storage/StorageProductoController.php',
     'App\\Http\\Controllers\\Storage\\StorageProfileController' => $baseDir . '/app/Http/Controllers/Storage/StorageProfileController.php',
     'App\\Http\\Controllers\\TableController' => $baseDir . '/app/Http/Controllers/Admin/TableController.php',
     'App\\Http\\Controllers\\WidgetController' => $baseDir . '/app/Http/Controllers/Admin/WidgetController.php',

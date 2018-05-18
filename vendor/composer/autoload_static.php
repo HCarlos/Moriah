@@ -533,6 +533,8 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Controllers\\SIIFAC\\PaqueteDetalleController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PaqueteDetalleController.php',
         'App\\Http\\Controllers\\SIIFAC\\ProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/ProductoController.php',
         'App\\Http\\Controllers\\SIIFAC\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/UsuarioController.php',
+        'App\\Http\\Controllers\\Storage\\StoragePaqueteController' => __DIR__ . '/../..' . '/app/Http/Controllers/Storage/StoragePaqueteController.php',
+        'App\\Http\\Controllers\\Storage\\StorageProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Storage/StorageProductoController.php',
         'App\\Http\\Controllers\\Storage\\StorageProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Storage/StorageProfileController.php',
         'App\\Http\\Controllers\\TableController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TableController.php',
         'App\\Http\\Controllers\\WidgetController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/WidgetController.php',
