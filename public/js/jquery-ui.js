@@ -15054,7 +15054,7 @@ $.fn.extend({
 $.extend( $.effects, {
 	version: "1.11.2",
 
-	// Saves a set of properties in a data storage
+	// Saves a set of properties in a data archivos
 	save: function( element, set ) {
 		for ( var i = 0; i < set.length; i++ ) {
 			if ( set[ i ] !== null ) {
@@ -15063,7 +15063,7 @@ $.extend( $.effects, {
 		}
 	},
 
-	// Restores a set of previously saved properties from a data storage
+	// Restores a set of previously saved properties from a data archivos
 	restore: function( element, set ) {
 		var val, i;
 		for ( i = 0; i < set.length; i++ ) {

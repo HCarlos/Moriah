@@ -220,7 +220,7 @@ class ProductoController extends Controller
         $oProd = Producto::findOrFail($idItem);
         $user = Auth::User();
 
-        return view ('storage.producto_imagen',
+        return view ('archivos.producto_imagen',
             [
                 'idItem' => $idItem,
                 'titulo' => 'Subir imagen a ficha: ',

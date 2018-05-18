@@ -110,12 +110,12 @@ class EditUserDataController extends Controller
 
     protected function showEditProfilePhoto(){
         $user = Auth::user();
-        return view('storage.profile_photo',compact("user"));
+        return view('archivos.profile_photo',compact("user"));
     }
 
     protected function showEditProfileEmail(){
         $user = Auth::user();
-        return view('storage.profile_email',compact("user"));
+        return view('archivos.profile_email',compact("user"));
     }
 
 

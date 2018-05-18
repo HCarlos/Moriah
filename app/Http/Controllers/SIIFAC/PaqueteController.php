@@ -175,7 +175,7 @@ class PaqueteController extends Controller
         $oPaq = Paquete::findOrFail($idItem);
         $user = Auth::User();
 
-        return view ('storage.paquete_imagen',
+        return view ('archivos.paquete_imagen',
             [
                 'idItem' => $idItem,
                 'titulo' => 'Subir imagen a ficha: ',

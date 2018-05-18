@@ -16,9 +16,9 @@ class FuncionesController extends Controller
         return strtr(strtoupper($str), "áéíóúñ", "ÁÉÍÓÚÑ");
     }
 
-    public function showFile($root="/storage/",$archivo=""){
+    public function showFile($root="/archivos/",$archivo=""){
         $public_path = public_path();
-        $url = $public_path."/storage/".$root.$archivo;
+        $url = $public_path."/archivos/".$root.$archivo;
         if (Storage::exists($archivo))
         {
             return response()->download($url);
