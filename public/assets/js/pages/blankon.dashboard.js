@@ -183,7 +183,7 @@ var BlankonDashboard = function () {
                     {
                         element: "#tour-20",
                         title: "Footer Content",
-                        content: "Additional style for handle storage system",
+                        content: "Additional style for handle imagenes system",
                         placement: "top"
                     }
                 ],

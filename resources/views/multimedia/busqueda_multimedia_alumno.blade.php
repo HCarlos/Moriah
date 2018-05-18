@@ -60,8 +60,8 @@
                     </div>
                     <div class="card-footer row-fluid">
                         @foreach($lib->imagenes as $item)
-                            <a href="{{ asset('storage/'.$item->root.$item->filename)  }}" target="_blank" class="img-thumbnail pull-left">
-                                <img src="{{ asset('storage/'.$item->root.$item->filename)  }}" width="100" height="80" title="{{$lib->titulo}}" class="img-responsive"/>
+                            <a href="{{ asset('imagenes'.$item->root.$item->filename)  }}" target="_blank" class="img-thumbnail pull-left">
+                                <img src="{{ asset('imagenes'.$item->root.$item->filename)  }}" width="100" height="80" title="{{$lib->titulo}}" class="img-responsive"/>
                             </a>
                         @endforeach
                     </div>

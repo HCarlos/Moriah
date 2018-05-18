@@ -274,7 +274,7 @@ ace.data_storage = function(method, undefined) {
 
 
 
-//cookie storage
+//cookie imagenes
 ace.cookie = {
 	// The following functions are from Cookie.js class in TinyMCE, Moxiecode, used under LGPL.
 
@@ -343,7 +343,7 @@ ace.cookie = {
 };
 
 
-//local storage
+//local imagenes
 ace.storage = {
 	get: function(key) {
 		return window['localStorage'].getItem(key);

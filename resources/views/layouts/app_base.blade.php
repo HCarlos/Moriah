@@ -47,7 +47,7 @@
                             @if( Auth::user()->IsEmptyPhoto() )
                                 <img src="{{ asset('assets/img/empty_user.png')  }}" width="40" height="40" class="img-circle border border-white border-white-moriah"/>
                             @else
-                                <img src="{{ asset('storage/'.Auth::user()->root.Auth::user()->filename)  }}" width="40" height="40" class="img-circle border border-white  border-white-moriah"/>
+                                <img src="{{ asset('storage'.Auth::user()->root.Auth::user()->filename)  }}" width="40" height="40" class="img-circle border border-white  border-white-moriah"/>
                             @endif
                             {{ Auth::user()->username }}
 

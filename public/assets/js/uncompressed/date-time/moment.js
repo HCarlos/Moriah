@@ -13,7 +13,7 @@
     var moment,
         VERSION = "2.0.0",
         round = Math.round, i,
-        // internal storage for language config files
+        // internal imagenes for language config files
         languages = {},
 
         // check for nodeJS

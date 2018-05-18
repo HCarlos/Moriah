@@ -168,7 +168,7 @@ class CatalogosController extends Controller
         $user = Auth::User();
         $filename = Fichafile::all()->where('isbn',$items->isbn)->sortBy('id');
 
-        return view ('storage.catalogos_subir_imagen_ficha',
+        return view ('imagenes.catalogos_subir_imagen_ficha',
             [
                 'id'   => $id,
                 'idItem' => $idItem,

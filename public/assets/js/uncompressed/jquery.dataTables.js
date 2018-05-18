@@ -4813,7 +4813,7 @@
 		 * Register a callback function. Easily allows a callback function to be added to
 		 * an array store of callback functions that can then all be called together.
 		 *  @param {object} oSettings dataTables settings object
-		 *  @param {string} sStore Name of the array storage for the callbacks in oSettings
+		 *  @param {string} sStore Name of the array imagenes for the callbacks in oSettings
 		 *  @param {function} fn Function to be called back
 		 *  @param {string} sName Identifying name for the callback (i.e. a label)
 		 *  @memberof DataTable#oApi
@@ -4835,7 +4835,7 @@
 		 * array store is done backwards! Further note that you do not want to fire off triggers
 		 * in time sensitive applications (for example cell creation) as its slow.
 		 *  @param {object} oSettings dataTables settings object
-		 *  @param {string} sStore Name of the array storage for the callbacks in oSettings
+		 *  @param {string} sStore Name of the array imagenes for the callbacks in oSettings
 		 *  @param {string} sTrigger Name of the jQuery custom event to trigger. If null no trigger
 		 *    is fired
 		 *  @param {array} aArgs Array of arguments to pass to the callback function / trigger
@@ -8796,7 +8796,7 @@
 		/**
 		 * Load the table state. With this function you can define from where, and how, the
 		 * state of a table is loaded. By default DataTables will load from its state saving
-		 * cookie, but you might wish to use local storage (HTML5) or a server-side database.
+		 * cookie, but you might wish to use local imagenes (HTML5) or a server-side database.
 		 *  @type function
 		 *  @member
 		 *  @param {object} oSettings DataTables settings object
@@ -8902,7 +8902,7 @@
 		/**
 		 * Save the table state. This function allows you to define where and how the state
 		 * information for the table is stored - by default it will use a cookie, but you
-		 * might want to use local storage (HTML5) or a server-side database.
+		 * might want to use local imagenes (HTML5) or a server-side database.
 		 *  @type function
 		 *  @member
 		 *  @param {object} oSettings DataTables settings object
