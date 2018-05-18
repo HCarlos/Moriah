@@ -71,6 +71,20 @@ return [
             'visibility' => env('PROFILE_VISIBILITY'),
         ],
 
+        'producto' => [
+            'driver' => env('PRODUCTO_DRIVER'),
+            'root' => public_path().env('PRODUCTO_ROOT'),
+            'url' => env('APP_URL').env('PRODUCTO_URL'),
+            'visibility' => env('PRODUCTO_VISIBILITY'),
+        ],
+
+        'paquete' => [
+            'driver' => env('PAQUETE_DRIVER'),
+            'root' => public_path().env('PAQUETE_ROOT'),
+            'url' => env('APP_URL').env('PAQUETE_URL'),
+            'visibility' => env('PAQUETE_VISIBILITY'),
+        ],
+
     ],
 
 ];

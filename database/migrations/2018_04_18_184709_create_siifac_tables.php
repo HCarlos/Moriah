@@ -608,6 +608,8 @@ class CreateSiifacTables extends Migration
             $table->string('codigo',16)->default('')->nullable();
             $table->string('descripcion_paquete',150)->default('')->nullable();
             $table->decimal('importe',10,2)->default(0)->nullable();
+            $table->string('filename',50)->nullable();
+            $table->string('root',150)->default('')->nullable();
             $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_paquete')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();

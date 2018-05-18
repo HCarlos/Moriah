@@ -26,7 +26,7 @@
                             <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
                             <th aria-label="Importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Importe</th>
-                            <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
+                            <th aria-label="" style="width: 120px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
                         <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -41,6 +41,11 @@
                                         @if ($user->hasAnyPermission(['consultar','all']) )
                                             <a href="{{ route('paqueteDetalleIndex', ['npage' => 1, 'tpaginas' => 0,'id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Paquete">
                                                 <i class="fa fa-cubes bigger-150 purple"></i>
+                                            </a>
+                                        @endif
+                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                            <a href="{{ route('paqueteImagen', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
+                                                <i class="fa fa-picture-o bigger-150 orange2"></i>
                                             </a>
                                         @endif
                                         @if ($user->hasAnyPermission(['consultar','all']) )

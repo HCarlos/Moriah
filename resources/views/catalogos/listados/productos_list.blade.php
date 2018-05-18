@@ -43,12 +43,16 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                     @if ($user->hasAnyPermission(['consultar','all']) )
+                                        <a href="{{ route('productoImagen', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
+                                            <i class="fa fa-picture-o bigger-150 orange2"></i>
+                                        </a>
+                                    @endif
+                                    @if ($user->hasAnyPermission(['consultar','all']) )
                                         <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="producto-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
                                             <i class="fa fa-trash bigger-150 red" ></i>
                                         </a>
                                     @endif
                                     @if ($user->hasAnyPermission(['consultar','all']) )
-                                        {{--<a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" title="Editar">--}}
                                         <a href="{{ route('productoEdit', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                             <i class="fa fa-pencil bigger-150 blue"></i>
                                         </a>

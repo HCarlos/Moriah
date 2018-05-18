@@ -39,6 +39,11 @@
                                 <td class="text-right">{{ $item->pv}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
+                                        {{--@if ($user->hasAnyPermission(['consultar','all']) )--}}
+                                            {{--<a href="{{ route('paqueteUpdateInDetalle/', ['idItem' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Actualizar Precios">--}}
+                                                {{--<i class="fa fa-pencil bigger-150 blue"></i>--}}
+                                            {{--</a>--}}
+                                        {{--@endif--}}
                                         @if ($user->hasAnyPermission(['consultar','all']) )
                                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="paquete_detalle-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>

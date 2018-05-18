@@ -14,7 +14,7 @@ class Paquete extends Model
     protected $table = 'paquetes';
 
     protected $fillable = [
-        'user_id', 'codigo', 'descripcion_paquete','empresa_id',
+        'user_id', 'codigo', 'descripcion_paquete','root','filename','empresa_id',
         'status_paquete','idemp','ip','host',
     ];
 
@@ -42,6 +42,10 @@ class Paquete extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
+    public function IsEmptyPhoto(){
+        return $this->filename == '' ? true : false;
+    }
+
 
     public static function findOrCreatePaquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
         $obj = static::all()->where('clave', $descripcion_paquete)->first();
@@ -62,5 +66,16 @@ class Paquete extends Model
         return $obj;
     }
 
+    public static function UpdateImporteFromPaqueteDetalle($paquete_id){
+        $pd = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
+        $importe = 0;
+        foreach ($pd as $p){
+            $importe += $p->pv;
+        }
+        $pq = static::where('id',$paquete_id)->first();
+        $pq->importe = $importe;
+        $pq->save();
+        return $pq->importe;
+    }
 
 }

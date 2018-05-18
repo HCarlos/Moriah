@@ -82,6 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store_producto','SIIFAC\ProductoController@store')->name('productoStore/');
     Route::put('/update_producto/{prod}','SIIFAC\ProductoController@update')->name('productoUpdate/');
     Route::get('/destroy_producto/{id}', 'SIIFAC\ProductoController@destroy')->name('productoDestroy/');
+    Route::get('/imagen_producto/{idItem}', 'SIIFAC\ProductoController@imagen')->name('productoImagen');
+    Route::post('/subir_imagen_producto/{oProducto}','Storage\StorageProductoController@subirArchivoProducto')->name('storageProductoUpload/');
+    Route::get('/quitar_imagen_producto/{idItem}','Storage\StorageProductoController@quitarArchivoProducto')->name('storageProductoRemove/');
 
     // Paquetes
     Route::get('/index_paquete/{npage}/{tpaginas}','SIIFAC\PaqueteController@index')->name('paqueteIndex');
@@ -90,6 +93,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store_paquete','SIIFAC\PaqueteController@store')->name('paqueteStore/');
     Route::put('/update_paquete/{paq}','SIIFAC\PaqueteController@update')->name('paqueteUpdate/');
     Route::get('/destroy_paquete/{id}', 'SIIFAC\PaqueteController@destroy')->name('paqueteDestroy/');
+    Route::get('/imagen_paquete/{idItem}', 'SIIFAC\PaqueteController@imagen')->name('paqueteImagen');
+    Route::post('/subir_imagen_paquete/{oPaquete}','Storage\StoragePaqueteController@subirArchivoPaquete')->name('storagePaqueteUpload/');
+    Route::get('/quitar_imagen_paquete/{idItem}','Storage\StoragePaqueteController@quitarArchivoPaquete')->name('storagePaqueteRemove/');
 
     // Paquete Detalles
     Route::get('/index_paquete_detalle/{npage}/{tpaginas}/{id}','SIIFAC\PaqueteDetalleController@index')->name('paqueteDetalleIndex');
@@ -98,6 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@edit_ajax')->name('paqueteDetalleEditAjax');
     Route::put('/update_paquete_detalle_ajax','SIIFAC\PaqueteDetalleController@update_ajax')->name('paqueteDetalleUpdateAjax/');
     Route::get('/destroy_paquete_detalle/{id}', 'SIIFAC\PaqueteDetalleController@destroy')->name('paqueteDetalleDestroy/');
+//    Route::get('/update_paquete_precios/{id}', 'SIIFAC\PaqueteDetalleController@update_precios')->name('paqueteUpdateInDetalle/');
 
     // Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');

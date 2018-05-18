@@ -74,7 +74,6 @@ class PaqueteDetalleController extends Controller
                 'Url' => '/store_paquete_detalle_ajax',
             ]
         );
-
     }
 
     public function edit_ajax($paquete_id=0,$paquete_detalle_id=0)
@@ -111,6 +110,7 @@ class PaqueteDetalleController extends Controller
         try {
             $mensaje = "OK";
             PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
+            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
         }
         catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
@@ -131,6 +131,8 @@ class PaqueteDetalleController extends Controller
         try {
             $mensaje = "OK";
             $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old);
+            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
+
         }
         catch(QueryException $e){
             $mensaje = "Error: ".$e->getMessage();
@@ -140,14 +142,14 @@ class PaqueteDetalleController extends Controller
 
     }
 
-
     public function destroy($id=0){
 
             $pd = PaqueteDetalle::findOrFail($id);
             $pd->forceDelete();
 
-            $paq = Paquete::find($pd->paquete_id);
             $prod = Producto::find($pd->producto_id);
+            $paq = Paquete::find($pd->paquete_id);
+            $paq::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
 
             $pd->productos()->detach($prod);
             $paq->productos()->detach($prod);
@@ -155,6 +157,16 @@ class PaqueteDetalleController extends Controller
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
 
     }
+
+//    public function update_precios($id=0){
+//
+//        $pd = PaqueteDetalle::findOrFail($id);
+//        $paq = Paquete::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
+//        dd ( $paq );
+//
+//    }
+
+
 
 
 }

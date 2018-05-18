@@ -7,6 +7,7 @@ use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaProducto;
 use App\Models\SIIFAC\Medida;
 use App\Models\SIIFAC\Movimiento;
+use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -153,6 +154,7 @@ class ProductoController extends Controller
         $prod->familiaProductos()->attach($fp);
         $prod->medidas()->attach($med);
         $prod->empresas()->attach($emp);
+        $prod::ActualizaPaqueteDetalles($prod->id);
 
         return redirect('/new_producto/'.$idItem);
     }
@@ -196,6 +198,7 @@ class ProductoController extends Controller
         $med  = Medida::find($data['medida_id']);
         $emp  = Empresa::find($data['empresa_id']);
 
+
         $prod->update($data);
 
         $prod->almacenes()->detach();
@@ -207,22 +210,42 @@ class ProductoController extends Controller
         $prod->familiaProductos()->sync($fp);
         $prod->medidas()->sync($med);
         $prod->empresas()->sync($emp);
+        $prod::ActualizaPaqueteDetalles($prod->id);
 
         return redirect('/edit_producto/'.$idItem);
 
     }
+
+    protected function imagen($idItem){
+        $oProd = Producto::findOrFail($idItem);
+        $user = Auth::User();
+
+        return view ('storage.producto_imagen',
+            [
+                'idItem' => $idItem,
+                'titulo' => 'Subir imagen a ficha: ',
+                'item' => $oProd,
+                'user' => $user,
+                'otrosDatos' => '',
+            ]
+        );
+    }
+
 
     public function destroy($id=0){
         $mov = Movimiento::all()->where('producto_id',$id)->first();
 
         if ( !$mov ){
             $prod = Producto::findOrFail($id);
-            $prod->delete();
+            $prod->forceDelete();
+            $prod::ActualizaPaqueteDetalles($id);
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
         }else{
             return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$mov->id.']', 'data' => 'Error', 'status' => '200'], 200);
         }
 
     }
+
+
 }
 

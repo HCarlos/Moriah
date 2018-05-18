@@ -171,6 +171,21 @@ class PaqueteController extends Controller
 
     }
 
+    protected function imagen($idItem){
+        $oPaq = Paquete::findOrFail($idItem);
+        $user = Auth::User();
+
+        return view ('storage.paquete_imagen',
+            [
+                'idItem' => $idItem,
+                'titulo' => 'Subir imagen a ficha: ',
+                'item' => $oPaq,
+                'user' => $user,
+                'otrosDatos' => '',
+            ]
+        );
+    }
+
     public function destroy($id=0){
         $mov = Movimiento::all()->where('paquete_id',$id)->first();
 
