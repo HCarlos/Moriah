@@ -14,8 +14,8 @@ class Paquete extends Model
     protected $table = 'paquetes';
 
     protected $fillable = [
-        'user_id', 'codigo', 'descripcion_paquete','root','filename','empresa_id',
-        'status_paquete','idemp','ip','host',
+        'user_id', 'codigo', 'descripcion_paquete','root','filename','importe',
+        'empresa_id', 'status_paquete','idemp','ip','host',
     ];
 
     public function user(){
@@ -46,6 +46,9 @@ class Paquete extends Model
         return $this->filename == '' ? true : false;
     }
 
+    public function getFullDescriptionAttribute(){
+        return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_paquete']. ' - ' . $this->attributes['importe'];
+    }
 
     public static function findOrCreatePaquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
         $obj = static::all()->where('clave', $descripcion_paquete)->first();

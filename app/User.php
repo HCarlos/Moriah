@@ -139,6 +139,10 @@ class User extends Authenticatable
         return $this->id;
     }
 
+    public function getFullNameAttribute() {
+        return $this->attributes['ap_paterno'] . ' ' . $this->attributes['ap_materno']. ' ' . $this->attributes['nombre'];
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MyResetPassword($token));

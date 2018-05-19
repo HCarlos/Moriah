@@ -104,7 +104,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@edit_ajax')->name('paqueteDetalleEditAjax');
     Route::put('/update_paquete_detalle_ajax','SIIFAC\PaqueteDetalleController@update_ajax')->name('paqueteDetalleUpdateAjax/');
     Route::get('/destroy_paquete_detalle/{id}', 'SIIFAC\PaqueteDetalleController@destroy')->name('paqueteDetalleDestroy/');
-//    Route::get('/update_paquete_precios/{id}', 'SIIFAC\PaqueteDetalleController@update_precios')->name('paqueteUpdateInDetalle/');
+
+    // Pedidos
+    Route::get('/index_pedido/{npage}/{tpaginas}','SIIFAC\PedidoController@index')->name('pedidoIndex');
+    Route::get('/new_pedido/{idItem}', 'SIIFAC\PedidoController@new')->name('pedidoNew');
+    Route::post('/store_pedido','SIIFAC\PedidoController@store')->name('pedidoStore/');
+    Route::get('/destroy_pedido/{id}', 'SIIFAC\PedidoController@destroy')->name('pedidoDestroy/');
+
+    // Pedido Detalles
+    Route::get('/index_pedido_detalle/{npage}/{tpaginas}/{id}','SIIFAC\PedidoDetalleController@index')->name('pedidoDetalleIndex');
+    Route::get('/new_pedido_detalle_ajax/{pedido_id}/{pedido_detalle_id}', 'SIIFAC\PedidoDetalleController@new_ajax')->name('pedidoDetalleNewAjax');
+    Route::post('/store_pedido_detalle_ajax','SIIFAC\PedidoDetalleController@store_ajax')->name('pedidoDetalleStoreAjax/');
+    Route::get('/destroy_pedido_detalle/{id}', 'SIIFAC\PedidoDetalleController@destroy')->name('pedidoDetalleDestroy/');
 
     // Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');

@@ -2,43 +2,86 @@
 
 namespace App\Models\SIIFAC;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Request;
 
 class Pedido extends Model
 {
     use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
-    protected $table = 'proveedores';
+    protected $table = 'pedidos';
 
     protected $fillable = [
-        'clave_proveedor', 'nombre_proveedor', 'contacto_proveedor','domicilio_fiscal_proveedor','empresa_id',
-        'status_proveedores','idemp','ip','host',
+        'user_id', 'paquete_id', 'descripcion_pedido','fecha','codigo','root','filename','importe',
+        'empresa_id', 'status_pedido','idemp','ip','host',
     ];
 
-    public function proveedor(){
-        // Esta en muchas Compras
-        return $this->belongsTo(Compra::class);
-    }
+    use SoftDeletes;
 
     public function user(){
-        // Esta en muchos Usuarios
         return $this->belongsTo(User::class);
     }
 
-    public function detalles(){
-        // Contiene muchos Ingresos
-        return $this->hasMany(PedidoDetalle::class);
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 
-    public function movimientos(){
-        // Contiene muchos Ingresos
-        return $this->hasMany(Movimiento::class);
+    public function detalles(){
+        return $this->belongsToMany(PedidoDetalle::class);
+    }
+
+    public function productos(){
+        return $this->belongsToMany(Producto::class);
     }
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
+
+    public function empresas(){
+        return $this->belongsToMany(Empresa::class);
+    }
+
+    public static function findOrCreatePedido($user_id, $paquete_id, $empresa_id)
+    {
+        $user = User::find($user_id);
+        $emp = Empresa::find($empresa_id);
+        $paq = Paquete::find($paquete_id);
+        $ped = static::create([
+            'user_id' => $user_id,
+            'paquete_id' => $paquete_id,
+            'descripcion_pedido' => $paq->descripcion_paquete,
+            'codigo' => $paq->codigo,
+            'filename' => $paq->root,
+            'filename' => $paq->filename,
+            'importe' => $paq->importe,
+            'fecha' => NOW(),
+            'empresa_id' => $empresa_id,
+            'idemp' => 1,
+            'ip' => Request::ip(),
+            'host' => Request::getHttpHost(),
+        ]);
+        $ped->users()->attach($user);
+        $ped->empresas()->attach($emp);
+        PedidoDetalle::asignProductoAPedidoDetalle($ped->id,$user_id,$paquete_id,$empresa_id);
+        return $ped;
+
+    }
+
+    public static function UpdateImporteFromPedidoDetalle($pedido_id){
+        $pd = PedidoDetalle::where('pedido_id',$pedido_id)->get();
+        $importe = 0;
+        foreach ($pd as $p){
+            $importe += $p->pv;
+        }
+        $pq = static::where('id',$pedido_id)->first();
+        $pq->importe = $importe;
+        $pq->save();
+        return $pq->importe;
+    }
+
 
 }

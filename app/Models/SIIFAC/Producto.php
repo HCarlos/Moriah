@@ -72,6 +72,10 @@ class Producto extends Model
         return $this->filename == '' ? true : false;
     }
 
+    public function getFullDescriptionAttribute(){
+        return $this->attributes['descripcion']. ' - ' .$this->attributes['id'] . ' - ' .  $this->attributes['pv'];
+    }
+
     public static function findOrCreateProducto(
         $almacen_id, $familia_producto_id, $medida_id,
         $clave, $codigo, $descripcion, $shortdesc,$maximo,$minimo,

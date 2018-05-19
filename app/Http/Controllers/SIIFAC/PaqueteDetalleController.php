@@ -16,7 +16,6 @@ use LogicException;
 
 class PaqueteDetalleController extends Controller
 {
-    protected $tableName = 'paquetes';
     protected $itemPorPagina = 50;
     protected $otrosDatos;
     protected $Predeterminado = false;
@@ -61,16 +60,13 @@ class PaqueteDetalleController extends Controller
         $views  = 'paquete_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::with('medidas')->orderBy('descripcion','asc')->get();
-        foreach($Productos as $prod){
-            $prod['descripcion'] = $prod->descripcion.' '.$prod->medida->desc1;
-        }
+        $Productos = Producto::all()->sortBy('descripcion')->pluck('FullDescription','id');
         return view ($oView.$views,
             [
                 'paquete_id' => $paquete_id,
                 'titulo' => 'detalles paquete',
                 'user' => $user,
-                'Productos' => $Productos->sortBy('descripcion') ->pluck('descripcion','id'),
+                'Productos' => $Productos,
                 'Url' => '/store_paquete_detalle_ajax',
             ]
         );
@@ -82,17 +78,14 @@ class PaqueteDetalleController extends Controller
         $user = Auth::User();
         $oView = 'catalogos.' ;
         $items = PaqueteDetalle::find($paquete_detalle_id);
-        $Productos = Producto::with('medidas')->orderBy('descripcion')->get();
-        foreach($Productos as $prod){
-            $prod['descripcion'] = $prod->descripcion.' '.$prod->medida->desc1;
-        }
+        $Productos = Producto::all()->sortBy('descripcion')->pluck('FullDescription','id');
 
         return view ($oView.$views,
             [   'items' => $items,
                 'paquete_id' => $paquete_id,
                 'titulo' => 'detalles paquete',
                 'user' => $user,
-                'Productos' => $Productos->sortBy('descripcion')->pluck('descripcion','id'),
+                'Productos' => $Productos,
                 'Url' => '/update_paquete_detalle_ajax',
             ]
         );
@@ -157,16 +150,5 @@ class PaqueteDetalleController extends Controller
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
 
     }
-
-//    public function update_precios($id=0){
-//
-//        $pd = PaqueteDetalle::findOrFail($id);
-//        $paq = Paquete::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
-//        dd ( $paq );
-//
-//    }
-
-
-
 
 }

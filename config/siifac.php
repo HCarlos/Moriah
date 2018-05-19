@@ -39,7 +39,8 @@ return [
         'pedido_detalle' => 'pedido_detalles',
         'pedido_user' => 'pedido_user',
         'pedido_paquete' => 'pedido_paquete',
-        'pedido_detalle_pedido' => 'pedido_detalle_pedido',
+        'pedido_pedido_detalle' => 'pedido_pedido_detalle',
+        'pedido_producto' => 'pedido_producto',
         'pedido_detalle_user' => 'pedido_detalle_user',
         'pedido_detalle_producto' => 'pedido_detalle_producto',
         'pedido_detalle_medida' => 'pedido_detalle_medida',
@@ -57,6 +58,7 @@ return [
         'venta_detalle' => 'venta_detalle',
         'empresa_producto' => 'empresa_producto',
         'empresa_paquete' => 'empresa_paquete',
+        'empresa_pedido' => 'empresa_pedido',
     ],
 
     ];

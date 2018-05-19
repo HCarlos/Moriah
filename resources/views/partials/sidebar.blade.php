@@ -49,6 +49,13 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li>
+                    <a href="{{ route('pedidoIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                        <i class="menu-icon fa fa-cubes red"></i>
+                        Pedidos
+                    </a>
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 

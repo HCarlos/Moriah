@@ -823,8 +823,12 @@ class CreateSiifacTables extends Migration
             $table->increments('id');
             $table->integer('user_id')->default(0)->nullable();
             $table->integer('paquete_id')->default(0)->nullable();
+            $table->string('codigo',16)->default('')->nullable();
             $table->string('descripcion_pedido',150)->default('');
             $table->dateTime('fecha')->nullable();
+            $table->decimal('importe',10,2)->default(0)->nullable();
+            $table->string('filename',50)->nullable();
+            $table->string('root',150)->default('')->nullable();
             $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_pedido')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
@@ -893,6 +897,44 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
         });
 
+        Schema::create($tableNames['pedido_producto'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('pedido_id');
+            $table->integer('producto_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['pedido_id', 'producto_id']);
+
+            $table->foreign('pedido_id')
+                ->references('id')
+                ->on($tableNames['pedidos'])
+                ->onDelete('cascade');
+
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on($tableNames['productos'])
+                ->onDelete('cascade');
+        });
+
+        Schema::create($tableNames['empresa_pedido'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('empresa_id');
+            $table->integer('pedido_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->unique(['pedido_id', 'empresa_id']);
+
+            $table->foreign('pedido_id')
+                ->references('id')
+                ->on($tableNames['pedidos'])
+                ->onDelete('cascade');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+        });
 
 
         Schema::create($tableNames['pedido_detalle'], function (Blueprint $table) use ($tableNames) {
@@ -949,7 +991,7 @@ class CreateSiifacTables extends Migration
 
         });
 
-        Schema::create($tableNames['pedido_detalle_pedido'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['pedido_pedido_detalle'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('pedido_id');
             $table->integer('pedido_detalle_id');
@@ -1509,6 +1551,7 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['medida_producto']);
         Schema::dropIfExists($tableNames['producto_medida']);
         Schema::dropIfExists($tableNames['empresa_paquete']);
+        Schema::dropIfExists($tableNames['empresa_pedido']);
 
         Schema::dropIfExists($tableNames['familia_cliente_user']);
 
@@ -1522,7 +1565,8 @@ class CreateSiifacTables extends Migration
 
         Schema::dropIfExists($tableNames['pedido_user']);
         Schema::dropIfExists($tableNames['pedido_paquete']);
-        Schema::dropIfExists($tableNames['pedido_detalle_pedido']);
+        Schema::dropIfExists($tableNames['pedido_producto']);
+        Schema::dropIfExists($tableNames['pedido_pedido_detalle']);
         Schema::dropIfExists($tableNames['pedido_detalle_user']);
         Schema::dropIfExists($tableNames['pedido_detalle_producto']);
         Schema::dropIfExists($tableNames['pedido_detalle_medida']);

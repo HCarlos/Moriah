@@ -2,7 +2,6 @@
 
 namespace App\Models\SIIFAC;
 
-use App\Http\Controllers\Funciones\FuncionesController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Request;
@@ -48,7 +47,6 @@ class PaqueteDetalle extends Model
                 'descripcion' => $prod->descripcion,
                 'cant' => $prod->cant,
                 'pv' => $prod->pv,
-                'cant' => $prod->cant,
                 'comp1' => $prod->comp1,
                 'empresa_id' => $prod->empresa_id,
                 'idemp' => 1,

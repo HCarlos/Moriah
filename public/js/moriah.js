@@ -121,11 +121,13 @@ $(document).ready(function() {
         });
     }
 
-    if ( $("#frm1Edit") ) {
-        $('#frm1Edit').on('submit', function (event) {
-            event.preventDefault();
-            alert("Datos guardados con éxito")
+    if ( $('#descripcion_pedido') ) {
+        $('#descripcion_pedido').val( $('#paquete_id').find(':selected').text() );
+        $('#paquete_id').on('change',function(event){
+            $('#descripcion_pedido').val( $('#paquete_id').find(':selected').text() );
         });
     }
+
+
 
 });
