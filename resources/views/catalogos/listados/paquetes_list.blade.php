@@ -34,7 +34,11 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->codigo }}</td>
-                                <td>{{ $item->descripcion_paquete }}</td>
+                                <td>{{ $item->descripcion_paquete }}
+                                    @if( !$item->IsEmptyPhoto() )
+                                        <i class="fa fa-picture-o bigger-150 orange2"></i>
+                                    @endif
+                                </td>
                                 <td class="text-right">{{ $item->importe}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">

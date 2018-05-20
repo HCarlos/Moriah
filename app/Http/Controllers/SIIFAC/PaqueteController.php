@@ -32,7 +32,7 @@ class PaqueteController extends Controller
         if ( $page ) $npage = $page;
 
         $this->tableName = 'paquetes';
-        $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id')
+        $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id','filename')
             ->orderBy('id','desc')
             ->forPage($npage,$this->itemPorPagina)
             ->get();

@@ -37,7 +37,11 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->clave }}</td>
                                 <td>{{ $item->codigo }}</td>
-                                <td>{{ $item->descripcion }}</td>
+                                <td>{{ $item->descripcion }}
+                                    @if( !$item->IsEmptyPhoto() )
+                                        <i class="fa fa-picture-o bigger-150 orange2"></i>
+                                    @endif
+                                </td>
                                 <td class="text-right">{{ $item->pv}} </td>
                                 <td class="text-right">{{ $item->exist}} </td>
                                 <td >

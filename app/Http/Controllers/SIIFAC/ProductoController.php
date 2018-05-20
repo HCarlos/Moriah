@@ -36,7 +36,7 @@ class ProductoController extends Controller
         if ( $page ) $npage = $page;
 
         $this->tableName = 'productos';
-        $items = Producto::select('id','clave','codigo','descripcion','pv','exist','empresa_id','almacen_id','familia_producto_id','medida_id')
+        $items = Producto::select('id','clave','codigo','descripcion','pv','exist','empresa_id','almacen_id','familia_producto_id','medida_id','filename')
             ->orderBy('id','desc')
             ->forPage($npage,$this->itemPorPagina)
             ->get();
