@@ -45,6 +45,10 @@ class Pedido extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
+    public function IsEmptyPhoto(){
+        return $this->filename == '' ? true : false;
+    }
+
     public static function findOrCreatePedido($user_id, $paquete_id, $empresa_id)
     {
         $user = User::find($user_id);

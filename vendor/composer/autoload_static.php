@@ -14,6 +14,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '8cff32064859f4559445b89279f3199c' => __DIR__ . '/..' . '/php-http/message/src/filters.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
@@ -58,6 +59,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         array (
             'Symfony\\Polyfill\\Php72\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Routing\\' => 26,
@@ -149,6 +151,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
             'Cron\\' => 5,
             'Collective\\Remote\\' => 18,
             'Collective\\Html\\' => 16,
+            'Codedge\\Fpdf\\' => 13,
             'Clue\\StreamFilter\\' => 18,
             'Carbon\\' => 7,
         ),
@@ -205,6 +208,10 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
         'Symfony\\Component\\VarDumper\\' => 
         array (
@@ -427,6 +434,10 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
         ),
+        'Codedge\\Fpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codedge/laravel-fpdf/src',
+        ),
         'Clue\\StreamFilter\\' => 
         array (
             0 => __DIR__ . '/..' . '/clue/stream-filter/src',
@@ -494,10 +505,20 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
                 0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
         ),
+        'A' => 
+        array (
+            'Anouar\\Fpdf' => 
+            array (
+                0 => __DIR__ . '/..' . '/anouar/fpdf/src',
+            ),
+        ),
     );
 
     public static $classMap = array (
         'Acacha\\AceTemplateLaravel\\Providers\\AceTemplateLaravelServiceProvider' => __DIR__ . '/..' . '/acacha/ace-template-laravel/src/Providers/AceTemplateLaravelServiceProvider.php',
+        'Anouar\\Fpdf\\Facades\\Fpdf' => __DIR__ . '/..' . '/anouar/fpdf/src/Anouar/Fpdf/Facades/Fpdf.php',
+        'Anouar\\Fpdf\\Fpdf' => __DIR__ . '/..' . '/anouar/fpdf/src/Anouar/Fpdf/Fpdf.php',
+        'Anouar\\Fpdf\\FpdfServiceProvider' => __DIR__ . '/..' . '/anouar/fpdf/src/Anouar/Fpdf/FpdfServiceProvider.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
@@ -531,6 +552,8 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Controllers\\SIIFAC\\EmpresaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/EmpresaController.php',
         'App\\Http\\Controllers\\SIIFAC\\PaqueteController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PaqueteController.php',
         'App\\Http\\Controllers\\SIIFAC\\PaqueteDetalleController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PaqueteDetalleController.php',
+        'App\\Http\\Controllers\\SIIFAC\\PedidoController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PedidoController.php',
+        'App\\Http\\Controllers\\SIIFAC\\PedidoDetalleController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/PedidoDetalleController.php',
         'App\\Http\\Controllers\\SIIFAC\\ProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/ProductoController.php',
         'App\\Http\\Controllers\\SIIFAC\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/UsuarioController.php',
         'App\\Http\\Controllers\\Storage\\StoragePaqueteController' => __DIR__ . '/../..' . '/app/Http/Controllers/Storage/StoragePaqueteController.php',
@@ -617,6 +640,9 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Clue\\StreamFilter\\CallbackFilter' => __DIR__ . '/..' . '/clue/stream-filter/src/CallbackFilter.php',
+        'Codedge\\Fpdf\\Facades\\Fpdf' => __DIR__ . '/..' . '/codedge/laravel-fpdf/src/Facades/Fpdf.php',
+        'Codedge\\Fpdf\\FpdfServiceProvider' => __DIR__ . '/..' . '/codedge/laravel-fpdf/src/FpdfServiceProvider.php',
+        'Codedge\\Fpdf\\Fpdf\\Fpdf' => __DIR__ . '/..' . '/codedge/laravel-fpdf/src/Fpdf/Fpdf.php',
         'Collective\\Html\\Componentable' => __DIR__ . '/..' . '/laravelcollective/html/src/Componentable.php',
         'Collective\\Html\\Eloquent\\FormAccessible' => __DIR__ . '/..' . '/laravelcollective/html/src/Eloquent/FormAccessible.php',
         'Collective\\Html\\FormBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/FormBuilder.php',
@@ -1161,6 +1187,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Egulias\\EmailValidator\\Warning\\QuotedString' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Warning/QuotedString.php',
         'Egulias\\EmailValidator\\Warning\\TLD' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Warning/TLD.php',
         'Egulias\\EmailValidator\\Warning\\Warning' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Warning/Warning.php',
+        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
         'Faker\\Calculator\\Iban' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Iban.php',
         'Faker\\Calculator\\Inn' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Inn.php',
         'Faker\\Calculator\\Luhn' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Luhn.php',
@@ -4055,6 +4082,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Psy\\CodeCleaner\\InstanceOfPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/InstanceOfPass.php',
         'Psy\\CodeCleaner\\LeavePsyshAlonePass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/LeavePsyshAlonePass.php',
         'Psy\\CodeCleaner\\LegacyEmptyPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/LegacyEmptyPass.php',
+        'Psy\\CodeCleaner\\ListPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/ListPass.php',
         'Psy\\CodeCleaner\\LoopContextPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/LoopContextPass.php',
         'Psy\\CodeCleaner\\MagicConstantsPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/MagicConstantsPass.php',
         'Psy\\CodeCleaner\\NamespaceAwarePass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/NamespaceAwarePass.php',
@@ -4099,7 +4127,6 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Psy\\Command\\TraceCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/TraceCommand.php',
         'Psy\\Command\\WhereamiCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/WhereamiCommand.php',
         'Psy\\Command\\WtfCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/WtfCommand.php',
-        'Psy\\Compiler' => __DIR__ . '/..' . '/psy/psysh/src/Compiler.php',
         'Psy\\ConfigPaths' => __DIR__ . '/..' . '/psy/psysh/src/ConfigPaths.php',
         'Psy\\Configuration' => __DIR__ . '/..' . '/psy/psysh/src/Configuration.php',
         'Psy\\ConsoleColorFactory' => __DIR__ . '/..' . '/psy/psysh/src/ConsoleColorFactory.php',
@@ -4116,6 +4143,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Psy\\Exception\\TypeErrorException' => __DIR__ . '/..' . '/psy/psysh/src/Exception/TypeErrorException.php',
         'Psy\\ExecutionClosure' => __DIR__ . '/..' . '/psy/psysh/src/ExecutionClosure.php',
         'Psy\\ExecutionLoop' => __DIR__ . '/..' . '/psy/psysh/src/ExecutionLoop.php',
+        'Psy\\ExecutionLoopClosure' => __DIR__ . '/..' . '/psy/psysh/src/ExecutionLoopClosure.php',
         'Psy\\ExecutionLoop\\AbstractListener' => __DIR__ . '/..' . '/psy/psysh/src/ExecutionLoop/AbstractListener.php',
         'Psy\\ExecutionLoop\\Listener' => __DIR__ . '/..' . '/psy/psysh/src/ExecutionLoop/Listener.php',
         'Psy\\ExecutionLoop\\ProcessForker' => __DIR__ . '/..' . '/psy/psysh/src/ExecutionLoop/ProcessForker.php',
@@ -4900,6 +4928,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Symfony\\Component\\VarDumper\\Exception\\ThrowingCasterException' => __DIR__ . '/..' . '/symfony/var-dumper/Exception/ThrowingCasterException.php',
         'Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait' => __DIR__ . '/..' . '/symfony/var-dumper/Test/VarDumperTestTrait.php',
         'Symfony\\Component\\VarDumper\\VarDumper' => __DIR__ . '/..' . '/symfony/var-dumper/VarDumper.php',
+        'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'Symfony\\Polyfill\\Php72\\Php72' => __DIR__ . '/..' . '/symfony/polyfill-php72/Php72.php',
         'TestCatalogosSeeder' => __DIR__ . '/../..' . '/database/seeds/TestCatalogosSeeder.php',

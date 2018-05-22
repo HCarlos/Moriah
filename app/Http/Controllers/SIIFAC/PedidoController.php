@@ -33,7 +33,7 @@ class PedidoController extends Controller
         if ( $page ) $npage = $page;
 
         $this->tableName = 'pedidos';
-        $items = Pedido::select('id','codigo','descripcion_pedido','importe','empresa_id')
+        $items = Pedido::select('id','codigo','descripcion_pedido','importe','empresa_id','filename')
             ->orderBy('id','desc')
             ->forPage($npage,$this->itemPorPagina)
             ->get();

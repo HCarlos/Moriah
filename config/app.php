@@ -178,6 +178,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Styde\Html\HtmlServiceProvider::class,
         Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
+        Codedge\Fpdf\FpdfServiceProvider::class,
+        Anouar\Fpdf\FpdfServiceProvider::class,
     ],
 
     /*
@@ -234,7 +236,8 @@ return [
         'Datatables' => yajra\Datatables\Datatables::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Access' => Styde\Html\Facades\Access::class,
-
+        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
+        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
     ],
 
 
