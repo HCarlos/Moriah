@@ -1442,10 +1442,49 @@ class CreateSiifacTables extends Migration
                 ->on($tableNames['users'])
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+        });
+
+        Schema::create($tableNames['empresa_venta'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('empresa_id');
+            $table->integer('venta_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['empresa_id', 'venta_id']);
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_id')
+                ->references('id')
+                ->on($tableNames['ventas'])
+                ->onDelete('cascade');
 
         });
 
-        Schema::create($tableNames['venta_detalle'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['user_venta'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('venta_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['user_id', 'venta_id']);
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_id')
+                ->references('id')
+                ->on($tableNames['ventas'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['venta_detalles'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('venta_id')->default(0)->nullable();
             $table->integer('user_id')->default(0)->nullable();
@@ -1471,7 +1510,7 @@ class CreateSiifacTables extends Migration
             $table->datetime('f_pagado')->nullable();
             $table->decimal('cantidad_devuelta',10,2)->default(0.00)->nullable();
             $table->unsignedInteger('empresa_id')->default(0)->nullable();
-            $table->unsignedTinyInteger('status_venta_detalle')->default(1)->nullable();
+            $table->unsignedTinyInteger('status_venta_detalles')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
             $table->string('ip',150)->default('')->nullable();
             $table->string('host',150)->default('')->nullable();
@@ -1529,6 +1568,129 @@ class CreateSiifacTables extends Migration
 
         });
 
+        Schema::create($tableNames['venta_venta_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('venta_id');
+            $table->integer('venta_detalle_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['venta_id', 'venta_detalle_id']);
+
+            $table->foreign('venta_id')
+                ->references('id')
+                ->on($tableNames['ventas'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_detalle_id')
+                ->references('id')
+                ->on($tableNames['venta_detalles'])
+                ->onDelete('cascade');
+
+        });
+        
+        Schema::create($tableNames['user_venta_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('venta_detalle_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['user_id', 'venta_detalle_id']);
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_detalle_id')
+                ->references('id')
+                ->on($tableNames['venta_detalles'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['producto_venta_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('producto_id');
+            $table->integer('venta_detalle_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['producto_id', 'venta_detalle_id']);
+
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on($tableNames['productos'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_detalle_id')
+                ->references('id')
+                ->on($tableNames['venta_detalles'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['paquete_venta_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('paquete_id');
+            $table->integer('venta_detalle_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['paquete_id', 'venta_detalle_id']);
+
+            $table->foreign('paquete_id')
+                ->references('id')
+                ->on($tableNames['paquetes'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_detalle_id')
+                ->references('id')
+                ->on($tableNames['venta_detalles'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['almacen_venta_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('almacen_id');
+            $table->integer('venta_detalle_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['almacen_id', 'venta_detalle_id']);
+
+            $table->foreign('almacen_id')
+                ->references('id')
+                ->on($tableNames['almacenes'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_detalle_id')
+                ->references('id')
+                ->on($tableNames['venta_detalles'])
+                ->onDelete('cascade');
+
+        });
+
+
+        Schema::create($tableNames['empresa_venta_detalle'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('empresa_id');
+            $table->integer('venta_detalle_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['empresa_id', 'venta_detalle_id']);
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_detalle_id')
+                ->references('id')
+                ->on($tableNames['venta_detalles'])
+                ->onDelete('cascade');
+
+        });
+
+
+
     }
 
     /**
@@ -1585,11 +1747,8 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['nota_credito_detalle']);
         Schema::dropIfExists($tableNames['notas_credito']);
 
-        Schema::dropIfExists($tableNames['venta_detalle']);
-
         Schema::dropIfExists($tableNames['pedido_detalle']);
         Schema::dropIfExists($tableNames['pedidos']);
-        Schema::dropIfExists($tableNames['paquetes']);
         Schema::dropIfExists($tableNames['compras']);
         Schema::dropIfExists($tableNames['proveedores']);
         Schema::dropIfExists($tableNames['familia_cliente']);
@@ -1597,14 +1756,25 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['config']);
         Schema::dropIfExists($tableNames['ingresos']);
         Schema::dropIfExists($tableNames['cuentas_por_cobrar']);
+
+        Schema::dropIfExists($tableNames['empresa_venta']);
+        Schema::dropIfExists($tableNames['user_venta']);
+        Schema::dropIfExists($tableNames['venta_venta_detalle']);
+        Schema::dropIfExists($tableNames['user_venta_detalle']);
+        Schema::dropIfExists($tableNames['producto_venta_detalle']);
+        Schema::dropIfExists($tableNames['paquete_venta_detalle']);
+        Schema::dropIfExists($tableNames['almacen_venta_detalle']);
+        Schema::dropIfExists($tableNames['empresa_venta_detalle']);
+        Schema::dropIfExists($tableNames['venta_detalles']);
+
         Schema::dropIfExists($tableNames['productos']);
-        Schema::dropIfExists($tableNames['ventas']);
-
-        Schema::dropIfExists($tableNames['familia_producto']);
-        Schema::dropIfExists($tableNames['medidas']);
+        Schema::dropIfExists($tableNames['paquetes']);
         Schema::dropIfExists($tableNames['almacenes']);
+        Schema::dropIfExists($tableNames['medidas']);
+        Schema::dropIfExists($tableNames['familia_producto']);
 
 
+        Schema::dropIfExists($tableNames['ventas']);
 
         Schema::dropIfExists($tableNames['empresas']);
 

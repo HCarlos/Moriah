@@ -21,17 +21,23 @@ class Venta extends Model
     ];
 
     public function user(){
-        // Su usuario es
         return $this->belongsTo(User::class);
     }
 
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
+
     public function ventaDetalles(){
-        // Tiene muchos en detalles
         return $this->hasMany(VentaDetalle::class);
     }
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
+    }    //
+
+    public function empresas(){
+        return $this->belongsToMany(Empresa::class);
     }    //
 
 }

@@ -2,9 +2,9 @@
 
     <ul class="nav nav-list" id="menuPrincipal">
         <li>
-            <a href="/home">
+            <a href="/ventas">
                 <i class="menu-icon fa fa-tachometer"></i>
-                <span class="menu-text"> Inicio </span>
+                <span class="menu-text"> Ventas </span>
             </a>
             <b class="arrow"></b>
         </li>

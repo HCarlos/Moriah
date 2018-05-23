@@ -10,7 +10,7 @@ class VentaDetalle extends Model
     use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
-    protected $table = 'venta_detalle';
+    protected $table = 'venta_detalles';
 
     protected $fillable = [
         'venta_id', 'user_id', 'producto_id','paquete_id','almacen_id',
@@ -27,8 +27,11 @@ class VentaDetalle extends Model
     }
 
     public function venta(){
-        // Su usuario es
         return $this->belongsTo(Venta::class);
+    }
+
+    public function ventas(){
+        return $this->belongsToMany(Venta::class);
     }
 
     public function producto(){
@@ -36,16 +39,34 @@ class VentaDetalle extends Model
         return $this->belongsTo(Producto::class);
     }
 
+    public function productos(){
+        // Su usuario es
+        return $this->belongsToMany(Producto::class);
+    }
+
     public function paquete(){
         // Su usuario es
         return $this->belongsTo(Paquete::class);
+    }
+
+    public function paquetes(){
+        // Su usuario es
+        return $this->belongsToMany(Paquete::class);
     }
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
 
+    public function empresas(){
+        return $this->belongsToMany(Empresa::class);
+    }
+
     public function almacen(){
+        return $this->belongsTo(Almacen::class);
+    }
+
+    public function almacenes(){
         return $this->belongsTo(Almacen::class);
     }
 
