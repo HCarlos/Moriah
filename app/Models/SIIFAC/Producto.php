@@ -4,6 +4,7 @@ namespace App\Models\SIIFAC;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Producto extends Model
 {
@@ -115,12 +116,22 @@ class Producto extends Model
                 'cu'=>$cu,
                 'saldo'=>$saldo,
                 'empresa_id'=>$empresa_id,
+                'root' => 'producto/',
             ]);
 
             $prod->almacenes()->attach($alma);
             $prod->familiaProductos()->attach($fp);
             $prod->medidas()->attach($med);
             $prod->empresas()->attach($emp);
+
+            $ext = ['jpg','jpeg','gif','png'];
+            for ($i=0;$i<4;$i++){
+                $p1 = $prod->id.'.'.$ext[$i];
+                $e1 = Storage::disk('producto')->exists($p1);
+                if ($e1) {
+                    $prod->update(['filename'=>$p1]);
+                }
+            }
 
             return $prod;
         }

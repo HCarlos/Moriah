@@ -5,6 +5,7 @@ namespace App\Models\SIIFAC;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Paquete extends Model
 {
@@ -61,9 +62,19 @@ class Paquete extends Model
                 'descripcion_paquete'=>$descripcion_paquete,
                 'importe'=>$importe,
                 'empresa_id'=>$empresa_id,
+                'root' => 'paquete/',
             ]);
             $paq->users()->attach($user);
             $paq->empresas()->attach($emp);
+            $ext = ['jpg','jpeg','gif','png'];
+            for ($i=0;$i<4;$i++){
+                $p1 = $paq->id.'.'.$ext[$i];
+                $e1 = Storage::disk('paquete')->exists($p1);
+                if ($e1) {
+                    $paq->update(['filename'=>$p1]);
+                }
+            }
+
             return $paq;
         }
         return $obj;
