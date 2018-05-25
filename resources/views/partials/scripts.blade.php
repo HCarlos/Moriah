@@ -13,6 +13,8 @@
 <script src="{{ asset('/js/ace/ace.submenu-hover.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('scripts')
+@yield('scripts_ventas')
+
 <script src="{{ asset('js/base.js') }}"></script>
 <script src="{{ asset('js/moriah.js') }}"></script>
 <script type="text/javascript">

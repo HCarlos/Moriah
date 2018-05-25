@@ -2,7 +2,7 @@
 
     <ul class="nav nav-list" id="menuPrincipal">
         <li>
-            <a href="/ventas">
+            <a href="{{ route('ventasIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> Ventas </span>
             </a>

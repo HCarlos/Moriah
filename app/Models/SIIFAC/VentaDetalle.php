@@ -4,6 +4,7 @@ namespace App\Models\SIIFAC;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Request;
 
 class VentaDetalle extends Model
 {
@@ -13,17 +14,21 @@ class VentaDetalle extends Model
     protected $table = 'venta_detalles';
 
     protected $fillable = [
-        'venta_id', 'user_id', 'producto_id','paquete_id','almacen_id',
+        'id',
+        'venta_id', 'user_id', 'producto_id','paquete_id','almacen_id','empresa_id',
         'fecha', 'folio', 'cuenta','clave_producto','codigo',
         'descripcion', 'foliofac', 'porcdescto','cantidad','pv',
         'importe', 'descto', 'subtotal','iva','total',
-        'ispagado', 'f_pagado', 'cantidad_devuelta','empresa_id',
-        'status_venta_detalle','idemp','ip','host',
+        'ispagado', 'f_pagado', 'cantidad_devuelta','cantidad','pv',
+        'status_venta_detalles','idemp','ip','host',
     ];
 
     public function user(){
-        // Su usuario es
         return $this->belongsTo(User::class);
+    }
+
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 
     public function venta(){
@@ -35,22 +40,18 @@ class VentaDetalle extends Model
     }
 
     public function producto(){
-        // Su usuario es
         return $this->belongsTo(Producto::class);
     }
 
     public function productos(){
-        // Su usuario es
         return $this->belongsToMany(Producto::class);
     }
 
     public function paquete(){
-        // Su usuario es
         return $this->belongsTo(Paquete::class);
     }
 
     public function paquetes(){
-        // Su usuario es
         return $this->belongsToMany(Paquete::class);
     }
 
@@ -69,5 +70,56 @@ class VentaDetalle extends Model
     public function almacenes(){
         return $this->belongsTo(Almacen::class);
     }
+
+    public function ventaDetalles(){
+        return $this->hasMany(VentaDetalle::class);
+    }
+
+    public function pedido(){
+        return $this->belongsTo(Pedido::class);
+    }
+
+    public function pedidos(){
+        return $this->belongsToMany(Pedido::class);
+    }
+
+    public static function venderPaqueteDetalles($venta_id, $paquete_id){
+        $ven = Venta::find($venta_id);
+        $peq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
+
+        foreach ($peq as $pd){
+            $prod = Producto::find($pd->producto_id);
+
+            $paq  =  static::create([
+                'venta_id'       => $ven->id,
+                'user_id'        => $ven->user_id,
+                'paquete_id'     => $ven->paquete_id,
+                'producto_id'    => $pd->producto_id,
+                'empresa_id'     => $ven->empresa_id,
+                'almacen_id'     => $prod->empresa_id,
+                'fecha'          => now(),
+                'cuenta'         => $ven->cuenta,
+                'clave_producto' => $prod->clave_producto,
+                'descripcion'    => $prod->descripcion,
+                'codigo'         => $prod->codigo,
+                'porcdescto'     => $prod->porcdescto,
+                'cantidad'       => 1,
+                'pv'             => $prod->pv,
+                'subtotal'       => $prod->subtotal,
+                'total'          => $prod->total,
+                'importe'        => $ven->importe,
+                'idemp'          => 1,
+                'ip'             => Request::ip(),
+                'host'           => Request::getHttpHost(),
+            ]);
+
+        }
+
+        return $peq;
+
+    }
+
+
+
 
 }

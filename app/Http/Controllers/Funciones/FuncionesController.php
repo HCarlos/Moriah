@@ -58,4 +58,13 @@ class FuncionesController extends Controller
         }
     }
 
+    public function getFechaFromNumeric($number){
+        return
+            '20'.substr($number,0,2).'-'.
+            substr($number,2,2).'-'.
+            substr($number,4,2)
+        ;
+
+    }
+
 }

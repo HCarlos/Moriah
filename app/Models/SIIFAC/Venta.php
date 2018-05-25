@@ -2,6 +2,8 @@
 
 namespace App\Models\SIIFAC;
 
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,7 +18,7 @@ class Venta extends Model
         'fecha', 'clave', 'foliofac','tipoventa','cuenta',
         'isimp', 'cantidad', 'importe','descto','subtotal',
         'iva', 'total', 'ispagado','f_pagado','user_id',
-        'empresa_id',
+        'empresa_id','paquete_id','pedido_id',
         'status_venta','idemp','ip','host',
     ];
 
@@ -34,10 +36,52 @@ class Venta extends Model
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
-    }    //
+    }
 
     public function empresas(){
         return $this->belongsToMany(Empresa::class);
-    }    //
+    }
+
+    public function paquete(){
+        return $this->belongsTo(Paquete::class);
+    }
+
+    public function paquetes(){
+        return $this->belongsToMany(Paquete::class);
+    }
+
+    public function pedido(){
+        return $this->belongsTo(Pedido::class);
+    }
+
+    public function pedidos(){
+        return $this->belongsToMany(Pedido::class);
+    }
+
+    public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa){
+        $user  = User::find($vendedor_id);
+        $paq   = Paquete::find($paquete_id);
+        $emp   = Empresa::find($paq->empresa_id);
+        $timex = Carbon::now()->format('ymdHisu');
+        $timex = substr($timex,0,16);
+
+        $Ven  =  static::create([
+            'fecha'      => now(),
+            'clave'      => $paq->clave,
+            'tipoventa'  => $tipoventa,
+            'cuenta'     => $timex,
+            'cantidad'   => 1,
+            'total'      => $paq->importe,
+            'empresa_id' => $paq->empresa_id,
+            'paquete_id' => $paquete_id,
+            'user_id'    => $user->id,
+        ]);
+
+        $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id);
+
+        return $pd;
+
+    }
+
 
 }
