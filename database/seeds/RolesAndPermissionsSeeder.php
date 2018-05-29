@@ -126,7 +126,9 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->permissions()->attach($P0);
 
         $user = new User();
-        $user->nombre = 'Usuario de los Libros';
+        $user->ap_paterno = 'Usuario';
+        $user->ap_materno = 'de los';
+        $user->nombre = 'Libros';
         $user->username = 'usuario_libros';
         $user->email = 'usuario_libro@example.com';
         $user->cuenta = '20182404130901';
@@ -139,7 +141,9 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->permissions()->attach($P6);
 
         $user = new User();
-        $user->nombre = 'Usuario de Uniformes';
+        $user->ap_paterno = 'Usuario';
+        $user->ap_materno = 'de';
+        $user->nombre = 'Uniformes';
         $user->username = 'usuario_uniformes';
         $user->email = 'usuario_uniforme@example.com';
         $user->cuenta = '20182404130937';
@@ -152,7 +156,9 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->permissions()->attach($P6);
 
         $user = new User();
-        $user->nombre = 'Usuario de Cuadernos';
+        $user->ap_paterno = 'Usuario';
+        $user->ap_materno = 'de';
+        $user->nombre = 'Cuadernos';
         $user->username = 'usuario_cuadernos';
         $user->email = 'usuario_cuaderno@example.com';
         $user->cuenta = '20182404130947';

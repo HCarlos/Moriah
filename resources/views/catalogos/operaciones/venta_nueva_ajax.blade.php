@@ -25,14 +25,21 @@
                 <div class="col-md-1"></div>
             </div>
             <div class="form-group row">
-                <label for = "tipoventa" class="col-md-2 col-form-label text-md-left">Tipo Venta</label>
+                <label for = "user_id" class="col-md-2 col-form-label text-md-left">Cliente</label>
                 <div class="col-md-9">
+                    {{ Form::select('user_id', $User_Id, null, ['id' => 'user_id','class'=>'form-control']) }}
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for = "tipoventa" class="col-md-2 col-form-label text-md-left">Tipo</label>
+                <div class="col-md-5">
                     <select id="tipoventa" name="tipoventa" size="1">
                         <option value="0" selected>Contado</option>
                         <option value="1">Credito</option>
                     </select>
                 </div>
-                <div class="col-md-1"></div>
+                <div class="col-md-5"></div>
             </div>
 
             <div class="form-group row">

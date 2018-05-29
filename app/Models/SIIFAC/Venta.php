@@ -18,7 +18,7 @@ class Venta extends Model
         'fecha', 'clave', 'foliofac','tipoventa','cuenta',
         'isimp', 'cantidad', 'importe','descto','subtotal',
         'iva', 'total', 'ispagado','f_pagado','user_id',
-        'empresa_id','paquete_id','pedido_id',
+        'empresa_id','paquete_id','pedido_id','vendedor_id',
         'status_venta','idemp','ip','host',
     ];
 
@@ -54,27 +54,38 @@ class Venta extends Model
         return $this->belongsTo(Pedido::class);
     }
 
+    public function vendedor(){
+        return $this->belongsTo(User::class,'vendedor_id');
+    }
+
+    public function venedores(){
+        return $this->belongsToMany(User::class,'vendedor_id');
+    }
+
     public function pedidos(){
         return $this->belongsToMany(Pedido::class);
     }
 
-    public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa){
-        $user  = User::find($vendedor_id);
+    public function getTipoVentaAttribute() {
+        return $this->attributes['tipoventa'] == 0 ? 'Contado' : 'Crédito';
+    }
+
+    public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa,$user_id){
         $paq   = Paquete::find($paquete_id);
-        $emp   = Empresa::find($paq->empresa_id);
         $timex = Carbon::now()->format('ymdHisu');
         $timex = substr($timex,0,16);
 
         $Ven  =  static::create([
-            'fecha'      => now(),
-            'clave'      => $paq->clave,
-            'tipoventa'  => $tipoventa,
-            'cuenta'     => $timex,
-            'cantidad'   => 1,
-            'total'      => $paq->importe,
-            'empresa_id' => $paq->empresa_id,
-            'paquete_id' => $paquete_id,
-            'user_id'    => $user->id,
+            'fecha'       => now(),
+            'clave'       => $paq->clave,
+            'tipoventa'   => $tipoventa,
+            'cuenta'      => $timex,
+            'cantidad'    => 1,
+            'total'       => $paq->importe,
+            'empresa_id'  => $paq->empresa_id,
+            'paquete_id'  => $paquete_id,
+            'user_id'     => $user_id,
+            'vendedor_id' => $vendedor_id,
         ]);
 
         $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id);
@@ -82,6 +93,5 @@ class Venta extends Model
         return $pd;
 
     }
-
 
 }

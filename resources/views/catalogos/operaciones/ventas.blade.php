@@ -16,12 +16,13 @@
                     <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
                         <thead>
                         <tr role="row">
-                            <th aria-label="id" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
+                            <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
                             <th aria-label="fecha" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Fecha</th>
                             <th aria-label="cliente" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Cliente</th>
-                            <th aria-label="paquete" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Paq. / Ped.</th>
-                            <th aria-label="total" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Importe</th>
-                            <th aria-label="tipoventa" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">T. Venta</th>
+                            <th aria-label="paquete" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Paq. / Ped.</th>
+                            <th aria-label="total" style="width: 80px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Importe</th>
+                            <th aria-label="tipoventa" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">T. Venta</th>
+                            <th aria-label="vendedor" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="6" role="columnheader" class="sorting">Vendedor</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
@@ -32,22 +33,22 @@
                                 <td>{{ $venta->fecha }}</td>
                                 <td>{{ $venta->user->FullName }}</td>
                                 <td>{{ $venta->paquete->FullDescription }}</td>
-                                <td>{{ $venta->total}} </td>
-                                <td>{{ $venta->tipoventa}} </td>
+                                <td class="text-right">{{ $venta->total}} </td>
+                                <td>{{ $venta->TipoVenta }}</td>
+                                <td>{{ $venta->vendedor->FullName }}</td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
-                                        {{--@if ($user->hasAnyPermission(['consultar','all']) )--}}
-                                            {{--<a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="almacen-{{$venta->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">--}}
-                                                {{--<i class="fa fa-trash bigger-150 red" ></i>--}}
-                                            {{--</a>--}}
-                                        {{--@endif--}}
-                                        {{--@if ( $user->hasAnyPermission(['consultar','all']))--}}
-                                            {{--<a href="{{ route('catalogos/', array('id' => $id,'idItem' => $venta->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" title="Editar">--}}
-                                            {{--<a href="{{ route('almacenEdit', array('idItem' => $venta->id)) }}" class="btn btn-link btn-xs pull-right editarReg" target="_blank" title="Editar">--}}
-                                                {{--<i class="fa fa-pencil bigger-150 blue"></i>--}}
-                                            {{--</a>--}}
-                                        {{--@endif--}}
+                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="venta-{{$venta->id.'-0-0'}}-destroy" title="Eliminar">
+                                                <i class="fa fa-trash bigger-150 red" ></i>
+                                            </a>
+                                        @endif
+                                        @if ( $user->hasAnyPermission(['consultar','all']))
+                                            <a href="{{ route('ventaDetalleEdit', array('venta_id' => $venta->id)) }}" class="btn btn-link btn-xs pull-right editarReg" target="_blank" title="Editar">
+                                                <i class="fa fa-cubes bigger-150 blue"></i>
+                                            </a>
+                                        @endif
 
                                     </div>
                                 </td>

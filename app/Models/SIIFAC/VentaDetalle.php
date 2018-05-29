@@ -86,11 +86,14 @@ class VentaDetalle extends Model
     public static function venderPaqueteDetalles($venta_id, $paquete_id){
         $ven = Venta::find($venta_id);
         $peq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
-
         foreach ($peq as $pd){
             $prod = Producto::find($pd->producto_id);
-
-            $paq  =  static::create([
+            $importe  = $prod->pv * 1;
+            $descto   = $prod->descto;
+            $subtotal = $importe - $descto;
+            $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
+            $total    = $subtotal + $iva;
+            static::create([
                 'venta_id'       => $ven->id,
                 'user_id'        => $ven->user_id,
                 'paquete_id'     => $ven->paquete_id,
@@ -105,20 +108,43 @@ class VentaDetalle extends Model
                 'porcdescto'     => $prod->porcdescto,
                 'cantidad'       => 1,
                 'pv'             => $prod->pv,
-                'subtotal'       => $prod->subtotal,
-                'total'          => $prod->total,
-                'importe'        => $ven->importe,
+                'importe'        => $importe,
+                'subtotal'       => $subtotal,
+                'iva'            => $iva,
+                'total'          => $total,
                 'idemp'          => 1,
                 'ip'             => Request::ip(),
                 'host'           => Request::getHttpHost(),
             ]);
-
         }
 
-        return $peq;
+        return static::totalVenta($venta_id);
 
     }
 
+    public static function totalVenta($venta_id)
+    {
+        $vendet  = VentaDetalle::where('venta_id',$venta_id)->get();
+        $sImorte = $sDescto = $sSubtotal = $sIva = $sTotal = 0;
+        foreach ($vendet as $vd) {
+            $sImorte   += $vd->importe;
+            $sDescto   += $vd->descto;
+            $sSubtotal += $vd->subtotal;
+            $sIva      += $vd->iva;
+            $sTotal    += $vd->total;
+
+        }
+        $ven = Venta::find($venta_id);
+        $ven->importe  = $sImorte;
+        $ven->descto   = $sDescto;
+        $ven->subtotal = $sSubtotal;
+        $ven->iva      = $sIva;
+        $ven->total    = $sTotal;
+        $ven->save();
+
+        return $venta_id;
+
+    }
 
 
 

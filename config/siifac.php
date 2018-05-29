@@ -62,6 +62,7 @@ return [
         'empresa_venta' => 'empresa_venta',
         'empresa_venta_detalle' => 'empresa_venta_detalle',
         'user_venta' => 'user_venta',
+        'vendedor_venta' => 'vendedor_venta',
         'paquete_venta' => 'paquete_venta',
         'pedido_venta' => 'pedido_venta',
         'user_venta_detalle' => 'user_venta_detalle',

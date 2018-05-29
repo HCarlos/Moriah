@@ -49,52 +49,42 @@ class User extends Authenticatable
     }
 
     public function permissions() {
-        // Contiene muchos Permisos
         return $this->belongsToMany(Permission::class);
     }
 
     public function roles(){
-        // Contiene muchos Roles
         return $this->belongsToMany(Role::class);
     }
 
     public function familiasClientes(){
-        // Contiene muchos Ingresos
         return $this->belongsToMany(FamiliaCliente::class);
     }
 
     public function cuentas_por_cobrar(){
-        // Contiene muchos Cuentas_por_Cobrar
         return $this->hasMany(CuentaPorCobrar::class);
     }
 
     public function ingresos(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Ingreso::class);
     }
 
     public function paquetes_productos(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Paquete::class);
     }
 
     public function pedidos(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Pedido::class);
     }
 
     public function pedidos_detalles(){
-        // Contiene muchos Ingresos
         return $this->hasMany(PedidoDetalle::class);
     }
 
     public function movimientos(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Movimiento::class);
     }
 
     public function empresas(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Empresa::class);
     }
     public function empresa(){
@@ -102,12 +92,10 @@ class User extends Authenticatable
     }
 
     public function almacenes(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Almacen::class);
     }
 
     public function ventas(){
-        // Contiene muchos Ingresos
         return $this->hasMany(Venta::class);
     }
 

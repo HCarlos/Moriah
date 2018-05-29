@@ -1417,6 +1417,7 @@ class CreateSiifacTables extends Migration
             $table->boolean('ispagado')->default(false)->nullable();
             $table->datetime('f_pagado')->nullable();
             $table->integer('user_id')->default(0)->nullable();
+            $table->integer('vendedor_id')->default(0)->nullable();
             $table->integer('paquete_id')->default(0)->nullable();
             $table->integer('pedido_id')->default(0)->nullable();
             $table->unsignedInteger('empresa_id')->default(0)->nullable();
@@ -1428,6 +1429,7 @@ class CreateSiifacTables extends Migration
             $table->timestamps();
 
             $table->index('user_id');
+            $table->index('vendedor_id');
             $table->index('clave');
             $table->index('cuenta');
             $table->index('foliofac');
@@ -1442,6 +1444,12 @@ class CreateSiifacTables extends Migration
                 ->onUpdate('cascade');
 
             $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('vendedor_id')
                 ->references('id')
                 ->on($tableNames['users'])
                 ->onDelete('cascade')
@@ -1490,6 +1498,25 @@ class CreateSiifacTables extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+
+            $table->foreign('venta_id')
+                ->references('id')
+                ->on($tableNames['ventas'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['vendedor_venta'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('vendedor_id');
+            $table->integer('venta_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('vendedor_id')
                 ->references('id')
                 ->on($tableNames['users'])
                 ->onDelete('cascade');
@@ -1818,6 +1845,8 @@ class CreateSiifacTables extends Migration
 
         Schema::dropIfExists($tableNames['empresa_venta']);
         Schema::dropIfExists($tableNames['user_venta']);
+        Schema::dropIfExists($tableNames['vendedor_venta']);
+
         Schema::dropIfExists($tableNames['venta_venta_detalle']);
         Schema::dropIfExists($tableNames['user_venta_detalle']);
         Schema::dropIfExists($tableNames['producto_venta_detalle']);
