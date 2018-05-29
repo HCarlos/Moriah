@@ -83,12 +83,12 @@ class VentaDetalle extends Model
         return $this->belongsToMany(Pedido::class);
     }
 
-    public static function venderPaqueteDetalles($venta_id, $paquete_id){
+    public static function venderPaqueteDetalles($venta_id, $paquete_id,$cantidad){
         $ven = Venta::find($venta_id);
         $peq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($peq as $pd){
             $prod = Producto::find($pd->producto_id);
-            $importe  = $prod->pv * 1;
+            $importe  = $prod->pv * $cantidad;
             $descto   = $prod->descto;
             $subtotal = $importe - $descto;
             $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
@@ -106,7 +106,7 @@ class VentaDetalle extends Model
                 'descripcion'    => $prod->descripcion,
                 'codigo'         => $prod->codigo,
                 'porcdescto'     => $prod->porcdescto,
-                'cantidad'       => 1,
+                'cantidad'       => $cantidad,
                 'pv'             => $prod->pv,
                 'importe'        => $importe,
                 'subtotal'       => $subtotal,

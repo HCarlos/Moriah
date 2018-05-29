@@ -20,9 +20,9 @@
                             <th aria-label="fecha" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Fecha</th>
                             <th aria-label="cliente" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Cliente</th>
                             <th aria-label="paquete" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Paq. / Ped.</th>
-                            <th aria-label="total" style="width: 80px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Importe</th>
                             <th aria-label="tipoventa" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">T. Venta</th>
                             <th aria-label="vendedor" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="6" role="columnheader" class="sorting">Vendedor</th>
+                            <th aria-label="total" style="width: 80px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Importe</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
@@ -33,9 +33,9 @@
                                 <td>{{ $venta->fecha }}</td>
                                 <td>{{ $venta->user->FullName }}</td>
                                 <td>{{ $venta->paquete->FullDescription }}</td>
-                                <td class="text-right">{{ $venta->total}} </td>
                                 <td>{{ $venta->TipoVenta }}</td>
                                 <td>{{ $venta->vendedor->FullName }}</td>
+                                <td class="text-right">{{ $venta->total}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
@@ -55,6 +55,22 @@
                             </tr>
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-right">
+                                <h3 class="smaller green">
+                                    Total $
+                                </h3>
+                            </td>
+                            <td class="text-right" id="totalVenta">
+                                <h3 class=" smaller orange">
+                                    {{$totalVentas}}
+                                </h3>
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tfoot>
+
                     </table>
                 @else
                     <div class="alert alert-danger" role="alert">No se encontraron datos</div>

@@ -32,14 +32,17 @@
                 <div class="col-md-1"></div>
             </div>
             <div class="form-group row">
+                <label for = "cantidad" class="col-md-2 col-form-label text-md-left">Cant.</label>
+                <div class="col-md-4">
+                    <input type="number" min="1" max="1000" value="1" required name="cantidad" id="cantidad"/>
+                </div>
                 <label for = "tipoventa" class="col-md-2 col-form-label text-md-left">Tipo</label>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <select id="tipoventa" name="tipoventa" size="1">
                         <option value="0" selected>Contado</option>
                         <option value="1">Credito</option>
                     </select>
                 </div>
-                <div class="col-md-5"></div>
             </div>
 
             <div class="form-group row">

@@ -28,6 +28,10 @@ class VentaController extends Controller
         $f = $F->getFechaFromNumeric($fecha);
         $f =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
         $items = Venta::all()->where('fecha', '>=', $f)->sortBy('id');
+        $totalVenta = 0;
+        foreach ($items as $i){
+            $totalVenta += $i->total;
+        }
         $user = Auth::User();
 
         return view ('catalogos.operaciones.ventas',
@@ -35,6 +39,7 @@ class VentaController extends Controller
                 'tableName' => 'ventas',
                 'ventas' => $items,
                 'user' => $user,
+                'totalVentas' => $totalVenta,
             ]
         );
     }
@@ -68,10 +73,11 @@ class VentaController extends Controller
         $paquete_id = $data['paquete_id'];
         $tipoventa  = $data['tipoventa'];
         $user_id    = $data['user_id'];
+        $cantidad    = $data['cantidad'];
         $user = Auth::user();
         try {
             $mensaje = "OK";
-            Venta::venderPaquete($user->id,$paquete_id,$tipoventa,$user_id);
+            Venta::venderPaquete($user->id,$paquete_id,$tipoventa,$user_id,$cantidad);
         }
         catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
@@ -83,6 +89,7 @@ class VentaController extends Controller
 
     public function edit($venta_id)
     {
+        $venta = Venta::find($venta_id);
         $items = VentaDetalle::all()->where('venta_id',$venta_id);
         // dd($items);
         $user = Auth::User();
@@ -93,6 +100,7 @@ class VentaController extends Controller
                 'venta' => $items,
                 'user' => $user,
                 'venta_id' => $venta_id,
+                'totalVenta' => $venta->total,
             ]
         );
     }

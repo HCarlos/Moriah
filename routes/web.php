@@ -125,6 +125,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_venta/{id}', 'SIIFAC\VentaController@destroy')->name('ventaDestroy/');
 
 
+    // Ventas
+    Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');
+
 
     // Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');

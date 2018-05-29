@@ -70,7 +70,7 @@ class Venta extends Model
         return $this->attributes['tipoventa'] == 0 ? 'Contado' : 'Crédito';
     }
 
-    public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa,$user_id){
+    public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa,$user_id,$cantidad){
         $paq   = Paquete::find($paquete_id);
         $timex = Carbon::now()->format('ymdHisu');
         $timex = substr($timex,0,16);
@@ -80,7 +80,7 @@ class Venta extends Model
             'clave'       => $paq->clave,
             'tipoventa'   => $tipoventa,
             'cuenta'      => $timex,
-            'cantidad'    => 1,
+            'cantidad'    => $cantidad,
             'total'       => $paq->importe,
             'empresa_id'  => $paq->empresa_id,
             'paquete_id'  => $paquete_id,
@@ -88,7 +88,7 @@ class Venta extends Model
             'vendedor_id' => $vendedor_id,
         ]);
 
-        $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id);
+        $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id,$cantidad);
 
         return $pd;
 
