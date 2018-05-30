@@ -3,8 +3,24 @@
 @section('main-content')
     <div class="panel panel-moriah" id="catalogosList0">
         <div class="panel-heading">
-            <span id="titulo_catalogo">VENTAS </span>
-            <a id="/select_paquete_ajax" class="btn btn-info btn-xs btnVentaPaquete" data-toggle="modal" data-target="#myModal">Paquetes</a>
+
+            <form method="post" action="{{ action('SIIFAC\VentaController@index_post') }}" class="form-inline">
+                {{ csrf_field()   }}
+
+                <div class="form-group">
+                    <span id="titulo_catalogo">VENTAS {{$fecha}}</span>
+                    <a id="/select_paquete_ajax" class="btn btn-info btn-xs btnVentaPaquete" data-toggle="modal" data-target="#myModal">Paquetes</a>
+                </div>
+                <div class="form-group row">
+                    <label for = "fecha" class="col-md-3 col-form-label text-md-right">Fecha</label>
+                    <div class="col-md-3">
+                        {{ Form::date('fecha', \Carbon\Carbon::now(), ['id'=>'fecha','class'=>'col-md-3 form-control']) }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-mini btn-primary">Consultar</button>
+            </form>
+
+
         </div>
 
         <div class="panel-body">

@@ -38,8 +38,8 @@ class Medida extends Model
     }
 
     public function movimientos(){
-        // Esta en muchas Compras
-        return $this->hasMany(Movimiento::class);
+//        return $this->hasMany(Movimiento::class);
+        return $this->belongsToMany(Movimiento::class);
     }
 
     public function empresa(){

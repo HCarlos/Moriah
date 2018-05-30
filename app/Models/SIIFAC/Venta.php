@@ -58,12 +58,16 @@ class Venta extends Model
         return $this->belongsTo(User::class,'vendedor_id');
     }
 
-    public function venedores(){
-        return $this->belongsToMany(User::class,'vendedor_id');
+    public function vendedores(){
+        return $this->belongsToMany(Vendedor::class);
     }
 
     public function pedidos(){
         return $this->belongsToMany(Pedido::class);
+    }
+
+    public function movimientos(){
+        return $this->belongsToMany(Movimiento::class);
     }
 
     public function getTipoVentaAttribute() {
@@ -87,6 +91,11 @@ class Venta extends Model
             'user_id'     => $user_id,
             'vendedor_id' => $vendedor_id,
         ]);
+
+        $Ven->empresas()->attach($paq->empresa_id);
+        $Ven->paquetes()->attach($paquete_id);
+        $Ven->users()->attach($user_id);
+        $Ven->vendedores()->attach($vendedor_id);
 
         $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id,$cantidad);
 

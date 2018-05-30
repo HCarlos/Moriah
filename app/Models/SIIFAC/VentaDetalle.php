@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Request;
@@ -15,7 +16,7 @@ class VentaDetalle extends Model
 
     protected $fillable = [
         'id',
-        'venta_id', 'user_id', 'producto_id','paquete_id','almacen_id','empresa_id',
+        'venta_id', 'user_id', 'producto_id','paquete_id','pedido_id','almacen_id','empresa_id',
         'fecha', 'folio', 'cuenta','clave_producto','codigo',
         'descripcion', 'foliofac', 'porcdescto','cantidad','pv',
         'importe', 'descto', 'subtotal','iva','total',
@@ -68,7 +69,7 @@ class VentaDetalle extends Model
     }
 
     public function almacenes(){
-        return $this->belongsTo(Almacen::class);
+        return $this->belongsToMany(Almacen::class);
     }
 
     public function ventaDetalles(){
@@ -93,13 +94,13 @@ class VentaDetalle extends Model
             $subtotal = $importe - $descto;
             $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
             $total    = $subtotal + $iva;
-            static::create([
+            $vd = static::create([
                 'venta_id'       => $ven->id,
                 'user_id'        => $ven->user_id,
                 'paquete_id'     => $ven->paquete_id,
                 'producto_id'    => $pd->producto_id,
                 'empresa_id'     => $ven->empresa_id,
-                'almacen_id'     => $prod->empresa_id,
+                'almacen_id'     => $prod->almacen_id,
                 'fecha'          => now(),
                 'cuenta'         => $ven->cuenta,
                 'clave_producto' => $prod->clave_producto,
@@ -116,6 +117,13 @@ class VentaDetalle extends Model
                 'ip'             => Request::ip(),
                 'host'           => Request::getHttpHost(),
             ]);
+
+            $vd->users()->attach($ven->user_id);
+            $vd->paquetes()->attach($ven->paquete_id);
+            $vd->productos()->attach($pd->producto_id);
+            $vd->empresas()->attach($ven->empresa_id);
+            $vd->almacenes()->attach($prod->almacen_id);
+            Movimiento::agregarDesdeVentaDetalle($vd);
         }
 
         return static::totalVenta($venta_id);

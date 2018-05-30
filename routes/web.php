@@ -119,6 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Ventas
     Route::get('/index_ventas/{fecha}','SIIFAC\VentaController@index')->name('ventasIndex');
+    Route::post('/index_ventas','SIIFAC\VentaController@index_post')->name('ventasPostIndex');
     Route::get('/select_paquete_ajax', 'SIIFAC\VentaController@new_ajax')->name('selectPaqueteNewAjax/');
     Route::post('/store_venta_ajax','SIIFAC\VentaController@store_ajax')->name('ventaStoreAjax/');
     Route::get('/edit_venta_detalle/{venta_id}', 'SIIFAC\VentaController@edit')->name('ventaDetalleEdit');

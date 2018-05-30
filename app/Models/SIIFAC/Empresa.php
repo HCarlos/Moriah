@@ -64,7 +64,8 @@ class Empresa extends Model
 
     public function movimientos()
     {
-        return $this->hasMany(Movimiento::class);
+        return $this->belongsToMany(Movimiento::class);
+//        return $this->hasMany(Movimiento::class);
     }
 
     public function notasCredito()

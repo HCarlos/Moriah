@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SIIFAC;
 
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
@@ -26,8 +27,13 @@ class VentaController extends Controller
     {
         $F = (new FuncionesController);
         $f = $F->getFechaFromNumeric($fecha);
-        $f =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
-        $items = Venta::all()->where('fecha', '>=', $f)->sortBy('id');
+        $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
+        $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 23:59:59';
+        $items = Venta::all()
+            ->where('fecha','>=', $f1)
+            ->where('fecha','<=', $f2)
+            ->sortBy('id');
+//        dd($items);
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->total;
@@ -40,9 +46,21 @@ class VentaController extends Controller
                 'ventas' => $items,
                 'user' => $user,
                 'totalVentas' => $totalVenta,
+                'fecha' => $F->fechaEspanol($f),
             ]
         );
     }
+
+    public function index_post(Request $request)
+    {
+        $data = $request->all();
+        $fecha = $data['fecha'];
+        $fecha = str_replace('20','',$fecha);
+        $fecha = str_replace('-','',$fecha);
+//        dd($fecha);
+        return $this->index($fecha);
+    }
+
 
     public function new_ajax()
     {
@@ -109,13 +127,14 @@ class VentaController extends Controller
     public function destroy($id=0){
         $venta = Venta::findOrFail($id);
         $venta->forceDelete();
+//        $venta->detach($id);
         $ventaDetalle = VentaDetalle::where('venta_id',$id);
         $ventaDetalle->forceDelete();
+        $Mov = Movimiento::where('venta_id',$id);
+        $Mov->forceDelete();
+
+        //        $ventaDetalle->detach();
         return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
-
     }
-
-
-
 
 }

@@ -80,6 +80,7 @@
                     if (data.mensaje == "OK"){
                         alert('Paquete agregado con éxito');
                         $("#myModal").modal( 'hide' );
+                        window.location.reload();
                     }else{
                         alert(data.mensaje);
                     }

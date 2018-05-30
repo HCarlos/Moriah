@@ -43,6 +43,10 @@ class Paquete extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
+    public function movimientos(){
+        return $this->belongsToMany(Movimiento::class);
+    }
+
     public function IsEmptyPhoto(){
         return $this->filename == '' ? true : false;
     }

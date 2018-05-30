@@ -64,7 +64,11 @@ class FuncionesController extends Controller
             substr($number,2,2).'-'.
             substr($number,4,2)
         ;
+    }
 
+    public function fechaEspanol($f){
+        $f = explode('-',substr($f,0,10));
+        return $f[2].'-'.$f[1].'-'.$f[0];
     }
 
 }
