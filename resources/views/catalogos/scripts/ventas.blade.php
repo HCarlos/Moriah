@@ -3,8 +3,8 @@
     <script>
         jQuery(function($) {
             $(document).ready(function() {
-                if ( $(".btnVentaPaquete") ){
-                    $(".btnVentaPaquete").on("click", function (event) {
+                if ( $(".btnVentaPaquete") || $(".btnVentaPedido") || $(".btnVentaNormal") ){
+                    $(".btnVentaPaquete, .btnVentaPedido, .btnVentaNormal").on("click", function (event) {
                         event.preventDefault();
 
                         $("#myModal .modal-body").empty();

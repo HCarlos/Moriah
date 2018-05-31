@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SIIFAC;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Paquete;
+use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
 use App\User;
@@ -18,9 +19,10 @@ class VentaController extends Controller
 {
     protected $tableName = 'ventas';
     protected $redirectTo = '/home';
-
+   protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->F = (new FuncionesController);
     }
 
     public function index($fecha)
@@ -55,16 +57,14 @@ class VentaController extends Controller
     {
         $data = $request->all();
         $fecha = $data['fecha'];
-        $fecha = str_replace('20','',$fecha);
-        $fecha = str_replace('-','',$fecha);
-//        dd($fecha);
+        $fecha = $this->F->setDateTo6Digit($fecha);
         return $this->index($fecha);
     }
 
 
-    public function new_ajax()
+    public function new_paquete_ajax()
     {
-        $views  = 'venta_nueva_ajax';
+        $views  = 'venta_nueva_paquete_ajax';
         $user = Auth::User();
         $oView = 'catalogos.operaciones.';
         $Paquetes = Paquete::all()->sortBy('FullDescription')->pluck('FullDescription', 'id');
@@ -73,19 +73,33 @@ class VentaController extends Controller
         })->get();
         $clientes->each(function ($model) { $model->setAppends(['FullName']); });
         $User_Id = $clientes->sortBy('FullName')->pluck('FullName','id');
-
         return view ($oView.$views,
             [
                 'user' => $user,
                 'Paquetes' => $Paquetes,
                 'User_Id' => $User_Id,
-                'Url' => '/store_venta_ajax',
+                'Url' => '/store_venta_paquete_ajax',
             ]
         );
-
     }
 
-    public function store_ajax(Request $request)
+    public function new_pedido_ajax()
+    {
+        $views  = 'venta_nueva_pedido_ajax';
+        $user = Auth::User();
+        $oView = 'catalogos.operaciones.';
+        $Pedidos = Pedido::all()->sortBy('FullDescriptionPedidoUser')->pluck('FullDescriptionPedidoUser', 'id');
+//        dd($Pedidos);
+        return view ($oView.$views,
+            [
+                'user' => $user,
+                'Pedidos' => $Pedidos,
+                'Url' => '/store_venta_pedido_ajax',
+            ]
+        );
+    }
+
+    public function store_paquete_ajax(Request $request)
     {
         $data = $request->all();
         $paquete_id = $data['paquete_id'];
@@ -100,9 +114,26 @@ class VentaController extends Controller
         catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
-
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
+    }
 
+    public function store_pedido_ajax(Request $request)
+    {
+        $data = $request->all();
+        $pedido_id = $data['pedido_id'];
+        $Ped       = Pedido::find($pedido_id);
+        $tipoventa = $data['tipoventa'];
+        $user_id   = $Ped->user_id;
+        $cantidad  = $data['cantidad'];
+        $user = Auth::user();
+        try {
+            $mensaje = "OK";
+            Venta::venderPedido($user->id,$pedido_id,$tipoventa,$user_id,$cantidad);
+        }
+        catch(LogicException $e){
+            $mensaje = "Error: ".$e->getMessage();
+        }
+        return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
 
     public function edit($venta_id)

@@ -7,17 +7,45 @@
             <form method="post" action="{{ action('SIIFAC\VentaController@index_post') }}" class="form-inline">
                 {{ csrf_field()   }}
 
-                <div class="form-group">
-                    <span id="titulo_catalogo">VENTAS {{$fecha}}</span>
-                    <a id="/select_paquete_ajax" class="btn btn-info btn-xs btnVentaPaquete" data-toggle="modal" data-target="#myModal">Paquetes</a>
+                <div class="form-group ">
+                    <div class="pull-left">
+                        <span id="titulo_catalogo">
+                            <i class="fa fa-user default"></i>
+                            VENTAS
+                        </span>
+                        <span class="marginLeft1em">
+                            <i class="fa fa-calendar default"></i>
+                            <strong>{{$fecha}}</strong>
+                        </span>
+                        <div class="btn-group marginLeft1em" role="group" aria-label="...">
+                            <a id="/select_paquete_ajax" class="btn btn-inverse btn-xs btnVentaPaquete" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-cube default"></i>
+                                Paquetes
+                            </a>
+                            <a id="/select_pedido_ajax" class="btn btn-danger btn-xs btnVentaPedido" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-paperclip default"></i>
+                                Pedidos
+                            </a>
+                            <a id="/select_normal_ajax" class="btn btn-grey btn-xs btnVentaNormal" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-book default"></i>
+                                Normal
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-group row">
-                    <label for = "fecha" class="col-md-3 col-form-label text-md-right">Fecha</label>
+
+                <div class="form-group  pull-right">
+                    <button type="submit" class="btn btn-mini btn-primary">
+                        <i class="fa fa-search default"></i>
+                        Consultar
+                    </button>
+                </div>
+                <div class="form-group  pull-right">
                     <div class="col-md-3">
                         {{ Form::date('fecha', \Carbon\Carbon::now(), ['id'=>'fecha','class'=>'col-md-3 form-control']) }}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-mini btn-primary">Consultar</button>
             </form>
 
 
@@ -48,8 +76,13 @@
                                 <td>{{ $venta->id }}</td>
                                 <td>{{ $venta->fecha }}</td>
                                 <td>{{ $venta->user->FullName }}</td>
-                                <td>{{ $venta->paquete->FullDescription }}</td>
-                                <td>{{ $venta->TipoVenta }}</td>
+                                @if($venta->paquete_id > 0)
+                                    <td>{{ $venta->paquete->FullDescription }}</td>
+                                    <td>PAQUETE {{ $venta->TipoVenta }}</td>
+                                @else
+                                    <td>{{ $venta->pedido->FullDescription }}</td>
+                                    <td>PEDIDO {{ $venta->TipoVenta }}</td>
+                                @endif
                                 <td>{{ $venta->vendedor->FullName }}</td>
                                 <td class="text-right">{{ $venta->total}} </td>
                                 <td >

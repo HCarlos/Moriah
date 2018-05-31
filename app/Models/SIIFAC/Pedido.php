@@ -49,6 +49,14 @@ class Pedido extends Model
         return $this->filename == '' ? true : false;
     }
 
+    public function getFullDescriptionAttribute(){
+        return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_pedido']. ' - ' . $this->attributes['importe'];
+    }
+
+    public function getFullDescriptionPedidoUserAttribute(){
+        return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_pedido']. ' - ' . $this->attributes['importe']. ' - ' . $this->user->FullName;
+    }
+
     public static function findOrCreatePedido($user_id, $paquete_id, $empresa_id)
     {
         $user = User::find($user_id);

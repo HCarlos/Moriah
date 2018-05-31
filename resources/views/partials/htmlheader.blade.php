@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
     @yield('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/tecnointel.css') }}" />
+    <link href="{{ asset('assets/css/sg-01.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my_style_sheet.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/ace-extra.min.js') }}"></script>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

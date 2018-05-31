@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Funciones;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class FuncionesController extends Controller
@@ -58,6 +59,16 @@ class FuncionesController extends Controller
         }
     }
 
+    public function setDateTo6Digit($fecha){
+        if(is_null($fecha)){
+            $fecha = Carbon::today()->toDateString();
+        }
+//        dd(Carbon::now());
+        $fecha = str_replace('20','',$fecha);
+        $fecha = str_replace('-','',$fecha);
+        return $fecha;
+    }
+
     public function getFechaFromNumeric($number){
         return
             '20'.substr($number,0,2).'-'.
@@ -70,5 +81,6 @@ class FuncionesController extends Controller
         $f = explode('-',substr($f,0,10));
         return $f[2].'-'.$f[1].'-'.$f[0];
     }
+
 
 }

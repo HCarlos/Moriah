@@ -1219,11 +1219,11 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('paquete_id')
-                ->references('id')
-                ->on($tableNames['paquetes'])
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+//            $table->foreign('paquete_id')
+//                ->references('id')
+//                ->on($tableNames['paquetes'])
+//                ->onDelete('cascade')
+//                ->onUpdate('cascade');
 
         });
 
@@ -1397,12 +1397,12 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('paquete_id')
-                ->references('id')
-                ->on($tableNames['paquetes'])
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
+//            $table->foreign('paquete_id')
+//                ->references('id')
+//                ->on($tableNames['paquetes'])
+//                ->onDelete('cascade')
+//                ->onUpdate('cascade');
+//
             $table->foreign('almacen_id')
                 ->references('id')
                 ->on($tableNames['almacenes'])

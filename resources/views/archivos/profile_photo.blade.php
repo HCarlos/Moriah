@@ -17,7 +17,7 @@
                             <div class="form-group row">
                                 <label for="foto" class="col-md-4 control-label">Nuevo Archivo</label>
                                 <div class="col-md-6">
-                                    <input type="file" name="photo" class="form-control {{ $errors->has('photo') ? ' is-invalid' : '' }} altMoz" style="padding-top: 0px;" >
+                                    <input type="file" name="photo" class="form-control fileSelect {{ $errors->has('photo') ? ' is-invalid' : '' }} altMoz" style="padding-top: 0px;" >
                                     @if ($errors->has('photo'))
                                         <span class="invalid-feedback">
                                             <strong>{{ $errors->first('photo') }}</strong>
@@ -33,9 +33,9 @@
                                     <div class="row">
                                         <div class="list-group-item col-md-5" >
                                             @if($user->IsEmptyPhoto())
-                                                <img src="{{ asset('assets/img/empty_user.png')  }}" width="100" height="100" title="{{$user->filename}}"/>
+                                                <img src="{{ asset('assets/img/empty_user.png')  }}" width="100" height="100" title="{{$user->filename}}" class="trans-img"/>
                                             @else
-                                                <a href="{{ asset('archivos'.$user->root.$user->filename)  }}" target="_blank" >
+                                                <a href="{{ asset('storage/'.$user->root.$user->filename)  }}" target="_blank" >
                                                     <img src="{{ asset('storage/'.$user->root.$user->filename)  }}" width="100" height="100" title="{{$user->filename}}"/>
                                                     <a href="{{ route('quitarArchivoProfile/')  }}"  class="mi-imagen-arriba-derecha icon-trash bigger-150" >
                                                         <i class="fas fa-trash-alt red"></i>

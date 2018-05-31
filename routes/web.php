@@ -120,8 +120,12 @@ Route::group(['middleware' => 'auth'], function () {
     // Ventas
     Route::get('/index_ventas/{fecha}','SIIFAC\VentaController@index')->name('ventasIndex');
     Route::post('/index_ventas','SIIFAC\VentaController@index_post')->name('ventasPostIndex');
-    Route::get('/select_paquete_ajax', 'SIIFAC\VentaController@new_ajax')->name('selectPaqueteNewAjax/');
-    Route::post('/store_venta_ajax','SIIFAC\VentaController@store_ajax')->name('ventaStoreAjax/');
+    Route::get('/select_paquete_ajax', 'SIIFAC\VentaController@new_paquete_ajax')->name('selectPaqueteNewAjax/');
+    Route::get('/select_pedido_ajax', 'SIIFAC\VentaController@new_pedido_ajax')->name('selectPedidoNewAjax/');
+    Route::get('/select_normal_ajax', 'SIIFAC\VentaController@new_normal_ajax')->name('selectPedidoNewAjax/');
+    Route::post('/store_venta_paquete_ajax','SIIFAC\VentaController@store_paquete_ajax')->name('ventaPaqueteStoreAjax/');
+    Route::post('/store_venta_pedido_ajax','SIIFAC\VentaController@store_pedido_ajax')->name('ventaPedidoStoreAjax/');
+    Route::post('/store_venta_normal_ajax','SIIFAC\VentaController@store_normal_ajax')->name('ventaNormalStoreAjax/');
     Route::get('/edit_venta_detalle/{venta_id}', 'SIIFAC\VentaController@edit')->name('ventaDetalleEdit');
     Route::get('/destroy_venta/{id}', 'SIIFAC\VentaController@destroy')->name('ventaDestroy/');
 

@@ -88,6 +88,7 @@ class Venta extends Model
             'total'       => $paq->importe,
             'empresa_id'  => $paq->empresa_id,
             'paquete_id'  => $paquete_id,
+            'pedido_id'  => 0,
             'user_id'     => $user_id,
             'vendedor_id' => $vendedor_id,
         ]);
@@ -102,5 +103,36 @@ class Venta extends Model
         return $pd;
 
     }
+
+    public static function venderPedido($vendedor_id, $pedido_id, $tipoventa,$user_id,$cantidad){
+        $paq   = Pedido::find($pedido_id);
+        $timex = Carbon::now()->format('ymdHisu');
+        $timex = substr($timex,0,16);
+
+        $Ven  =  static::create([
+            'fecha'       => now(),
+            'clave'       => $paq->clave,
+            'tipoventa'   => $tipoventa,
+            'cuenta'      => $timex,
+            'cantidad'    => $cantidad,
+            'total'       => $paq->importe,
+            'empresa_id'  => $paq->empresa_id,
+            'paquete_id'  => 0,
+            'pedido_id'  => $pedido_id,
+            'user_id'     => $user_id,
+            'vendedor_id' => $vendedor_id,
+        ]);
+
+        $Ven->empresas()->attach($paq->empresa_id);
+        $Ven->pedidos()->attach($pedido_id);
+        $Ven->users()->attach($user_id);
+        $Ven->vendedores()->attach($vendedor_id);
+
+        $pd = VentaDetalle::venderPedidoDetalles($Ven->id, $pedido_id,$cantidad);
+
+        return $pd;
+
+    }
+
 
 }
