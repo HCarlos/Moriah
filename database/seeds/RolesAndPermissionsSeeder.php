@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -14,7 +15,7 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-
+        $F = new FuncionesController();
         $ip   = 'root_init';//$_SERVER['REMOTE_ADDR'];
         $host = 'root_init';//gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $idemp = 1;
@@ -124,6 +125,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_admin);
         $user->permissions()->attach($P0);
+        $F->validImagePro($user,'profile','profile/');
 
         $user = new User();
         $user->ap_paterno = 'Usuario';
@@ -139,6 +141,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_user_libros);
         $user->permissions()->attach($P6);
+        $F->validImagePro($user,'profile','profile/');
 
         $user = new User();
         $user->ap_paterno = 'Usuario';
@@ -154,6 +157,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_user_uniformes);
         $user->permissions()->attach($P6);
+        $F->validImagePro($user,'profile','profile/');
 
         $user = new User();
         $user->ap_paterno = 'Usuario';
@@ -169,6 +173,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_user_cuadernos);
         $user->permissions()->attach($P6);
+        $F->validImagePro($user,'profile','profile/');
 
 
         $user = new User();
@@ -183,6 +188,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_user_servicios);
         $user->permissions()->attach($P6);
+        $F->validImagePro($user,'profile','profile/');
 
         $user = new User();
         $user->nombre = 'Usuario Venta Libros';
@@ -196,6 +202,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_uv_libros);
         $user->permissions()->attach($P6);
+        $F->validImagePro($user,'profile','profile/');
 
 
     }

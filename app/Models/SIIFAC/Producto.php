@@ -5,6 +5,7 @@ namespace App\Models\SIIFAC;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Funciones\FuncionesController;
 
 class Producto extends Model
 {
@@ -124,16 +125,11 @@ class Producto extends Model
             $prod->medidas()->attach($med);
             $prod->empresas()->attach($emp);
 
-            $ext = ['jpg','jpeg','gif','png'];
-            for ($i=0;$i<4;$i++){
-                $p1 = $prod->id.'.'.$ext[$i];
-                $e1 = Storage::disk('producto')->exists($p1);
-                if ($e1) {
-                    $prod->update(['filename'=>$p1]);
-                }
-            }
+            $F = new FuncionesController();
+            $F->validImagePro($prod,'producto','producto/');
 
             return $prod;
+
         }
         return $obj;
     }

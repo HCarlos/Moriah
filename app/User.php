@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\CuentaPorCobrar;
 use App\Models\SIIFAC\Empresa;
@@ -181,6 +182,9 @@ class User extends Authenticatable
             $user->roles()->attach($role1);
             $user->roles()->attach($role2);
             $user->roles()->attach($role3);
+            $F = new FuncionesController();
+            $F->validImagePro($user,'profile','profile/');
+
         }
         return $user;
 

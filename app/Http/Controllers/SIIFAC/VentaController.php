@@ -119,7 +119,7 @@ class VentaController extends Controller
 
     public function store_pedido_ajax(Request $request)
     {
-        $data = $request->all();
+        $data      = $request->all();
         $pedido_id = $data['pedido_id'];
         $Ped       = Pedido::find($pedido_id);
         $tipoventa = $data['tipoventa'];
