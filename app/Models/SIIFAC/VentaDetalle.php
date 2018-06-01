@@ -97,13 +97,13 @@ class VentaDetalle extends Model
             $vd = static::create([
                 'venta_id'       => $ven->id,
                 'user_id'        => $ven->user_id,
-                'paquete_id'     => $ven->paquete_id,
+                'paquete_id'     => $paquete_id,
                 'producto_id'    => $pd->producto_id,
                 'empresa_id'     => $ven->empresa_id,
                 'almacen_id'     => $prod->almacen_id,
                 'fecha'          => now(),
                 'cuenta'         => $ven->cuenta,
-                'clave_producto' => $prod->clave_producto,
+                'clave_producto' => $prod->clave,
                 'descripcion'    => $prod->descripcion,
                 'codigo'         => $prod->codigo,
                 'porcdescto'     => $prod->porcdescto,
@@ -130,7 +130,7 @@ class VentaDetalle extends Model
 
     }
 
-    public static function venderPedidoDetalles($venta_id, $pedido_id,$cantidad){
+    public static function venderPedidoDetalles($venta_id, $pedido_id, $cantidad){
         $ven = Venta::find($venta_id);
         $peq  = PedidoDetalle::where('pedido_id',$pedido_id)->get();
         foreach ($peq as $pd){
@@ -143,13 +143,13 @@ class VentaDetalle extends Model
             $vd = static::create([
                 'venta_id'       => $ven->id,
                 'user_id'        => $ven->user_id,
-                'pedido_id'     => $ven->pedido_id,
+                'pedido_id'      => $pedido_id,
                 'producto_id'    => $pd->producto_id,
                 'empresa_id'     => $ven->empresa_id,
                 'almacen_id'     => $prod->almacen_id,
                 'fecha'          => now(),
                 'cuenta'         => $ven->cuenta,
-                'clave_producto' => $prod->clave_producto,
+                'clave_producto' => $prod->clave,
                 'descripcion'    => $prod->descripcion,
                 'codigo'         => $prod->codigo,
                 'porcdescto'     => $prod->porcdescto,

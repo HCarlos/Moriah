@@ -134,7 +134,7 @@ class Movimiento extends Model
             'almacen_id'       => $Prod->almacen_id,
             'medida_id'        => $Prod->medida_id,
             'folio'            => $Vd->folio,
-            'clave'            => $Prod->clave_producto,
+            'clave'            => $Vd->clave_producto,
             'codigo'           => $Vd->codigo,
             'ejercicio'        => $Fecha->year,
             'periodo'          => $Fecha->month,

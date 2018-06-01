@@ -57,6 +57,7 @@ class PedidoDetalle extends Model
         foreach ($pqd as $p){
             static::findOrCreatePedidoDetalle($pedido_id,$p->id,$user_id,$empresa_id,0);
         }
+        Pedido::UpdateImporteFromPedidoDetalle($pedido_id);
         return $pqd;
     }
 
@@ -75,7 +76,7 @@ class PedidoDetalle extends Model
             'medida_id' => $p->medida_id,
             'codigo' => $p->codigo,
             'descripcion_producto' => $p->descripcion,
-            'cant' => $p->cant,
+            'cant' => 1,
             'pv' => $p->pv,
             'comp1' => $p->comp1,
             'empresa_id' => $empresa_id,
@@ -94,7 +95,8 @@ class PedidoDetalle extends Model
         $ped->detalles()->attach($pd);
         $ped->productos()->attach($prod);
 
-    return $pd;
+
+        return $pd;
 
     }
 
