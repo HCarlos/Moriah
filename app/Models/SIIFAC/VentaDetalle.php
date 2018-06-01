@@ -84,7 +84,7 @@ class VentaDetalle extends Model
         return $this->belongsToMany(Pedido::class);
     }
 
-    public static function venderPaqueteDetalles($venta_id, $paquete_id,$cantidad){
+    public static function venderPaqueteDetalles($venta_id, $paquete_id, $cantidad){
         $ven = Venta::find($venta_id);
         $peq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($peq as $pd){
@@ -98,6 +98,7 @@ class VentaDetalle extends Model
                 'venta_id'       => $ven->id,
                 'user_id'        => $ven->user_id,
                 'paquete_id'     => $paquete_id,
+                'pedido_id'      => 0,
                 'producto_id'    => $pd->producto_id,
                 'empresa_id'     => $ven->empresa_id,
                 'almacen_id'     => $prod->almacen_id,
@@ -143,6 +144,7 @@ class VentaDetalle extends Model
             $vd = static::create([
                 'venta_id'       => $ven->id,
                 'user_id'        => $ven->user_id,
+                'paquete_id'     => 0,
                 'pedido_id'      => $pedido_id,
                 'producto_id'    => $pd->producto_id,
                 'empresa_id'     => $ven->empresa_id,

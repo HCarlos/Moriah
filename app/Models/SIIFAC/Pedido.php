@@ -15,6 +15,7 @@ class Pedido extends Model
     protected $table = 'pedidos';
 
     protected $fillable = [
+        'id',
         'user_id', 'paquete_id', 'descripcion_pedido','fecha','codigo','root','filename','importe',
         'empresa_id', 'status_pedido','idemp','ip','host',
     ];

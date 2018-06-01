@@ -1723,43 +1723,43 @@ class CreateSiifacTables extends Migration
 
         });
 
-        Schema::create($tableNames['pedido_movimiento'], function (Blueprint $table) use ($tableNames) {
-            $table->increments('id');
-            $table->integer('pedido_id');
-            $table->integer('movimiento_id');
-            $table->softDeletes();
-            $table->timestamps();
-
-            $table->foreign('pedido_id')
-                ->references('id')
-                ->on($tableNames['pedidos'])
-                ->onDelete('cascade');
-
-            $table->foreign('movimiento_id')
-                ->references('id')
-                ->on($tableNames['movimientos'])
-                ->onDelete('cascade');
-
-        });
-
-        Schema::create($tableNames['movimiento_paquete'], function (Blueprint $table) use ($tableNames) {
-            $table->increments('id');
-            $table->integer('paquete_id');
-            $table->integer('movimiento_id');
-            $table->softDeletes();
-            $table->timestamps();
-
-            $table->foreign('paquete_id')
-                ->references('id')
-                ->on($tableNames['paquetes'])
-                ->onDelete('cascade');
-
-            $table->foreign('movimiento_id')
-                ->references('id')
-                ->on($tableNames['movimientos'])
-                ->onDelete('cascade');
-
-        });
+//        Schema::create($tableNames['pedido_movimiento'], function (Blueprint $table) use ($tableNames) {
+//            $table->increments('id');
+//            $table->integer('pedido_id');
+//            $table->integer('movimiento_id');
+//            $table->softDeletes();
+//            $table->timestamps();
+//
+//            $table->foreign('pedido_id')
+//                ->references('id')
+//                ->on($tableNames['pedidos'])
+//                ->onDelete('cascade');
+//
+//            $table->foreign('movimiento_id')
+//                ->references('id')
+//                ->on($tableNames['movimientos'])
+//                ->onDelete('cascade');
+//
+//        });
+//
+//        Schema::create($tableNames['movimiento_paquete'], function (Blueprint $table) use ($tableNames) {
+//            $table->increments('id');
+//            $table->integer('paquete_id');
+//            $table->integer('movimiento_id');
+//            $table->softDeletes();
+//            $table->timestamps();
+//
+//            $table->foreign('paquete_id')
+//                ->references('id')
+//                ->on($tableNames['paquetes'])
+//                ->onDelete('cascade');
+//
+//            $table->foreign('movimiento_id')
+//                ->references('id')
+//                ->on($tableNames['movimientos'])
+//                ->onDelete('cascade');
+//
+//        });
 
         Schema::create($tableNames['proveedor_movimiento'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');

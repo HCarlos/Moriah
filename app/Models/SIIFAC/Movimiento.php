@@ -17,7 +17,7 @@ class Movimiento extends Model
 
     protected $fillable = [
         'id',
-        'user_id', 'venta_id', 'venta_detalle_id', 'compra_id', 'producto_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
+        'user_id', 'venta_id', 'venta_detalle_id', 'compra_id', 'producto_id','paquete_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
         'folio', 'clave', 'codigo', 'ejercicio', 'periodo', 'fecha', 'foliofac', 'nota', 'entrada',
         'salida', 'exlocal', 'existencia', 'pu', 'cu', 'debe', 'haber', 'descto', 'importe', 'iva', 'sllocal', 'saldo',
         'tipo', 'status', 'tipoinv','empresa_id',
@@ -117,7 +117,7 @@ class Movimiento extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
-    public static function agregarDesdeVentaDetalle(VentaDetalle $Vd)
+    public static function agregarDesdeVentaDetalle($Vd)
     {
         $Prod = Producto::findOrFail($Vd->producto_id);
         $Existencia = $Prod->exist - $Vd->cantidad;
@@ -161,7 +161,6 @@ class Movimiento extends Model
         $Mov->proveedores()->attach($Prod->proveedor_id);
         $Mov->almacenes()->attach($Vd->almacen_id);
         $Mov->medidas()->attach($Prod->medida_id);
-        $Mov->paquetes()->attach($Vd->paquete_id);
 
     }
 

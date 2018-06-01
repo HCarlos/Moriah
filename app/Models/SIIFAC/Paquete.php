@@ -16,6 +16,7 @@ class Paquete extends Model
     protected $table = 'paquetes';
 
     protected $fillable = [
+        'id',
         'user_id', 'codigo', 'descripcion_paquete','root','filename','importe',
         'empresa_id', 'status_paquete','idemp','ip','host',
     ];
