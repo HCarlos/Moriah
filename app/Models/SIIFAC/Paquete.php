@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -70,14 +71,9 @@ class Paquete extends Model
             ]);
             $paq->users()->attach($user);
             $paq->empresas()->attach($emp);
-            $ext = ['jpg','jpeg','gif','png'];
-            for ($i=0;$i<4;$i++){
-                $p1 = $paq->id.'.'.$ext[$i];
-                $e1 = Storage::disk('paquete')->exists($p1);
-                if ($e1) {
-                    $paq->update(['filename'=>$p1]);
-                }
-            }
+
+            $F = new FuncionesController();
+            $F->validImage($paq,'paquete','paquete/');
 
             return $paq;
         }

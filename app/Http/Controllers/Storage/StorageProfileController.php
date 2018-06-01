@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Storage;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use http\Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,8 +14,10 @@ use Illuminate\Support\Facades\Validator;
 class StorageProfileController extends Controller
 {
     protected $redirectTo = 'showEditProfilePhoto/';
+    protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->F = new FuncionesController();
     }
 
     public function subirArchivoProfile(Request $request)
@@ -62,6 +65,7 @@ class StorageProfileController extends Controller
     {
         $user = Auth::user();
         Storage::disk('profile')->delete($user->filename);
+        $this->F->deleteImages($user,'profile');
         $user->filename = '';
         $user->root = '';
         $user->save();

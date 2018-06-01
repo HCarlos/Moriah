@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Storage;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Paquete;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,8 +16,10 @@ use League\Flysystem\Exception;
 class StoragePaqueteController extends Controller
 {
     protected $redirectTo = '/home';
+    protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->F = new FuncionesController();
     }
 
     public function subirArchivoPaquete(Request $request, Paquete $oPaquete)
@@ -60,6 +63,7 @@ class StoragePaqueteController extends Controller
     {
         $oProd = Paquete::findOrFail($idItem);
         Storage::disk('paquete')->delete($oProd->filename);
+        $this->F->deleteImages($oProd,'paquete');
         $oProd->filename = '';
         $oProd->root = '';
         $oProd->save();

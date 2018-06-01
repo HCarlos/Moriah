@@ -126,7 +126,7 @@ class Producto extends Model
             $prod->empresas()->attach($emp);
 
             $F = new FuncionesController();
-            $F->validImagePro($prod,'producto','producto/');
+            $F->validImage($prod,'producto','producto/');
 
             return $prod;
 

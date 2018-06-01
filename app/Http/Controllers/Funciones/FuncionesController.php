@@ -82,13 +82,24 @@ class FuncionesController extends Controller
         return $f[2].'-'.$f[1].'-'.$f[0];
     }
 
-    public function validImagePro($model,$storage,$root){
+    public function validImage($model, $storage, $root){
         $ext = ['jpg','jpeg','gif','png'];
         for ($i=0;$i<4;$i++){
             $p1 = $model->id.'.'.$ext[$i];
             $e1 = Storage::disk($storage)->exists($p1);
             if ($e1) {
                 $model->update(['root'=>$root,'filename'=>$p1]);
+            }
+        }
+    }
+
+    public function deleteImages($model,$storage){
+        $ext = ['jpg','jpeg','gif','png'];
+        for ($i=0;$i<4;$i++){
+            $p1 = $model->id.'.'.$ext[$i];
+            $e1 = Storage::disk($storage)->exists($p1);
+            if ($e1) {
+                Storage::disk($storage)->delete($p1);
             }
         }
     }

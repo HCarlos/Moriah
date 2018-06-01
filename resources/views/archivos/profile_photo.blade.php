@@ -37,7 +37,7 @@
                                             @else
                                                 <a href="{{ asset('storage/'.$user->root.$user->filename)  }}" target="_blank" >
                                                     <img src="{{ asset('storage/'.$user->root.$user->filename)  }}" width="100" height="100" title="{{$user->filename}}"/>
-                                                    <a href="{{ route('quitarArchivoProfile/')  }}"  class="mi-imagen-arriba-derecha icon-trash bigger-150" >
+                                                    <a href="{{ route('quitarArchivoProfile/')  }}"  class="fa fa-trash bigger-150 mi-imagen-arriba-derecha red" >
                                                         <i class="fas fa-trash-alt red"></i>
                                                     </a>
                                                 </a>

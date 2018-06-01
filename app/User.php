@@ -183,7 +183,7 @@ class User extends Authenticatable
             $user->roles()->attach($role2);
             $user->roles()->attach($role3);
             $F = new FuncionesController();
-            $F->validImagePro($user,'profile','profile/');
+            $F->validImage($user,'profile','profile/');
 
         }
         return $user;

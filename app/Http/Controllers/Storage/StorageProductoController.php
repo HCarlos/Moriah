@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Storage;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Producto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,8 +16,10 @@ use League\Flysystem\Exception;
 class StorageProductoController extends Controller
 {
     protected $redirectTo = '/home';
+    protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->F = new FuncionesController();
     }
 
     public function subirArchivoProducto(Request $request, Producto $oProducto)
@@ -60,6 +63,7 @@ class StorageProductoController extends Controller
     {
         $oProd = Producto::findOrFail($idItem);
         Storage::disk('producto')->delete($oProd->filename);
+        $this->F->deleteImages($oProd,'producto');
         $oProd->filename = '';
         $oProd->root = '';
         $oProd->save();
