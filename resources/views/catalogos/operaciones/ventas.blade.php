@@ -79,9 +79,12 @@
                                 @if($venta->paquete_id > 0)
                                     <td>{{ $venta->paquete->FullDescription }}</td>
                                     <td>PAQUETE {{ $venta->TipoVenta }}</td>
-                                @else
+                                @elseif($venta->pedido_id > 0)
                                     <td>{{ $venta->pedido->FullDescription }}</td>
                                     <td>PEDIDO {{ $venta->TipoVenta }}</td>
+                                @else
+                                    <td>{{ $venta->user->FullName }}</td>
+                                    <td>NORMAL {{ $venta->TipoVenta }}</td>
                                 @endif
                                 <td>{{ $venta->vendedor->FullName }}</td>
                                 <td class="text-right">{{ $venta->total}} </td>

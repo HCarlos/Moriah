@@ -16,10 +16,10 @@ use App\Models\SIIFAC\Venta;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Contracts\Auth\CanResetPassword;
 use App\Notifications\MyResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,7 +27,7 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-//    use CanResetPassword;
+    use HasRolesAndAbilities;
     use HasRoles;
 
     protected $guard_name = 'web'; // or whatever guard you want to use

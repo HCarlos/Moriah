@@ -180,6 +180,8 @@ return [
         Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
         Codedge\Fpdf\FpdfServiceProvider::class,
         Anouar\Fpdf\FpdfServiceProvider::class,
+        Silber\Bouncer\BouncerServiceProvider::class,
+
     ],
 
     /*
@@ -238,6 +240,7 @@ return [
         'Access' => Styde\Html\Facades\Access::class,
         'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
         'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
+        'Bouncer' => Silber\Bouncer\BouncerFacade::class,
     ],
 
 

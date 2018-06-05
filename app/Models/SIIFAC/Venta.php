@@ -133,5 +133,33 @@ class Venta extends Model
 
     }
 
+    public static function venderNormal($vendedor_id, $producto_id, $tipoventa, $user_id, $cantidad){
+        $Prod  = Producto::find($producto_id);
+        $timex = Carbon::now()->format('ymdHisu');
+        $timex = substr($timex,0,16);
+        $Ven   =  static::create([
+            'fecha'       => now(),
+            'clave'       => $Prod->clave,
+            'tipoventa'   => $tipoventa,
+            'cuenta'      => $timex,
+            'cantidad'    => $cantidad,
+            'total'       => $Prod->pv,
+            'empresa_id'  => $Prod->empresa_id,
+            'paquete_id'  => 0,
+            'pedido_id'   => 0,
+            'user_id'     => $user_id,
+            'vendedor_id' => $vendedor_id,
+        ]);
+
+        $Ven->empresas()->attach($Prod->empresa_id);
+        $Ven->users()->attach($user_id);
+        $Ven->vendedores()->attach($vendedor_id);
+
+        $pd = VentaDetalle::venderNormalDetalles($Ven, $producto_id,$cantidad);
+
+        return $pd;
+
+    }
+
 
 }

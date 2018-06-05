@@ -86,95 +86,66 @@ class VentaDetalle extends Model
 
     public static function venderPaqueteDetalles($venta_id, $paquete_id, $cantidad){
         $ven = Venta::find($venta_id);
-        $peq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
-        foreach ($peq as $pd){
-            $prod = Producto::find($pd->producto_id);
-            $importe  = $prod->pv * $cantidad;
-            $descto   = $prod->descto;
-            $subtotal = $importe - $descto;
-            $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
-            $total    = $subtotal + $iva;
-            $vd = static::create([
-                'venta_id'       => $ven->id,
-                'user_id'        => $ven->user_id,
-                'paquete_id'     => $paquete_id,
-                'pedido_id'      => 0,
-                'producto_id'    => $pd->producto_id,
-                'empresa_id'     => $ven->empresa_id,
-                'almacen_id'     => $prod->almacen_id,
-                'fecha'          => now(),
-                'cuenta'         => $ven->cuenta,
-                'clave_producto' => $prod->clave,
-                'descripcion'    => $prod->descripcion,
-                'codigo'         => $prod->codigo,
-                'porcdescto'     => $prod->porcdescto,
-                'cantidad'       => $cantidad,
-                'pv'             => $prod->pv,
-                'importe'        => $importe,
-                'subtotal'       => $subtotal,
-                'iva'            => $iva,
-                'total'          => $total,
-                'idemp'          => 1,
-                'ip'             => Request::ip(),
-                'host'           => Request::getHttpHost(),
-            ]);
-
-            $vd->users()->attach($ven->user_id);
-            $vd->paquetes()->attach($ven->paquete_id);
-            $vd->productos()->attach($pd->producto_id);
-            $vd->empresas()->attach($ven->empresa_id);
-            $vd->almacenes()->attach($prod->almacen_id);
-            Movimiento::agregarDesdeVentaDetalle($vd);
+        $paq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
+        foreach ($paq as $pq){
+            static::agregarProductoAVenta($ven,$pq->producto_id,$cantidad);
         }
-
-        return static::totalVenta($venta_id);
-
     }
 
     public static function venderPedidoDetalles($venta_id, $pedido_id, $cantidad){
         $ven = Venta::find($venta_id);
-        $peq  = PedidoDetalle::where('pedido_id',$pedido_id)->get();
-        foreach ($peq as $pd){
-            $prod = Producto::find($pd->producto_id);
-            $importe  = $prod->pv * $cantidad;
-            $descto   = $prod->descto;
-            $subtotal = $importe - $descto;
-            $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
-            $total    = $subtotal + $iva;
-            $vd = static::create([
-                'venta_id'       => $ven->id,
-                'user_id'        => $ven->user_id,
-                'paquete_id'     => 0,
-                'pedido_id'      => $pedido_id,
-                'producto_id'    => $pd->producto_id,
-                'empresa_id'     => $ven->empresa_id,
-                'almacen_id'     => $prod->almacen_id,
-                'fecha'          => now(),
-                'cuenta'         => $ven->cuenta,
-                'clave_producto' => $prod->clave,
-                'descripcion'    => $prod->descripcion,
-                'codigo'         => $prod->codigo,
-                'porcdescto'     => $prod->porcdescto,
-                'cantidad'       => $cantidad,
-                'pv'             => $prod->pv,
-                'importe'        => $importe,
-                'subtotal'       => $subtotal,
-                'iva'            => $iva,
-                'total'          => $total,
-                'idemp'          => 1,
-                'ip'             => Request::ip(),
-                'host'           => Request::getHttpHost(),
-            ]);
-
-            $vd->users()->attach($ven->user_id);
-            $vd->pedidos()->attach($ven->pedido_id);
-            $vd->productos()->attach($pd->producto_id);
-            $vd->empresas()->attach($ven->empresa_id);
-            $vd->almacenes()->attach($prod->almacen_id);
-            Movimiento::agregarDesdeVentaDetalle($vd);
+        $ped  = PedidoDetalle::where('pedido_id',$pedido_id)->get();
+        foreach ($ped as $pd){
+            static::agregarProductoAVenta($ven,$pd->producto_id,$cantidad);
         }
+    }
 
-        return static::totalVenta($venta_id);
+    public static function venderNormalDetalles($ven, $producto_id, $cantidad){
+            static::agregarProductoAVenta($ven,$producto_id,$cantidad);
+    }
+
+    public static function agregarProductoAVenta($ven,$producto_id,$cantidad){
+        $prod = Producto::find($producto_id);
+        $importe  = $prod->pv * $cantidad;
+        $descto   = $prod->descto;
+        $subtotal = $importe - $descto;
+        $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
+        $total    = $subtotal + $iva;
+        $vd = static::create([
+            'venta_id'       => $ven->id,
+            'user_id'        => $ven->user_id,
+            'paquete_id'     => $ven->paquete_id,
+            'pedido_id'      => $ven->pedido_id,
+            'producto_id'    => $producto_id,
+            'empresa_id'     => $ven->empresa_id,
+            'almacen_id'     => $prod->almacen_id,
+            'fecha'          => now(),
+            'cuenta'         => $ven->cuenta,
+            'clave_producto' => $prod->clave,
+            'descripcion'    => $prod->descripcion,
+            'codigo'         => $prod->codigo,
+            'porcdescto'     => $prod->porcdescto,
+            'cantidad'       => $cantidad,
+            'pv'             => $prod->pv,
+            'importe'        => $importe,
+            'subtotal'       => $subtotal,
+            'iva'            => $iva,
+            'total'          => $total,
+            'idemp'          => 1,
+            'ip'             => Request::ip(),
+            'host'           => Request::getHttpHost(),
+        ]);
+
+        $vd->users()->attach($ven->user_id);
+        if ($ven->paquete_id > 0)
+            $vd->paquetes()->attach($ven->paquete_id);
+        if ($ven->pedido_id > 0)
+            $vd->pedidos()->attach($ven->pedido_id);
+        $vd->productos()->attach($producto_id);
+        $vd->empresas()->attach($ven->empresa_id);
+        $vd->almacenes()->attach($prod->almacen_id);
+        Movimiento::agregarDesdeVentaDetalle($vd);
+        return static::totalVenta($ven->id);
 
     }
 
