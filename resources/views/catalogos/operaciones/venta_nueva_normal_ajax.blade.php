@@ -18,24 +18,26 @@
             @endif
             <div class="form-group row">
                 <label for = "user_id" class="col-md-2 col-form-label text-md-left">Cliente</label>
-                <div class="col-md-8">
+                <div class="col-md-5">
                     {{ Form::select('user_id', $User_Id, null, ['id' => 'user_id','class'=>'form-control']) }}
                 </div>
-                <label for = "tipoventa" class="col-md-1 col-form-label text-md-left">Agr. IVA</label>
-                <div class="col-md-1">
-                    {{ Form::checkbox('tipoventa', null, true , ['id' => 'tipoventa','class' => 'ace ace-switch']) }}
-                    <span class="lbl"></span>
+                <label for = "tipoventa" class="col-md-2 col-form-label text-md-left">Contado</label>
+                <div class="col-md-3">
+                    <select id="tipoventa" name="tipoventa" size="1" class="form-control col-md-3">
+                        <option value="0" selected>Contado</option>
+                        <option value="1">Credito</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for = "cantidad" class="col-md-2 col-form-label text-md-left">Cantidad</label>
                 <div class="col-md-2">
-                    <input type="number" min="1" max="1000" value="1" required name="cantidad" id="cantidad" class="form-control"/>
+                    <input type="number" min="1" max="1000" value="1" name="cantidad" id="cantidad" class="form-control" required/>
                 </div>
                 <label for = "codigo" class="col-md-2 col-form-label text-md-left">Código</label>
                 <div class="col-md-6">
-                    <input type="number" required name="codigo" id="codigo" class="form-control"/>
+                    <input type="number" name="codigo" id="codigo" class="form-control" required autofocus/>
                 </div>
             </div>
 
@@ -81,6 +83,8 @@
             });
 
         });
+        $("#codigo").focus();
+
 
     }
 

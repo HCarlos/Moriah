@@ -159,7 +159,7 @@ class VentaController extends Controller
     public function store_normal_ajax(Request $request)
     {
         $data = $request->all();
-        $data['tipoventa']       = isset($data['tipoventa']) ? 1 : 0;
+//        $data['tipoventa']       = isset($data['tipoventa']) ? 1 : 0;
         $tipoventa = $data['tipoventa'];
         $user_id   = $data['user_id'];
         $cantidad  = $data['cantidad'];
@@ -171,7 +171,7 @@ class VentaController extends Controller
             try {
                 $mensaje = "OK";
                 $producto_id = $Prod->id;
-                $ven         = Venta::venderNormal($user->id,$producto_id,$tipoventa,$user_id,$cantidad);
+                Venta::venderNormal($user->id,$producto_id,$tipoventa,$user_id,$cantidad);
             }
             catch(LogicException $e){
                 $mensaje = "Error: ".$e->getMessage();
@@ -181,7 +181,6 @@ class VentaController extends Controller
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
-
 
     public function edit($venta_id)
     {

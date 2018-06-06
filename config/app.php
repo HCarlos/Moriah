@@ -167,7 +167,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
 
-
         Spatie\Permission\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Collective\Remote\RemoteServiceProvider::class,
@@ -181,6 +180,7 @@ return [
         Codedge\Fpdf\FpdfServiceProvider::class,
         Anouar\Fpdf\FpdfServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -241,6 +241,9 @@ return [
         'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
         'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+
     ],
 
 

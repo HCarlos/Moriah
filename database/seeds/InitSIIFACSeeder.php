@@ -210,6 +210,7 @@ class InitSIIFACSeeder extends Seeder
         $IdProd157 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,61,'010300100061','PAQUETE 2° SECUNDARIA FCE','PAQUETE 2° SECUNDARIA FCE',100,1,false,NOW(),'',0.01,0,0,25,0.01,0.25,$IdEmp);
         $IdProd158 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,34289,'978607013428','ESTA HERIDA QUE DUELE Y NO SE SIENTE','ESTA HERIDA QUE DUELE Y NO SE SIENTE',100,1,false,NOW(),'',150,0,0,29,150,4350,$IdEmp);
         $IdProd159 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,1556,'770689420155','VEINTE POEMAS DE AMOR Y UNA CANCION DESESPERADA','VEINTE POEMAS DE AMOR Y UNA CANCION DESE',100,1,false,NOW(),'',155,0,0,4,155,620,$IdEmp);
+        $IdProd160 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,8756,'787257118756','GEL ANTIBACTERIAL "SMARTY"','GEL ANTIBACTERIAL "SMARTY"',100,1,true,NOW(),'',120,0,0,14,89,620,$IdEmp);
 
 
         $IdProv1 = Proveedor::findOrCreateProveedor(1,'JORJUBEL','JULIO URRETA','MEXICO',$IdEmp);
