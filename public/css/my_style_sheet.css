@@ -273,3 +273,46 @@ ul.role-list-hrz li a {
 	text-transform: uppercase !important;
 	padding-top: 1em;
 }
+
+.btn-cafe,
+.btn-cafe:focus {
+	background-color: #CA7542 !important;
+	border-color: #CA7542;
+}
+.btn-cafe:hover,
+.open .btn-cafe.dropdown-toggle {
+	background-color: #AA511B !important;
+	border-color: #CA7542;
+}
+.btn-cafe.no-border:hover {
+	border-color: #AA511B;
+}
+.btn-cafe.no-hover:hover {
+	background-color: #CA7542 !important;
+}
+.btn-cafe.active {
+	background-color: #BA5B2F !important;
+	border-color: #9D4C27;
+}
+.btn-cafe.no-border.active {
+	background-color: #AE532B !important;
+	border-color: #AE532B;
+}
+.btn-cafe.disabled,
+.btn-cafe[disabled],
+fieldset[disabled] .btn-cafe,
+.btn-cafe.disabled:hover,
+.btn-cafe[disabled]:hover,
+fieldset[disabled] .btn-cafe:hover,
+.btn-cafe.disabled:focus,
+.btn-cafe[disabled]:focus,
+fieldset[disabled] .btn-cafe:focus,
+.btn-cafe.disabled:active,
+.btn-cafe[disabled]:active,
+fieldset[disabled] .btn-cafe:active,
+.btn-cafe.disabled.active,
+.btn-cafe[disabled].active,
+fieldset[disabled] .btn-cafe.active {
+	background-color: #CA7542 !important;
+	border-color: #CA7542;
+}

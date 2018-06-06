@@ -135,6 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/form_venta_detalle_nueva_ajax/{venta_id}', 'SIIFAC\VentaDetalleController@new_venta_detalle_ajax')->name('selectVentaDetalleNewAjax/');
     Route::post('/store_venta_detalle_normal_ajax','SIIFAC\VentaDetalleController@store_normal_ajax')->name('ventaDetalleNormalAjax/');
 //    Route::get('/excel/{venta_id}','SIIFAC\VentaDetalleController@toexcel')->name('toExcelTest/');
+    Route::get('/print_venta_detalle/{venta_id}', 'Externos\TicketController@print_tiket')->name('printTicket/');
 
     // Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');

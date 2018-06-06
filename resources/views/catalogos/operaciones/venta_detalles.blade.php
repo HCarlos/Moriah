@@ -4,12 +4,16 @@
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
             <span id="titulo_catalogo">VENTA {{$venta_id}} </span>
+            <button id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnVentaDetalleNormal" data-toggle="modal" data-target="#myModal" title="Agregar Producto">
+                <i class="fa fa-plus bigger-150"></i>
+            </button>
+            <a href="{{ route('printTicket/', ['venta_id' => $venta_id]) }}" class="btn btn-cafe btn-minier icon-only marginLeft2em " title="Imprimir" target="_blank">
+
+                <i class="fa fa-print bigger-150"></i>
+            </a>
             <a  class="btn btn-info btn-minier icon-only pull-right btnCloseVentaDetalleNormal" title="Cerrar Ventana">
                 <i class="fa fa-close bigger-150"></i>
             </a>
-            <button  id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnVentaDetalleNormal" data-toggle="modal" data-target="#myModal" title="Agregar Producto">
-                <i class="fa fa-plus bigger-150"></i>
-            </button>
         </div>
 
         <div class="panel-body">

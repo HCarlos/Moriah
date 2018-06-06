@@ -177,10 +177,11 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Styde\Html\HtmlServiceProvider::class,
         Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
-        Codedge\Fpdf\FpdfServiceProvider::class,
-        Anouar\Fpdf\FpdfServiceProvider::class,
+//        Codedge\Fpdf\FpdfServiceProvider::class,
+//        Anouar\Fpdf\FpdfServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -238,10 +239,11 @@ return [
         'Datatables' => yajra\Datatables\Datatables::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Access' => Styde\Html\Facades\Access::class,
-        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
-        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
+//        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
+//        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
     ],
