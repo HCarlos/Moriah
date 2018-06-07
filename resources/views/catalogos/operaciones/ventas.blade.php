@@ -72,7 +72,7 @@
                         </thead>
                         <tbody aria-relevant="all" aria-live="polite" role="alert">
                         @foreach ($ventas as $venta)
-                            <tr>
+                            <tr class="{{$venta->isPagado() ? 'dark' : 'red'}}">
                                 <td>{{ $venta->id }}</td>
                                 <td>{{ $venta->fecha }}</td>
                                 <td>{{ $venta->user->FullName }}</td>
@@ -92,13 +92,18 @@
                                     <div class="visible-desktop action-buttons">
 
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="venta-{{$venta->id.'-0-0'}}-destroy" title="Eliminar">
-                                                <i class="fa fa-trash bigger-150 red" ></i>
+                                            @if( !$venta->isPagado() )
+                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="venta-{{$venta->id.'-0-0'}}-destroy" title="Eliminar">
+                                                <i class="fa fa-trash bigger-110 red" ></i>
                                             </a>
-                                        @endif
-                                        @if ( $user->hasAnyPermission(['consultar','all']))
-                                            <a href="{{ route('ventaDetalleEdit', array('venta_id' => $venta->id)) }}" class="btn btn-link btn-xs pull-right editarReg" target="_blank" title="Editar">
-                                                <i class="fa fa-cubes bigger-150 blue"></i>
+                                            @endif
+                                            @if($venta->isPagado())
+                                            <a href="{{ route('printTicket/', array('venta_id' => $venta->id)) }}" class="btn btn-link pull-right printReg" target="_blank" title="Imprimir">
+                                                <i class="fa fa-print bigger-110 cafe"></i>
+                                            </a>
+                                            @endif
+                                            <a href="{{ route('ventaDetalleEdit', array('venta_id' => $venta->id)) }}" class="btn btn-link pull-right editarReg" target="_blank" title="Editar">
+                                                <i class="fa fa-cubes bigger-110 blue"></i>
                                             </a>
                                         @endif
 

@@ -18,9 +18,12 @@ class Venta extends Model
         'fecha', 'clave', 'foliofac','tipoventa','cuenta',
         'isimp', 'cantidad', 'importe','descto','subtotal',
         'iva', 'total', 'ispagado','f_pagado','user_id',
+        'metodo_pago','referencia','total_pagado',
         'empresa_id','paquete_id','pedido_id','vendedor_id',
         'status_venta','idemp','ip','host',
     ];
+
+    protected $casts = ['isimp'=>'boolean','ispagado'=>'boolean','iscredito'=>'boolean','iscontado'=>'boolean',];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -70,8 +73,61 @@ class Venta extends Model
         return $this->belongsToMany(Movimiento::class);
     }
 
+    public function isImpreso(){
+        return $this->isimp;
+    }
+
+    public function isPagado(){
+        return $this->ispagado;
+    }
+
     public function getTipoVentaAttribute() {
         return $this->attributes['tipoventa'] == 0 ? 'Contado' : 'Crédito';
+    }
+
+    public function isCredito(){
+        return $this->tipoventa == 1 ? true : false;
+    }
+
+    public function isContado(){
+        return $this->tipoventa == 0 ? true : false;
+    }
+
+    public function getMetodoPagoAttribute() {
+        $mp = "";
+        switch ($this->attributes['metodo_pago']){
+            case 0:
+                $mp = "Efectivo";
+                break;
+            case 1:
+                $mp = "Cheque Nominativo";
+                break;
+            case 2:
+                $mp = "Transferencia Electrónica de Fondos";
+                break;
+            case 3:
+                $mp = "Tarjeta de Crédito";
+                break;
+            case 4:
+                $mp = "Monedero Electrónico";
+                break;
+            case 5:
+                $mp = "Dinero Elctrónico";
+                break;
+            case 6:
+                $mp = "Vales de Despensa";
+                break;
+            case 7:
+                $mp = "Tarjeta de Debito";
+                break;
+            case 8:
+                $mp = "Tarjeta de Servicio";
+                break;
+            case 9:
+                $mp = "Otros";
+                break;
+        }
+        return $mp;
     }
 
     public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa, $user_id, $cantidad){
@@ -87,7 +143,7 @@ class Venta extends Model
             'total'       => $paq->importe,
             'empresa_id'  => $paq->empresa_id,
             'paquete_id'  => $paquete_id,
-            'pedido_id'  => 0,
+            'pedido_id'   => 0,
             'user_id'     => $user_id,
             'vendedor_id' => $vendedor_id,
         ]);
@@ -158,6 +214,20 @@ class Venta extends Model
         $pd = VentaDetalle::venderNormalDetalles($Ven, $producto_id,$cantidad);
 
         return $pd;
+
+    }
+
+    public static function pagarVenta($venta_id, $total, $total_pagado, $metodo_pago, $referencia)
+    {
+        $Ven = static::findOrFail($venta_id);
+        $Ven->total_pagado = $total_pagado;
+        $Ven->metodo_pago = $metodo_pago;
+        $Ven->referencia = $referencia;
+        $Ven->f_pagado = now();
+        $Ven->ispagado = true;
+        $Ven->isimp = true;
+        $Ven->status_venta = 2;
+        $Ven->save();
 
     }
 

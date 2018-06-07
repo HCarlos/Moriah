@@ -119,6 +119,7 @@ class VentaController extends Controller
             ]
         );
     }
+
     public function store_paquete_ajax(Request $request)
     {
         $data = $request->all();
@@ -194,6 +195,7 @@ class VentaController extends Controller
                 [
                     'tableName' => 'venta_detalles',
                     'venta' => $items,
+                    'Venta' => $venta,
                     'user' => $user,
                     'venta_id' => $venta_id,
                     'paquete_id' => $venta->paquete_id,
@@ -208,6 +210,34 @@ class VentaController extends Controller
 
     }
 
+    public function call_pagar_venta_ajax($venta_id)
+    {
+        $oView = 'catalogos.operaciones.';
+        $views  = 'pagar_venta_ajax';
+        $venta = Venta::findOrFail($venta_id);
+            $user = Auth::User();
+        return view ($oView.$views,
+            [
+                'user'     => $user,
+                'venta'    => $venta,
+                'venta_id' => $venta_id,
+                'total'    => $venta->total,
+                'Url'      => '/pagar_venta_ajax',
+            ]
+        );
+    }
+    public function pagar_venta_ajax(Request $request)
+    {
+        $data = $request->all();
+        $total        = $data['total'];
+        $total_pagado = $data['total_pagado'];
+        $metodo_pago  = $data['metodo_pago'];
+        $referencia   = $data['referencia'];
+        $venta_id     = $data['venta_id'];
+        $mensaje = "OK";
+        Venta::pagarVenta($venta_id,$total,$total_pagado,$metodo_pago,$referencia);
+        return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
+    }
     public function destroy($id=0){
         $venta = Venta::findOrFail($id);
         $venta->forceDelete();

@@ -1171,7 +1171,6 @@ class CreateSiifacTables extends Migration
             $table->string('foliofac',12)->default('')->nullable();
             $table->unsignedTinyInteger('tipoventa')->default(0)->nullable();
             $table->string('cuenta',16)->default('');
-            $table->boolean('isimp')->default(false)->nullable();
             $table->decimal('cantidad',10,2)->default(0.00)->nullable();
             $table->decimal('importe',10,2)->default(0.00)->nullable();
             $table->decimal('descto',10,2)->default(0.00)->nullable();
@@ -1180,6 +1179,10 @@ class CreateSiifacTables extends Migration
             $table->decimal('total',10,2)->default(0.00)->nullable();
             $table->boolean('ispagado')->default(false)->nullable();
             $table->datetime('f_pagado')->nullable();
+            $table->decimal('total_pagado')->default(0)->nullable();
+            $table->boolean('isimp')->default(false)->nullable();
+            $table->unsignedSmallInteger('metodo_pago')->default(0)->nullable();
+            $table->string('referencia',250)->default('')->nullable();
             $table->integer('user_id')->default(0)->nullable();
             $table->integer('vendedor_id')->default(0)->nullable();
             $table->integer('paquete_id')->default(0)->nullable();

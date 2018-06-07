@@ -128,9 +128,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store_venta_normal_ajax','SIIFAC\VentaController@store_normal_ajax')->name('ventaNormalStoreAjax/');
     Route::get('/edit_venta_detalle/{venta_id}', 'SIIFAC\VentaController@edit')->name('ventaDetalleEdit');
     Route::get('/destroy_venta/{id}', 'SIIFAC\VentaController@destroy')->name('ventaDestroy/');
+    Route::get('/form_pagar_venta/{venta_id}', 'SIIFAC\VentaController@call_pagar_venta_ajax')->name('callPagarVentaAjax/');
+    Route::post('/pagar_venta_ajax','SIIFAC\VentaController@pagar_venta_ajax')->name('pagarVentaAjax/');
 
 
-    // Ventas
+    // Venta_Detalles
     Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');
     Route::get('/form_venta_detalle_nueva_ajax/{venta_id}', 'SIIFAC\VentaDetalleController@new_venta_detalle_ajax')->name('selectVentaDetalleNewAjax/');
     Route::post('/store_venta_detalle_normal_ajax','SIIFAC\VentaDetalleController@store_normal_ajax')->name('ventaDetalleNormalAjax/');

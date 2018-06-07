@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     protected $hidden = ['password', 'remember_token',];
-    protected $casts = ['admin'=>'boolean','alumno'=>'boolean','foraneo'=>'boolean','exalumno'=>'boolean','credito'=>'credito',];
+    protected $casts = ['admin'=>'boolean','alumno'=>'boolean','foraneo'=>'boolean','exalumno'=>'boolean','credito'=>'boolean',];
 
     public static function findByEmail($email){
         return static::where( compac('email') )->first();

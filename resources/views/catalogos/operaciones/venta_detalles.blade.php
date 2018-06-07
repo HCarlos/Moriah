@@ -4,9 +4,14 @@
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
             <span id="titulo_catalogo">VENTA {{$venta_id}} </span>
-            <button id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnVentaDetalleNormal" data-toggle="modal" data-target="#myModal" title="Agregar Producto">
+            @if( !$Venta->isPagado() )
+            <button id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnVentaDetalleNormal" title="Agregar Producto">
                 <i class="fa fa-plus bigger-150"></i>
             </button>
+            <a id="/form_pagar_venta/{{$venta_id}}" class="btn btn-orange btn-minier icon-only marginLeft2em btnPagarVenta" data-toggle="modal" data-target="#myModal" title="Pagar Venta" >
+                <i class="fa fa-money bigger-150"></i>
+            </a>
+            @endif
             <a href="{{ route('printTicket/', ['venta_id' => $venta_id]) }}" class="btn btn-cafe btn-minier icon-only marginLeft2em " title="Imprimir" target="_blank">
 
                 <i class="fa fa-print bigger-150"></i>
@@ -28,8 +33,8 @@
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
                             <th aria-label="codigo" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 120px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
-                            <th aria-label="cantidad" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PV</th>
-                            <th aria-label="pv" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Cant</th>
+                            <th aria-label="cantidad" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Cant</th>
+                            <th aria-label="pv" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PV</th>
                             <th aria-label="importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Importe</th>
                             <th aria-label="iva" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="6" role="columnheader" class="sorting">IVA</th>
                             <th aria-label="total" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Total</th>
@@ -50,9 +55,11 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all']) )
+                                            @if( !$Venta->isPagado() )
                                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="ventadetalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>
@@ -61,7 +68,12 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7" class="text-right">
+                                <td colspan="2" class="text-right">
+                                    <h3 class="smaller green">
+                                        Total $
+                                    </h3>
+                                </td>
+                                <td colspan="5" class="text-right">
                                     <h3 class="smaller green">
                                         Total $
                                     </h3>
