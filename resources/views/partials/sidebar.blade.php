@@ -44,15 +44,22 @@
                 </li>
                 <li>
                     <a href="{{ route('paqueteIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
-                        <i class="menu-icon fa fa-cubes red"></i>
+                        <i class="menu-icon fa fa-cubes cafe"></i>
                         Paquetes
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li>
                     <a href="{{ route('pedidoIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
-                        <i class="menu-icon fa fa-cubes red"></i>
+                        <i class="menu-icon fa fa-cubes purple"></i>
                         Pedidos
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li>
+                    <a href="{{ route('compraIndex') }}">
+                        <i class="menu-icon fa fa-archive green"></i>
+                        Compras
                     </a>
                     <b class="arrow"></b>
                 </li>

@@ -2,7 +2,6 @@
     <script>
         jQuery(function($) {
             $(document).ready(function() {
-
                 if ( $(".btnVentaDetalleNormal") ){
                     $(".btnVentaDetalleNormal").on("click", function (event) {
                         event.preventDefault();

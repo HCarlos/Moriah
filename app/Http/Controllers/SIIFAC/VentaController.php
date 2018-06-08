@@ -28,6 +28,9 @@ class VentaController extends Controller
 
     public function index($fecha)
     {
+        if (is_null($fecha)){
+            abort(500);
+        }
         $user = Auth::User();
         $F = (new FuncionesController);
         $f = $F->getFechaFromNumeric($fecha);

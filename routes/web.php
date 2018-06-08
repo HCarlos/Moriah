@@ -34,12 +34,14 @@ $this->post('register', 'Auth\RegisterController@register');
 Route::group(['middleware' => 'auth'], function () {
 
 // Password Reset Routes...
+
 /*
     $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
     $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
     $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 */
+
     Route::get('edit', 'Auth\EditUserDataController@showEditUserData')->name('edit');
     Route::put('Edit', 'Auth\EditUserDataController@update')->name('Edit');
     Route::get('showEditProfilePhoto/', 'Auth\EditUserDataController@showEditProfilePhoto')->name('showEditProfilePhoto/');
@@ -57,7 +59,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('catalogos/subir-imagen-ficha/{id}/{idItem}/{action}', 'Catalogos\CatalogosController@subirImagen')->name('catalogosSubirImagenFichas/');
 
 //        Route::get('/catajax/{id}', 'Catalogos\CatalogosListController@ajaxIndex')->name('ajaxIndexCatList');
-
 
     // Empresas
     Route::get('/index_empresa/{npage}/{tpaginas}','SIIFAC\EmpresaController@index')->name('empresaIndex');
@@ -131,13 +132,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/form_pagar_venta/{venta_id}', 'SIIFAC\VentaController@call_pagar_venta_ajax')->name('callPagarVentaAjax/');
     Route::post('/pagar_venta_ajax','SIIFAC\VentaController@pagar_venta_ajax')->name('pagarVentaAjax/');
 
-
     // Venta_Detalles
     Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');
     Route::get('/form_venta_detalle_nueva_ajax/{venta_id}', 'SIIFAC\VentaDetalleController@new_venta_detalle_ajax')->name('selectVentaDetalleNewAjax/');
     Route::post('/store_venta_detalle_normal_ajax','SIIFAC\VentaDetalleController@store_normal_ajax')->name('ventaDetalleNormalAjax/');
 //    Route::get('/excel/{venta_id}','SIIFAC\VentaDetalleController@toexcel')->name('toExcelTest/');
     Route::get('/print_venta_detalle/{venta_id}', 'Externos\TicketController@print_tiket')->name('printTicket/');
+
+
+    // Compras
+    Route::get('/index_compra/','SIIFAC\CompraController@index')->name('compraIndex');
+    Route::get('/index_compra_detalle_ajax/{compra_id}','SIIFAC\CompraDetalleController@index')->name('compraDetalleIndex');
+    Route::get('/form_compra_detalle_nueva_ajax/{compra_id}', 'SIIFAC\CompraDetalleController@new_compra_detalle_ajax')->name('selectCompraDetalleNewAjax/');
+    Route::post('/store_compra_detalle_ajax','SIIFAC\CompraDetalleController@store_compra_detalle_ajax')->name('compraDetalleAjax/');
+
+
+
 
     // Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');
@@ -167,7 +177,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/unasign_permission_role/{idRole}/{namePermissions}/{cat_id}','Asignaciones\PermisoRoleController@desasignar')->name('unAssignPermissionToRole/');
 
     Route::resource('excel','Externos\ExcelController');
-    Route::resource('excel/{venta_id}','Externos\ExcelController@show');
+    //Route::resource('excel/{venta_id}','Externos\ExcelController@show');
 
 
 

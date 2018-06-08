@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Request;
 
 class Movimiento extends Model
@@ -156,11 +157,57 @@ class Movimiento extends Model
 
         $Mov->users()->attach($Vd->user_id);
         $Mov->empresas()->attach($Vd->empresa_id);
-        $Mov->ventas()->attach($Vd->venta_id);
+//        $Mov->ventas()->attach($Vd->venta_id);
         $Mov->productos()->attach($Prod->id);
         $Mov->proveedores()->attach($Prod->proveedor_id);
         $Mov->almacenes()->attach($Vd->almacen_id);
         $Mov->medidas()->attach($Prod->medida_id);
+
+        return $Mov;
+
+    }
+
+    public static function agregarCompras($Comp,$producto_id,$cantidad)
+    {
+        $Prod = Producto::findOrFail($producto_id);
+        $Existencia = $Prod->exist + $cantidad;
+        $Fecha = Carbon::now();
+        $user = Auth::user();
+        $Mov  =  static::create([
+            'user_id'          => $user->id,
+            'producto_id'      => $Prod->id,
+            'empresa_id'       => $Comp->empresa_id,
+            'proveedor_id'     => $Prod->proveedor_id,
+            'almacen_id'       => $Prod->almacen_id,
+            'medida_id'        => $Prod->medida_id,
+            'clave'            => $Prod->clave,
+            'ejercicio'        => $Fecha->year,
+            'periodo'          => $Fecha->month,
+            'fecha'            => $Fecha,
+            'entrada'           => $cantidad,
+            'existencia'       => $Existencia,
+            'cu'               => $Prod->cu,
+            'debe'            => $Comp->importe,
+            'descto'           =>  $Comp->descuento,
+            'importe'          =>  $Comp->subtotal,
+            'iva'              =>  $Comp->iva,
+            'saldo'            =>  $Comp->total,
+            'idemp'            => 1,
+            'ip'               => Request::ip(),
+            'host'             => Request::getHttpHost(),
+        ]);
+        $Prod->exist = $Existencia;
+        $Prod->save();
+
+        $Mov->users()->attach($Comp->user_id);
+        $Mov->empresas()->attach($Comp->empresa_id);
+//        $Mov->ventas()->attach($Comp->venta_id);
+        $Mov->productos()->attach($Prod->id);
+//        $Mov->proveedores()->attach($Comp->proveedor_id);
+        $Mov->almacenes()->attach($Comp->almacen_id);
+        $Mov->medidas()->attach($Prod->medida_id);
+
+        return $Mov;
 
     }
 

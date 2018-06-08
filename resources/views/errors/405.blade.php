@@ -21,16 +21,16 @@
                         <h1 class="grey lighter smaller">
                 <span class="blue bigger-125">
                     <i class="ace-icon fa fa-sitemap"></i>
-                    404
+                    405
                 </span>
-                        Página no encontrada
+                            Página no encontrada
                         </h1>
-
                         <hr />
+
                         <div class="space"></div>
 
                         <div class="center">
-                            <a href="{{ url('/home') }}" class="btn btn-primary">
+                            <a href="{{ url('/') }}" class="btn btn-primary">
                                 <i class="ace-icon fa fa-tachometer"></i>
                                 Inicio
                             </a>

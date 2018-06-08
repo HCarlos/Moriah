@@ -3,20 +3,11 @@
 @section('main-content')
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
-            <span id="titulo_catalogo">VENTA {{$venta_id}} </span>
-            @if( !$Venta->isPagado() )
-            <a id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnVentaDetalleNormal" title="Agregar Producto" data-toggle="modal" data-target="#myModal">
+            <span id="titulo_catalogo">COMPRA {{$compra_id}} </span>
+            <a id="/form_compra_detalle_nueva_ajax/{{$compra_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnCompraDetalle" title="Agregar Producto" data-toggle="modal" data-target="#myModal">
                 <i class="fa fa-plus bigger-150"></i>
             </a>
-            <a id="/form_pagar_venta/{{$venta_id}}" class="btn btn-orange btn-minier icon-only marginLeft2em btnPagarVenta" data-toggle="modal" data-target="#myModal" title="Pagar Venta" >
-                <i class="fa fa-money bigger-150"></i>
-            </a>
-            @endif
-            <a href="{{ route('printTicket/', ['venta_id' => $venta_id]) }}" class="btn btn-cafe btn-minier icon-only marginLeft2em " title="Imprimir" target="_blank">
-
-                <i class="fa fa-print bigger-150"></i>
-            </a>
-            <a  class="btn btn-info btn-minier icon-only pull-right btnCloseVentaDetalleNormal" title="Cerrar Ventana">
+            <a  class="btn btn-info btn-minier icon-only pull-right btnCloseCompraDetalle" title="Cerrar Comprana">
                 <i class="fa fa-close bigger-150"></i>
             </a>
         </div>
@@ -26,7 +17,7 @@
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
             <div class="dataTables_wrapper" role="grid">
-                @if ($venta)
+                @if ($compra)
                     <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
                         <thead>
                         <tr role="row">
@@ -42,7 +33,7 @@
                         </tr>
                         </thead>
                         <tbody aria-relevant="all" aria-live="polite" role="alert">
-                        @foreach ($venta as $vd)
+                        @foreach ($compra as $vd)
                             <tr>
                                 <td>{{ $vd->id }}</td>
                                 <td>{{ $vd->codigo }}</td>
@@ -55,11 +46,9 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            @if( !$Venta->isPagado() )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="ventadetalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">
-                                                <i class="fa fa-trash bigger-150 red" ></i>
-                                            </a>
-                                            @endif
+                                            {{--<a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="compradetalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">--}}
+                                                {{--<i class="fa fa-trash bigger-150 red" ></i>--}}
+                                            {{--</a>--}}
                                         @endif
                                     </div>
                                 </td>
@@ -78,9 +67,9 @@
                                         Total $
                                     </h3>
                                 </td>
-                                <td class="text-right" id="totalVenta">
+                                <td class="text-right" id="totalCompra">
                                     <h3 class=" smaller orange">
-                                    {{$totalVenta}}
+                                    {{$totalCompra}}
                                     </h3>
                                 </td>
                                 <td></td>
@@ -98,4 +87,4 @@
 
 @include('catalogos.scripts.dataTable')
 
-@include('catalogos.scripts.venta_detalles')
+@include('catalogos.scripts.compra_detalles')
