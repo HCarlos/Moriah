@@ -51,6 +51,21 @@ class InitSIIFACSeeder extends Seeder
         $IdMed1 = Medida::findOrCreateMedida('PIEZA','',0,$IdEmp);
         $IdMed = $IdMed1->id;
 
+
+        $IdProv1 = Proveedor::findOrCreateProveedor(1,'JORJUBEL','JULIO URRETA','MEXICO',$IdEmp);
+        $IdProv2 = Proveedor::findOrCreateProveedor(2,'LEONEL NIETO LEON','','',$IdEmp);
+        $IdProv3 = Proveedor::findOrCreateProveedor(3,'FERNANDEZ EDITORES','','',$IdEmp);
+        $IdProv4 = Proveedor::findOrCreateProveedor(4,'AMERICAN BOOK','JULIETA BLANQUET','',$IdEmp);
+        $IdProv5 = Proveedor::findOrCreateProveedor(5,'EDITORIAL SM','ALFONSO HERNANDEZ','',$IdEmp);
+        $IdProv6 = Proveedor::findOrCreateProveedor(6,'COLEGIO ARJI','','',$IdEmp);
+        $IdProv7 = Proveedor::findOrCreateProveedor(7,'SANTILLANA','JUAN JOSE GUERRERO','',$IdEmp);
+        $IdProv8 = Proveedor::findOrCreateProveedor(8,'ALFAGUARA','ELIZABEHT MEZA','',$IdEmp);
+        $IdProv9 = Proveedor::findOrCreateProveedor(9,'ITC CONSULTING','MIGUEL ANGEL CARDONA','',$IdEmp);
+        $IdProv10 = Proveedor::findOrCreateProveedor(10,'NORMA','','',$IdEmp);
+        $IdProv11 = Proveedor::findOrCreateProveedor(11,'VANJUPE','','',$IdEmp);
+        $IdProv12 = Proveedor::findOrCreateProveedor(12,'SILVINO AREVALO','','',$IdEmp);
+
+
         $IdProd1 = Producto::findOrCreateProducto($IdAlma,5,$IdMed,5,'010500100005','MATERIAL DIDACTICO','MATERIAL DIDACTICO',5000,1,false,NOW(),'',850,0,0,53,850,45050,$IdEmp);
         $IdProd2 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,21135,'010300121135','PAQUETE 3° SECUNDARIA PET','PAQUETE 3° SECUNDARIA PET',100,1,false,NOW(),'',0.01,0,0,10,0.01,0.1,$IdEmp);
         $IdProd3 = Producto::findOrCreateProducto($IdAlma,1,$IdMed,24,'010200100024','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI, 1 Y 2 KII','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI',100,1,false,NOW(),'',260,0,0,7,260,1820,$IdEmp);

@@ -75,7 +75,7 @@ return [
         'producto_venta_detalle' => 'producto_venta_detalle',
         'venta_venta_detalle' => 'venta_venta_detalle',
         'empresa_movimiento' => 'empresa_movimiento',
-
+        'producto_proveedor' => 'producto_proveedor',
     ],
 
     ];

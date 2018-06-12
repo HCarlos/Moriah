@@ -142,6 +142,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Compras
     Route::get('/index_compra/','SIIFAC\CompraController@index')->name('compraIndex');
+    Route::get('/form_compra_nueva_ajax/','SIIFAC\CompraController@nueva_compra_ajax')->name('formCompraNuevaAjax');
+    Route::post('/store_compra_nueva_ajax','SIIFAC\CompraController@store_compra_nueva_ajax')->name('compraNuevaAjax/');
+    Route::get('/form_compra_editar_ajax/{compra_id}','SIIFAC\CompraController@editar_compra_ajax')->name('formCompraEditarAjax');
+    Route::put('/store_compra_editada_ajax','SIIFAC\CompraController@store_compra_editada_ajax')->name('compraEditadaAjax/');
+
+    // Compra Detalless
     Route::get('/index_compra_detalle_ajax/{compra_id}','SIIFAC\CompraDetalleController@index')->name('compraDetalleIndex');
     Route::get('/form_compra_detalle_nueva_ajax/{compra_id}', 'SIIFAC\CompraDetalleController@new_compra_detalle_ajax')->name('selectCompraDetalleNewAjax/');
     Route::post('/store_compra_detalle_ajax','SIIFAC\CompraDetalleController@store_compra_detalle_ajax')->name('compraDetalleAjax/');

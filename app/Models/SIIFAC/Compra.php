@@ -14,6 +14,7 @@ class Compra extends Model
 
     protected $fillable = [
         'almacen_id', 'proveedor_id', 'folio_factura','nota_id',
+        'descripcion_compra',
         'fecha','importe','descuento','subtotal','iva',
         'credito','observaciones','status_compras','total','tipo','empresa_id',
         'idemp','ip','host',
@@ -44,9 +45,10 @@ class Compra extends Model
         return $this->belongsTo(Empresa::class);
     }
 
-    public static function compra($producto_id, $cantidad){
-        $Prod  = Producto::find($producto_id);
-        $Alma  = Almacen::find($Prod->almacen_id);
+    public static function compra($compra_id,$producto_id, $cantidad){
+//        $Prod  = Producto::find($producto_id);
+//        $Alma  = Almacen::find($Prod->almacen_id);
+        /*
         $Comp   =  static::create([
             'fecha'       => now(),
             'almacen_id'       => $Prod->almacen_id,
@@ -61,7 +63,9 @@ class Compra extends Model
             'credito' => false,
             'empresa_id'  => $Prod->empresa_id,
         ]);
-
+        */
+        $Comp = static::find($compra_id);
+        //dd($Comp);
         return Movimiento::agregarCompras($Comp,$producto_id,$cantidad);
 
     }

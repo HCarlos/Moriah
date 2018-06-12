@@ -46,7 +46,7 @@
 <script >
 
     var Url = "{{$Url}}";
-    alert(Url);
+    // alert(Url);
 
     if ( $("#frmCompraDetalle") ) {
 

@@ -7,8 +7,7 @@
                             <i class="fa fa-user default"></i>
                             COMPRAS
                         </span>
-
-            <a href="{{ route('compraDetalleIndex',['compra_id'=>0]) }}" class="btn btn-purple btn-minier icon-only marginLeft2em " title="Nueva Compra">
+            <a id="/form_compra_nueva_ajax" class="btn btn-purple btn-minier icon-only marginLeft2em btnCompraNueva" title="Agregar Producto" data-toggle="modal" data-target="#myModal">
                 <i class="fa fa-plus bigger-150"></i>
             </a>
 
@@ -25,7 +24,10 @@
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
                             <th aria-label="fecha" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Fecha</th>
-                            {{--<th aria-label="proveedor" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Proveedor</th>--}}
+                            <th aria-label="descripcion" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Descripción</th>
+                            <th aria-label="proveedor" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Proveedor</th>
+                            <th aria-label="almacen" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Almacen</th>
+                            <th aria-label="empresa" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Empresa</th>
                             <th aria-label="total" style="width: 80px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Total</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
@@ -35,7 +37,10 @@
                             <tr>
                                 <td>{{ $compra->id }}</td>
                                 <td>{{ $compra->fecha }}</td>
-                                {{--<td>{{ $compra->proveedor->nombre_proveedor }}</td>--}}
+                                <td>{{ $compra->descripcion_compra }}</td>
+                                <td>{{ $compra->proveedor->nombre_proveedor }}</td>
+                                <td>{{ $compra->almacen->descripcion }}</td>
+                                <td>{{ $compra->empresa->rs }}</td>
                                 <td class="text-right">{{ $compra->total}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
@@ -44,12 +49,13 @@
                                             {{--<a href="#" class="btn btn-link pull-right btnAction2" id ="compra-{{$compra->id.'-0-0'}}-destroy" title="Eliminar">--}}
                                                 {{--<i class="fa fa-trash bigger-110 red" ></i>--}}
                                             {{--</a>--}}
-                                            {{--<a href="{{ route('printTicket/', array('compra_id' => $compra->id)) }}" class="btn btn-link pull-right printReg" target="_blank" title="Imprimir">--}}
-                                                {{--<i class="fa fa-print bigger-110 cafe"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a href="{{ route('compraDetalleEdit', array('compra_id' => $compra->id)) }}" class="btn btn-link pull-right editarReg" target="_blank" title="Editar">--}}
-                                                {{--<i class="fa fa-cubes bigger-110 blue"></i>--}}
-                                            {{--</a>--}}
+                                            <a href="{{ route('compraDetalleIndex', array('compra_id' => $compra->id)) }}" class="btn btn-link pull-right editarReg" target="_blank" title="Editar">
+                                                <i class="fa fa-cubes bigger-110 blue"></i>
+                                            </a>
+
+                                            <a  id="/form_compra_editar_ajax/{{$compra->id}}"  class="btn btn-link pull-right btnCompraEditar" title="Editar" data-toggle="modal" data-target="#myModal">
+                                                <i class="fa fa-pencil bigger-110 success"></i>
+                                            </a>
                                         @endif
 
                                     </div>

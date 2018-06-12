@@ -27,17 +27,20 @@
             <div class="form-group row">
                 <label for = "almacen_id" class="col-md-1 col-form-label text-md-left">Almacen</label>
                 <div class="col-md-2">
-                    {{ Form::select('almacen_id', $Almacenes, 1, ['id' => 'almacen_id']) }}
+                    {{ Form::select('almacen_id', $Almacenes, 1, ['id' => 'almacen_id','class' => 'form-control']) }}
+                </div>
+                <label for = "proveedor_id" class="col-md-1 col-form-label text-md-left">Proveedor</label>
+                <div class="col-md-2">
+                    {{ Form::select('proveedor_id', $Proveedores, null, ['id' => 'proveedor_id','class' => 'form-control']) }}
                 </div>
                 <label for = "familia_producto_id" class="col-md-1 col-form-label text-md-left">Categoría</label>
                 <div class="col-md-2">
-                    {{ Form::select('familia_producto_id', $FamProds, 1, ['id' => 'familia_producto_id']) }}
+                    {{ Form::select('familia_producto_id', $FamProds, 1, ['id' => 'familia_producto_id','class' => 'form-control']) }}
                 </div>
                 <label for = "medida_id" class="col-md-1 col-form-label text-md-left">Medida</label>
                 <div class="col-md-2">
-                    {{ Form::select('medida_id', $Medidas, 1, ['id' => 'medida_id']) }}
+                    {{ Form::select('medida_id', $Medidas, 1, ['id' => 'medida_id','class' => 'form-control']) }}
                 </div>
-                <div class="col-md-1"></div>
             </div>
 
             <div class="form-group row">

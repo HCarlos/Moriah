@@ -138,6 +138,7 @@ class CreateSiifacTables extends Migration
             $table->unsignedInteger('proveedor_id')->default(0);
             $table->string('folio_factura',15)->default('');
             $table->string('nota_id',15)->default('');
+            $table->string('descripcion_compra',150)->default('');
             $table->date('fecha')->nullable();
             $table->decimal('importe',10,2)->default(0.00);
             $table->decimal('descuento',10,2)->default(0.00);
@@ -443,6 +444,7 @@ class CreateSiifacTables extends Migration
         Schema::create($tableNames['productos'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('almacen_id')->default(0)->nullable();
+            $table->integer('proveedor_id')->default(0)->nullable();
             $table->integer('familia_producto_id')->default(0)->nullable();
             $table->integer('medida_id')->default(0)->nullable();
             $table->unsignedInteger('clave')->default(0)->unique()->nullable();
@@ -474,6 +476,7 @@ class CreateSiifacTables extends Migration
             $table->timestamps();
 
             $table->index('almacen_id');
+            $table->index('proveedor_id');
             $table->index('familia_producto_id');
             $table->index('medida_id');
             $table->index('clave');
@@ -489,6 +492,11 @@ class CreateSiifacTables extends Migration
             $table->foreign('almacen_id')
                 ->references('id')
                 ->on($tableNames['almacenes'])
+                ->onDelete('cascade');
+
+            $table->foreign('proveedor_id')
+                ->references('id')
+                ->on($tableNames['proveedores'])
                 ->onDelete('cascade');
 
             $table->foreign('familia_producto_id')
@@ -534,6 +542,25 @@ class CreateSiifacTables extends Migration
             $table->foreign('almacen_id')
                 ->references('id')
                 ->on($tableNames['almacenes'])
+                ->onDelete('cascade');
+
+            $table->foreign('producto_id')
+                ->references('id')
+                ->on($tableNames['productos'])
+                ->onDelete('cascade');
+        });
+
+        Schema::create($tableNames['producto_proveedor'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('proveedor_id');
+            $table->integer('producto_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['proveedor_id', 'producto_id']);
+
+            $table->foreign('proveedor_id')
+                ->references('id')
+                ->on($tableNames['proveedores'])
                 ->onDelete('cascade');
 
             $table->foreign('producto_id')
@@ -1914,6 +1941,7 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['empresa_movimiento']);
 
         Schema::dropIfExists($tableNames['empresa_producto']);
+        Schema::dropIfExists($tableNames['producto_proveedor']);
 
         Schema::dropIfExists($tableNames['nota_credito_detalle']);
         Schema::dropIfExists($tableNames['notas_credito']);
@@ -1944,11 +1972,11 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['pedidos']);
         Schema::dropIfExists($tableNames['movimientos']);
         Schema::dropIfExists($tableNames['compras']);
-        Schema::dropIfExists($tableNames['proveedores']);
         Schema::dropIfExists($tableNames['venta_detalles']);
         Schema::dropIfExists($tableNames['ventas']);
         Schema::dropIfExists($tableNames['paquetes']);
         Schema::dropIfExists($tableNames['productos']);
+        Schema::dropIfExists($tableNames['proveedores']);
         Schema::dropIfExists($tableNames['almacenes']);
         Schema::dropIfExists($tableNames['familia_producto']);
         Schema::dropIfExists($tableNames['medidas']);

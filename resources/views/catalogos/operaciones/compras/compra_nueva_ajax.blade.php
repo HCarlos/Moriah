@@ -1,0 +1,100 @@
+<div class="panel panel-moriah" >
+    <div class="panel-heading">
+        <span><strong>PRODUCTOS DISPONIBLES</strong></span>
+    </div>
+
+    <div class="panel-body">
+        <form method="post"  id="frmCompraNueva">
+            {{ csrf_field() }}
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="form-group row">
+                <label for = "almacen_id" class="col-md-2 col-form-label text-md-left">Almacen</label>
+                <div class="col-md-2">
+                    {{ Form::select('almacen_id', $Almacenes, 1, ['id' => 'almacen_id','class' => 'form-control']) }}
+                </div>
+                <label for = "proveedor_id" class="col-md-2 col-form-label text-md-left">Proveedor</label>
+                <div class="col-md-2">
+                    {{ Form::select('proveedor_id', $Proveedores, null, ['id' => 'proveedor_id','class' => 'form-control']) }}
+                </div>
+                <label for = "empresa_id" class="col-md-2 col-form-label text-md-left">Empresa</label>
+                <div class="col-md-2">
+                    {{ Form::select('empresa_id', $Empresas, null, ['id' => 'empresa_id','class' => 'form-control']) }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for = "folio_factura" class="col-md-2 col-form-label text-md-left">Factura</label>
+                <div class="col-md-2">
+                    <input type="text" name="folio_factura" id="folio_factura" value="{{ old('folio_factura') }}" class="form-control" autofocus />
+                </div>
+                <label for = "nota_id" class="col-md-2 col-form-label text-md-left">Nota</label>
+                <div class="col-md-2">
+                    <input type="text" name="nota_id" id="nota_id" value="{{ old('nota_id') }}" class="form-control" />
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+            <div class="form-group row">
+                <label for = "descripcion_compra" class="col-md-2 col-form-label text-md-left">Descripción</label>
+                <div class="col-md-10">
+                    <input type="text" name="descripcion_compra" id="descripcion_compra" value="{{ old('descripcion_compra') }}" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary" id="btnVentaDetalleNormalSubmit">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+            {{--<input type="hidden" name="compra_id"    id="compra_id"       value="{{$compra_id}}" />--}}
+        </form>
+    </div>
+</div>
+<script >
+
+    var Url = "{{$Url}}";
+    // alert(Url);
+
+    if ( $("#frmCompraNueva") ) {
+
+        $("#frmCompraNueva").on("submit", function (event) {
+            event.preventDefault();
+            var frmSerialize = $("#frmCompraNueva").serialize();
+            $.ajax({
+                cache: false,
+                type: 'post',
+                url: Url,
+                data:  frmSerialize,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.mensaje == "OK"){
+                        alert('Compra creada con éxito');
+                        $("#myModal").modal( 'hide' );
+                        window.location.reload();
+                    }else{
+                        alert(data.mensaje);
+                    }
+                }
+            });
+
+        });
+
+    }
+
+</script>

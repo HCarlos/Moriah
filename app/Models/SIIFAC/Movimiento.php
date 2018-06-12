@@ -169,12 +169,13 @@ class Movimiento extends Model
 
     public static function agregarCompras($Comp,$producto_id,$cantidad)
     {
-        $Prod = Producto::findOrFail($producto_id);
+        $Prod = Producto::find($producto_id);
         $Existencia = $Prod->exist + $cantidad;
         $Fecha = Carbon::now();
         $user = Auth::user();
         $Mov  =  static::create([
             'user_id'          => $user->id,
+            'compra_id'        => $Comp->id,
             'producto_id'      => $Prod->id,
             'empresa_id'       => $Comp->empresa_id,
             'proveedor_id'     => $Prod->proveedor_id,

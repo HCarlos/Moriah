@@ -19,31 +19,23 @@ class CompraDetalleController extends Controller
     {
 //        dd($compra_id);
         $compra = Compra::find($compra_id);
-//        dd($compra);
-        if ($compra !== null) {
-            $items = Movimiento::all()->where('compra_id', $compra_id);
-            $total =  $compra->total;
-        } else {
-//            abort(404);
-            $compra = new Collection();
-            $items = new Collection();
-            $total =  0;
-        }
+        $items = Movimiento::all()->where('compra_id', $compra_id);
+        $total =  $compra->total;
 
-            // dd($compra);
-            $user = Auth::User();
+        //dd($items);
+        $user = Auth::User();
 
-            return view('catalogos.operaciones.compras.compra_detalles',
-                [
-                    'tableName' => 'compra_detalles',
-                    'compra' => $items,
-                    'Compra' => $compra,
-                    'user' => $user,
-                    'compra_id' => $compra_id,
-                    'totalCompra' => $total,
-                    'Url' => '/form_compra_detalle_nueva_ajax',
-                ]
-            );
+        return view('catalogos.operaciones.compras.compra_detalles',
+            [
+                'tableName' => 'compra_detalles',
+                'compra' => $items,
+                'Compra' => $compra,
+                'user' => $user,
+                'compra_id' => $compra_id,
+                'totalCompra' => $total,
+                'Url' => '/form_compra_detalle_nueva_ajax',
+            ]
+        );
     }
 
     public function new_compra_detalle_ajax($compra_id)
@@ -66,13 +58,14 @@ class CompraDetalleController extends Controller
 //        $data['tipoventa']       = isset($data['tipoventa']) ? 1 : 0;
         $cantidad  = $data['cantidad'];
         $codigo    = $data['codigo'];
+        $compra_id = $data['compra_id'];
         $Prod      = Producto::all()->where('codigo',$codigo)->first();
         $user      = Auth::user();
         if ($Prod !== null){
             try {
                 $mensaje = "OK";
                 $producto_id = $Prod->id;
-                Compra::compra($producto_id,$cantidad);
+                Compra::compra($compra_id,$producto_id,$cantidad);
             }
             catch(LogicException $e){
                 $mensaje = "Error: ".$e->getMessage();
@@ -82,6 +75,5 @@ class CompraDetalleController extends Controller
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
-
 
 }

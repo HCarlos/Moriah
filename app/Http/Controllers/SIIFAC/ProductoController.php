@@ -9,6 +9,7 @@ use App\Models\SIIFAC\Medida;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Producto;
+use App\Models\SIIFAC\Proveedor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -60,14 +61,15 @@ class ProductoController extends Controller
 
     public function new($idItem=0)
     {
-        $views  = 'producto_new';
-        $user = Auth::User();
-        $oView = 'catalogos.';
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes = Almacen::all()->sortBy('rs')->sortBy('rs')->pluck('descripcion', 'id');
-        $FamProds = FamiliaProducto::all()->sortBy('rs')->sortBy('rs')->pluck('descripcion', 'id');
-        $Medidas = Medida::all()->sortBy('rs')->sortBy('rs')->pluck('desc1', 'id');
-        $timex  = Carbon::now()->format('ymdHisu');
+        $views       = 'producto_new';
+        $user        = Auth::User();
+        $oView       = 'catalogos.';
+        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
+        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $FamProds    = FamiliaProducto::all()->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Medidas     = Medida::all()->sortBy('desc1')->pluck('desc1', 'id');
+        $timex       = Carbon::now()->format('ymdHisu');
 
         return view ($oView.$views,
             [
@@ -76,6 +78,7 @@ class ProductoController extends Controller
                 'user' => $user,
                 'Empresas' => $Empresas,
                 'Almacenes' => $Almacenes,
+                'Proveedores' => $Proveedores,
                 'FamProds' => $FamProds,
                 'Medidas' => $Medidas,
             ]
@@ -85,14 +88,15 @@ class ProductoController extends Controller
 
     public function edit($idItem=0)
     {
-        $views  = 'producto_edit';
-        $items = Producto::findOrFail($idItem);
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes = Almacen::all()->sortBy('rs')->sortBy('rs')->pluck('descripcion', 'id');
-        $FamProds = FamiliaProducto::all()->sortBy('rs')->sortBy('rs')->pluck('descripcion', 'id');
-        $Medidas = Medida::all()->sortBy('rs')->sortBy('rs')->pluck('desc1', 'id');
-        $user = Auth::User();
-        $oView = 'catalogos.' ;
+        $views       = 'producto_edit';
+        $items       = Producto::findOrFail($idItem);
+        $user        = Auth::User();
+        $oView       = 'catalogos.';
+        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
+        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $FamProds    = FamiliaProducto::all()->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Medidas     = Medida::all()->sortBy('desc1')->pluck('desc1', 'id');
 
         return view ($oView.$views,
             [
@@ -102,6 +106,7 @@ class ProductoController extends Controller
                 'user' => $user,
                 'Empresas' => $Empresas,
                 'Almacenes' => $Almacenes,
+                'Proveedores' => $Proveedores,
                 'FamProds' => $FamProds,
                 'Medidas' => $Medidas,
             ]
@@ -144,6 +149,7 @@ class ProductoController extends Controller
         $data["host"]        = $F->getIHE(2);
 
         $alma = Almacen::find($data['almacen_id']);
+        $prov = Proveedor::find($data['proveedor_id']);
         $fp   = FamiliaProducto::find($data['familia_producto_id']);
         $med  = Medida::find($data['medida_id']);
         $emp  = Empresa::find($data['empresa_id']);
@@ -154,6 +160,7 @@ class ProductoController extends Controller
         $prod->familiaProductos()->attach($fp);
         $prod->medidas()->attach($med);
         $prod->empresas()->attach($emp);
+        $prod->proveedores()->attach($prov);
         $prod::ActualizaPaqueteDetalles($prod->id);
 
         return redirect('/new_producto/'.$idItem);
@@ -194,6 +201,7 @@ class ProductoController extends Controller
         $data["host"]        = $F->getIHE(2);
 
         $alma = Almacen::find($data['almacen_id']);
+        $prov = Proveedor::find($data['proveedor_id']);
         $fp   = FamiliaProducto::find($data['familia_producto_id']);
         $med  = Medida::find($data['medida_id']);
         $emp  = Empresa::find($data['empresa_id']);
@@ -205,11 +213,13 @@ class ProductoController extends Controller
         $prod->familiaProductos()->detach();
         $prod->medidas()->detach();
         $prod->empresas()->detach();
+        $prod->proveedores()->detach();
 
         $prod->almacenes()->sync($alma);
         $prod->familiaProductos()->sync($fp);
         $prod->medidas()->sync($med);
         $prod->empresas()->sync($emp);
+        $prod->proveedores()->sync($prov);
         $prod::ActualizaPaqueteDetalles($prod->id);
 
         return redirect('/edit_producto/'.$idItem);

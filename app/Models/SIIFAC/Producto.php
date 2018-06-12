@@ -15,7 +15,8 @@ class Producto extends Model
     protected $table = 'productos';
 
     protected $fillable = [
-        'almacen_id','familia_producto_id','medida_id','clave', 'codigo', 'descripcion', 'shortdesc',
+        'almacen_id','proveedor_id','familia_producto_id','medida_id','clave', 'codigo', 'descripcion',
+        'shortdesc',
         'maximo','minimo','isiva','fecha', 'tipo', 'pv', 'porcdescto','inicia_descuento','termina_descuento',
         'moneycli','exist','cu','saldo', 'propiedades_producto', 'filename', 'root','empresa_id',
         'status_producto','idemp','ip','host',
@@ -70,6 +71,14 @@ class Producto extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public function proveedores(){
+        return $this->belongsToMany(Proveedor::class);
+    }
+
+    public function proveedor(){
+        return $this->belongsTo(Proveedor::class);
+    }
+
     public function IsEmptyPhoto(){
         return $this->filename == '' ? true : false;
     }
@@ -82,7 +91,7 @@ class Producto extends Model
         $almacen_id, $familia_producto_id, $medida_id,
         $clave, $codigo, $descripcion, $shortdesc,$maximo,$minimo,
         $isiva, $fecha, $tipo, $pv, $porcdescto,$moneycli,$exist,$cu,$saldo,
-        $empresa_id){
+        $empresa_id,$proveedor_id=0){
         $obj = static::all()
             ->where('almacen_id', $almacen_id)
             ->where('familia_producto_id', $familia_producto_id)
@@ -96,9 +105,13 @@ class Producto extends Model
             $fp   = FamiliaProducto::find($familia_producto_id);
             $med  = Medida::find($medida_id);
             $emp = Empresa::find($empresa_id);
+            if ( $proveedor_id == 0 ){
+                $proveedor_id = $alma->proveedor_id;
+            }
 
             $prod =  static::create([
                 'almacen_id'=>$almacen_id,
+                'proveedor_id'=>$proveedor_id,
                 'familia_producto_id'=>$familia_producto_id,
                 'medida_id'=>$medida_id,
                 'clave'=>$clave,
