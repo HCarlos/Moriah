@@ -6,6 +6,7 @@ use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\Compra;
 use App\Models\SIIFAC\Empresa;
+use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Proveedor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,6 +58,12 @@ class CompraController extends Controller
     public function store_compra_nueva_ajax(Request $request)
     {
         $data = $request->all();
+        $data["folio_factura"]      = $data["folio_factura"]      ==  null ? '' : $data["folio_factura"];
+        $data["nota_id"]            = $data["nota_id"]            ==  null ? '' : $data["nota_id"];
+        $data["descripcion_compra"] = $data["descripcion_compra"] ==  null ? '' : $data["descripcion_compra"];
+
+//        dd($data);
+
         $data['fecha'] = now();
         try {
             $mensaje = "OK";
@@ -107,6 +114,17 @@ class CompraController extends Controller
             $mensaje = "Error: ".$e->getMessage();
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
+    }
+
+    public function destroy($id){
+
+        $Comp = Compra::findOrFail($id);
+        $Mov  = Movimiento::where('compra_id', $id);
+        $Comp->forceDelete();
+        $Mov->forceDelete();
+
+        return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
+
     }
 
 

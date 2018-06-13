@@ -105,9 +105,14 @@ class Producto extends Model
             $fp   = FamiliaProducto::find($familia_producto_id);
             $med  = Medida::find($medida_id);
             $emp = Empresa::find($empresa_id);
-            if ( $proveedor_id == 0 ){
-                $proveedor_id = $alma->proveedor_id;
+            if ( $proveedor_id == 0 ) {
+                if ($alma->proveedor_id !== null){
+                    $proveedor_id = $alma->proveedor_id;
+                }else {
+                    $proveedor_id = 1;
+                }
             }
+//            dd($proveedor_id);
 
             $prod =  static::create([
                 'almacen_id'=>$almacen_id,
@@ -156,5 +161,33 @@ class Producto extends Model
         }
     }
 
+    public static function ActualizaDatosDesdeCompras($id,$data){
+
+        $Prod         = static::find($id);
+        $almacen_id   = $data['almacen_id'];
+        $proveedor_id = $data['proveedor_id'];
+        $empresa_id   = $data['empresa_id'];
+        $compra_id    = $data['compra_id'];
+        $pv           = $data['pv'];
+        $cu           = $data['cu'];
+        $cantidad     = $data['cantidad'];
+        $existencia   = $Prod->exist + $cantidad;
+        $saldo        = $Prod->saldo + ($cu * $cantidad);
+
+        $Prod->almacen_id   = $almacen_id;
+        $Prod->proveedor_id = $proveedor_id;
+        $Prod->empresa_id   = $empresa_id;
+        $Prod->pv           = $pv;
+        $Prod->cu           = $cu;
+        $Prod->exist        = $existencia;
+        $Prod->saldo        = $saldo;
+
+        $Prod->save();
+
+        $Mov = Compra::compra($compra_id,$Prod, $data);
+
+        return $Mov;
+
+    }
 
 }

@@ -4,7 +4,7 @@
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
             <span id="titulo_catalogo">COMPRA {{$compra_id}} </span>
-            <a id="/form_compra_detalle_nueva_ajax/{{$compra_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnCompraDetalle" title="Agregar Producto" data-toggle="modal" data-target="#myModal">
+            <a id="/form_compra_detalle_nueva_ajax/{{$compra_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnCompraDetalle" title="Agregar Producto" data-toggle="modal" data-target=".bs-example-modal-lg">
                 <i class="fa fa-plus bigger-150"></i>
             </a>
             <a  class="btn btn-info btn-minier icon-only pull-right btnCloseCompraDetalle" title="Cerrar Comprana">
@@ -37,18 +37,18 @@
                             <tr>
                                 <td>{{ $vd->id }}</td>
                                 <td>{{ $vd->codigo }}</td>
-                                <td>{{ $vd->descripcion }}</td>
-                                <td class="text-right">{{ $vd->cantidad}} </td>
-                                <td class="text-right">{{ $vd->pv}} </td>
+                                <td>{{ $vd->producto->descripcion }}</td>
+                                <td class="text-right">{{ $vd->entrada}} </td>
+                                <td class="text-right">{{ $vd->pu}} </td>
                                 <td class="text-right">{{ $vd->importe}} </td>
                                 <td class="text-right">{{ $vd->iva}} </td>
-                                <td class="text-right">{{ $vd->total}} </td>
+                                <td class="text-right">{{ $vd->saldo}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            {{--<a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="compradetalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">--}}
-                                                {{--<i class="fa fa-trash bigger-150 red" ></i>--}}
-                                            {{--</a>--}}
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="compra_detalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">
+                                                <i class="fa fa-trash bigger-150 red" ></i>
+                                            </a>
                                         @endif
                                     </div>
                                 </td>

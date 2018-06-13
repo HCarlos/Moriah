@@ -8,6 +8,7 @@
                         event.preventDefault();
 
                         $("#myModal .modal-body").empty();
+                        $("#myModal .modal-footer").hide();
                         $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-cog fa-spin"></i> Cargado datos...</div>');
                         $("#myModal").modal('show');
 

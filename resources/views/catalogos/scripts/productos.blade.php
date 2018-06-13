@@ -1,15 +1,14 @@
 
-@section('scripts_ventas')
+@section('scripts_productos')
     <script>
         jQuery(function($) {
             $(document).ready(function() {
-                if ( $(".btnVentaPaquete") || $(".btnVentaPedido") || $(".btnVentaNormal") ){
-                    $(".btnVentaPaquete, .btnVentaPedido, .btnVentaNormal").on("click", function (event) {
+                if ( $(".btnActualizarInventario") ){
+                    $(".btnActualizarInventario").on("click", function (event) {
                         event.preventDefault();
 
                         $("#myModal .modal-body").empty();
-                        $("#myModal .modal-footer").hide();
-                        $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-cog fa-spin"></i> Cargado datos...</div>');
+                        $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-cog fa-spin"></i> Actualizando inventario...</div>');
                         $("#myModal").modal('show');
                         var Url = event.currentTarget.id;
                         // alert(Url);
@@ -19,8 +18,7 @@
                                 url: Url
                             })
                                 .done(function (response) {
-                                    //alert(response);
-                                    $("#myModal .modal-body").html(response);
+                                    $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-check-circle-o text-success"></i><span class="marginLeft1em">Inventario actualizado con éxito.</span></div>');
                                 });
                         });
 

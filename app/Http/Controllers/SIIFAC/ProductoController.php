@@ -241,7 +241,6 @@ class ProductoController extends Controller
         );
     }
 
-
     public function destroy($id=0){
         $mov = Movimiento::all()->where('producto_id',$id)->first();
 
@@ -253,9 +252,15 @@ class ProductoController extends Controller
         }else{
             return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$mov->id.']', 'data' => 'Error', 'status' => '200'], 200);
         }
-
     }
 
+    public function actualizar_inventario(){
+            $Prods = Producto::all();
+            foreach ($Prods as $Prod){
+                Movimiento::actualizaExistenciasYSaldo($Prod);
+            }
+            return Response::json(['mensaje' => 'Inventario actualizado con éxito.', 'data' => 'Error', 'status' => '200'], 200);
+    }
 
 }
 

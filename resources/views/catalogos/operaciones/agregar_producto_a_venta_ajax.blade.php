@@ -23,9 +23,10 @@
                     <input type="number" min="1" max="1000" value="1" required name="cantidad" id="cantidad" class="form-control"/>
                 </div>
                 <label for = "codigo" class="col-md-2 col-form-label text-md-left">Código</label>
-                <div class="col-md-6">
-                    <input type="number" required name="codigo" id="codigo" class="form-control"/>
+                <div class="col-md-2">
+                    <input type="number" required name="codigo" id="codigo" class="form-control" />
                 </div>
+
             </div>
 
             <div class="form-group row">

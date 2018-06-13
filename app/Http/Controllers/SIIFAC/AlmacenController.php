@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SIIFAC;
 
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Producto;
+use App\Models\SIIFAC\Proveedor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Almacen;
@@ -62,12 +63,14 @@ class AlmacenController extends Controller
         $user = Auth::User();
         $oView = 'catalogos.' ;
         $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
 
         return view ($oView.$views,
             [
                 'idItem' => $idItem,
                 'titulo' => 'almacenes',
                 'user' => $user,
+                'Proveedores' => $Proveedores,
                 'Empresas' => $Empresas,
             ]
         );
@@ -79,6 +82,7 @@ class AlmacenController extends Controller
         $views  = 'almacen_edit';
         $items = Almacen::findOrFail($idItem);
         $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $user = Auth::User();
         $oView = 'catalogos.' ;
 
@@ -88,6 +92,7 @@ class AlmacenController extends Controller
                 'titulo' => 'almacenes',
                 'items' => $items,
                 'user' => $user,
+                'Proveedores' => $Proveedores,
                 'Empresas' => $Empresas,
             ]
         );

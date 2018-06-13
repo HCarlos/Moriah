@@ -66,18 +66,18 @@ class InitSIIFACSeeder extends Seeder
         $IdProv12 = Proveedor::findOrCreateProveedor(12,'SILVINO AREVALO','','',$IdEmp);
 
 
-        $IdProd1 = Producto::findOrCreateProducto($IdAlma,5,$IdMed,5,'010500100005','MATERIAL DIDACTICO','MATERIAL DIDACTICO',5000,1,false,NOW(),'',850,0,0,53,850,45050,$IdEmp);
-        $IdProd2 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,21135,'010300121135','PAQUETE 3° SECUNDARIA PET','PAQUETE 3° SECUNDARIA PET',100,1,false,NOW(),'',0.01,0,0,10,0.01,0.1,$IdEmp);
-        $IdProd3 = Producto::findOrCreateProducto($IdAlma,1,$IdMed,24,'010200100024','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI, 1 Y 2 KII','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI',100,1,false,NOW(),'',260,0,0,7,260,1820,$IdEmp);
-        $IdProd4 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,24135,'010400124135','COMPLETE CAE, STUDENTS BOOK','COMPLETE CAE, STUDENTS BOOK',100,1,false,NOW(),'',875,0,0,3,875,2625,$IdEmp);
-        $IdProd5 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,31489,'978110763148','COMPLETE CAE, WORKBOOK','COMPLETE CAE, WORKBOOK',100,1,false,NOW(),'',495,0,0,4,499.17,1996.67,$IdEmp);
-        $IdProd6 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,2983,'978131650298','CAMBRIDGE FCE 2, PT','CAMBRIDGE FCE 2, PT',100,1,false,NOW(),'',505,0,0,3,459.09,1377.27,$IdEmp);
-        $IdProd7 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,7147,'978607910714','ACENTO 3, ORTOGRAFIA','ACENTO 3, ORTOGRAFIA',100,1,false,NOW(),'',205,0,0,17,201.47,3424.91,$IdEmp);
-        $IdProd8 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,98450,'978968569845','ABRAPALABRA 2','ABRAPALABRA 2',100,1,false,NOW(),'',145,0,0,9,138.1,1242.86,$IdEmp);
-        $IdProd9 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,2733,'978607060273','READING PATHS 1, STUDENT BOOK','READING PATHS 1, STUDENT BOOK',100,1,false,NOW(),'',295,0,0,25,295,7375,$IdEmp);
-        $IdProd10 = Producto::findOrCreateProducto($IdAlma,1,$IdMed,43835,'978607774383','FIGURAS Y FORMAS  NIVEL INTERMEDIO','FIGURAS Y FORMAS NIVEL INTERMEDIO',100,1,false,NOW(),'',245,0,0,6,245,1470,$IdEmp);
-        $IdProd11 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,98443,'978968569844','ABRAPALABRA 1','ABRAPALABRA 1',100,1,false,NOW(),'',145,0,0,11,145,1595,$IdEmp);
-        $IdProd12 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,28342,'978110762834','OBJECTIVE FIRST STUDENTS BOOK','OBJECTIVE FIRST STUDENTS BOOK',100,1,false,NOW(),'',780,0,0,8,764.4,6115.2,$IdEmp);
+        $IdProd1 = Producto::findOrCreateProducto($IdAlma,5,$IdMed,5,'010500100005','MATERIAL DIDACTICO','MATERIAL DIDACTICO',5000,1,false,NOW(),'',850,0,0,53,850,45050,$IdEmp,0);
+        $IdProd2 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,21135,'010300121135','PAQUETE 3° SECUNDARIA PET','PAQUETE 3° SECUNDARIA PET',100,1,false,NOW(),'',0.01,0,0,10,0.01,0.1,$IdEmp,0);
+        $IdProd3 = Producto::findOrCreateProducto($IdAlma,1,$IdMed,24,'010200100024','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI, 1 Y 2 KII','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI',100,1,false,NOW(),'',260,0,0,7,260,1820,$IdEmp,0);
+        $IdProd4 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,24135,'010400124135','COMPLETE CAE, STUDENTS BOOK','COMPLETE CAE, STUDENTS BOOK',100,1,false,NOW(),'',875,0,0,3,875,2625,$IdEmp,0);
+        $IdProd5 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,31489,'978110763148','COMPLETE CAE, WORKBOOK','COMPLETE CAE, WORKBOOK',100,1,false,NOW(),'',495,0,0,4,499.17,1996.67,$IdEmp,0);
+        $IdProd6 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,2983,'978131650298','CAMBRIDGE FCE 2, PT','CAMBRIDGE FCE 2, PT',100,1,false,NOW(),'',505,0,0,3,459.09,1377.27,$IdEmp,0);
+        $IdProd7 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,7147,'978607910714','ACENTO 3, ORTOGRAFIA','ACENTO 3, ORTOGRAFIA',100,1,false,NOW(),'',205,0,0,17,201.47,3424.91,$IdEmp,0);
+        $IdProd8 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,98450,'978968569845','ABRAPALABRA 2','ABRAPALABRA 2',100,1,false,NOW(),'',145,0,0,9,138.1,1242.86,$IdEmp,0);
+        $IdProd9 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,2733,'978607060273','READING PATHS 1, STUDENT BOOK','READING PATHS 1, STUDENT BOOK',100,1,false,NOW(),'',295,0,0,25,295,7375,$IdEmp,0);
+        $IdProd10 = Producto::findOrCreateProducto($IdAlma,1,$IdMed,43835,'978607774383','FIGURAS Y FORMAS  NIVEL INTERMEDIO','FIGURAS Y FORMAS NIVEL INTERMEDIO',100,1,false,NOW(),'',245,0,0,6,245,1470,$IdEmp,0);
+        $IdProd11 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,98443,'978968569844','ABRAPALABRA 1','ABRAPALABRA 1',100,1,false,NOW(),'',145,0,0,11,145,1595,$IdEmp,0);
+        $IdProd12 = Producto::findOrCreateProducto($IdAlma,4,$IdMed,28342,'978110762834','OBJECTIVE FIRST STUDENTS BOOK','OBJECTIVE FIRST STUDENTS BOOK',100,1,false,NOW(),'',780,0,0,8,764.4,6115.2,$IdEmp,0);
         $IdProd13 = Producto::findOrCreateProducto($IdAlma,2,$IdMed,27633,'978607172763','JUGUEMOS A LEER','JUGUEMOS A LEER',100,1,false,NOW(),'',195,0,0,4,195,780,$IdEmp);
         $IdProd14 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,88296,'978052118829','CAMBRIDGE PET FOR SCHOOLS 1','CAMBRIDGE PET FOR SCHOOLS 1',100,1,false,NOW(),'',580,0,0,4,500,2000,$IdEmp);
         $IdProd15 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,6659,'978607210665','FORMACIÓN CÍVICA Y ÉTICA 1','FORMACIÓN CÍVICA Y ÉTICA 1',100,1,false,NOW(),'',340,0,0,8,327.41,2619.26,$IdEmp);

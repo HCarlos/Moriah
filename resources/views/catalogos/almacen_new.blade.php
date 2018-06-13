@@ -45,12 +45,16 @@
                 </div>
                 <div class="form-group row">
                     <label for = "tipoinv" class="col-md-2 col-form-label text-md-right">Tipo</label>
-                    <div class="col-md-10">
-                        <select id="tipoinv" name="tipoinv" size="1">
+                    <div class="col-md-2">
+                        <select id="tipoinv" name="tipoinv" size="1" class="form-control">
                             <option value="0">Primeras Entradas, Primeras Salidas</option>
                             <option value="1">Ultimas Entradas, Primeras Salidas</option>
                             <option value="2" selected>Costo Promedio</option>
                         </select>
+                    </div>
+                    <label for = "proveedor_id" class="col-md-1 col-form-label text-md-left">Proveedor</label>
+                    <div class="col-md-7">
+                        {{ Form::select('proveedor_id', $Proveedores, null, ['id' => 'proveedor_id','class' => 'form-control']) }}
                     </div>
                 </div>
                 <div class="form-group row">

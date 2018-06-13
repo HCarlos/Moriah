@@ -5,10 +5,13 @@
         <div class="panel-heading">
             <span id="titulo_catalogo">Catálogos </span> |
             <a href="{{ route('productoNew', array('idItem' => 0)) }}" class="btn btn-info btn-xs" target="_blank" title="Agregar nuevo registro">
-                <i class="fa fa-plus-circle bigger-150"></i>
+                <i class="fa fa-plus-circle bigger-150"></i> Agregar producto
             </a>
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
-                <i class="ace-icon fa fa-refresh bigger-150"></i>
+                <i class="ace-icon fa fa-refresh bigger-150"></i> Refrescar
+            </a>
+            <a href="#" class="btn btn-danger btn-xs btnActualizarInventario" title="Actualizar Invetario" id="btnActualizarInventario" data-toggle="modal" data-target="#myModal">
+                <i class="ace-icon fa fa-adjust bigger-150 "></i> Actualizar inventario
             </a>
             @include('catalogos.listados.paginate_list')
         </div>
@@ -78,3 +81,4 @@
 @endsection
 
 @include('catalogos.scripts.dataTable')
+@include('catalogos.scripts.productos')

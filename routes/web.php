@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/imagen_producto/{idItem}', 'SIIFAC\ProductoController@imagen')->name('productoImagen');
     Route::post('/subir_imagen_producto/{oProducto}','Storage\StorageProductoController@subirArchivoProducto')->name('storageProductoUpload/');
     Route::get('/quitar_imagen_producto/{idItem}','Storage\StorageProductoController@quitarArchivoProducto')->name('storageProductoRemove/');
+    Route::get('/actualizar_inventario', 'SIIFAC\ProductoController@actualizar_inventario')->name('actualizarInventario');
 
     // Paquetes
     Route::get('/index_paquete/{npage}/{tpaginas}','SIIFAC\PaqueteController@index')->name('paqueteIndex');
@@ -146,11 +147,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store_compra_nueva_ajax','SIIFAC\CompraController@store_compra_nueva_ajax')->name('compraNuevaAjax/');
     Route::get('/form_compra_editar_ajax/{compra_id}','SIIFAC\CompraController@editar_compra_ajax')->name('formCompraEditarAjax');
     Route::put('/store_compra_editada_ajax','SIIFAC\CompraController@store_compra_editada_ajax')->name('compraEditadaAjax/');
+    Route::get('/destroy_compra/{id}', 'SIIFAC\CompraController@destroy')->name('compraDestroy/');
 
     // Compra Detalless
     Route::get('/index_compra_detalle_ajax/{compra_id}','SIIFAC\CompraDetalleController@index')->name('compraDetalleIndex');
     Route::get('/form_compra_detalle_nueva_ajax/{compra_id}', 'SIIFAC\CompraDetalleController@new_compra_detalle_ajax')->name('selectCompraDetalleNewAjax/');
     Route::post('/store_compra_detalle_ajax','SIIFAC\CompraDetalleController@store_compra_detalle_ajax')->name('compraDetalleAjax/');
+    Route::get('/destroy_compra_detalle/{id}', 'SIIFAC\CompraDetalleController@destroy')->name('compraDetalleDestroy/');
 
 
 

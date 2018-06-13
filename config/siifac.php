@@ -49,7 +49,7 @@ return [
         'movimiento_user' => 'movimiento_user',
         'compra_movimiento' => 'compra_movimiento',
         'movimiento_producto' => 'movimiento_producto',
-        'proveedor_movimiento' => 'proveedor_movimiento',
+        'movimiento_proveedor' => 'movimiento_proveedor',
         'movimiento_paquete' => 'movimiento_paquete',
         'pedido_movimiento' => 'pedido_movimiento',
         'almacen_movimiento' => 'almacen_movimiento',

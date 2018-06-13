@@ -14,6 +14,8 @@
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('scripts')
 @yield('scripts_ventas')
+@yield('scripts_compras')
+@yield('scripts_productos')
 
 <script src="{{ asset('js/base.js') }}"></script>
 <script src="{{ asset('js/moriah.js') }}"></script>

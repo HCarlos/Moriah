@@ -1594,12 +1594,12 @@ class CreateSiifacTables extends Migration
             $table->integer('medida_id')->default(0)->nullable();
             $table->integer('folio')->default(0)->nullable();
             $table->unsignedInteger('clave')->default(0)->nullable();
-            $table->string('codigo',13)->default('');
+            $table->string('codigo',13)->default('')->nullable();
             $table->unsignedInteger('ejercicio')->default(0)->nullable();
             $table->unsignedInteger('periodo')->default(0)->nullable();
             $table->dateTime('fecha')->nullable();
-            $table->string('foliofac',12)->default('');
-            $table->string('nota',12)->default('');
+            $table->string('foliofac',12)->default('')->nullable();
+            $table->string('nota',12)->default('')->nullable();
             $table->decimal('entrada',10,2)->default(0.00)->nullable();
             $table->decimal('salida',10,2)->default(0.00)->nullable();
             $table->decimal('exlocal',10,2)->default(0.00)->nullable();
@@ -1791,7 +1791,7 @@ class CreateSiifacTables extends Migration
 //
 //        });
 
-        Schema::create($tableNames['proveedor_movimiento'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['movimiento_proveedor'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('proveedor_id');
             $table->integer('movimiento_id');
@@ -1934,7 +1934,7 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['movimiento_producto']);
         Schema::dropIfExists($tableNames['pedido_movimiento']);
         Schema::dropIfExists($tableNames['movimiento_paquete']);
-        Schema::dropIfExists($tableNames['proveedor_movimiento']);
+        Schema::dropIfExists($tableNames['movimiento_proveedor']);
         Schema::dropIfExists($tableNames['almacen_movimiento']);
         Schema::dropIfExists($tableNames['medida_movimiento']);
         Schema::dropIfExists($tableNames['movimiento_venta']);
@@ -1970,11 +1970,11 @@ class CreateSiifacTables extends Migration
 
 
         Schema::dropIfExists($tableNames['pedidos']);
-        Schema::dropIfExists($tableNames['movimientos']);
         Schema::dropIfExists($tableNames['compras']);
         Schema::dropIfExists($tableNames['venta_detalles']);
         Schema::dropIfExists($tableNames['ventas']);
         Schema::dropIfExists($tableNames['paquetes']);
+        Schema::dropIfExists($tableNames['movimientos']);
         Schema::dropIfExists($tableNames['productos']);
         Schema::dropIfExists($tableNames['proveedores']);
         Schema::dropIfExists($tableNames['almacenes']);

@@ -46,14 +46,18 @@
                         </div>
                         <div class="form-group row">
                             <label for = "tipoinv" class="col-md-2 col-form-label text-md-right">Tipo</label>
-                            <div class="col-md-10">
+                            <div class="col-md-2">
                                 {{ Form::select('tipoinv',
                                 array(
                                     '0'=>'Primeras Entradas, Primeras Salidas',
                                     '1'=>'Ultimas Entradas, Primeras Salidas',
                                     '2'=>'Costo Promedio',
-                                    ), trim($items->tipoinv), ['id' => 'tipoinv','class' => 'col-md-2']) }}
+                                    ), trim($items->tipoinv), ['id' => 'tipoinv','class' => 'form-control']) }}
 
+                            </div>
+                            <label for = "proveedor_id" class="col-md-1 col-form-label text-md-left">Proveedor</label>
+                            <div class="col-md-7">
+                                {{ Form::select('proveedor_id', $Proveedores, $items->proveedor_id, ['id' => 'proveedor_id','class' => 'form-control']) }}
                             </div>
                         </div>
                         <div class="form-group row">

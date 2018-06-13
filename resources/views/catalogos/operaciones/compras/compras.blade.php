@@ -46,13 +46,12 @@
                                     <div class="visible-desktop action-buttons">
 
                                         @if ($user->hasAnyPermission(['consultar','all']) )
-                                            {{--<a href="#" class="btn btn-link pull-right btnAction2" id ="compra-{{$compra->id.'-0-0'}}-destroy" title="Eliminar">--}}
-                                                {{--<i class="fa fa-trash bigger-110 red" ></i>--}}
-                                            {{--</a>--}}
+                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="compra-{{$compra->id.'-0-0'}}-destroy" title="Eliminar">
+                                                <i class="fa fa-trash bigger-110 red" ></i>
+                                            </a>
                                             <a href="{{ route('compraDetalleIndex', array('compra_id' => $compra->id)) }}" class="btn btn-link pull-right editarReg" target="_blank" title="Editar">
                                                 <i class="fa fa-cubes bigger-110 blue"></i>
                                             </a>
-
                                             <a  id="/form_compra_editar_ajax/{{$compra->id}}"  class="btn btn-link pull-right btnCompraEditar" title="Editar" data-toggle="modal" data-target="#myModal">
                                                 <i class="fa fa-pencil bigger-110 success"></i>
                                             </a>
