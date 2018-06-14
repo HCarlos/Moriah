@@ -123,15 +123,6 @@ class TicketController extends Controller
         $pdf->Output();
         exit;
 
-
-//        return view ($oView.$views,
-//            [
-//                'user' => $user,
-//                'venta_id'    => $venta_id,
-//                'Url'         => '/store_venta_detalle_normal_ajax',
-//            ]
-//        );
-
     }
 
 }

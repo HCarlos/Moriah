@@ -1636,6 +1636,8 @@ class CreateSiifacTables extends Migration
             $table->index('codigo');
             $table->index('folio');
             $table->index('clave');
+            $table->index('status');
+            $table->index('tipoinv');
             $table->index('empresa_id');
 
             $table->foreign('empresa_id')

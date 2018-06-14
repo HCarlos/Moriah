@@ -22,7 +22,7 @@ use App\Http\Controllers\Funciones\FuncionesController;
 class ProductoController extends Controller
 {
     protected $tableName = '';
-    protected $itemPorPagina = 50;
+    protected $itemPorPagina = 500;
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';

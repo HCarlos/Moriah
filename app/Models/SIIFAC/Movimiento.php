@@ -118,6 +118,25 @@ class Movimiento extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
+    public function getStatusAttribute() {
+        $mp = "";
+        switch ($this->attributes['status']){
+            case 0:
+                $mp = "INICIO";
+                break;
+            case 1:
+                $mp = "COMPRA";
+                break;
+            case 2:
+                $mp = "VENTA";
+                break;
+            default:
+                $mp = "Indefinido";
+                break;
+        }
+        return $mp;
+    }
+
     public static function agregarDesdeVentaDetalle($Vd)
     {
         $Prod = Producto::findOrFail($Vd->producto_id);
@@ -283,15 +302,15 @@ class Movimiento extends Model
     }
 
     public static function actualizaExistenciasYSaldo($Prod){
-        $MovInit = static::all()
-            ->where('producto_id',$Prod->id)
+        $MovInit = static::where('producto_id',$Prod->id)
             ->where('status',0)
             ->first();
 
-        $Movs = static::all()
-            ->where('producto_id',$Prod->id)
+        $Movs = static::where('producto_id',$Prod->id)
             ->where('status','>',0)
-            ->sortBy('id');
+            ->orderBy('id','asc')
+            ->get();
+
         $exist = $MovInit->existencia;
         $saldo = $MovInit->saldo;
         foreach ($Movs as $mov){
@@ -299,11 +318,9 @@ class Movimiento extends Model
             $saldo0 = $mov->debe - $mov->haber;
             $mov->existencia  = $exist + $exist0;
             $mov->saldo       = $saldo + $saldo0;
-//            $mov->saldo       = $mov->existencia * $mov->pu;
             $mov->save();
             $exist           += $exist0;
             $saldo           += $saldo0;
-//            $saldo           += $mov->saldo;
         }
         $Prod->exist = $exist;
         $Prod->saldo = $saldo;

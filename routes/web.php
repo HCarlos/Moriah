@@ -87,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/subir_imagen_producto/{oProducto}','Storage\StorageProductoController@subirArchivoProducto')->name('storageProductoUpload/');
     Route::get('/quitar_imagen_producto/{idItem}','Storage\StorageProductoController@quitarArchivoProducto')->name('storageProductoRemove/');
     Route::get('/actualizar_inventario', 'SIIFAC\ProductoController@actualizar_inventario')->name('actualizarInventario');
+    Route::get('/imprimir_existencias/', 'Externos\ExistenciasController@imprimir_existencias')->name('imprimirExistencias/');
+    Route::get('/tarjeta_movtos_prod/{producto_id}', 'Externos\TarjetaMovtosController@imprimir_tarjeta_movtos')->name('imprimirTarjetasMovto/');
 
     // Paquetes
     Route::get('/index_paquete/{npage}/{tpaginas}','SIIFAC\PaqueteController@index')->name('paqueteIndex');
