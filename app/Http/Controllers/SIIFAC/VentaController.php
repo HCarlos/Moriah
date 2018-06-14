@@ -114,10 +114,12 @@ class VentaController extends Controller
         })->get();
         $clientes->each(function ($model) { $model->setAppends(['FullName']); });
         $User_Id = $clientes->sortBy('FullName')->pluck('FullName','id');
+        $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');
         return view ($oView.$views,
             [
                 'user' => $user,
                 'User_Id' => $User_Id,
+                'Productos' => $Productos,
                 'Url' => '/store_venta_normal_ajax',
             ]
         );

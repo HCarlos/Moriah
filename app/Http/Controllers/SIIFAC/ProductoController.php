@@ -259,7 +259,7 @@ class ProductoController extends Controller
             foreach ($Prods as $Prod){
                 Movimiento::actualizaExistenciasYSaldo($Prod);
             }
-            return Response::json(['mensaje' => 'Inventario actualizado con éxito.', 'data' => 'Error', 'status' => '200'], 200);
+            return Response::json(['mensaje' => 'Inventario actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
     }
 
 }

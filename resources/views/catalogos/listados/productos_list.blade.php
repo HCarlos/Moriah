@@ -10,7 +10,7 @@
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i> Refrescar
             </a>
-            <a href="#" class="btn btn-danger btn-xs btnActualizarInventario" title="Actualizar Invetario" id="btnActualizarInventario" data-toggle="modal" data-target="#myModal">
+            <a href="#" class="btn btn-danger btn-xs btnActualizarInventario" title="Actualizar Invetario" id="/actualizar_inventario" data-toggle="modal" data-target="#myModal">
                 <i class="ace-icon fa fa-adjust bigger-150 "></i> Actualizar inventario
             </a>
             @include('catalogos.listados.paginate_list')

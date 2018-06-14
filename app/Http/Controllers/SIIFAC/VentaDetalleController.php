@@ -21,12 +21,15 @@ class VentaDetalleController extends Controller
         $views = 'agregar_producto_a_venta_ajax';
         $user  = Auth::User();
         $oView = 'catalogos.operaciones.';
-        $venta = Venta::find($venta_id);
+//        $venta = Venta::find($venta_id);
+        $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');
+
         //dd($venta);
         return view ($oView.$views,
             [
                 'user' => $user,
                 'venta_id'    => $venta_id,
+                'Productos'   => $Productos,
                 'Url'         => '/store_venta_detalle_normal_ajax',
             ]
         );

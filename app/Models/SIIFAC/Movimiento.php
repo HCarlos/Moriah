@@ -169,7 +169,7 @@ class Movimiento extends Model
 
     }
 
-    public static function agregarCompras($Comp,$Prod,$data)
+    public static function agregarDesdeCompraDetalle($Comp, $Prod, $data)
     {
         $Fecha = Carbon::now();
         $user  = Auth::user();
@@ -227,23 +227,86 @@ class Movimiento extends Model
 
     }
 
+    public static function inventarioInicialDesdeProducto($Prod)
+    {
+        $Fecha = Carbon::now();
+        $user  = Auth::user();
+        $cu           = $Prod->cu;
+        $cantidad     = $Prod->exist;
+        $existencia   = $Prod->exist;
+        $saldo        = $cu * $cantidad;
+
+        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
+        $total = $saldo + $iva;
+
+        $Mov  =  static::create([
+            'user_id'          => 1,
+            'compra_id'        => 0,
+            'venta_id'         => 0,
+            'producto_id'      => $Prod->id,
+            'empresa_id'       => $Prod->empresa_id,
+            'proveedor_id'     => $Prod->proveedor_id,
+            'almacen_id'       => $Prod->almacen_id,
+            'medida_id'        => $Prod->medida_id,
+            'clave'            => $Prod->clave,
+            'codigo'           => $Prod->codigo,
+            'folio'            => $Prod->folio,
+            'foliofac'         => 'Inicio',
+            'nota'             => 'Inicio',
+            'ejercicio'        => $Fecha->year,
+            'periodo'          => $Fecha->month,
+            'fecha'            => $Fecha,
+            'entrada'          => $cantidad,
+            'existencia'       => $existencia,
+            'cu'               => $Prod->cu,
+            'pu'               => $Prod->pv,
+            'debe'             => $saldo,
+            'descto'           => 0,
+            'importe'          => $saldo,
+            'iva'              => $iva,
+            'saldo'            => $total,
+            'status'           => 0,
+            'idemp'            => 1,
+            'ip'               => Request::ip(),
+            'host'             => Request::getHttpHost(),
+        ]);
+
+        $Mov->users()->attach(1);
+        $Mov->empresas()->attach($Prod->empresa_id);
+        $Mov->productos()->attach($Prod->id);
+        $Mov->proveedores()->attach($Prod->proveedor_id);
+        $Mov->almacenes()->attach($Prod->almacen_id);
+        $Mov->medidas()->attach($Prod->medida_id);
+
+        return $Mov;
+
+    }
+
     public static function actualizaExistenciasYSaldo($Prod){
-        $Movs = static::all()->where('producto_id',$Prod->id)->sortBy('id');
-        $exist = 0;
-        $saldo = 0;
+        $MovInit = static::all()
+            ->where('producto_id',$Prod->id)
+            ->where('status',0)
+            ->first();
+
+        $Movs = static::all()
+            ->where('producto_id',$Prod->id)
+            ->where('status','>',0)
+            ->sortBy('id');
+        $exist = $MovInit->existencia;
+        $saldo = $MovInit->saldo;
         foreach ($Movs as $mov){
             $exist0 = $mov->entrada - $mov->salida;
             $saldo0 = $mov->debe - $mov->haber;
-            $mov->existencia = $exist0;
-            $mov->$saldo      = $saldo0;
+            $mov->existencia  = $exist + $exist0;
+            $mov->saldo       = $saldo + $saldo0;
+//            $mov->saldo       = $mov->existencia * $mov->pu;
             $mov->save();
             $exist           += $exist0;
             $saldo           += $saldo0;
+//            $saldo           += $mov->saldo;
         }
         $Prod->exist = $exist;
         $Prod->saldo = $saldo;
         $Prod->save();
     }
-
-
 }

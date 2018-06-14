@@ -106,13 +106,14 @@ class Producto extends Model
             $med  = Medida::find($medida_id);
             $emp = Empresa::find($empresa_id);
             if ( $proveedor_id == 0 ) {
+                $proveedor_id = 1;
+            }else{
                 if ($alma->proveedor_id !== null){
                     $proveedor_id = $alma->proveedor_id;
                 }else {
                     $proveedor_id = 1;
                 }
             }
-//            dd($proveedor_id);
 
             $prod =  static::create([
                 'almacen_id'=>$almacen_id,
@@ -145,6 +146,8 @@ class Producto extends Model
 
             $F = new FuncionesController();
             $F->validImage($prod,'producto','producto/');
+
+            Movimiento::inventarioInicialDesdeProducto($prod);
 
             return $prod;
 

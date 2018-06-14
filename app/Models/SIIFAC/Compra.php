@@ -47,7 +47,7 @@ class Compra extends Model
 
     public static function compra($compra_id,$producto_id, $cantidad){
         $Comp = static::find($compra_id);
-        return Movimiento::agregarCompras($Comp,$producto_id,$cantidad);
+        return Movimiento::agregarDesdeCompraDetalle($Comp,$producto_id,$cantidad);
     }
 
 }

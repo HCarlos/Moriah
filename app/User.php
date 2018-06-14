@@ -34,6 +34,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
+        'id',
         'username', 'email', 'password','cuenta',
         'admin','alumno','foraneo','exalumno','credito',
         'dias_credito','limite_credito','saldo_a_favor','saldo_en_contra',
