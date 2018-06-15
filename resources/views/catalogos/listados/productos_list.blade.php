@@ -13,7 +13,9 @@
             <a href="{{ route('imprimirExistencias/')  }}" class="btn bt1n-small btn-cafe no-border btn-xs" title="Imprimir existencias" target="_blank">
                 <i class="ace-icon fa fa-print bigger-150 "></i>
             </a>
-            {{--@include('catalogos.listados.paginate_list')--}}
+            <a href="{{ route('excelShow',['venta_id'=>1])  }}" class="btn bt1n-small btn-cafe no-border btn-xs" title="Imprimir Excel" >
+                <i class="ace-icon fa fa-print bigger-150 "></i>
+            </a>
             <a href="#" class="btn bt1n-small btn-inverse no-border btn-xs pull-right " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>

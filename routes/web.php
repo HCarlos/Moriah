@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');
     Route::get('/form_venta_detalle_nueva_ajax/{venta_id}', 'SIIFAC\VentaDetalleController@new_venta_detalle_ajax')->name('selectVentaDetalleNewAjax/');
     Route::post('/store_venta_detalle_normal_ajax','SIIFAC\VentaDetalleController@store_normal_ajax')->name('ventaDetalleNormalAjax/');
-//    Route::get('/excel/{venta_id}','SIIFAC\VentaDetalleController@toexcel')->name('toExcelTest/');
+//    Route::get('/excel/1','SIIFAC\ExcelController@toexcel')->name('toExcelTest/');
     Route::get('/print_venta_detalle/{venta_id}', 'Externos\TicketController@print_tiket')->name('printTicket/');
 
 
@@ -187,8 +187,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asign_permission_role/{idRole}/{namePermissions}/{cat_id}','Asignaciones\PermisoRoleController@asignar')->name('assignPermissionToRole/');
     Route::get('/unasign_permission_role/{idRole}/{namePermissions}/{cat_id}','Asignaciones\PermisoRoleController@desasignar')->name('unAssignPermissionToRole/');
 
-    Route::resource('excel','Externos\ExcelController');
-    //Route::resource('excel/{venta_id}','Externos\ExcelController@show');
+//    Route::resource('excel','Externos\ExcelController');
+
+    Route::get('excel/{venta_id}','Externos\ExcelController@show')->name('excelShow');
+
+//    Route::get('storage/excel/{filename}',function () {
+//        return view('/home');
+//    });
 
 
 

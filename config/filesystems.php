@@ -85,6 +85,13 @@ return [
             'visibility' => env('PAQUETE_VISIBILITY'),
         ],
 
+        'excel' => [
+            'driver' => env('EXCEL'),
+            'root' => public_path().env('EXCEL_ROOT'),
+            'url' => env('APP_URL').env('EXCEL_URL'),
+            'visibility' => env('EXCEL_VISIBILITY'),
+        ],
+
     ],
 
 ];

@@ -49,7 +49,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //return redirect()->route('/');
         if  ($exception instanceof MethodNotAllowedHttpException) {
             abort(405);
         }
