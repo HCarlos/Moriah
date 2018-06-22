@@ -54,6 +54,35 @@
                     });
                 }
 
+                if ( $("#frmSearchCode") ){
+                    $("#codigo").val("");
+                    $("#guardandoVenta").hide();
+                    $("#frmSearchCode").on("submit", function (event) {
+                        event.preventDefault();
+                        $("#guardandoVenta").show();
+                        var Data = $(this).serialize();
+                        var Url = '/store_venta_detalle_normal_ajax';
+                        $(function () {
+                            $.ajax({
+                                cache: false,
+                                type: 'post',
+                                url: Url,
+                                data:  Data,
+                                dataType: 'json',
+                                success: function(data) {
+                                    if (data.mensaje == "OK"){
+                                        location.reload();
+                                    }else{
+                                        alert(data.mensaje);
+                                    }
+                                }
+                            });
+                        });
+
+                    });
+                }
+
+
             });
         });
 
