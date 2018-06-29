@@ -41,15 +41,12 @@
                 </div>
                 <label for = "codigo" class="col-md-1 col-form-label text-md-left">Código</label>
                 <div class="col-md-2">
-                    <input type="number" name="codigo" id="codigo" class="form-control" required readonly/>
+                    <input type="number" name="codigo" id="codigo" class="form-control" required autofocus/>
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-2"></div>
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-10"></div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary" id="btnVentaDetalleNormalSubmit">
                         Seleccionar
@@ -89,10 +86,14 @@
         });
 
         $("#producto_id").on('change',function (event) {
+            event.preventDefault();
             $("#codigo").val( $(this).val() );
         });
-        $("#codigo").val( $("#producto_id").val() );
 
+        //$("#producto_id").append('<option value="0" selected>Selecione un producto</option>');
+
+        // $("#codigo").val( $("#producto_id").val() );
+        $("#codigo").focus();
 
     }
 

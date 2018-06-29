@@ -115,6 +115,7 @@ class VentaController extends Controller
         $clientes->each(function ($model) { $model->setAppends(['FullName']); });
         $User_Id = $clientes->sortBy('FullName')->pluck('FullName','id');
         $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');
+        $Productos->prepend('Seleccione un producto', '0');
         return view ($oView.$views,
             [
                 'user' => $user,
