@@ -10,8 +10,9 @@
             <!-- #section:basics/navbar.layout.brand -->
             <a href="#" class="navbar-brand">
                 <small>
-                    <i class="fa fa-leaf"></i>
-                    Moriah
+                    {{--<i class="fa fa-leaf"></i>--}}
+                    {{--Moriah--}}
+                    <img src="{{ asset('assets/img/moriah_logo_3.png') }}" width="160" height="24" alt=""/>
                 </small>
             </a>
 
