@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre')->nullable();
@@ -24,6 +25,28 @@ class CreateUsersTable extends Migration
             $table->string('domicilio',250)->nullable();
             $table->string('celular',50)->nullable();
             $table->string('telefono',50)->nullable();
+            $table->string('rfc',13)->default('')->nullable();
+            $table->string('curp',18)->default('')->nullable();
+            $table->string('razon_social',250)->default('')->nullable();
+            $table->string('calle',250)->default('')->nullable();
+            $table->string('num_ext',100)->default('')->nullable();
+            $table->string('num_int',100)->default('')->nullable();
+            $table->string('colonia',150)->default('')->nullable();
+            $table->string('localidad',150)->default('')->nullable();
+            $table->string('estado',25)->default('TABASCO')->nullable();
+            $table->string('pais',25)->default('MÉXICO')->nullable();
+            $table->string('cp',10)->default('')->nullable();
+            $table->string('email1',100)->default('')->nullable();
+            $table->string('email2',100)->default('')->nullable();
+            $table->string('cel1',100)->default('')->nullable();
+            $table->string('cel2',100)->default('')->nullable();
+            $table->string('tel1',100)->default('')->nullable();
+            $table->string('tel2',100)->default('')->nullable();
+            $table->string('lugar_nacimiento',250)->default('')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->smallInteger('genero')->default(0)->nullable();
+            $table->string('ocupacion',250)->default('')->nullable();
+            $table->string('lugar_trabajo',250)->default('')->nullable();
             $table->string('root',150)->default('')->nullable();
             $table->string('filename',50)->nullable();
             $table->unsignedInteger('iduser_ps')->nullable();

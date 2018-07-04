@@ -172,8 +172,8 @@ class UsuarioController extends Controller
 
         $ap_paterno = $F->toMayus($data['ap_paterno']);
         $ap_materno = $F->toMayus($data['ap_materno']);
-        $nombre = $F->toMayus($data['nombre']);
-        $domicilio = $F->toMayus($data['domicilio']);
+        $nombre     = $F->toMayus($data['nombre']);
+        $domicilio  = $F->toMayus($data['domicilio']);
 
         $data['ap_paterno'] = $ap_paterno;
         $data['ap_materno']   = $ap_materno;
