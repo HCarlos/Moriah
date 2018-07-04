@@ -7,15 +7,7 @@
     <div class="navbar-container" id="navbar-container">
         <!-- /section:basics/sidebar.mobile.toggle -->
         <div class="navbar-header pull-left">
-            <!-- #section:basics/navbar.layout.brand -->
-            <a href="#" class="navbar-brand">
-                <small>
-                    {{--<i class="fa fa-leaf"></i>--}}
-                    {{--Moriah--}}
-                    <img src="{{ asset('assets/img/moriah_logo_3.png') }}" width="160" height="24" alt=""/>
-                </small>
-            </a>
-
+            <img src="{{ asset('assets/img/logo_moriah_160x24.png') }}" width="106" height="45" alt=""/>
         </div>
 
         <!-- #section:basics/navbar.dropdown -->
