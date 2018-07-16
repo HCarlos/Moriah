@@ -19,7 +19,7 @@ use Spatie\Permission\Models\Role;
 class UsuarioController extends Controller
 {
     protected $tableName = '';
-    protected $itemPorPagina = 100;
+    protected $itemPorPagina = 300;
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
@@ -32,18 +32,17 @@ class UsuarioController extends Controller
     {
         $page = Input::get('p');
         if ( $page ) $npage = $page;
-
+        ini_set('max_execution_time', 300);
         $this->tableName = 'usuarios';
-        $items = User::with('roles')
-            ->select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
+        $items = User::select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
             ->orderBy('id','desc')
-            ->forPage($npage,$this->itemPorPagina)
+//            ->forPage($npage,$this->itemPorPagina)
             ->get();
-        $tpaginator = User::paginate($this->itemPorPagina,['*'],'p');
-        //dd($items);
+//        $tpaginator = User::paginate($this->itemPorPagina,['*'],'p');
+        // dd($items);
         $user = Auth::User();
-        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
-        $tpaginator->withPath("/index_usuario/$npage/$tpaginas");
+//        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
+//        $tpaginator->withPath("/index_usuario/$npage/$tpaginas");
 
         return view ('catalogos.listados.usuarios_list',
             [
@@ -51,10 +50,13 @@ class UsuarioController extends Controller
                 'titulo_catalogo' => "Catálogo de ".ucwords($this->tableName),
                 'user' => $user,
                 'tableName'=>$this->tableName,
-                'npage'=> $npage,
-                'tpaginas' => $tpaginas,
+//                'npage'=> $npage,
+//                'tpaginas' => $tpaginas,
+                'npage'=> 0,
+                'tpaginas' => 0,
             ]
-        )->with("paginator" , $tpaginator);
+//        )->with("paginator" , $tpaginator);
+        );
 
     }
 

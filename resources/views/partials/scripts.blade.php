@@ -11,6 +11,7 @@
 <script src="{{ asset('/js/ace/ace.sidebar.js') }}"></script>
 <script src="{{ asset('/js/ace/ace.sidebar-scroll-1.js') }}"></script>
 <script src="{{ asset('/js/ace/ace.submenu-hover.js') }}"></script>
+<script src="{{ asset('js/vue.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('scripts')
 @yield('scripts_ventas')

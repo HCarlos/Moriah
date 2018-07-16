@@ -10,7 +10,7 @@
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
-            @include('catalogos.listados.paginate_list')
+            {{--@include('catalogos.listados.paginate_list')--}}
         </div>
 
         <div class="panel-body">
