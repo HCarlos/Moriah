@@ -242,7 +242,7 @@ return [
 //        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
 //        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+//        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
