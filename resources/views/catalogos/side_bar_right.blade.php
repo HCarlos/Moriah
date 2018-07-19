@@ -5,7 +5,7 @@
     <div class="panel-heading">
 
         <span id="titulo_catalogo">Catálogos </span>
-        @if ($user->hasAnyPermission(['consultar','all']))
+        @if ($user->hasAnyPermission(['consultar','all','sysop']))
             @switch($id)
                 @case(0)
                 @case(1)

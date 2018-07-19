@@ -76,6 +76,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+                @role('administrator|sysop')
                 <li>
                     <a href="{{ route('usuarioIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
                         <i class="menu-icon fa fa-book red"></i>
@@ -83,6 +84,8 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                @endrole
+                @role('administrator')
                 <li>
                     <a href="{{ route('asignItem/', ['ida' => 0,'iduser' => 0]) }}">
                         <i class="menu-icon fa fa-cog"></i>
@@ -98,6 +101,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                @endrole
             </ul>
         </li>
 

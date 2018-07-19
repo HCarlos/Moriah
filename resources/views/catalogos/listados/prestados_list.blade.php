@@ -20,12 +20,12 @@
                     <td>{{ $item->usuario_prestador->nombre_completo }}</td>
                     <td>{{ $item->dias_vencidos }}</td>
                     <td width="100">
-                        @if ($user->hasAnyPermission(['subir_imagen_fichas','all']))
+                        @if ($user->hasAnyPermission(['consultar','all','sysop']))
                             <a href="{{ route('catalogosSubirImagenFichas/', array('id' => $id,'idItem' => $item->id,'action' => 4)) }}" class="btn btn-link btn-xs  margen-izquierdo-03em pull-right" target="_blank" title="Subir imagen" >
                                 <i class="fas fa-image orange"></i>
                             </a>
                         @endif
-                        @if ($user->hasAnyPermission(['editar_registro','all']))
+                        @if ($user->hasAnyPermission(['consultar','all','sysop']))
                             <a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" target="_blank" title="Editar">
                                 <i class="fas fa-pencil-alt blue"></i>
                             </a>

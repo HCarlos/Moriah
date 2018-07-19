@@ -20,12 +20,12 @@
                     <td>{{ trim($item->lenguaje) }}</td>
                     <td>{{ trim($item->tipo)=='L'?'Lengüaje':'Pais' }}</td>
                     <td width="100">
-                        @if ($user->hasAnyPermission(['eliminar_registro','all']))
+                        @if ($user->hasAnyPermission(['consultar','all','sysop']))
                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="editorial-{{$item->id.'-'.$user->id.'-'.$id.'-'.$npage.'-'.$tpaginas}}-2-/destroy_clp/" title="Eliminar">
                                 <i class="fa fa-trash fa-lg red" ></i>
                             </a>
                         @endif
-                        @if ($user->hasAnyPermission(['editar_registro','all']))
+                        @if ($user->hasAnyPermission(['consultar','all','sysop']))
                             <a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" target="_blank" title="Editar">
                                 <i class="fas fa-pencil-alt blue"></i>
                             </a>

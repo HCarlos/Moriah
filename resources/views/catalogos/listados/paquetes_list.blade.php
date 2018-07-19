@@ -42,22 +42,22 @@
                                 <td class="text-right">{{ $item->importe}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="{{ route('paqueteDetalleIndex', ['npage' => 1, 'tpaginas' => 0,'id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Paquete">
                                                 <i class="fa fa-cubes bigger-150 purple"></i>
                                             </a>
                                         @endif
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="{{ route('paqueteImagen', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                                 <i class="fa fa-picture-o bigger-150 orange2"></i>
                                             </a>
                                         @endif
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="paquete-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="{{ route('paqueteEdit', ['idItem' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                                 <i class="fa fa-pencil bigger-150 blue"></i>
                                             </a>

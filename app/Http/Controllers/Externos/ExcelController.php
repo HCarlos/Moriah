@@ -4,121 +4,67 @@ namespace App\Http\Controllers\Externos;
 
 use App\Http\Controllers\Excel\ImportFileController;
 use App\Models\SIIFAC\Producto;
-use App\Models\SIIFAC\Venta;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
+use Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ExcelController extends Controller
 {
 
-    public function index()
+    public function show()
     {
-        Excel::create('Report2016', function($excel) {
-            $excel->setTitle('My awesome report 2016');
-            $excel->setCreator('Me')->setCompany('Our Code World');
-            $excel->setDescription('A demonstration to change the file properties');
-            $data = [12,"Hey",123,4234,5632435,"Nope",345,345,345,345];
+        $Prod  = Producto::select(['id','descripcion','exist'])->orderBy('descripcion')->get();
 
-            $excel->sheet('Sheet 1', function ($sheet) use ($data) {
-                $sheet->setOrientation('landscape');
-                $sheet->fromArray($data, NULL, 'A3');
-            });
+        $C0 = 6;
+        $C = $C0;
 
-        })->download('xlsx');
+        // Extrension File;
+        $extension = "Xls";
+        $ext_fila  = "xls";
+        try {
+            $archivo =  ImportFileController::getFileExistencias($ext_fila);
+            $reader = IOFactory::createReader($extension);
+            $spreadsheet = $reader->load($archivo);
+            $sh = $spreadsheet->setActiveSheetIndex(0);
 
-    }
+            $sh->setCellValue('K1', Carbon::now()->format('d-m-Y h:m:s'));
+            foreach ($Prod as $v){
+                    $sh
+                    ->setCellValue('A'.$C, $v->id)
+                    ->setCellValue('B'.$C, $v->descripcion)
+                    ->setCellValue('C'.$C, $v->exist);
+                $C++;
+            }
+//            $spreadsheet->getActiveSheet()->getCell('B7')->getDataValidation();
+            $Cx = $C  - 1;
+            $oVal = $sh->getCell('G1')->getValue();
+            $sh->setCellValue('B'.$C, 'TOTAL DE ARTÍCULOS')
+            ->setCellValue('C'.$C, '=SUM(C1:C'.$Cx.')')
+            ->setCellValue('G'.$C, $oVal);
 
-    public function show($venta_id)
-    {
-        $venta = Venta::find($venta_id)->toArray();
-        //dd($venta);
-/*
-        Excel::create('Ventas', function($excel) use ($venta, $venta_id) {
-            $excel->setTitle('Venta');
-            $excel->setDescription('archivo de venta');
-            $C = 6;
-            $excel->sheet('venta '.$venta_id, function($sheet) use ($venta,$C) {
-//                $sheet->fromArray($venta, null, 'A1', false, false);
-                $sheet->cell('C'.$C,'Hola Mundo');
-            });
-        })->download('xlsx');
+            $sh->getStyle('A'.$C0.':G'.$C)->getFont()
+                ->setName('Arial')
+                ->setSize(8);
 
+            $sh->getStyle('A'.$C.':G'.$C)->getFont()->setBold(true);
 
-*/
-        $C = 6;
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="productos_.'.$ext_fila.'"');
+            header('Cache-Control: max-age=0');
+            header('Cache-Control: max-age=1');
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+            header('Cache-Control: cache, must-revalidate');
+            header('Pragma: public');
+            $writer = IOFactory::createWriter($spreadsheet, $extension);
+            $writer->save('php://output');
+            exit;
 
-        $mifile = ImportFileController::getFileExistencias();
-//        Excel::load($mifile)->byConfig('excel::import.sheets', function($sheet) {
-        Excel::load($mifile, function($reader) use ($venta, $venta_id)  {
-            //dd($reader);
-
-            $C = 6;
-
-        })->get();
-
-        $template = ImportFileController::getFileExistencias();
-        $source   = ImportFileController::setFileExistencias();
-//        $open     = ImportFileController::openFileExistencias();
-        $FileName = ImportFileController::getFileNameOutExistenca();
-/*
-//        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($template);
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load($template);
-
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('B7', 'Hello World !');
-
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
-//        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-//        header("Content-type:   application/x-msexcel; charset=utf-8");
-//        header("Expires: 0");
-//        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-//        header("Cache-Control: private",false);
-
-*/
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-        $spreadsheet = $reader->load($template);
-        //        $spreadsheet = IOFactory::load($template);
-
-
-        $worksheet = $spreadsheet->getActiveSheet();
-
-
-
-        $worksheet->getCell('A1')->setValue('John');
-        $worksheet->getCell('A2')->setValue('Smith');
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
-        header("Content-type:   application/x-msexcel; charset=utf-8");
-
-//        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-//       header('Content-Disposition: attachment; filename=05featuredemo.xls');
-
-        header('Content-Disposition: attachment; filename="05featuredemo.xls"');
-
-        $writer->save("05featuredemo.xls");
-//
-//        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
-//        header("Content-type:   application/x-msexcel; charset=utf-8");
-//        header("Expires: 0");
-//        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-////        $writer->save('write.xlsx');
-//
-////        header('Content-Disposition: attachment; filename='.$FileName);
-//        header('Content-Disposition: attachment; filename="write.xlsx"');
-
-  //      $writer->save($source);
-
-//        $writer->save('write.xlsx');
-
+        } catch (Exception $e) {
+            echo 'Ocurrio un error al intentar abrir el archivo ' . $e;
+        }
 
     }
 

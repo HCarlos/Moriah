@@ -39,12 +39,12 @@
                                 <td class="text-right">{{ $item->pv}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="pedido_detalle-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif
-                                        {{--@if ($user->hasAnyPermission(['consultar','all']) )--}}
+                                        {{--@if ($user->hasAnyPermission(['consultar','all','sysop']) )--}}
                                             {{--<a href="#" class="btn btn-link btn-xs pull-right btnAction1" id="/edit_pedido_detalle_ajax/-{{$item->pedido_id.'-'.$item->id}}" data-toggle="modal" data-target="#myModal" title="Editar" >--}}
                                                 {{--<i class="fa fa-pencil bigger-150 blue"></i>--}}
                                             {{--</a>--}}

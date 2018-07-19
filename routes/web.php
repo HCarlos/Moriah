@@ -189,7 +189,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //    Route::resource('excel','Externos\ExcelController');
 
-    Route::get('excel/{venta_id}','Externos\ExcelController@show')->name('excelShow');
+    Route::get('producto/existencias-excel','Externos\ExcelController@show')->name('productoExistenciaList');
 
 //    Route::get('storage/excel/{filename}',function () {
 //        return view('/home');

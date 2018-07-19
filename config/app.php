@@ -180,7 +180,7 @@ return [
 //        Codedge\Fpdf\FpdfServiceProvider::class,
 //        Anouar\Fpdf\FpdfServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+//        Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
     ],

@@ -1,5 +1,5 @@
 <div class="list-group todoloAncho" id="dvCatalogos0">
-    @role('user|administrator')
+    @role('user|administrator|sysop')
     <a class="button list-group-item form-control" href="{{ route('empresaIndex', ['npage' => 1, 'tpaginas' => 0]) }}">Empresas</a>
     <a class="button list-group-item form-control" href="{{ route('almacenIndex', ['npage' => 1, 'tpaginas' => 0]) }}">Almacenes</a>
     <a class="button list-group-item form-control" href="{{ route('listItem', ['id' => 2,'npage' => 1, 'tpaginas' => 0]) }}">Medidas</a>
@@ -10,7 +10,7 @@
     {{--<a class="button list-group-item form-control" href="#" id="btnPrueba">Prueba</a>--}}
     @endrole
 
-    @role('administrator|system_operator')
+    @role('administrator|sysop')
     <a class="button list-group-item form-control" href="{{ route('listItem', ['id' => 10,'npage' => 1, 'tpaginas' => 0]) }}">Usuarios</a>
     @endrole
     @role('administrator')

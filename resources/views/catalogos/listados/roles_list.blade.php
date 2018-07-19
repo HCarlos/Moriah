@@ -14,13 +14,13 @@
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td width="100">
-                        @if ($user->hasAnyPermission(['eliminar_roles','all']))
+                        @if ($user->hasAnyPermission(['all']))
                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="role-{{$item->id.'-'.$item->id.'-'.$id.'-'.$npage.'-'.$tpaginas}}-2-/destroy_role/" title="Eliminar">
                                 {{--<a href="{{ route('roleDestroy/', array('id' => $item->id,'idItem' => $item->id,'action' => 2)) }}" class="btn btn-link btn-xs pull-right" title="Eliminar">--}}
                                 <i class="fa fa-trash fa-lg red" ></i>
                             </a>
                         @endif
-                        @if ($user->hasAnyPermission(['editar_roles','all']))
+                        @if ($user->hasAnyPermission(['all']))
                             <a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" title="Editar">
                                 <i class="fas fa-pencil-alt blue"></i>
                             </a>

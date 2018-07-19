@@ -33,6 +33,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $P10 = Permission::create(['name' => 'apartar']);
         $P11 = Permission::create(['name' => 'pedir']);
         $P12 = Permission::create(['name' => 'comprar']);
+        $P13 = Permission::create(['name' => 'sysop']);
 
         $role_admin = Role::create([
             'name' => 'administrator',
@@ -40,6 +41,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'guard_name' => 'web',
         ]);
         $role_admin->givePermissionTo($P0);
+
+        $role_sysop = Role::create([
+            'name' => 'sysop',
+            'description' => 'System Operator',
+            'guard_name' => 'web',
+        ]);
+        $role_sysop->givePermissionTo($P13);
 
         $role_user_libros = Role::create([
             'name' => 'usuario_libros',
@@ -125,6 +133,21 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->save();
         $user->roles()->attach($role_admin);
         $user->permissions()->attach($P0);
+        $F->validImage($user,'profile','profile/');
+
+        $user = new User();
+        $user->nombre = 'System Operator';
+        $user->username = 'SysOp';
+        $user->email = 'sysop@example.com';
+        $user->cuenta = '20181907130824';
+        $user->password = bcrypt('sysop');
+        $user->admin = false;
+        $user->idemp = $idemp;
+        $user->ip = $ip;
+        $user->host = $host;
+        $user->save();
+        $user->roles()->attach($role_sysop);
+        $user->permissions()->attach($P13);
         $F->validImage($user,'profile','profile/');
 
         $user = new User();

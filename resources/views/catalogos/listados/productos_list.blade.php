@@ -13,7 +13,7 @@
             <a href="{{ route('imprimirExistencias/')  }}" class="btn bt1n-small btn-cafe no-border btn-xs" title="Imprimir existencias" target="_blank">
                 <i class="ace-icon fa fa-print bigger-150 "></i>
             </a>
-            <a href="{{ route('excelShow',['venta_id'=>1])  }}" class="btn bt1n-small btn-cafe no-border btn-xs" title="Imprimir Excel" >
+            <a href="{{ route('productoExistenciaList')  }}" class="btn bt1n-small btn-cafe no-border btn-xs" title="Imprimir Excel" >
                 <i class="ace-icon fa fa-print bigger-150 "></i>
             </a>
             <a href="#" class="btn bt1n-small btn-inverse no-border btn-xs pull-right " title="Actualizar" id="btnRefreshNavigator">
@@ -55,22 +55,22 @@
                                 <td class="text-right">{{ $item->exist}} </td>
                                 <td >
                                     <div class="visible-desktop visible-phone action-buttons">
-                                    @if ($user->hasAnyPermission(['consultar','all']) )
+                                    @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                         <a href="{{ route('productoImagen', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                             <i class="fa fa-picture-o bigger-110 orange2"></i>
                                         </a>
                                     @endif
-                                    @if ($user->hasAnyPermission(['consultar','all']) )
+                                    @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                         <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="producto-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
                                             <i class="fa fa-trash bigger-110 red" ></i>
                                         </a>
                                     @endif
-                                    @if ($user->hasAnyPermission(['consultar','all']) )
+                                    @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                         <a href="{{ route('productoEdit', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                             <i class="fa fa-pencil bigger-110 light-green"></i>
                                         </a>
                                     @endif
-                                    @if ($user->hasAnyPermission(['consultar','all']) )
+                                    @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                         <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$item->id])  }}" class="btn btn-link bt1n-xs" title="Imprimir tarjeta de movimientos" target="_blank">
                                             <i class="fa fa-list bigger-110 cafe"></i>
                                         </a>

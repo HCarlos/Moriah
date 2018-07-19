@@ -44,12 +44,12 @@
                                 <td>{{ $item->cuenta }}</td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
-                                    @if ($user->hasAnyPermission(['consultar','all']) )
+                                    @if ($user->hasAnyPermission(['all','sysop']) )
                                         <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="usuario-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
                                             <i class="fa fa-trash bigger-150 red" ></i>
                                         </a>
                                     @endif
-                                    @if ($user->hasAnyPermission(['consultar','all']) )
+                                    @if ($user->hasAnyPermission(['all','sysop']) )
                                         {{--<a href="{{ route('catalogos/', array('id' => $id,'idItem' => $item->id,'action' => 1)) }}" class="btn btn-link btn-xs pull-right" title="Editar">--}}
                                         <a href="{{ route('usuarioEdit', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">
                                             <i class="fa fa-pencil bigger-150 blue"></i>

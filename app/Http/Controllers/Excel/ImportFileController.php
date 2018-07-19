@@ -18,36 +18,23 @@ use PHPExcel_Cell_DefaultValueBinder;
 //}
 
 
-class ImportFileController extends PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
+class ImportFileController extends Controller
 {
 
+    public static function getFileInicio($extension){
+        return storage_path('exports') . '/inicio.' . $extension;
+    }
 
-    public function bindValue(PHPExcel_Cell $cell, $value = null)
-    {
-        if ($cell->getColumn() !== 'D') {
+    public static function getFileExistencias($extension){
+        return storage_path('exports') . '/base.' . $extension;
+    }
 
-            $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_STRING);
+    public static function getFileInventario($extension){
+        return storage_path('exports') . '/inventario.' . $extension;
+    }
 
-            return true;
-        }
-
-        // else return default behavior
-        return parent::bindValue($cell, $value);
+    public static function getFileCompra($extension){
+        return storage_path('exports') . '/compra.' . $extension;
     }
-    private static function getFileNameBaseExistenca(){
-        return 'base.xls';
-    }
-    public static function getFileNameOutExistenca(){
-        return 'base_tmp.xls';
-    }
-    public static function getFileExistencias(){
-        return storage_path('exports') . '/' . static::getFileNameBaseExistenca();
-    }
-    public static function setFileExistencias(){
-        return storage_path('excel') . '/' . static::getFileNameBaseExistenca();
-    }
-//    public static function openFileExistencias(){
-//        return env('APP_URL').env('EXCEL_URL'). '/' . static::getFileNameExistenca();
-//    }
 
 }
