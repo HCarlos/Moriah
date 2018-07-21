@@ -7,7 +7,10 @@ use App\Models\SIIFAC\Producto;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use function Sodium\add;
 
 class ExcelController extends Controller
 {
@@ -67,6 +70,13 @@ class ExcelController extends Controller
 
     }
 
+    public function archivos_config()
+    {
+        return view('catalogos.config.archivos',[
+            "tableName" => "",
+            "archivos" => Storage::disk('externo')->allFiles(),
+        ]);
+    }
 
 
 }

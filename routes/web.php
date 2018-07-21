@@ -157,9 +157,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store_compra_detalle_ajax','SIIFAC\CompraDetalleController@store_compra_detalle_ajax')->name('compraDetalleAjax/');
     Route::get('/destroy_compra_detalle/{id}', 'SIIFAC\CompraDetalleController@destroy')->name('compraDetalleDestroy/');
 
-
-
-
     // Usuarios
     Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');
     Route::get('/new_usuario/{idItem}', 'SIIFAC\UsuarioController@new')->name('usuarioNew');
@@ -190,6 +187,8 @@ Route::group(['middleware' => 'auth'], function () {
 //    Route::resource('excel','Externos\ExcelController');
 
     Route::get('producto/existencias-excel','Externos\ExcelController@show')->name('productoExistenciaList');
+    Route::get('archivos-config','Externos\ExcelController@archivos_config')->name('archivosConfig/');
+    Route::post('subirArchivoBase/', 'Storage\StorageExternosController@subirArchivoBase')->name('subirArchivoBase/');
 
 //    Route::get('storage/excel/{filename}',function () {
 //        return view('/home');

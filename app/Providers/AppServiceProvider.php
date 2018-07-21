@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Carbon::setLocale(config('app.locale'));
+        Blade::component('catalogos.share._panel_list','panel');
     }
 
     /**

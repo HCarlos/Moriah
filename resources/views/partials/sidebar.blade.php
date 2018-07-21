@@ -86,21 +86,28 @@
                 </li>
                 @endrole
                 @role('administrator')
-                <li>
-                    <a href="{{ route('asignItem/', ['ida' => 0,'iduser' => 0]) }}">
-                        <i class="menu-icon fa fa-cog"></i>
-                        Asignar Roles a Usuarios
-                    </a>
+                    <li>
+                        <a href="{{ route('asignItem/', ['ida' => 0,'iduser' => 0]) }}">
+                            <i class="menu-icon fa fa-cog"></i>
+                            Asignar Roles a Usuarios
+                        </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="{{ route('asignItem/', ['ida' => 1,'iduser' => 0]) }}">
-                        <i class="menu-icon fa fa-cog"></i>
-                        Asignar Permisos a Roles
-                    </a>
-                    <b class="arrow"></b>
-                </li>
+                        <b class="arrow"></b>
+                    </li>
+                    <li>
+                        <a href="{{ route('asignItem/', ['ida' => 1,'iduser' => 0]) }}">
+                            <i class="menu-icon fa fa-cog"></i>
+                            Asignar Permisos a Roles
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li>
+                        <a href="{{ route('archivosConfig/') }}">
+                            <i class="menu-icon fa fa-cog"></i>
+                            Archivos
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
                 @endrole
             </ul>
         </li>
