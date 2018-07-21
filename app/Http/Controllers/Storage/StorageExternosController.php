@@ -8,13 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Funciones\FuncionesController;
 
 class StorageExternosController extends Controller
 {
-    protected $redirectTo = '/';
+    protected $redirectTo = 'archivos-config';
+    protected $F;
 
     public function __construct(){
         $this->middleware('auth');
+        $this->F = new FuncionesController();
     }
 
     public function subirArchivoBase(Request $request)
@@ -29,17 +32,12 @@ class StorageExternosController extends Controller
                 return redirect('archivos-config')
                     ->withErrors($validator)
                     ->withInput();
-
             }
             $file = $request->file('base_file');
             $ext = $file->extension();
             $fileName = "base." . $ext;
 
             Storage::disk('externo')->put($fileName, File::get($file));
-
-//            Storage::putFileAs(
-//                'externo', $request->file('base_file'), $fileName
-//            );
 
             return redirect($this->redirectTo);
 
@@ -48,5 +46,19 @@ class StorageExternosController extends Controller
         }
 
     }
+
+    public function quitarArchivoBase($driver,$archivo)
+    {
+        Storage::disk($driver)->delete($archivo);
+        $e1 = Storage::disk($driver)->exists($archivo);
+        if ($e1) {
+            Storage::disk($driver)->delete($archivo);
+        }
+        return redirect($this->redirectTo);
+
+    }
+
+
+
 
 }

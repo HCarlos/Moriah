@@ -189,7 +189,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('producto/existencias-excel','Externos\ExcelController@show')->name('productoExistenciaList');
     Route::get('archivos-config','Externos\ExcelController@archivos_config')->name('archivosConfig/');
     Route::post('subirArchivoBase/', 'Storage\StorageExternosController@subirArchivoBase')->name('subirArchivoBase/');
-
+    Route::get('quitarArchivoBase/{driver}/{archivo}', 'Storage\StorageExternosController@quitarArchivoBase')->name('quitarArchivoBase/');
 //    Route::get('storage/excel/{filename}',function () {
 //        return view('/home');
 //    });

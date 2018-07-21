@@ -23,8 +23,8 @@ class ExcelController extends Controller
         $C = $C0;
 
         // Extrension File;
-        $extension = "Xls";
-        $ext_fila  = "xls";
+        $extension = "Xlsx";
+        $ext_fila  = "xlsx";
         try {
             $archivo =  ImportFileController::getFileExistencias($ext_fila);
             $reader = IOFactory::createReader($extension);

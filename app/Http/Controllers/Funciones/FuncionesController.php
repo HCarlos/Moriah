@@ -94,7 +94,7 @@ class FuncionesController extends Controller
     }
 
     public function deleteImages($model,$storage){
-        $ext = ['jpg','jpeg','gif','png'];
+        $ext = ['jpg','jpeg','gif','png','xls','xlsx','doc','docx','ppt','pptx','txt','mp4'];
         for ($i=0;$i<4;$i++){
             $p1 = $model->id.'.'.$ext[$i];
             $e1 = Storage::disk($storage)->exists($p1);
