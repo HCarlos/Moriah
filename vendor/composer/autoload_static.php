@@ -86,6 +86,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'Predis\\' => 7,
+            'Picqer\\Barcode\\' => 15,
             'PhpParser\\' => 10,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
@@ -299,6 +300,10 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Predis\\' => 
         array (
             0 => __DIR__ . '/..' . '/predis/predis/src',
+        ),
+        'Picqer\\Barcode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/picqer/php-barcode-generator/src',
         ),
         'PhpParser\\' => 
         array (
@@ -579,6 +584,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Controllers\\MailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MailController.php',
         'App\\Http\\Controllers\\MapController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MapController.php',
         'App\\Http\\Controllers\\Multimedia\\BusquedaMultimediaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Multimedia/BusquedaMultimediaController.php',
+        'App\\Http\\Controllers\\PDF_EAN13' => __DIR__ . '/../..' . '/app/Http/Controllers/Classes/PDF_EAN13.php',
         'App\\Http\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PageController.php',
         'App\\Http\\Controllers\\SIIFAC\\AlmacenController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/AlmacenController.php',
         'App\\Http\\Controllers\\SIIFAC\\CompraController' => __DIR__ . '/../..' . '/app/Http/Controllers/SIIFAC/CompraController.php',
@@ -3969,6 +3975,17 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'PhpParser\\Parser\\Tokens' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Parser/Tokens.php',
         'PhpParser\\PrettyPrinterAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
         'PhpParser\\PrettyPrinter\\Standard' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
+        'Picqer\\Barcode\\BarcodeGenerator' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/BarcodeGenerator.php',
+        'Picqer\\Barcode\\BarcodeGeneratorHTML' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/BarcodeGeneratorHTML.php',
+        'Picqer\\Barcode\\BarcodeGeneratorJPG' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/BarcodeGeneratorJPG.php',
+        'Picqer\\Barcode\\BarcodeGeneratorPNG' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/BarcodeGeneratorPNG.php',
+        'Picqer\\Barcode\\BarcodeGeneratorSVG' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/BarcodeGeneratorSVG.php',
+        'Picqer\\Barcode\\Exceptions\\BarcodeException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/BarcodeException.php',
+        'Picqer\\Barcode\\Exceptions\\InvalidCharacterException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidCharacterException.php',
+        'Picqer\\Barcode\\Exceptions\\InvalidCheckDigitException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidCheckDigitException.php',
+        'Picqer\\Barcode\\Exceptions\\InvalidFormatException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidFormatException.php',
+        'Picqer\\Barcode\\Exceptions\\InvalidLengthException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidLengthException.php',
+        'Picqer\\Barcode\\Exceptions\\UnknownTypeException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/UnknownTypeException.php',
         'Predis\\Autoloader' => __DIR__ . '/..' . '/predis/predis/src/Autoloader.php',
         'Predis\\Client' => __DIR__ . '/..' . '/predis/predis/src/Client.php',
         'Predis\\ClientContextInterface' => __DIR__ . '/..' . '/predis/predis/src/ClientContextInterface.php',

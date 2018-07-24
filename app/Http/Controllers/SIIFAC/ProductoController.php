@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\Exceptions\BarcodeException;
 
 class ProductoController extends Controller
 {
@@ -37,7 +39,7 @@ class ProductoController extends Controller
         if ( $page ) $npage = $page;
 
         $this->tableName = 'productos';
-        $items = Producto::select('id','clave','codigo','descripcion','pv','exist','empresa_id','almacen_id','familia_producto_id','medida_id','filename')
+        $items = Producto::select('id','clave','codigo','descripcion','pv','exist','empresa_id','almacen_id','familia_producto_id','medida_id','root','filename')
             ->orderBy('id','desc')
             ->forPage($npage,$this->itemPorPagina)
             ->get();
@@ -97,6 +99,13 @@ class ProductoController extends Controller
         $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $FamProds    = FamiliaProducto::all()->sortBy('descripcion')->pluck('descripcion', 'id');
         $Medidas     = Medida::all()->sortBy('desc1')->pluck('desc1', 'id');
+        $generator = new BarcodeGeneratorPNG();
+        try {
+            $img = base64_encode($generator->getBarcode($items->codigo, $generator::TYPE_EAN_13,5.4,150,array(164,92,92)));
+        } catch (BarcodeException $e) {
+            $img = '';
+        }
+        //dd($img);
 
         return view ($oView.$views,
             [
@@ -109,6 +118,7 @@ class ProductoController extends Controller
                 'Proveedores' => $Proveedores,
                 'FamProds' => $FamProds,
                 'Medidas' => $Medidas,
+                'img' => $img,
             ]
         );
 

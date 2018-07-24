@@ -5,18 +5,9 @@
     @panel
     @slot('titulo','Archivos de configuración')
     @slot('barra_menu')
-
-        {{--<a href="{{ route('usuarioNew', array('idItem' => 0)) }}" class="btn btn-info btn-xs" target="_blank" title="Agregar nuevo registro">--}}
-            {{--<i class="fa fa-plus-circle bigger-150"></i>--}}
-        {{--</a>--}}
-        {{--<a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">--}}
-            {{--<i class="ace-icon fa fa-refresh bigger-150"></i>--}}
-        {{--</a>--}}
-
     @endslot
     @slot('contenido')
         <div class="dataTables_wrapper" role="grid">
-
             <div class="panel panel-default">
                 <div class="panel-heading">Archivo Base (base.xlsx)</div>
                 <div class="panel-body">

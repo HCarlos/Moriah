@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Http\Controllers\PDF_EAN13;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Producto;
 use App\Http\Controllers\Controller;
@@ -72,7 +73,7 @@ class TarjetaMovtosController extends Controller
         $Movs                = Movimiento::all()->where('producto_id',$producto_id)->sortBy('id');
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
 
-        $pdf                 = new FPDF('P','mm','Letter');
+        $pdf                 = new PDF_EAN13('P','mm','Letter');
         $this->producto_name = $Prod->descripcion;
 
         $pdf->AliasNbPages();
@@ -118,7 +119,15 @@ class TarjetaMovtosController extends Controller
             ++$i;
         }
 
+
+        $pdf->SetFillColor(32,32,32);
+        $pdf->SetFont('Arial','',6);
+        $pdf->EAN13(10,$pdf->getY()+10,$Prod->codigo);
+
         $pdf->Ln();
+
+
+
         $pdf->Output();
         exit;
 
