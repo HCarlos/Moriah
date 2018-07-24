@@ -316,3 +316,16 @@ fieldset[disabled] .btn-cafe.active {
 	background-color: #CA7542 !important;
 	border-color: #CA7542;
 }
+
+.character_justify {
+	position: relative;
+	letter-spacing: 0.96em;
+	font-size: 2em;
+	margin: 0;
+	padding: 0;
+}
+.character_justify * {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
