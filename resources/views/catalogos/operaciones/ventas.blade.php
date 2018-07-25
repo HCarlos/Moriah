@@ -87,7 +87,7 @@
                                     <td>NORMAL {{ $venta->TipoVenta }}</td>
                                 @endif
                                 <td>{{ $venta->vendedor->FullName }}</td>
-                                <td class="text-right">{{ $venta->total}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $venta->total}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
@@ -115,12 +115,12 @@
                         <tfoot>
                         <tr>
                             <td colspan="6" class="text-right">
-                                <h3 class="smaller green">
+                                <h3 class="smaller green font_Roboto_Mono_400">
                                     Total $
                                 </h3>
                             </td>
                             <td class="text-right" id="totalVenta">
-                                <h3 class=" smaller orange">
+                                <h3 class=" smaller orange font_Roboto_Mono_400">
                                     {{$totalVentas}}
                                 </h3>
                             </td>

@@ -329,3 +329,30 @@ fieldset[disabled] .btn-cafe.active {
 	padding: 0;
 	border: none;
 }
+
+.font_PT_Sans_Narrow{
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.font_Roboto_400{
+    font-family: 'Roboto', sans-serif;
+    font-weight:400;
+}
+
+.font_Roboto_500{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+.font_Roboto_Mono_400{
+    font-family: 'Roboto Mono', monospace;
+    font-weight:400;
+}
+
+.font_Tangerine_700{
+    font-family: 'Kaushan Script', cursive;
+    font-size: x-large;
+    font-weight: bold;
+    /*text-shadow: 4px 4px 4px #aaa;*/
+}
+

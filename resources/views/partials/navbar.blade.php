@@ -6,8 +6,9 @@
 
     <div class="navbar-container" id="navbar-container">
         <!-- /section:basics/sidebar.mobile.toggle -->
-        <div class="navbar-header pull-left">
-            <img src="{{ asset('assets/img/logo_moriah_160x24.png') }}" width="106" height="45" alt=""/>
+        <div class="navbar-header pull-left " style="margin-bottom: 0;">
+            {{--<img src="{{ asset('assets/img/logo_moriah_160x24.png') }}" width="106" height="45" alt=""/>--}}
+            <h4 class="white font-effect-3d-float font_Tangerine_700">Moriah</h4>
         </div>
 
         <!-- #section:basics/navbar.dropdown -->

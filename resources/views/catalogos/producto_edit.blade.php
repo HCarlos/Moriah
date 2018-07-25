@@ -144,9 +144,9 @@
                     </div>
                     <div  class="span6">
                         <img src="data:image/png;base64, {{$img}} ">
-                        <p class="col-md-6 text-center text-inverse character_justify" >{{$items->codigo}}</p>
+                        <p class="col-md-6 text-center text-inverse character_justify font_PT_Sans_Narrow" >{{$items->codigo}}</p>
                     </div>
-                </div>
+                </div>0
             </div>
         </div>
     </div>

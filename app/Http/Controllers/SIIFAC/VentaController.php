@@ -52,7 +52,7 @@ class VentaController extends Controller
                 'tableName' => 'ventas',
                 'ventas' => $items,
                 'user' => $user,
-                'totalVentas' => $totalVenta,
+                'totalVentas' => number_format($totalVenta,2,'.',',') ,
                 'fecha' => $F->fechaEspanol($f),
             ]
         );

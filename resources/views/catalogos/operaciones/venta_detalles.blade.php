@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label class="sr-only" for="codigo">Código de barras</label>
                             <div class="input-group">
-                                <div class="input-group-addon">Código</div>
+                                <div class="input-group-addon font_Roboto_500">Código</div>
                                 <input type="number" name="codigo" id="codigo" value="" class="form-control" required autofocus/>
                                 {{--<div class="input-group-addon">--}}
                                 {{--</div>--}}
@@ -41,9 +41,9 @@
                         </div>
                         <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
                         <div class="form-group">
-                            <span id="titulo_catalogo" class="bigger-140 marginLeft1em "><strong class="orange2">VENTA <i class="purple">{{$venta_id}}</i></strong> </span>
+                            <span id="titulo_catalogo" class="bigger-140 marginLeft1em "><strong class="orange2 font_PT_Sans_Narrow">VENTA <b class="purple font_Roboto_400">{{$venta_id}}</b></strong> </span>
                         </div>
-                        <h4 class="pull-right"><i class="glyphicon glyphicon-shopping-cart green3"></i> <strong class="orange"> DETALLES DE LA VENTA</strong></h4>
+                        <h4 class="pull-right"><i class="glyphicon glyphicon-shopping-cart green3"></i> <strong class="orange font_PT_Sans_Narrow"> DETALLES DE LA VENTA</strong></h4>
                     </form>
                 </div>
             </div>
@@ -72,13 +72,13 @@
                         @foreach ($venta as $vd)
                             <tr>
                                 <td>{{ $vd->id }}</td>
-                                <td>{{ $vd->codigo }}</td>
+                                <td class="font_Roboto_Mono_400">{{ $vd->codigo }}</td>
                                 <td>{{ $vd->descripcion }}</td>
-                                <td class="text-right">{{ $vd->cantidad}} </td>
-                                <td class="text-right">{{ $vd->pv}} </td>
-                                <td class="text-right">{{ $vd->importe}} </td>
-                                <td class="text-right">{{ $vd->iva}} </td>
-                                <td class="text-right">{{ $vd->total}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->cantidad}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->pv}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->importe}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->iva}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->total}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all']) )
@@ -95,18 +95,13 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="2" class="text-right">
-                                    <h3 class="smaller green">
-                                        Total $
-                                    </h3>
-                                </td>
-                                <td colspan="5" class="text-right">
-                                    <h3 class="smaller green">
+                                <td colspan="7" class="text-right">
+                                    <h3 class="smaller green font_Roboto_Mono_400">
                                         Total $
                                     </h3>
                                 </td>
                                 <td class="text-right" id="totalVenta">
-                                    <h3 class=" smaller orange">
+                                    <h3 class=" smaller orange font_Roboto_Mono_400">
                                     {{$totalVenta}}
                                     </h3>
                                 </td>

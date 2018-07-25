@@ -1,5 +1,5 @@
 @section('scripts_ventas')
-    <script>
+    <script type="javascript">
         jQuery(function($) {
             $(document).ready(function() {
                 if ( $(".btnVentaDetalleNormal") ){

@@ -12,14 +12,14 @@ use FPDF;
 
 class PDF_EAN13 extends FPDF
 {
-    function EAN13($x, $y, $barcode, $h=16, $w=.35)
+    function EAN13($x, $y, $barcode, $h=16, $w=.35,$titulo="",$precio=0)
     {
-        $this->Barcode($x,$y,$barcode,$h,$w,13);
+        $this->Barcode($x,$y,$barcode,$h,$w,13,$titulo,$precio);
     }
 
-    function UPC_A($x, $y, $barcode, $h=16, $w=.35)
+    function UPC_A($x, $y, $barcode, $h=16, $w=.35,$titulo="",$precio=0)
     {
-        $this->Barcode($x,$y,$barcode,$h,$w,12);
+        $this->Barcode($x,$y,$barcode,$h,$w,12,$titulo,$precio);
     }
 
     function GetCheckDigit($barcode)
@@ -47,7 +47,7 @@ class PDF_EAN13 extends FPDF
         return ($sum+$barcode[12])%10==0;
     }
 
-    function Barcode($x, $y, $barcode, $h, $w, $len)
+    function Barcode($x, $y, $barcode, $h, $w, $len,$titulo,$precio)
     {
         //Padding
         $barcode=str_pad($barcode,$len-1,'0',STR_PAD_LEFT);
@@ -97,8 +97,11 @@ class PDF_EAN13 extends FPDF
                 $this->Rect($x+$i*$w,$y,$w,$h,'F');
         }
         //Print text uder barcode
+        $this->SetFont('Arial','',7);
+        $this->Text($x,$y+$h+7/$this->k,substr($barcode,-$len));
+        $this->Text($x,$y+$h+16/$this->k,substr($titulo,-$len));
         $this->SetFont('Arial','',11);
-        $this->Text($x,$y+$h+11/$this->k,substr($barcode,-$len));
+        $this->Text($x,$y+$h+30/$this->k,substr($precio,-$len));
     }
 
 }

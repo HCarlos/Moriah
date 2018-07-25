@@ -33,6 +33,7 @@ return array(
     'App\\Http\\Controllers\\ComponentController' => $baseDir . '/app/Http/Controllers/Admin/ComponentController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Excel\\ImportFileController' => $baseDir . '/app/Http/Controllers/Excel/ImportFileController.php',
+    'App\\Http\\Controllers\\Externos\\BarCodeController' => $baseDir . '/app/Http/Controllers/Externos/BarCodeController.php',
     'App\\Http\\Controllers\\Externos\\ExcelController' => $baseDir . '/app/Http/Controllers/Externos/ExcelController.php',
     'App\\Http\\Controllers\\Externos\\ExistenciasController' => $baseDir . '/app/Http/Controllers/Externos/ExistenciasController.php',
     'App\\Http\\Controllers\\Externos\\TarjetaMovtosController' => $baseDir . '/app/Http/Controllers/Externos/TarjetaMovtosController.php',

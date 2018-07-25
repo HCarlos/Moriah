@@ -36,13 +36,13 @@
                         @foreach ($compra as $vd)
                             <tr>
                                 <td>{{ $vd->id }}</td>
-                                <td>{{ $vd->codigo }}</td>
+                                <td class="font_Roboto_Mono_400">{{ $vd->codigo }}</td>
                                 <td>{{ $vd->producto->descripcion }}</td>
-                                <td class="text-right">{{ $vd->entrada}} </td>
-                                <td class="text-right">{{ $vd->pu}} </td>
-                                <td class="text-right">{{ $vd->importe}} </td>
-                                <td class="text-right">{{ $vd->iva}} </td>
-                                <td class="text-right">{{ $vd->saldo}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->entrada}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->pu}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->importe}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->iva}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->saldo}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all']) )
@@ -57,18 +57,13 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="2" class="text-right">
-                                    <h3 class="smaller green">
-                                        Total $
-                                    </h3>
-                                </td>
-                                <td colspan="5" class="text-right">
-                                    <h3 class="smaller green">
+                                <td colspan="7" class="text-right">
+                                    <h3 class="smaller green font_Roboto_Mono_400">
                                         Total $
                                     </h3>
                                 </td>
                                 <td class="text-right" id="totalCompra">
-                                    <h3 class=" smaller orange">
+                                    <h3 class=" smaller orange font_Roboto_Mono_400">
                                     {{$totalCompra}}
                                     </h3>
                                 </td>
