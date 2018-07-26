@@ -82,6 +82,7 @@ class PDF_EAN13 extends FPDF
             '8'=>array('A','B','A','B','B','A'),
             '9'=>array('A','B','B','A','B','A')
         );
+        $xInit = $this->getX();
         $code='101';
         $p=$parities[$barcode[0]];
         for($i=1;$i<=6;$i++)
@@ -96,12 +97,25 @@ class PDF_EAN13 extends FPDF
             if($code[$i]=='1')
                 $this->Rect($x+$i*$w,$y,$w,$h,'F');
         }
-        //Print text uder barcode
-        $this->SetFont('Arial','',7);
-        $this->Text($x,$y+$h+7/$this->k,substr($barcode,-$len));
-        $this->Text($x,$y+$h+16/$this->k,substr($titulo,-$len));
-        $this->SetFont('Arial','',11);
-        $this->Text($x,$y+$h+30/$this->k,substr($precio,-$len));
+        $this->SetFont('AndaleMono','',7);
+        $titulo = trim(utf8_decode($titulo));
+        $i = 1;
+        while ($this->GetStringWidth($titulo) > 38){
+            $titulo = substr($titulo,0,strlen($titulo)-1);
+            $i++;
+        }
+        if ($i>1) $titulo.="...";
+
+        $w2 = 34;
+        $this->setXY($x,$y+14);
+        $this->Cell($w2,8,$barcode,0,0,'C');
+        $this->setXY($x,$y+17);
+        $this->SetFont('arialn','',8);
+        $this->Cell($w2,8, $titulo,0,0,'C');
+        $this->setXY($x,$y+21);
+        $this->SetFont('times','b',10);
+        $this->Cell($w2,8,trim($precio),0,0,'C');
+
     }
 
 }
