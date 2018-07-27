@@ -1,14 +1,14 @@
 <!-- #section:basics/navbar.layout -->
 <div id="navbar" class="navbar navbar-default">
-    <script type="text/javascript">
-        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
-    </script>
+    {{--<script type="text/javascript">--}}
+        {{--try{ace.settings.check('navbar' , 'fixed')}catch(e){}--}}
+    {{--</script>--}}
 
-    <div class="navbar-container" id="navbar-container">
+    <div class="navbar-container" id="navbar-container" >
         <!-- /section:basics/sidebar.mobile.toggle -->
-        <div class="navbar-header pull-left " style="margin-bottom: 0;">
+        <div class="navbar-header pull-left ">
             {{--<img src="{{ asset('assets/img/logo_moriah_160x24.png') }}" width="106" height="45" alt=""/>--}}
-            <h4 class="white font-effect-3d-float font_Tangerine_700">Moriah</h4>
+            <h4 class="white font-effect-3d-float font_Kaushan_Script_700">Moriah</h4>
         </div>
 
         <!-- #section:basics/navbar.dropdown -->

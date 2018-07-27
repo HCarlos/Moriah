@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/imprimir_existencias/', 'Externos\ExistenciasController@imprimir_existencias')->name('imprimirExistencias/');
     Route::get('/tarjeta_movtos_prod/{producto_id}', 'Externos\TarjetaMovtosController@imprimir_tarjeta_movtos')->name('imprimirTarjetasMovto/');
     Route::get('/imprimir_codigo_barra/{producto_id}', 'Externos\BarCodeController@imprimir_codigo_barra')->name('imprimirCodigoBarra/');
+    Route::get('/imprimir_codigos_de_barras/', 'Externos\BarCodeController@imprimir_todos_codigos_barras')->name('imprimirTodosCodigosBarras/');
 
     // Paquetes
     Route::get('/index_paquete/{npage}/{tpaginas}','SIIFAC\PaqueteController@index')->name('paqueteIndex');

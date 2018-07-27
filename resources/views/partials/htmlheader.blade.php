@@ -5,7 +5,7 @@
     <title>{{ config('app.name') }}</title>
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/font-awesome.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway|PT+Sans+Narrow|Roboto:400,400i,500,500i|Roboto+Mono|Kaushan+Script&effect=3d-float" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|PT+Sans+Narrow|Roboto:400,400i,500,500i|Roboto+Mono|Roboto+Condensed|Kaushan+Script&effect=3d-float" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('/css/ace.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
     <link rel="stylesheet" href="{{ asset('/css/ace-ie.css') }}" />

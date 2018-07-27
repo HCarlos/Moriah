@@ -14,7 +14,7 @@ class Producto extends Model
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'productos';
 
-    protected $fillable = [
+    protected $fillable = ['id',
         'almacen_id','proveedor_id','familia_producto_id','medida_id','clave', 'codigo', 'descripcion',
         'shortdesc',
         'maximo','minimo','isiva','fecha', 'tipo', 'pv', 'porcdescto','inicia_descuento','termina_descuento',

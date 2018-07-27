@@ -5,10 +5,10 @@
 
     @include('partials.navbar')
 
-    <div class="main-container" id="main-container--">
-        <script type="text/javascript">
-            try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-        </script>
+    <div class="main-container ">
+        {{--<script type="text/javascript">--}}
+            {{--try{ace.settings.check('main-container' , 'fixed')}catch(e){}--}}
+        {{--</script>--}}
 
         @include('partials.sidebar')
 
@@ -20,15 +20,16 @@
             	    @yield('main-content')
                 </div>
                 <!-- /page-content -->
+
             </div>
             <!-- /main-content-inner -->
         </div>
         <!-- /main-content -->
-        @include('partials.modal')
-        @include('partials.footer')
 
     </div>
     <!-- /main-container -->
+    @include('partials.modal')
+    @include('partials.footer')
 
     @include('partials.scripts')
 

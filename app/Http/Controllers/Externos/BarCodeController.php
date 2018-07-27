@@ -20,7 +20,7 @@ class BarCodeController extends Controller
         $pdf->setY(10);
         $pdf->setX(10);
         $pdf->SetTextColor(0,0,0);
-
+        $pdf->SetFillColor(192,192,192);
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
@@ -48,28 +48,24 @@ class BarCodeController extends Controller
         $pdf->setX(10);
     }
 
-    public function imprimir_todos_codigos_barras()
+    protected function imprimir($pdf,$Prod, $final=false)
     {
-    }
-    public function imprimir_codigo_barra($producto_id)
-    {
-        $Prod                = Producto::find($producto_id);
 
-        $pdf                 = new PDF_EAN13('P','mm','Letter');
         $this->producto_name = $Prod->shortdesc;
         $this->codigo        = $Prod->codigo;
         $this->pv            = $Prod->pv;
 
-
         $pdf->AliasNbPages();
-        $pdf->SetFillColor(192,192,192);
         $this->header($pdf);
         $this->alto  = 8;
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
-        $c= 0;
-        $x = 17.5;
-        $y = $pdf->getY()+10;
+        $c  = 0;
+        $ln = 1;
+        $x  = 17.5;
+        $y  = $pdf->getY()+10;
+        $xi = $x;
+        $yi = $y;
         for ($i = 1; $i <= $Prod->exist; $i++){
             $pdf->SetFillColor(212,212,212);
             $pdf->Rect($x-7.5,$y-5,49,35,'');
@@ -81,10 +77,19 @@ class BarCodeController extends Controller
                 $pdf->setY( $y+35 );
                 $y = $pdf->getY();
                 $c=0;
+                $ln++;
             }else{
                 $pdf->setX($x+49);
                 $x = $pdf->getX();
                 $c++;
+            }
+
+            if ($ln == 4 ){
+                $this->header($pdf);
+                $x = $xi;
+                $y = $yi;
+
+                $ln = 1;
             }
 
             //$pdf->Ln(30);
@@ -92,7 +97,36 @@ class BarCodeController extends Controller
 
         $pdf->Ln();
 
-        $pdf->Output();
+        if ($final){
+            $pdf->Output();
+        }
+
+    }
+
+    public function imprimir_todos_codigos_barras()
+    {
+        $pdf = new PDF_EAN13('P','mm','Letter');
+        $Prods = Producto::all();
+        $i = 0;
+        $j = $Prods->count();
+//        dd($j);
+        foreach ($Prods as $prod){
+            $i++;
+            if ( $i >= $j ) {
+                $this->imprimir($pdf, $prod, true);
+            }else{
+                $this->imprimir($pdf, $prod,false);
+            }
+        }
+        exit;
+    }
+
+    public function imprimir_codigo_barra($producto_id)
+    {
+        $pdf  = new PDF_EAN13('P','mm','Letter');
+        $Prod = Producto::find($producto_id);
+
+        $this->imprimir($pdf, $Prod,true);
         exit;
 
     }

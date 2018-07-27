@@ -16,7 +16,9 @@
 
     <title>{{ config('app.name') }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Raleway|Roboto+Condensed|Tangerine&effect=3d-float" rel="stylesheet">
+    <link href="{{ asset('css/my_style_sheet.css') }}" rel="stylesheet">
+
     <style>
         html, body {
             background-color: #fff;
@@ -77,6 +79,7 @@
 
 <body>
     <div class="flex-center position-ref full-height">
+
         @if (Route::has('login'))
             <div class="top-right links">
                 @auth
@@ -92,9 +95,13 @@
             </div>
         @endif
 
-        <div class="content">
-            <img src="{{asset('assets/img/moriah_logo_1.png')}}" /><br/>
+        <div class="content" style="margin-top: -12em;">
+            <h1 class="text-cafe  font-effect-3d-float font_Tangerine_700" style="font-size: 10em; ">Moriah</h1>
+            <h2 class="text-inverse text-center font_Roboto_Condensed_400" style="margin-top: -5em; ">Punto de Venta y Control de Inventario</h2>
+            <h3 class="text-inverse text-center font_Open_Sans_Condensed_expanded_300" style="margin-top: -1em;">SOFTWARE</h3>
         </div>
+        <p class="wellcome-pos-version font_Open_Sans_Condensed_300">v 1.0</p>
+        <p class="wellcome-pos-twitter ">by <a href="https://twitter.com/DevCH" target="_blank" class="font_Roboto_Condensed_400">@DevCH</a></p>
     </div>
 </body>
 </html>

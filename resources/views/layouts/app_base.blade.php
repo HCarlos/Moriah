@@ -16,7 +16,7 @@
 
     <title>{{ config('app.name') }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|PT+Sans+Narrow|Roboto:400,400i,500,500i|Roboto+Mono|Roboto+Condensed|Kaushan+Script&effect=3d-float" rel="stylesheet">
     <link href="{{ asset('assets/css_/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -29,8 +29,8 @@
 <div id="app">
     <nav class="navbar navbar-expand navbar-light navbar-laravel navbar-moriah">
         {{--<div class="container">--}}
-        <a class="navbar-brand title-app-moriah  pull-left" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+        <a class="navbar-brand  pull-left"  style="margin-top: 0;" href="{{ url('/') }}">
+            <span class="white font-effect-3d-float font_Kaushan_Script_700">Moriah</span>
         </a>
 
         <div class="collapse navbar-collapse " id="navbarSupportedContent">

@@ -33,7 +33,7 @@ $(document).ready(function() {
         @endif
     }
 
-    var H0 = document.body.clientHeight + 145;
+    var H0 = document.body.clientHeight -100;
     $(".sidebar").css('height',H0);
 
     $(".nav-list li").removeClass("active");

@@ -17,6 +17,9 @@
         <a href="{{ route('productoExistenciaList')  }}" class="btn bt1n-small btn-cafe no-border btn-xs" title="Imprimir Excel" >
             <i class="ace-icon fa fa-print bigger-150 "></i>
         </a>
+        <a href="{{ route('imprimirTodosCodigosBarras/')  }}" class="btn bt1n-small btn-primary no-border btn-xs" title="Imprimir Códigos de Barra" target="_blank">
+            <i class="ace-icon fa fa-barcode bigger-150 "></i>
+        </a>
         <a href="#" class="btn bt1n-small btn-inverse no-border btn-xs pull-right " title="Actualizar" id="btnRefreshNavigator">
             <i class="ace-icon fa fa-refresh bigger-150"></i>
         </a>

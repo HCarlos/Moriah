@@ -217,8 +217,13 @@ ul.role-list-hrz li a {
 	background-color: lightcoral !important;
 	color: white;
 }
-.texto-black{
+
+.text-black{
 	color: black !important;
+}
+
+.text-cafe{
+	color: #7b3f25;
 }
 
 .title-app-moriah{
@@ -349,10 +354,47 @@ fieldset[disabled] .btn-cafe.active {
     font-weight:400;
 }
 
-.font_Tangerine_700{
+.font_Roboto_Condensed_400{
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight:400;
+}
+
+.font_Kaushan_Script_700{
     font-family: 'Kaushan Script', cursive;
     font-size: x-large;
     font-weight: bold;
     /*text-shadow: 4px 4px 4px #aaa;*/
 }
 
+.font_Tangerine_700{
+	font-family: 'Tangerine', cursive;
+	font-size: xx-large;
+	font-weight: bold;
+	/*text-shadow: 4px 4px 4px #aaa;*/
+}
+
+.font_Open_Sans_Condensed_300{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 300;
+    text-align: center;
+}
+
+.font_Open_Sans_Condensed_expanded_300{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 300;
+    letter-spacing: 2em;
+    text-align: center;
+    text-indent: 2em;
+}
+
+.font_Raleway_400{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+
+.wellcome-pos-twitter{
+	position: absolute; top: 94%; left: 91%;
+}
+.wellcome-pos-version{
+    position: absolute; top: 94%; left: 3%;
+}
