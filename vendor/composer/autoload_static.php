@@ -576,6 +576,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Excel\\ImportFileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Excel/ImportFileController.php',
         'App\\Http\\Controllers\\Externos\\BarCodeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/BarCodeController.php',
+        'App\\Http\\Controllers\\Externos\\CorteCajaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/CorteCajaController.php',
         'App\\Http\\Controllers\\Externos\\ExcelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/ExcelController.php',
         'App\\Http\\Controllers\\Externos\\ExistenciasController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/ExistenciasController.php',
         'App\\Http\\Controllers\\Externos\\TarjetaMovtosController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/TarjetaMovtosController.php',

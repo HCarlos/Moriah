@@ -111,7 +111,25 @@
                 @endrole
             </ul>
         </li>
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-info"></i>
+                <span class="menu-text"> Reportes </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
 
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                <li>
+                    <a href="{{ route('panelConsulta1') }}">
+                        <i class="menu-icon fa fa-search"></i>
+                        Consultas
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
     </ul><!-- /.nav-list -->
 
     <!-- #section:basics/sidebar.layout.minimize -->

@@ -18,7 +18,7 @@ class Movimiento extends Model
 
     protected $fillable = [
         'id',
-        'user_id', 'venta_id', 'venta_detalle_id', 'compra_id', 'producto_id','paquete_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
+        'user_id', 'cliente_id', 'venta_id', 'venta_detalle_id', 'compra_id', 'producto_id','paquete_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
         'folio', 'clave', 'codigo', 'ejercicio', 'periodo', 'fecha', 'foliofac', 'nota', 'entrada',
         'salida', 'exlocal', 'existencia', 'pu', 'cu', 'debe', 'haber', 'descto', 'importe', 'iva', 'sllocal', 'saldo',
         'tipo', 'status', 'tipoinv','empresa_id',
@@ -33,6 +33,16 @@ class Movimiento extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function clientes()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function venta()
@@ -140,10 +150,13 @@ class Movimiento extends Model
     public static function agregarDesdeVentaDetalle($Vd)
     {
         $Prod = Producto::findOrFail($Vd->producto_id);
+        $Venta = Venta::findOrFail($Vd->venta_id);
         $Existencia = $Prod->exist - $Vd->cantidad;
         $Fecha = Carbon::now();
+        $user = Auth::User();
         $Mov  =  static::create([
-            'user_id'          => $Vd->user_id,
+            'user_id'          => $Venta->vendedor_id,
+            'cliente_id'       => $Vd->user_id,
             'venta_id'         => $Vd->venta_id,
             'venta_detalle_id' => $Vd->id,
             'producto_id'      => $Prod->id,
@@ -176,7 +189,8 @@ class Movimiento extends Model
         $Prod->exist = $Existencia;
         $Prod->save();
 
-        $Mov->users()->attach($Vd->user_id);
+        $Mov->users()->attach($Venta->vendedor_id);
+        $Mov->clientes()->attach($Vd->user_id);
         $Mov->empresas()->attach($Vd->empresa_id);
 //        $Mov->ventas()->attach($Vd->venta_id);
         $Mov->productos()->attach($Prod->id);
@@ -190,18 +204,19 @@ class Movimiento extends Model
 
     public static function agregarDesdeCompraDetalle($Comp, $Prod, $data)
     {
-        $Fecha = Carbon::now();
-        $user  = Auth::user();
-        $cu           = $data['cu'];
-        $cantidad     = $data['cantidad'];
-        $existencia   = $Prod->exist;
-        $saldo        = $cu * $cantidad;
+        $Fecha      = Carbon::now();
+        $user       = Auth::user();
+        $cu         = $data['cu'];
+        $cantidad   = $data['cantidad'];
+        $existencia = $Prod->exist;
+        $saldo      = $cu * $cantidad;
 
         $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
         $total = $saldo + $iva;
 
         $Mov  =  static::create([
             'user_id'          => $user->id,
+            'cliente_id'       => 1,
             'compra_id'        => $Comp->id,
             'producto_id'      => $Prod->id,
             'empresa_id'       => $Comp->empresa_id,
@@ -248,18 +263,19 @@ class Movimiento extends Model
 
     public static function inventarioInicialDesdeProducto($Prod)
     {
-        $Fecha = Carbon::now();
-        $user  = Auth::user();
-        $cu           = $Prod->cu;
-        $cantidad     = $Prod->exist;
-        $existencia   = $Prod->exist;
-        $saldo        = $cu * $cantidad;
+        $Fecha      = Carbon::now();
+        $user       = Auth::user();
+        $cu         = $Prod->cu;
+        $cantidad   = $Prod->exist;
+        $existencia = $Prod->exist;
+        $saldo      = $cu * $cantidad;
 
         $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
         $total = $saldo + $iva;
 
         $Mov  =  static::create([
             'user_id'          => 1,
+            'cliente_id'       => 1,
             'compra_id'        => 0,
             'venta_id'         => 0,
             'producto_id'      => $Prod->id,

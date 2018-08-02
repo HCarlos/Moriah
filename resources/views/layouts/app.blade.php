@@ -28,9 +28,8 @@
 
     </div>
     <!-- /main-container -->
-    @include('partials.modal')
     @include('partials.footer')
-
+    @include('partials.modal')
     @include('partials.scripts')
 
 </body>

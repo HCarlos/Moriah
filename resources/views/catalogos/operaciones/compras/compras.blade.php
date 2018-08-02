@@ -45,7 +45,7 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="#" class="btn btn-link pull-right btnAction2" id ="compra-{{$compra->id.'-0-0'}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-110 red" ></i>
                                             </a>

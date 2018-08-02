@@ -102,7 +102,7 @@ class User extends Authenticatable
     }
 
     public function ventas(){
-        return $this->hasMany(Venta::class);
+        return $this->belongsToMany(Venta::class);
     }
 
     public function isAdmin(){

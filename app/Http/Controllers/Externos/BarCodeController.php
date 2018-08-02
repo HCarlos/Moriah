@@ -15,7 +15,7 @@ class BarCodeController extends Controller
     protected $codigo        = "";
     protected $pv            = "";
 
-    public function header($pdf){
+    protected function header($pdf){
         $pdf->AddPage();
         $pdf->setY(10);
         $pdf->setX(10);
@@ -57,15 +57,16 @@ class BarCodeController extends Controller
 
         $pdf->AliasNbPages();
         $this->header($pdf);
-        $this->alto  = 8;
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
+
         $c  = 0;
         $ln = 1;
         $x  = 17.5;
-        $y  = $pdf->getY()+10;
+        $y  = $pdf->getY()+9;
         $xi = $x;
         $yi = $y;
+
         for ($i = 1; $i <= $Prod->exist; $i++){
             $pdf->SetFillColor(212,212,212);
             $pdf->Rect($x-7.5,$y-5,49,35,'');
@@ -84,23 +85,19 @@ class BarCodeController extends Controller
                 $c++;
             }
 
-            if ($ln == 4 ){
+            if ($ln == 7 ){
                 $this->header($pdf);
                 $x = $xi;
                 $y = $yi;
-
                 $ln = 1;
             }
 
-            //$pdf->Ln(30);
         }
 
         $pdf->Ln();
-
         if ($final){
             $pdf->Output();
         }
-
     }
 
     public function imprimir_todos_codigos_barras()
@@ -109,13 +106,12 @@ class BarCodeController extends Controller
         $Prods = Producto::all();
         $i = 0;
         $j = $Prods->count();
-//        dd($j);
         foreach ($Prods as $prod){
             $i++;
             if ( $i >= $j ) {
                 $this->imprimir($pdf, $prod, true);
             }else{
-                $this->imprimir($pdf, $prod,false);
+                $this->imprimir($pdf, $prod);
             }
         }
         exit;

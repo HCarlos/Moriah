@@ -45,7 +45,7 @@
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->saldo}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="compra_detalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>

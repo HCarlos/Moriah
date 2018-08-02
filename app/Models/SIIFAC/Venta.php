@@ -58,7 +58,7 @@ class Venta extends Model
     }
 
     public function vendedor(){
-        return $this->belongsTo(User::class,'vendedor_id');
+        return $this->belongsTo(Vendedor::class,'vendedor_id');
     }
 
     public function vendedores(){
@@ -83,6 +83,10 @@ class Venta extends Model
 
     public function getTipoVentaAttribute() {
         return $this->attributes['tipoventa'] == 0 ? 'Contado' : 'Crédito';
+    }
+
+    public function getTipoDeVentaAttribute() {
+        return $this->attributes['tipoventa'] == 0 ? 0 : 1;
     }
 
     public function isCredito(){

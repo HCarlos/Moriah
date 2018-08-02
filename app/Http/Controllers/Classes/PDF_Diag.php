@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Classes;
 
-use PDF_Sector;
+use App\Http\Controllers\Classes\PDF_Sector;
 
 class PDF_Diag extends PDF_Sector
 {

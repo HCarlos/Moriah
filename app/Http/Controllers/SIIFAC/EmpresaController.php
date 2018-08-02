@@ -162,9 +162,6 @@ class EmpresaController extends Controller
             return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$alma->id.']', 'data' => 'Error', 'status' => '200'], 200);
         }
 
-//        $res = $alma?'ok':'no';
-//        return Response::json(['mensaje' => 'No se puede eliminar el registro '.$res, 'data' => '$alma', 'status' => '200'], 200);
-
     }
 
 

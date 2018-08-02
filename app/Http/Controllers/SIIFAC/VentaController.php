@@ -219,9 +219,9 @@ class VentaController extends Controller
     public function call_pagar_venta_ajax($venta_id)
     {
         $oView = 'catalogos.operaciones.';
-        $views  = 'pagar_venta_ajax';
+        $views = 'pagar_venta_ajax';
         $venta = Venta::findOrFail($venta_id);
-            $user = Auth::User();
+        $user  = Auth::User();
         return view ($oView.$views,
             [
                 'user'     => $user,
@@ -234,13 +234,13 @@ class VentaController extends Controller
     }
     public function pagar_venta_ajax(Request $request)
     {
-        $data = $request->all();
+        $data         = $request->all();
         $total        = $data['total'];
         $total_pagado = $data['total_pagado'];
         $metodo_pago  = $data['metodo_pago'];
         $referencia   = $data['referencia'];
         $venta_id     = $data['venta_id'];
-        $mensaje = "OK";
+        $mensaje      = "OK";
         Venta::pagarVenta($venta_id,$total,$total_pagado,$metodo_pago,$referencia);
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }

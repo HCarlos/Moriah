@@ -82,6 +82,18 @@ class FuncionesController extends Controller
         return $f[2].'-'.$f[1].'-'.$f[0];
     }
 
+    public function fechaEspanolComplete($f,$type=false){
+        $f = explode('-',substr($f,0,10));
+        $f =  $f[2].'-'.$f[1].'-'.$f[0];
+        return !$type ? $f.' 00:00:00' : $f.' 23:59:59';
+    }
+
+    public function fechaDateTimeFormat($f,$type=false){
+        $f = explode('-',substr($f,0,10));
+        $f = $f[0].'-'.$f[1].'-'.$f[2];
+        return !$type ? $f.' 00:00:00' : $f.' 23:59:59';
+    }
+
     public function validImage($model, $storage, $root){
         $ext = ['jpg','jpeg','gif','png'];
         for ($i=0;$i<4;$i++){

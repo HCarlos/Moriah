@@ -91,7 +91,7 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
-                                        @if ($user->hasAnyPermission(['consultar','all']) )
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             @if( !$venta->isPagado() )
                                             <a href="#" class="btn btn-link pull-right btnAction2" id ="venta-{{$venta->id.'-0-0'}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-110 red" ></i>
