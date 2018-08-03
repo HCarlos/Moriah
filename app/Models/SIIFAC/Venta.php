@@ -233,6 +233,10 @@ class Venta extends Model
         $Ven->status_venta = 2;
         $Ven->save();
 
+        Ingreso::pagar($venta_id,$total_pagado,$metodo_pago,$referencia,0);
+
+        return $Ven;
+
     }
 
 

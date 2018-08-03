@@ -317,21 +317,18 @@ class CreateSiifacTables extends Migration
         Schema::create($tableNames['ingresos'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('cuenta_por_cobrar_id')->default(0);
-            $table->string('cuenta',16)->default('');
-            $table->unsignedInteger('folio')->default(0);
-            $table->unsignedInteger('num')->default(0);
-            $table->string('foliofac',12)->default('');
+            $table->integer('cliente_id');
+            $table->integer('vendedor_id');
+            $table->integer('nota_credito_id');
+            $table->dateTime('f_vencimiento')->nullable();
             $table->dateTime('f_pagado')->nullable();
+            $table->unsignedSmallInteger('metodo_pago')->default(0)->nullable();
+            $table->string('referencia',250)->default('')->nullable();
             $table->decimal('subtotal',10,2)->default(0)->nullable();
             $table->decimal('iva',10,2)->default(0)->nullable();
             $table->decimal('total',10,2)->default(0)->nullable();
-            $table->unsignedTinyInteger('tipo')->default(0);
-            $table->unsignedTinyInteger('origen')->default(0);
-            $table->string('banco',15)->default('');
-            $table->string('cheque',15)->default('');
-            $table->dateTime('fc_aplica')->nullable();
-            $table->unsignedInteger('nota_credito')->default(0);
+            $table->unsignedTinyInteger('tipoventa')->default(0)->nullable();
+            $table->dateTime('fecha')->nullable();
             $table->unsignedInteger('empresa_id')->default(0)->nullable();
             $table->unsignedSmallInteger('status_ingreso')->default(1)->nullable();
             $table->unsignedSmallInteger('idemp')->default(1)->nullable();
@@ -340,9 +337,9 @@ class CreateSiifacTables extends Migration
             $table->softDeletes();
             $table->timestamps();
             $table->index('user_id');
-            $table->index('cuenta_por_cobrar_id');
-            $table->index('cuenta');
-            $table->index('folio');
+            $table->index('cliente_id');
+            $table->index('vendedor_id');
+            $table->index('nota_credito_id');
             $table->index('empresa_id');
 
             $table->foreign('empresa_id')
@@ -356,9 +353,14 @@ class CreateSiifacTables extends Migration
                 ->on($tableNames['users'])
                 ->onDelete('cascade');
 
-            $table->foreign('cuenta_por_cobrar_id')
+            $table->foreign('cliente_id')
                 ->references('id')
-                ->on($tableNames['cuentas_por_cobrar'])
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+
+            $table->foreign('vendedor_id')
+                ->references('id')
+                ->on($tableNames['users'])
                 ->onDelete('cascade');
 
         });
@@ -381,6 +383,67 @@ class CreateSiifacTables extends Migration
                 ->on($tableNames['users'])
                 ->onDelete('cascade');
         });
+
+        Schema::create($tableNames['ingreso_cliente'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('cliente_id');
+            $table->integer('ingreso_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['ingreso_id', 'cliente_id']);
+
+            $table->foreign('ingreso_id')
+                ->references('id')
+                ->on($tableNames['ingresos'])
+                ->onDelete('cascade');
+
+            $table->foreign('cliente_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+        });
+
+        Schema::create($tableNames['cliente_ingreso'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('cliente_id');
+            $table->integer('ingreso_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['ingreso_id', 'cliente_id']);
+
+            $table->foreign('ingreso_id')
+                ->references('id')
+                ->on($tableNames['ingresos'])
+                ->onDelete('cascade');
+
+            $table->foreign('cliente_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+        });
+
+
+
+        Schema::create($tableNames['ingreso_vendedor'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('vendedor_id');
+            $table->integer('ingreso_id');
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['ingreso_id', 'vendedor_id']);
+
+            $table->foreign('ingreso_id')
+                ->references('id')
+                ->on($tableNames['ingresos'])
+                ->onDelete('cascade');
+
+            $table->foreign('vendedor_id')
+                ->references('id')
+                ->on($tableNames['users'])
+                ->onDelete('cascade');
+
+        });
+
 
         Schema::create($tableNames['ingreso_cuenta_por_cobrar'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
@@ -1906,6 +1969,9 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['cuenta_por_cobrar_user']);
         Schema::dropIfExists($tableNames['ingreso_user']);
         Schema::dropIfExists($tableNames['ingreso_cuenta_por_cobrar']);
+        Schema::dropIfExists($tableNames['ingreso_cliente']);
+        Schema::dropIfExists($tableNames['cliente_ingreso']);
+        Schema::dropIfExists($tableNames['ingreso_vendedor']);
         Schema::dropIfExists($tableNames['almacen_producto']);
         Schema::dropIfExists($tableNames['almacen_empresa']);
         Schema::dropIfExists($tableNames['familia_producto_producto']);
