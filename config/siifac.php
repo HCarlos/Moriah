@@ -24,6 +24,7 @@ return [
         'ingreso_cliente' => 'ingreso_cliente',
         'cliente_ingreso' => 'cliente_ingreso',
         'ingreso_vendedor' => 'ingreso_vendedor',
+        'ingreso_venta' => 'ingreso_venta',
         'medidas' => 'medidas',
         'productos' => 'productos',
         'producto_medida' => 'producto_medida',

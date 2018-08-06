@@ -15,9 +15,9 @@ class Ingreso extends Model
     protected $table = 'ingresos';
 
     protected $fillable = [
-        'id','user_id','cliente_id','vendedor_id','nota_credito_id','empresa_id','idemp',
+        'id','venta_id','user_id','cliente_id','vendedor_id','nota_credito_id','empresa_id','idemp',
         'f_vencimiento','f_pagado','metodo_pago','referencia','subtotal','iva','total',
-        'status_ingreso','fecha',
+        'status_ingreso','fecha','tipoventa',
     ];
 
     public function users(){
@@ -27,6 +27,15 @@ class Ingreso extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function ventas(){
+        return $this->belongsToMany(Venta::class);
+    }
+
+    public function venta(){
+        return $this->belongsTo(Venta::class);
+    }
+
 
 //    public function empresas(){
 //        return $this->belongsToMany(Empresa::class);
@@ -52,6 +61,10 @@ class Ingreso extends Model
         return $this->belongsTo(Vendedor::class);
     }
 
+    public function scopeAbonos($query,$venta_id) {
+        return $query->where('venta_id',$venta_id)->sum('total');
+    }
+
     public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id=0)
     {
         $user = Auth::user();
@@ -61,6 +74,7 @@ class Ingreso extends Model
 
         $Ing   =  static::create([
             'fecha'           => now(),
+            'venta_id'        => $venta_id,
             'user_id'         => $user_id,
             'cliente_id'      => $Ven->user_id,
             'vendedor_id'     => $Ven->vendedor_id,
@@ -72,10 +86,10 @@ class Ingreso extends Model
             'subtotal'        => $Ven->subtotal,
             'iva'             => $Ven->iva,
             'total'           => $total_pagado,
-            'tipoventa'       => $Ven->tipoventa,
+            'tipoventa'       => $Ven->TipoDeVenta,
         ]);
 
-//        $Ing->empresas()->attach($Ven->empresa_id);
+        $Ing->ventas()->attach($venta_id);
         $Ing->users()->attach($user_id);
         $Ing->vendedores()->attach($Ven->vendedor_id);
         $Ing->clientes()->attach($Ven->user_id);
@@ -83,6 +97,5 @@ class Ingreso extends Model
         return $Ing;
 
     }
-
 
 }

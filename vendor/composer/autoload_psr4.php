@@ -74,6 +74,7 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'DebugBar\\' => array($vendorDir . '/maximebf/debugbar/src/DebugBar'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
+    'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
     'Collective\\Remote\\' => array($vendorDir . '/laravelcollective/remote/src'),
     'Collective\\Html\\' => array($vendorDir . '/laravelcollective/html/src'),
     'Codedge\\Fpdf\\' => array($vendorDir . '/codedge/laravel-fpdf/src'),

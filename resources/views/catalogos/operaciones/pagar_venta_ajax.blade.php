@@ -18,19 +18,27 @@
             @endif
 
             <div class="form-group row">
-                <label for = "total" class="col-md-3 col-form-label text-md-left">Total</label>
-                <div class="col-md-3">
-                    <input type="text" name="total" id="total" value="{{ old('total',$total) }}" class="form-control" required readonly  {{$venta->isPagado() ? 'disabled' : ''}}/>
+                <label for = "total" class="col-md-1 col-form-label text-md-left">Total</label>
+                <div class="col-md-2">
+                    <input type="text" name="total" id="total" value="{{ old('total',$total) }}" class="form-control" readonly  {{$venta->isPagado() ? 'disabled' : ''}}/>
+                </div>
+                <label for = "total_abonos" class="col-md-1 col-form-label text-md-left">Abonos</label>
+                <div class="col-md-2">
+                    <input type="number" name="total_abonos" id="total_abonos" value="{{ old('total_abonos',$total_abonos) }}" class="form-control" min="1" max="{{$total_abonos}}" readonly  {{$venta->isPagado() ? 'disabled' : ''}} />
+                </div>
+                <label for = "tipoventa" class="col-md-1 col-form-label text-md-left">Tipo</label>
+                <div class="col-md-2">
+                    <input type="text" name="tipoventa" id="tipoventa" value="{{ old('tipoventa',$venta->tipoventa) }}" class="form-control" readonly  {{$venta->isPagado() ? 'disabled' : ''}}/>
 
                 </div>
-                <label for = "total_pagado" class="col-md-3 col-form-label text-md-left">Pago</label>
-                <div class="col-md-3">
-                    <input type="number" name="total_pagado" id="total_pagado" value="{{ old('total',$total) }}" class="form-control" required {{$venta->isPagado() ? 'disabled' : ''}} />
+                <label for = "fechaventa" class="col-md-1 col-form-label text-md-left">Fecha</label>
+                <div class="col-sm-2">
+                    <input type="text" name="fechaventa" id="fechaventa" value="{{ old('fechaventa',$venta->FechaVenta) }}" class="form-control col-sm-2 " readonly  {{$venta->isPagado() ? 'disabled' : ''}}/>
                 </div>
             </div>
             <div class="form-group row">
-                <label for = "metodo_pago" class="col-md-3 col-form-label text-md-left">Metodo Pago</label>
-                <div class="col-md-9">
+                <label for = "metodo_pago" class="col-md-1 col-form-label text-md-left">Método</label>
+                <div class="col-md-4">
                     <select id="metodo_pago" name="metodo_pago" size="1" class="form-control ">
                         <option value="0">Efectivo</option>
                         <option value="1">Cheque Nominativo</option>
@@ -44,11 +52,13 @@
                         <option value="9">Otros</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for = "referencia" class="col-md-3 col-form-label text-md-left">Referencia</label>
-                <div class="col-md-9">
+                <label for = "referencia" class="col-md-1 col-form-label text-md-left">Refer.</label>
+                <div class="col-md-3">
                     <input type="text" name="referencia" id="referencia" value="" class="form-control" autofocus  {{$venta->isPagado() ? 'disabled' : ''}}/>
+                </div>
+                <label for = "total_pagado" class="col-md-1 col-form-label text-md-left">Pago</label>
+                <div class="col-md-2">
+                    <input type="number" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" min="1" max="{{$total_a_pagar}}" required {{$venta->isPagado() ? 'disabled' : ''}} />
                 </div>
             </div>
 
@@ -60,7 +70,8 @@
                     </button>
                 </div>
             </div>
-            <input type="hidden" name="venta_id"    id="venta_id"       value="{{$venta_id}}" />
+            <input type="hidden" name="total_a_pagar" id="total_a_pagar" value="{{$total_a_pagar}}" />
+            <input type="hidden" name="venta_id" id="venta_id" value="{{$venta_id}}" />
         </form>
     </div>
 </div>

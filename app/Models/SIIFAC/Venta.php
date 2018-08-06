@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -95,6 +96,11 @@ class Venta extends Model
 
     public function isContado(){
         return $this->tipoventa == 0 ? true : false;
+    }
+
+    public function getFechaVentaAttribute() {
+        $F = new FuncionesController();
+        return $F->fechaEspanolComplete($this->attributes['fecha'],true);
     }
 
     public function getMetodoPagoAttribute() {
@@ -221,16 +227,18 @@ class Venta extends Model
 
     }
 
-    public static function pagarVenta($venta_id, $total, $total_pagado, $metodo_pago, $referencia)
+    public static function pagarVenta($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia)
     {
         $Ven = static::findOrFail($venta_id);
         $Ven->total_pagado = $total_pagado;
         $Ven->metodo_pago = $metodo_pago;
         $Ven->referencia = $referencia;
-        $Ven->f_pagado = now();
-        $Ven->ispagado = true;
-        $Ven->isimp = true;
-        $Ven->status_venta = 2;
+        if ($total_pagado >= $total_a_pagar){
+            $Ven->f_pagado = now();
+            $Ven->ispagado = true;
+            $Ven->isimp = true;
+            $Ven->status_venta = 2;
+        }
         $Ven->save();
 
         Ingreso::pagar($venta_id,$total_pagado,$metodo_pago,$referencia,0);
