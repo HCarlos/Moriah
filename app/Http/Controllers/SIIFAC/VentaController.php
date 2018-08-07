@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 class VentaController extends Controller
 {
@@ -252,6 +253,52 @@ class VentaController extends Controller
 //        dd($total_pagado);
         Venta::pagarVenta($venta_id,$total_a_pagar,$total_pagado,$metodo_pago,$referencia);
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
+    }
+
+    public function llamar_busquedaIndividual($tipo){
+        switch ($tipo){
+            case 0:
+                $ctipo = 'Venta ID';
+                $ctype = 'Busqueda por Venta ID';
+                break;
+            case 1:
+                $ctipo = 'Cliente';
+                $ctype = 'Busqueda por Cliente';
+                break;
+        }
+        return view (
+            'catalogos.operaciones.busquedas.busqueda_individual',
+            ['tipo'=>$ctipo,'type'=>$tipo,'placeholder'=>$ctype]
+        );
+    }
+
+    public function busquedaIndividual(Request $request)
+    {
+        $data = $request->all();
+        $dato = $data['dato'];
+        $tipo = $data['type'];
+        $user = Auth::User();
+        switch ($tipo){
+            case 0:
+                $items = Venta::all()->where('id',$dato);
+                break;
+            case 1:
+                $items = Venta::BuscarClientePorNombreCompleto($dato);
+                break;
+        }
+
+//        dd($items);
+
+        return view ('catalogos.operaciones.ventas',
+            [
+                'tableName' => 'ventas',
+                'ventas' => $items,
+                'user' => $user,
+                'totalVentas' => 0,
+                'fecha' => $dato,
+            ]
+        );
+
     }
 
     public function destroy($id=0){

@@ -7,6 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Venta extends Model
 {
@@ -101,6 +102,14 @@ class Venta extends Model
     public function getFechaVentaAttribute() {
         $F = new FuncionesController();
         return $F->fechaEspanolComplete($this->attributes['fecha'],true);
+    }
+
+    public function scopeBuscarClientePorNombreCompleto($query,$dato) {
+        $dato = strtoupper($dato);
+        return
+            $this::whereHas('users', function ($q) use($dato) {
+                $q->where(DB::raw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre)") , "similar to" , "%".$dato."%");
+            })->get();
     }
 
     public function getMetodoPagoAttribute() {

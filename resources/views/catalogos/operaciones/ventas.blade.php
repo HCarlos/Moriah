@@ -32,18 +32,31 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
-
                 <div class="form-group  pull-right">
-                    <button type="submit" class="btn btn-mini btn-primary">
+                    <button type="submit" class="btn btn-xs btn-primary">
                         <i class="fa fa-search default"></i>
-                        Consultar
                     </button>
                 </div>
                 <div class="form-group  pull-right">
                     <div class="col-md-3">
                         {{ Form::date('fecha', \Carbon\Carbon::now(), ['id'=>'fecha','class'=>'col-md-3 form-control']) }}
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <div class="dropdown">
+                        <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Opciones
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-0" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Buscar Venta por ID</a></li>
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-1" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Buscar Venta Cliente</a></li>
+                            {{--<li><a href="#">Another action</a></li>--}}
+                            {{--<li><a href="#">Something else here</a></li>--}}
+                            {{--<li role="separator" class="divider"></li>--}}
+                            {{--<li><a href="#">Separated link</a></li>--}}
+                        </ul>
                     </div>
                 </div>
             </form>

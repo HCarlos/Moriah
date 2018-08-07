@@ -136,6 +136,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_venta/{id}', 'SIIFAC\VentaController@destroy')->name('ventaDestroy/');
     Route::get('/form_pagar_venta/{venta_id}', 'SIIFAC\VentaController@call_pagar_venta_ajax')->name('callPagarVentaAjax/');
     Route::post('/pagar_venta_ajax','SIIFAC\VentaController@pagar_venta_ajax')->name('pagarVentaAjax/');
+    Route::get('/llamar_busqueda_individual_ajax/{tipo}','SIIFAC\VentaController@llamar_busquedaIndividual')->name('llamarBusquedaIndividualAjax/');
+    Route::post('/busqueda_individual','SIIFAC\VentaController@busquedaIndividual')->name('busquedaIndividual/');
 
     // Venta_Detalles
     Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');

@@ -36,11 +36,6 @@ class Ingreso extends Model
         return $this->belongsTo(Venta::class);
     }
 
-
-//    public function empresas(){
-//        return $this->belongsToMany(Empresa::class);
-//    }
-
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
@@ -64,6 +59,15 @@ class Ingreso extends Model
     public function scopeAbonos($query,$venta_id) {
         return $query->where('venta_id',$venta_id)->sum('total');
     }
+
+    public function getTipoVentaAttribute() {
+        return $this->attributes['tipoventa'] == 0 ? 'Contado' : 'Crédito';
+    }
+
+    public function getTipoDeVentaAttribute() {
+        return $this->attributes['tipoventa'] == 0 ? 0 : 1;
+    }
+
 
     public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id=0)
     {
