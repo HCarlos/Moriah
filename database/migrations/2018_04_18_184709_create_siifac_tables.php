@@ -1433,7 +1433,6 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
         });
 
-
         Schema::create($tableNames['venta_detalles'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('venta_id')->default(0)->nullable();

@@ -137,8 +137,7 @@ class User extends Authenticatable
         return "{$this->ap_paterno} {$this->ap_materno} {$this->nombre}";
     }
 
-    public function sendPasswordResetNotification($token)
-    {
+    public function sendPasswordResetNotification($token){
         $this->notify(new MyResetPassword($token));
     }
 

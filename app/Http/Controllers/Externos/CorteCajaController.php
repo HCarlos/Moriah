@@ -6,7 +6,6 @@ use App\Http\Controllers\Classes\PDF_Diag;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Ingreso;
-use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Venta;
 use Illuminate\Http\Request;
 
@@ -79,24 +78,28 @@ class CorteCajaController extends Controller
         $f1    = $this->F->fechaDateTimeFormat($data['fecha1']);
         $f2    = $this->F->fechaDateTimeFormat($data['fecha2'],true);
         $vendedor_id = $data['vendedor_id'];
+        $metodo_pago = $data['metodo_pago'];
 
-        if ($vendedor_id>0){
-            $Movs = Ingreso::all()
-                    ->where('vendedor_id',$vendedor_id)
-                    ->where('fecha','>=', $f1)
-                    ->where('fecha','<=', $f2)
-                    ->sortBy('fecha');
-        }else{
-            $Movs = Ingreso::all()
-                    ->where('fecha','>=', $f1)
-                    ->where('fecha','<=', $f2)
-                    ->sortBy('fecha');
-        }
+        $Movs = Ingreso::select()
+            ->where('fecha','>=', $f1)
+            ->where('fecha','<=', $f2)
+            ->whereHas('vendedores', function ($q) use($vendedor_id) {
+                if ($vendedor_id > 0)
+                    $q->where('vendedor_id', $vendedor_id);
+            })
+//            ->whereHas('ventas', function ($q) use($metodo_pago) {
+//                if ($metodo_pago >= 0 && $metodo_pago <= 999 )
+//                    $q->where('metodo_pago', $metodo_pago);
+//            })
+            ->orderBy('fecha')
+            ->get();
 
+//        dd($Movs);
         $m = $Movs->first();
         $this->f1 = $this->F->fechaEspanol($data['fecha1']);
         $this->f2 = $this->F->fechaEspanol($data['fecha2']);
-        $this->vendedor = trim($m->vendedor->FullName);
+        if ( !is_null($m) )
+            $this->vendedor = trim($m->vendedor->FullName);
 
         $pdf->AliasNbPages();
         $this->header($pdf);
@@ -113,8 +116,8 @@ class CorteCajaController extends Controller
             $pdf->Cell(63, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
             $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->FullName)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
-            $pdf->Cell(22, $this->alto, utf8_decode(trim($Mov->venta->MetodoPago)), "LTB", 0,"L");
-            $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->venta->referencia)), "LTB", 0,"L");
+            $pdf->Cell(22, $this->alto, substr(utf8_decode(Venta::$metodos_pago[$Mov->metodo_pago]),0,20), "LTB", 0,"L");
+            $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
             $totalContado += $Mov->total;
             $pdf->SetFont('AndaleMono','',7);
             $pdf->Cell(17, $this->alto, number_format($Mov->total,2), "LTRB", 1,"R");
@@ -136,10 +139,13 @@ class CorteCajaController extends Controller
         $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->FullName); });
         $Cajeros = $Cajeros->sortBy('FullName')->pluck('FullName','vendedor_id');
         $Cajeros->prepend('Todos', '0');
+        $metodo_pagos = Venta::$metodos_pago;
+        $metodo_pagos[999] = 'Todos';
 
         return view('catalogos.reportes.panel_reporte_1',[
             "tableName" => "",
             "cajeros" => $Cajeros,
+            'metodo_pagos' => $metodo_pagos,
         ]);
 
     }

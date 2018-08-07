@@ -37,19 +37,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for = "metodo_pago" class="col-md-1 col-form-label text-md-left">Método</label>
+                <label for="metodo_pago" class="col-md-1 control-label">Metodo:</label>
                 <div class="col-md-4">
-                    <select id="metodo_pago" name="metodo_pago" size="1" class="form-control ">
-                        <option value="0">Efectivo</option>
-                        <option value="1">Cheque Nominativo</option>
-                        <option value="2">Transferencia Electrónica de Fondos</option>
-                        <option value="3" selected>Tarjeta de Crédito</option>
-                        <option value="4">Monedero Electrónico</option>
-                        <option value="5">Dinero Elctrónico</option>
-                        <option value="6">Vales de Despensa</option>
-                        <option value="7">Tarjeta de Debito</option>
-                        <option value="8">Tarjeta de Servicio</option>
-                        <option value="9">Otros</option>
+                    <select name="metodo_pago" id="metodo_pago" class="form-control" size="1">
+                        @foreach ($metodo_pagos as $key => $value)
+                            <option value="{{ $key }}"@if ($key == 3) selected @endif>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <label for = "referencia" class="col-md-1 col-form-label text-md-left">Refer.</label>

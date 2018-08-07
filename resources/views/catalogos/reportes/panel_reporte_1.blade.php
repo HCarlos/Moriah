@@ -14,12 +14,19 @@
                     <form method="post" action="{{ action('Externos\CorteCajaController@corte_de_caja_1') }}" accept-charset="UTF-8" enctype="multipart/form-data" target="_blank">
                         {{ csrf_field() }}
                         <div class="form-group row">
-                            <label for="vendedor_id" class="col-md-1 control-label">Venededor:</label>
+                            <label for="vendedor_id" class="col-md-1 control-label">Vendedor:</label>
                             <div class="col-md-2">
-                                {{--{{ Form::select('vendedor_id', $cajeros, null, ['id' => 'vendedor_id','class' => 'form-control']) }}--}}
                                 <select name="vendedor_id" id="vendedor_id" class="form-control" size="1">
                                     @foreach ($cajeros as $key => $value)
                                     <option value="{{ $key }}"@if ($key == 0) selected @endif>{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label for="metodo_pago" class="col-md-1 control-label">Metodo:</label>
+                            <div class="col-md-2">
+                                <select name="metodo_pago" id="metodo_pago" class="form-control" size="1">
+                                    @foreach ($metodo_pagos as $key => $value)
+                                        <option value="{{ $key }}"@if ($key == 999) selected @endif>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>

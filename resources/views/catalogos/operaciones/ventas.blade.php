@@ -50,12 +50,12 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#" class="btnBuscarVentaID" id="bvid-0" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Buscar Venta por ID</a></li>
-                            <li><a href="#" class="btnBuscarVentaID" id="bvid-1" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Buscar Venta Cliente</a></li>
-                            {{--<li><a href="#">Another action</a></li>--}}
-                            {{--<li><a href="#">Something else here</a></li>--}}
-                            {{--<li role="separator" class="divider"></li>--}}
-                            {{--<li><a href="#">Separated link</a></li>--}}
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-0" data-toggle="modal" data-target="#myModal">Buscar Venta por ID</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-1" data-toggle="modal" data-target="#myModal">Buscar Venta Cliente</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-2" data-toggle="modal" data-target="#myModal">Buscar Venta Producto</a></li>
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-3" data-toggle="modal" data-target="#myModal">Buscar Venta Código de Producto</a></li>
                         </ul>
                     </div>
                 </div>

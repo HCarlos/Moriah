@@ -223,9 +223,9 @@ class VentaController extends Controller
         $oView  = 'catalogos.operaciones.';
         $views  = 'pagar_venta_ajax';
         $venta  = Venta::findOrFail($venta_id);
-//        $abono  = Ingreso::all()->where('venta_id',$venta_id)->sum('total');
         $abono  = Ingreso::Abonos($venta_id);
         $apagar = $venta->total - $abono;
+        $metodo_pagos = Venta::$metodos_pago;
         $user  = Auth::User();
         return view ($oView.$views,
             [
@@ -234,6 +234,7 @@ class VentaController extends Controller
                 'venta_id'      => $venta_id,
                 'total'         => $venta->total,
                 'total_abonos'  => $abono,
+                'metodo_pagos'  => $metodo_pagos,
                 'total_a_pagar' => $apagar,
                 'Url'      => '/pagar_venta_ajax',
             ]
@@ -265,9 +266,17 @@ class VentaController extends Controller
                 $ctipo = 'Cliente';
                 $ctype = 'Busqueda por Cliente';
                 break;
+            case 2:
+                $ctipo = 'Producto';
+                $ctype = 'Búsqueda de Producto';
+                break;
+            case 3:
+                $ctipo = 'Código';
+                $ctype = 'Búsqueda de Código de Producto';
+                break;
         }
         return view (
-            'catalogos.operaciones.busquedas.busqueda_individual',
+            'catalogos.operaciones.busquedas.busqueda_individual_1',
             ['tipo'=>$ctipo,'type'=>$tipo,'placeholder'=>$ctype]
         );
     }
@@ -284,6 +293,12 @@ class VentaController extends Controller
                 break;
             case 1:
                 $items = Venta::BuscarClientePorNombreCompleto($dato);
+                break;
+            case 2:
+                $items = Venta::BuscarProductoPorNombre($dato);
+                break;
+            case 3:
+                $items = Venta::BuscarProductoPorCodigo($dato);
                 break;
         }
 

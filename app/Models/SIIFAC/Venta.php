@@ -27,6 +27,14 @@ class Venta extends Model
 
     protected $casts = ['isimp'=>'boolean','ispagado'=>'boolean','iscredito'=>'boolean','iscontado'=>'boolean',];
 
+    public static $metodos_pago =
+        [
+            0 => "Efectivo", 1 => "Cheque Nominativo", 2 => "Transferencia Electrónica de Fondos",
+            3 => "Tarjeta de Crédito", 4 => "Monedero Electrónico", 5 => "Dinero Elctrónico",
+            6 => "Vales de Despensa", 7 => "Tarjeta de Debito", 8 => "Tarjeta de Servicio",
+            9 => "Otros",
+        ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -112,41 +120,28 @@ class Venta extends Model
             })->get();
     }
 
+    public function scopeBuscarProductoPorNombre($query,$dato) {
+        $dato = strtoupper($dato);
+        return
+            $this::whereHas('ventaDetalles', function ($q) use($dato) {
+                $q->where('descripcion', "similar to" , "%".$dato."%");
+            })
+                ->distinct()
+                ->get();
+    }
+
+    public function scopeBuscarProductoPorCodigo($query,$dato) {
+        $dato = strtoupper($dato);
+        return
+            $this::whereHas('ventaDetalles', function ($q) use($dato) {
+                $q->where('codigo', "similar to" , "%".$dato."%");
+            })
+            ->distinct()
+            ->get();
+    }
+
     public function getMetodoPagoAttribute() {
-        $mp = "";
-        switch ($this->attributes['metodo_pago']){
-            case 0:
-                $mp = "Efectivo";
-                break;
-            case 1:
-                $mp = "Cheque Nominativo";
-                break;
-            case 2:
-                $mp = "Transferencia Electrónica de Fondos";
-                break;
-            case 3:
-                $mp = "Tarjeta de Crédito";
-                break;
-            case 4:
-                $mp = "Monedero Electrónico";
-                break;
-            case 5:
-                $mp = "Dinero Elctrónico";
-                break;
-            case 6:
-                $mp = "Vales de Despensa";
-                break;
-            case 7:
-                $mp = "Tarjeta de Debito";
-                break;
-            case 8:
-                $mp = "Tarjeta de Servicio";
-                break;
-            case 9:
-                $mp = "Otros";
-                break;
-        }
-        return $mp;
+        return self::$metodos_pago[ $this->attributes['metodo_pago'] ];
     }
 
     public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa, $user_id, $cantidad){
