@@ -71,11 +71,6 @@ class CreateUsersTable extends Migration
             $table->index('familia_cliente_id');
             $table->index('idemp');
 
-//            $table->foreign('familia_cliente_id')
-//                ->references('id')
-//                ->on('familia_cliente')
-//                ->onDelete('cascade');
-
         });
     }
 

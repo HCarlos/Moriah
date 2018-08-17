@@ -2195,6 +2195,7 @@ return array(
     'Illuminate\\Validation\\Rules\\Exists' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/Rules/Exists.php',
     'Illuminate\\Validation\\Rules\\In' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/Rules/In.php',
     'Illuminate\\Validation\\Rules\\NotIn' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/Rules/NotIn.php',
+    'Illuminate\\Validation\\Rules\\RequiredIf' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/Rules/RequiredIf.php',
     'Illuminate\\Validation\\Rules\\Unique' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/Rules/Unique.php',
     'Illuminate\\Validation\\UnauthorizedException' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/UnauthorizedException.php',
     'Illuminate\\Validation\\ValidatesWhenResolvedTrait' => $vendorDir . '/laravel/framework/src/Illuminate/Validation/ValidatesWhenResolvedTrait.php',

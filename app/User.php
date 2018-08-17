@@ -14,8 +14,10 @@ use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\PedidoDetalle;
 use App\Models\SIIFAC\Venta;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -141,12 +143,16 @@ class User extends Authenticatable
         $this->notify(new MyResetPassword($token));
     }
 
+
     public static function findOrCreateUserWithRole3(
         string $cuenta, string $username, string $nombre, string $ap_paterno, string $ap_materno, string $email, string $password,
         bool $admin, bool $alumno, bool $foraneo, bool $exalumno, bool $credito, int $dias_credito, float $limite_credito,
         string $domicilio, string $celular, string $telefono,
         float $saldo_a_favor, float $saldo_en_contra, int $familia_cliente_id,
-        int $iduser_ps, int $idemp, Role $role1, Role $role2, Role $role3){
+        int $iduser_ps, int $idemp, Role $role1, Role $role2, Role $role3,
+        string $calle='', string $num_ext='', string $num_int='', string $colonia='', string $localidad='', string $estado='', string $pais='', string $cp='', string $curp='', string $rfc='', string $razon_social='',
+        string $lugar_nacimiento='', Date $fecha_nacimiento=null, int $genero=null,
+        string $ocupacion=''){
         $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
         if (!$user) {
             if ($cuenta == ''){
@@ -159,6 +165,7 @@ class User extends Authenticatable
             if ($password == ''){
                 $password = $username;
             }
+
             $user = static::create([
                 'cuenta' => $cuenta,
                 'username'=>$username,
@@ -168,6 +175,21 @@ class User extends Authenticatable
                 'email'=>$email,
                 'password' => bcrypt($password),
                 'domicilio' => $domicilio,
+                'rfc' => $rfc,
+                'curp' => $curp,
+                'razon_social' => $razon_social,
+                'calle' => $calle,
+                'num_ext' => $num_ext,
+                'num_int' => $num_int,
+                'colonia' => $colonia,
+                'localidad' => $localidad,
+                'estado' => $estado,
+                'pais' => $pais,
+                'cp' => $cp,
+                'lugar_nacimiento' => $lugar_nacimiento,
+                'fecha_nacimiento' => $fecha_nacimiento,
+                'genero' => $genero,
+                'ocupacion'=> $ocupacion,
                 'celular' => $celular,
                 'telefono' => $telefono,
                 'admin' => $admin,

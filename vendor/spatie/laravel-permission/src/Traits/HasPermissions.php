@@ -32,7 +32,7 @@ trait HasPermissions
             config('permission.models.permission'),
             'model',
             config('permission.table_names.model_has_permissions'),
-            'model_id',
+            config('permission.column_names.model_morph_key'),
             'permission_id'
         );
     }
@@ -246,9 +246,10 @@ trait HasPermissions
             ->each(function ($permission) {
                 $this->ensureModelSharesGuard($permission);
             })
+            ->map->id
             ->all();
 
-        $this->permissions()->saveMany($permissions);
+        $this->permissions()->sync($permissions, false);
 
         $this->forgetCachedPermissions();
 

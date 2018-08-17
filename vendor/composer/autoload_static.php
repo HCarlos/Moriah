@@ -2782,6 +2782,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'Illuminate\\Validation\\Rules\\Exists' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/Exists.php',
         'Illuminate\\Validation\\Rules\\In' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/In.php',
         'Illuminate\\Validation\\Rules\\NotIn' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/NotIn.php',
+        'Illuminate\\Validation\\Rules\\RequiredIf' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/RequiredIf.php',
         'Illuminate\\Validation\\Rules\\Unique' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/Unique.php',
         'Illuminate\\Validation\\UnauthorizedException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/UnauthorizedException.php',
         'Illuminate\\Validation\\ValidatesWhenResolvedTrait' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/ValidatesWhenResolvedTrait.php',

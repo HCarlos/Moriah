@@ -31,7 +31,7 @@ trait HasRoles
             config('permission.models.role'),
             'model',
             config('permission.table_names.model_has_roles'),
-            'model_id',
+            config('permission.column_names.model_morph_key'),
             'role_id'
         );
     }
@@ -95,9 +95,10 @@ trait HasRoles
             ->each(function ($role) {
                 $this->ensureModelSharesGuard($role);
             })
+            ->map->id
             ->all();
 
-        $this->roles()->saveMany($roles);
+        $this->roles()->sync($roles, false);
 
         $this->forgetCachedPermissions();
 
