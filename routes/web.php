@@ -201,6 +201,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Panel de Control 1
     Route::get('panel_consulta_1','Externos\CorteCajaController@panel_consulta_1')->name('panelConsulta1');
     Route::post('corte_caja_1','Externos\CorteCajaController@corte_de_caja_1')->name('corteCaja1');
+    Route::post('send_sms_one','Externos\TwilioSMSController@send_sms_one')->name('sendSMSOne');
 
 
 });

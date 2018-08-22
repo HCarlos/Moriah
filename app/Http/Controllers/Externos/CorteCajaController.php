@@ -87,10 +87,10 @@ class CorteCajaController extends Controller
                 if ($vendedor_id > 0)
                     $q->where('vendedor_id', $vendedor_id);
             })
-//            ->whereHas('ventas', function ($q) use($metodo_pago) {
-//                if ($metodo_pago >= 0 && $metodo_pago <= 999 )
-//                    $q->where('metodo_pago', $metodo_pago);
-//            })
+            ->orWhereHas('ventas', function ($q) use($metodo_pago) {
+                if ($metodo_pago >= 0 && $metodo_pago <= 999 )
+                    $q->where('metodo_pago', $metodo_pago);
+            })
             ->orderBy('fecha')
             ->get();
 
@@ -146,6 +146,7 @@ class CorteCajaController extends Controller
             "tableName" => "",
             "cajeros" => $Cajeros,
             'metodo_pagos' => $metodo_pagos,
+            'msg' => '',
         ]);
 
     }
