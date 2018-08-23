@@ -17,6 +17,7 @@
                             <label for="vendedor_id" class="col-md-1 control-label">Vendedor:</label>
                             <div class="col-md-2">
                                 <select name="vendedor_id" id="vendedor_id" class="form-control" size="1">
+                                    <option value="0" selected>Todos</option>
                                     @foreach ($cajeros as $key => $value)
                                     <option value="{{ $key }}"@if ($key == 0) selected @endif>{{ $value }}</option>
                                     @endforeach
@@ -25,6 +26,7 @@
                             <label for="metodo_pago" class="col-md-1 control-label">Metodo:</label>
                             <div class="col-md-2">
                                 <select name="metodo_pago" id="metodo_pago" class="form-control" size="1">
+                                    <option value="999" selected>Todos</option>
                                     @foreach ($metodo_pagos as $key => $value)
                                         <option value="{{ $key }}"@if ($key == 999) selected @endif>{{ $value }}</option>
                                     @endforeach

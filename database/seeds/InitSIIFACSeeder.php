@@ -12,7 +12,6 @@ use App\Models\SIIFAC\Producto;
 use App\Models\SIIFAC\Proveedor;
 use App\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class InitSIIFACSeeder extends Seeder
@@ -22,6 +21,7 @@ class InitSIIFACSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
         $IdEmp1 = Empresa::findOrCreateEmpresa('COMERCIALIZADORA ARJI, S.A. DE C.V.','COMERCIALIZADORA ARJI, S.A. DE C.V.','AV. MEXICO #2 COL. DEL BOSQUE, VILLAHERMOSA, TABASCO CP.86160','CAR-930816-FH0');
@@ -51,7 +51,6 @@ class InitSIIFACSeeder extends Seeder
         $IdMed1 = Medida::findOrCreateMedida('PIEZA','',0,$IdEmp);
         $IdMed = $IdMed1->id;
 
-
         $IdProv1 = Proveedor::findOrCreateProveedor(1,'JORJUBEL','JULIO URRETA','MEXICO',$IdEmp);
         $IdProv2 = Proveedor::findOrCreateProveedor(2,'LEONEL NIETO LEON','','',$IdEmp);
         $IdProv3 = Proveedor::findOrCreateProveedor(3,'FERNANDEZ EDITORES','','',$IdEmp);
@@ -64,7 +63,6 @@ class InitSIIFACSeeder extends Seeder
         $IdProv10 = Proveedor::findOrCreateProveedor(10,'NORMA','','',$IdEmp);
         $IdProv11 = Proveedor::findOrCreateProveedor(11,'VANJUPE','','',$IdEmp);
         $IdProv12 = Proveedor::findOrCreateProveedor(12,'SILVINO AREVALO','','',$IdEmp);
-
 
         $IdProd1 = Producto::findOrCreateProducto($IdAlma,5,$IdMed,5,'010500100005','MATERIAL DIDACTICO','MATERIAL DIDACTICO',5000,1,false,NOW(),'',850,0,0,53,850,45050,$IdEmp,0);
         $IdProd3 = Producto::findOrCreateProducto($IdAlma,1,$IdMed,24,'010200100024','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI, 1 Y 2 KII','CUADERNO DE EJERCICIOS CALIGRAFICOS ARJI',100,1,false,NOW(),'',260,0,0,7,260,1820,$IdEmp,0);
@@ -203,7 +201,6 @@ class InitSIIFACSeeder extends Seeder
         $IdProd158 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,34289,'978607013428','ESTA HERIDA QUE DUELE Y NO SE SIENTE','ESTA HERIDA QUE DUELE Y NO SE SIENTE',100,1,false,NOW(),'',150,0,0,29,150,4350,$IdEmp);
         $IdProd159 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,1556,'770689420155','VEINTE POEMAS DE AMOR Y UNA CANCION DESESPERADA','VEINTE POEMAS DE AMOR Y UNA CANCION DESE',100,1,false,NOW(),'',155,0,0,4,155,620,$IdEmp);
         $IdProd160 = Producto::findOrCreateProducto($IdAlma,3,$IdMed,8756,'787257118756','GEL ANTIBACTERIAL "SMARTY"','GEL ANTIBACTERIAL "SMARTY"',100,1,true,NOW(),'',120,0,0,14,89,620,$IdEmp);
-
 
         $IdProv1 = Proveedor::findOrCreateProveedor(1,'JORJUBEL','JULIO URRETA','MEXICO',$IdEmp);
         $IdProv2 = Proveedor::findOrCreateProveedor(2,'LEONEL NIETO LEON','','',$IdEmp);
@@ -1711,11 +1708,6 @@ class InitSIIFACSeeder extends Seeder
         $IdUser1342 = User::findOrCreateUserWithRole3('','per2099','JANUARY','AGUILAR','LOPEZ','per2099@mimail.com','per2099',false,false,false,false,false,0,0,'','','',0,0,1,7470,$IdEmp,$role1,$role2,$role3,'','','','','','','','','');
         $IdUser1343 = User::findOrCreateUserWithRole3('','per0406','ROCIO','JAIMES','SALGADO','per0406@mimail.com','per0406',false,false,false,false,false,0,0,'','','',0,0,1,3983,$IdEmp,$role1,$role2,$role3,'AZALEAS # 120','FRACC. REAL DEL ANGEL','','VILLAHERMOSA','VILLAHERMOSA','TABASCO','MÉXICO','','');
         $IdUser1344 = User::findOrCreateUserWithRole3('','per0333','ANA CECILIA','RODRIGUEZ','QUEVEDO','per0333@mimail.com','per0333',false,false,false,false,false,0,0,'','','',0,0,1,4049,$IdEmp,$role1,$role2,$role3,'MIGUEL HIDALGO','221-1','','EL AGUILA','VILLAHERMOSA','TABASCO','MÉXICO','','');
-
-
-
-
-
 
 
 

@@ -80,6 +80,8 @@ class CorteCajaController extends Controller
         $vendedor_id = $data['vendedor_id'];
         $metodo_pago = $data['metodo_pago'];
 
+//        dd($vendedor_id.' - '.$metodo_pago);
+
         $Movs = Ingreso::select()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
@@ -87,8 +89,8 @@ class CorteCajaController extends Controller
                 if ($vendedor_id > 0)
                     $q->where('vendedor_id', $vendedor_id);
             })
-            ->orWhereHas('ventas', function ($q) use($metodo_pago) {
-                if ($metodo_pago >= 0 && $metodo_pago <= 999 )
+            ->whereHas('ventas', function ($q) use($metodo_pago) {
+                if ($metodo_pago >= 0 && $metodo_pago < 999 )
                     $q->where('metodo_pago', $metodo_pago);
             })
             ->orderBy('fecha')
@@ -123,10 +125,15 @@ class CorteCajaController extends Controller
             $pdf->Cell(17, $this->alto, number_format($Mov->total,2), "LTRB", 1,"R");
         }
         $pdf->setX(10);
-        $pdf->SetFont('Arial','B',7);
-        $pdf->Cell(179, $this->alto, 'TOTAL $ ', "LB", 0,"R");
-        $pdf->SetFont('andalemonomtstdbold','',7);
-        $pdf->Cell(17, $this->alto, number_format($totalPagado,2), "LRB", 1,"R");
+        if ($Movs->count() > 0){
+            $pdf->SetFont('Arial','B',7);
+            $pdf->Cell(179, $this->alto, 'TOTAL $ ', "LB", 0,"R");
+            $pdf->SetFont('andalemonomtstdbold','',7);
+            $pdf->Cell(17, $this->alto, number_format($totalPagado,2), "LRB", 1,"R");
+        }else{
+            $pdf->SetFont('Arial','BI',10);
+            $pdf->Cell(196, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
+        }
         $pdf->Output();
 
     }
@@ -138,9 +145,7 @@ class CorteCajaController extends Controller
             ->get();
         $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->FullName); });
         $Cajeros = $Cajeros->sortBy('FullName')->pluck('FullName','vendedor_id');
-        $Cajeros->prepend('Todos', '0');
         $metodo_pagos = Venta::$metodos_pago;
-        $metodo_pagos[999] = 'Todos';
 
         return view('catalogos.reportes.panel_reporte_1',[
             "tableName" => "",
