@@ -10,13 +10,13 @@
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
-            {{--@include('catalogos.listados.paginate_list')--}}
         </div>
 
         <div class="panel-body">
             <div class="fa-2x" id="preloaderLocal">
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
+            @include('catalogos.filters._filter_user_search')
             <div class="dataTables_wrapper" role="grid">
                 @if ($items)
                     <table id="{{ $tableName}}" class="table table-striped table-bordered table-hover dataTable" >

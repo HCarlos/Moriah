@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
 use Spatie\Permission\Models\Role;
+//use App\Http\Requests\{CreateUserRequest, UpdateUserRequest};
+
 
 class UsuarioController extends Controller
 {
@@ -28,21 +30,33 @@ class UsuarioController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($npage = 1, $tpaginas = 0)
+    public function index()
     {
-        $page = Input::get('p');
-        if ( $page ) $npage = $page;
+//        $page = Input::get('p');
+//        if ( $page ) $npage = $page;
         ini_set('max_execution_time', 300);
         $this->tableName = 'usuarios';
-        $items = User::select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
-            ->orderBy('id','desc')
-//            ->forPage($npage,$this->itemPorPagina)
-            ->get();
-//        $tpaginator = User::paginate($this->itemPorPagina,['*'],'p');
-        // dd($items);
+
+//        $items = User::select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
+//            ->orderBy('id','desc')
+//            ->get();
+
+        $items = User::query()
+            ->filtrar(request('search'))
+            ->orderByDesc('created_at')
+            ->paginate();
+
+//        $items = User::select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
+//            ->orderBy('id','desc')
+//            ->paginate();
+
+
+//        $items->links()->fragment('catalogosList0');
+        $items->appends(request(['search']))->fragment('table');
+
+        $items->links();
+
         $user = Auth::User();
-//        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
-//        $tpaginator->withPath("/index_usuario/$npage/$tpaginas");
 
         return view ('catalogos.listados.usuarios_list',
             [
@@ -121,12 +135,10 @@ class UsuarioController extends Controller
         $ap_paterno = $F->toMayus($data['ap_paterno']);
         $ap_materno = $F->toMayus($data['ap_materno']);
         $nombre = $F->toMayus($data['nombre']);
-        $domicilio = $F->toMayus($data['domicilio']);
 
         $data['ap_paterno'] = $ap_paterno;
         $data['ap_materno']   = $ap_materno;
         $data['nombre'] = $nombre;
-        $data['domicilio'] = $domicilio;
         $data['cuenta'] = '';
         $data['celular'] = is_null($data['celular']) ? ' ' : $data['celular'];
         $data['telefono'] = is_null($data['telefono']) ? ' ' : $data['telefono'];
@@ -146,7 +158,7 @@ class UsuarioController extends Controller
         User::findOrCreateUserWithRole3(
             $data['cuenta'], $data['username'], $data['nombre'], $data['ap_paterno'], $data['ap_materno'], $data['email'],
             '',false,false,false,false,false,0,0,
-            $data['domicilio'], $data['celular'], $data['telefono'],0,0, $data['familia_cliente_id'],
+            '', $data['celular'], $data['telefono'],0,0, $data['familia_cliente_id'],
             $data['iduser_ps'],$data['idemp'],$role1,$role2,$role3);
 
         return redirect('/new_usuario/'.$idItem);
@@ -175,12 +187,10 @@ class UsuarioController extends Controller
         $ap_paterno = $F->toMayus($data['ap_paterno']);
         $ap_materno = $F->toMayus($data['ap_materno']);
         $nombre     = $F->toMayus($data['nombre']);
-        $domicilio  = $F->toMayus($data['domicilio']);
 
         $data['ap_paterno'] = $ap_paterno;
         $data['ap_materno']   = $ap_materno;
         $data['nombre'] = $nombre;
-        $data['domicilio'] = $domicilio;
         $data["idemp"]       = $F->getIHE(0);
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);

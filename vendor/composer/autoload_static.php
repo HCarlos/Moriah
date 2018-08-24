@@ -669,6 +669,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\PanelControlOneRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PanelControlOneRequest.php',
         'App\\Models\\Catalogos\\Prueba' => __DIR__ . '/../..' . '/app/Models/Catalogos/Prueba.php',
         'App\\Models\\SIIFAC\\Almacen' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Almacen.php',
         'App\\Models\\SIIFAC\\Cliente' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Cliente.php',

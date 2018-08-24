@@ -60,13 +60,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for = "domicilio" class="col-md-1 col-form-label text-md-left">Domicilio</label>
-                            <div class="col-md-11">
-                                <textarea rows="4" name="domicilio" id="domicilio" class="col-md-12">{{ old('domicilio') }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for = "celular" class="col-md-1 col-form-label text-md-left">Celular</label>
                             <div class="col-md-4">
                                 <input type="text" name="celular" id="celular" value="{{ old('celular') }}" class="form-control" />

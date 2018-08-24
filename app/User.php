@@ -46,7 +46,7 @@ class User extends Authenticatable
         'ocupacion','lugar_trabajo',
         'root','filename','familia_cliente_id',
         'idemp','ip','host',
-        'nombre','ap_paterno','ap_materno','domicilio','celular','telefono',
+        'nombre','ap_paterno','ap_materno','celular','telefono',
     ];
 
     protected $hidden = ['password', 'remember_token',];
@@ -143,6 +143,19 @@ class User extends Authenticatable
         $this->notify(new MyResetPassword($token));
     }
 
+    public function scopeFiltrar($query, $search)
+    {
+        if (empty ($search)) {
+            return;
+        }
+        $search = strtoupper($search);
+        $query->whereRaw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre) like ?", "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%")
+            ->orWhere('cuenta', 'like', "%{$search}%");
+//            ->orWhereHas('team', function ($query) use ($search) {
+//                $query->where('name', 'like', "%{$search}%");
+//            });
+    }
 
     public static function findOrCreateUserWithRole3(
         string $cuenta, string $username, string $nombre, string $ap_paterno, string $ap_materno, string $email, string $password,
@@ -174,7 +187,6 @@ class User extends Authenticatable
                 'ap_materno'=>$ap_materno,
                 'email'=>$email,
                 'password' => bcrypt($password),
-                'domicilio' => $domicilio,
                 'rfc' => $rfc,
                 'curp' => $curp,
                 'razon_social' => $razon_social,

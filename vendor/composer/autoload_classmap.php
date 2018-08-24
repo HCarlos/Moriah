@@ -77,6 +77,7 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Http\\Requests\\PanelControlOneRequest' => $baseDir . '/app/Http/Requests/PanelControlOneRequest.php',
     'App\\Models\\Catalogos\\Prueba' => $baseDir . '/app/Models/Catalogos/Prueba.php',
     'App\\Models\\SIIFAC\\Almacen' => $baseDir . '/app/Models/SIIFAC/Almacen.php',
     'App\\Models\\SIIFAC\\Cliente' => $baseDir . '/app/Models/SIIFAC/Cliente.php',

@@ -157,14 +157,6 @@
                                 <input type="text" name="ocupacion" id="ocupacion" value="{{ old('ocupacion',$items->ocupacion) }}" class="form-control" />
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for = "domicilio" class="col-md-1 col-form-label text-md-left">Domicilio</label>
-                            <div class="col-md-11">
-                                <textarea rows="4" name="domicilio" id="domicilio" class="col-md-12">{{ old('domicilio',$items->domicilio) }}</textarea>
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <label for = "celular" class="col-md-1 col-form-label text-md-left">Celular</label>
                             <div class="col-md-4">

@@ -31,7 +31,7 @@ class TwilioSMSController extends Controller
 
         //print $message->sid;
         $msg = $message->status;
-        return redirect('panel_consulta_1');
+        return redirect('show_panel_consulta_1');
 
     }
 

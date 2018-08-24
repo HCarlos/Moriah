@@ -8,6 +8,7 @@ use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Venta;
 use Illuminate\Http\Request;
+use App\Http\Requests\PanelControlOneRequest;
 
 class CorteCajaController extends Controller
 {
@@ -18,7 +19,6 @@ class CorteCajaController extends Controller
     protected $f1       = "";
     protected $f2       = "";
     protected $vendedor = "";
-    protected $cliente  = "";
     protected $F;
 
     public function __construct(){
@@ -73,35 +73,11 @@ class CorteCajaController extends Controller
         $pdf->setX(10);
     }
 
-    protected function imprimir_Venta($pdf, $data)
+    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs)
     {
-        $f1    = $this->F->fechaDateTimeFormat($data['fecha1']);
-        $f2    = $this->F->fechaDateTimeFormat($data['fecha2'],true);
-        $vendedor_id = $data['vendedor_id'];
-        $metodo_pago = $data['metodo_pago'];
-
-//        dd($vendedor_id.' - '.$metodo_pago);
-
-        $Movs = Ingreso::select()
-            ->where('fecha','>=', $f1)
-            ->where('fecha','<=', $f2)
-            ->whereHas('vendedores', function ($q) use($vendedor_id) {
-                if ($vendedor_id > 0)
-                    $q->where('vendedor_id', $vendedor_id);
-            })
-            ->whereHas('ventas', function ($q) use($metodo_pago) {
-                if ($metodo_pago >= 0 && $metodo_pago < 999 )
-                    $q->where('metodo_pago', $metodo_pago);
-            })
-            ->orderBy('fecha')
-            ->get();
-
-//        dd($Movs);
-        $m = $Movs->first();
-        $this->f1 = $this->F->fechaEspanol($data['fecha1']);
-        $this->f2 = $this->F->fechaEspanol($data['fecha2']);
-        if ( !is_null($m) )
-            $this->vendedor = trim($m->vendedor->FullName);
+        $this->f1 = $f1;
+        $this->f2 = $f2;
+        $this->vendedor = $vendedor;
 
         $pdf->AliasNbPages();
         $this->header($pdf);
@@ -135,11 +111,9 @@ class CorteCajaController extends Controller
             $pdf->Cell(196, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
         }
         $pdf->Output();
-
     }
 
-
-    protected function panel_consulta_1(){
+    protected function show_panel_consulta_1(){
         $Cajeros = Venta::select(['vendedor_id'])
             ->distinct()
             ->get();
@@ -156,10 +130,10 @@ class CorteCajaController extends Controller
 
     }
 
-    protected function corte_de_caja_1(Request $request){
-        $data = $request->all();
+    protected function create_corte_caja_1(PanelControlOneRequest $request){
         $pdf  = new PDF_Diag('P','mm','Letter');
-        $this->imprimir_Venta($pdf, $data);
+        $request->createReportPDF01($pdf);
+        return redirect()->route('show_panel_consulta_1');
     }
 
 
