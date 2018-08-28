@@ -27,31 +27,26 @@ class PedidoController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($npage = 1, $tpaginas = 0)
+    public function index()
     {
-        $page = Input::get('p');
-        if ( $page ) $npage = $page;
 
         $this->tableName = 'pedidos';
         $items = Pedido::select('id','codigo','descripcion_pedido','importe','empresa_id','filename')
             ->orderBy('id','desc')
-            ->forPage($npage,$this->itemPorPagina)
-            ->get();
-        $tpaginator = Pedido::paginate($this->itemPorPagina,['*'],'p');
-        //dd($npage);
+            ->paginate();
+
+        $items->appends(request(['search']))->fragment('table');
+        $items->links();
+
         $user = Auth::User();
-        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
-        $tpaginator->withPath("/index_pedido/$npage/$tpaginas");
         return view ('catalogos.listados.pedidos_list',
             [
                 'items' => $items,
                 'titulo_catalogo' => "Catálogo de ".ucwords($this->tableName),
                 'user' => $user,
                 'tableName'=>$this->tableName,
-                'npage'=> $npage,
-                'tpaginas' => $tpaginas,
             ]
-        )->with("paginator" , $tpaginator);
+        );
 
     }
 

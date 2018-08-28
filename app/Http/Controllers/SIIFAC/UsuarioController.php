@@ -32,28 +32,14 @@ class UsuarioController extends Controller
 
     public function index()
     {
-//        $page = Input::get('p');
-//        if ( $page ) $npage = $page;
         ini_set('max_execution_time', 300);
         $this->tableName = 'usuarios';
-
-//        $items = User::select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
-//            ->orderBy('id','desc')
-//            ->get();
-
         $items = User::query()
             ->filtrar(request('search'))
             ->orderByDesc('created_at')
             ->paginate();
 
-//        $items = User::select('id','username','ap_paterno','ap_materno','nombre','email','cuenta')
-//            ->orderBy('id','desc')
-//            ->paginate();
-
-
-//        $items->links()->fragment('catalogosList0');
         $items->appends(request(['search']))->fragment('table');
-
         $items->links();
 
         $user = Auth::User();

@@ -67,7 +67,6 @@ class CreateSiifacTables extends Migration
                 ->onDelete('cascade');
         });
 
-
         Schema::create($tableNames['almacenes'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->unsignedInteger('clave_almacen')->unique()->nullable();
@@ -367,6 +366,43 @@ class CreateSiifacTables extends Migration
 
         });
 
+        Schema::create($tableNames['ingreso_empresa'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('ingreso_id');
+            $table->integer('empresa_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('ingreso_id')
+                ->references('id')
+                ->on($tableNames['ingresos'])
+                ->onDelete('cascade');
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+
+        });
+
+        Schema::create($tableNames['empresa_ingreso'], function (Blueprint $table) use ($tableNames) {
+            $table->increments('id');
+            $table->integer('empresa_id');
+            $table->integer('ingreso_id');
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on($tableNames['empresas'])
+                ->onDelete('cascade');
+
+            $table->foreign('ingreso_id')
+                ->references('id')
+                ->on($tableNames['ingresos'])
+                ->onDelete('cascade');
+        });
+
         Schema::create($tableNames['ingreso_user'], function (Blueprint $table) use ($tableNames) {
             $table->increments('id');
             $table->integer('ingreso_id');
@@ -384,6 +420,7 @@ class CreateSiifacTables extends Migration
                 ->references('id')
                 ->on($tableNames['users'])
                 ->onDelete('cascade');
+
         });
 
         Schema::create($tableNames['ingreso_cliente'], function (Blueprint $table) use ($tableNames) {
@@ -1995,6 +2032,8 @@ class CreateSiifacTables extends Migration
         Schema::dropIfExists($tableNames['producto_medida']);
         Schema::dropIfExists($tableNames['empresa_paquete']);
         Schema::dropIfExists($tableNames['empresa_pedido']);
+        Schema::dropIfExists($tableNames['empresa_ingreso']);
+        Schema::dropIfExists($tableNames['ingreso_empresa']);
 
         Schema::dropIfExists($tableNames['familia_cliente_user']);
 

@@ -58,7 +58,7 @@ class Paquete extends Model
     }
 
     public static function findOrCreatePaquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
-        $obj = static::all()->where('clave', $descripcion_paquete)->first();
+        $obj = static::all()->where('clave', $codigo)->first();
         if (!$obj) {
             $user = User::find($user_id);
             $emp = Empresa::find($empresa_id);

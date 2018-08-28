@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Externos;
 use App\Http\Controllers\Classes\PDF_Diag;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Venta;
 use Illuminate\Http\Request;
@@ -120,12 +121,14 @@ class CorteCajaController extends Controller
         $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->FullName); });
         $Cajeros = $Cajeros->sortBy('FullName')->pluck('FullName','vendedor_id');
         $metodo_pagos = Venta::$metodos_pago;
+        $empresas     = Empresa::all()->sortBy('id')->pluck('ncomer','id');
 
         return view('catalogos.reportes.panel_reporte_1',[
-            "tableName" => "",
-            "cajeros" => $Cajeros,
+            "tableName"    => "",
+            "cajeros"      => $Cajeros,
             'metodo_pagos' => $metodo_pagos,
-            'msg' => '',
+            "empresas"     => $empresas,
+            'msg'          => '',
         ]);
 
     }
@@ -135,6 +138,5 @@ class CorteCajaController extends Controller
         $request->createReportPDF01($pdf);
         return redirect()->route('show_panel_consulta_1');
     }
-
 
 }

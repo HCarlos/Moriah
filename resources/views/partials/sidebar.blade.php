@@ -22,35 +22,35 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="{{ route('empresaIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                    <a href="{{ route('empresaIndex') }}">
                         <i class="menu-icon fa fa-book green"></i>
                         Empresas
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li>
-                    <a href="{{ route('almacenIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                    <a href="{{ route('almacenIndex') }}">
                         <i class="menu-icon fa fa-book orange"></i>
                         Almacenes
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li>
-                    <a href="{{ route('productoIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                    <a href="{{ route('productoIndex') }}">
                         <i class="menu-icon fa fa-book red"></i>
                         Productos
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li>
-                    <a href="{{ route('paqueteIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                    <a href="{{ route('paqueteIndex') }}">
                         <i class="menu-icon fa fa-cubes cafe"></i>
                         Paquetes
                     </a>
                     <b class="arrow"></b>
                 </li>
                 <li>
-                    <a href="{{ route('pedidoIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                    <a href="{{ route('pedidoIndex') }}">
                         <i class="menu-icon fa fa-cubes purple"></i>
                         Pedidos
                     </a>
@@ -78,7 +78,7 @@
             <ul class="submenu">
                 @role('administrator|sysop')
                 <li>
-                    <a href="{{ route('usuarioIndex', ['npage' => 1, 'tpaginas' => 0]) }}">
+                    <a href="{{ route('usuarioIndex') }}">
                         <i class="menu-icon fa fa-book red"></i>
                         Usuarios
                     </a>

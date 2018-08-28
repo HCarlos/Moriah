@@ -81,6 +81,8 @@ return [
         'venta_venta_detalle' => 'venta_venta_detalle',
         'empresa_movimiento' => 'empresa_movimiento',
         'producto_proveedor' => 'producto_proveedor',
+        'empresa_ingreso' => 'empresa_ingreso',
+        'ingreso_empresa' => 'ingreso_empresa',
     ],
 
     ];

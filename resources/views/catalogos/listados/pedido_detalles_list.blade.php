@@ -40,7 +40,7 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="pedido_detalle-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="pedido_detalle-{{$item->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif

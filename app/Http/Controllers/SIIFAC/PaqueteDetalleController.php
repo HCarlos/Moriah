@@ -25,22 +25,18 @@ class PaqueteDetalleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($npage = 1, $tpaginas = 0, $id = 0)
+    public function index($id = 0)
     {
-        $page = Input::get('p');
-        if ( $page ) $npage = $page;
 
         $this->tableName = 'paquetes';
         $paq = Paquete::find($id);
         $items = PaqueteDetalle::select('id','paquete_id', 'producto_id', 'medida_id', 'codigo', 'descripcion', 'cant','pv','comp1','empresa_id')
             ->where('paquete_id',$id)
             ->orderBy('id','desc')
-            ->forPage($npage,$this->itemPorPagina)
-            ->get();
-        $tpaginator = Paquete::paginate($this->itemPorPagina,['*'],'p');
+            ->paginate();
         $user = Auth::User();
-        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
-        $tpaginator->withPath("/index_paquete_detalle/$npage/$tpaginas");
+        $items->appends(request(['search']))->fragment('table');
+        $items->links();
         return view ('catalogos.listados.paquete_detalles_list',
             [
                 'idItem' => $id,
@@ -48,10 +44,8 @@ class PaqueteDetalleController extends Controller
                 'titulo_catalogo' => "Elementos de ".$paq->descripcion_paquete,
                 'user' => $user,
                 'tableName'=>$this->tableName,
-                'npage'=> $npage,
-                'tpaginas' => $tpaginas,
             ]
-        )->with("paginator" , $tpaginator);
+        );
 
     }
 

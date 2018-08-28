@@ -4,12 +4,12 @@
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
             @if( !$Venta->isPagado() )
-            <a id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only btnVentaDetalleNormal" title="Agregar Producto" data-toggle="modal" data-target="#myModal">
-                <i class="fa fa-plus bigger-150"></i>
-            </a>
-            <a id="/form_pagar_venta/{{$venta_id}}" class="btn btn-orange btn-minier icon-only marginLeft2em btnPagarVenta" data-toggle="modal" data-target="#myModal" title="Pagar Venta" >
-                <i class="fa fa-money bigger-150"></i>
-            </a>
+                {{--<a id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only btnVentaDetalleNormal" title="Agregar Producto" data-toggle="modal" data-target="#myModal">--}}
+                    {{--<i class="fa fa-plus bigger-150"></i>--}}
+                {{--</a>--}}
+                <a id="/form_pagar_venta/{{$venta_id}}" class="btn btn-orange btn-minier icon-only btnPagarVenta" data-toggle="modal" data-target="#myModal" title="Pagar Venta" >
+                    <i class="fa fa-money bigger-150"></i>
+                </a>
             @endif
 
             <a href="{{ route('printTicket/', ['venta_id' => $venta_id]) }}" class="btn btn-cafe btn-minier icon-only marginLeft2em " title="Imprimir" target="_blank">
@@ -18,7 +18,7 @@
 
             <span id="guardandoVenta" class="bigger-180 marginLeft2em" style="display: none;"><i class="fa fa-spinner fa-w-16 fa-spin fa-lg"></i>  Guardando... </span>
 
-            <a  class="btn btn-info btn-minier icon-only pull-right btnCloseVentaDetalleNormal" title="Cerrar Ventana">
+            <a class="btn btn-info btn-minier icon-only pull-right btnCloseVentaDetalleNormal" title="Cerrar Ventana">
                 <i class="fa fa-close bigger-150"></i>
             </a>
         </div>

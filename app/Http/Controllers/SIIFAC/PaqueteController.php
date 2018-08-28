@@ -26,31 +26,24 @@ class PaqueteController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($npage = 1, $tpaginas = 0)
+    public function index()
     {
-        $page = Input::get('p');
-        if ( $page ) $npage = $page;
 
         $this->tableName = 'paquetes';
         $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id','filename')
             ->orderBy('id','desc')
-            ->forPage($npage,$this->itemPorPagina)
-            ->get();
-        $tpaginator = Paquete::paginate($this->itemPorPagina,['*'],'p');
-        //dd($npage);
+            ->paginate();
         $user = Auth::User();
-        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
-        $tpaginator->withPath("/index_paquete/$npage/$tpaginas");
+        $items->appends(request(['search']))->fragment('table');
+        $items->links();
         return view ('catalogos.listados.paquetes_list',
             [
                 'items' => $items,
                 'titulo_catalogo' => "Catálogo de ".ucwords($this->tableName),
                 'user' => $user,
                 'tableName'=>$this->tableName,
-                'npage'=> $npage,
-                'tpaginas' => $tpaginas,
             ]
-        )->with("paginator" , $tpaginator);
+        );
 
     }
 

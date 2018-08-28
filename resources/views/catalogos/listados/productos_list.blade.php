@@ -63,7 +63,7 @@
                                     </a>
                                 @endif
                                 @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                    <a href="#" class="btn btn-link btn-xs pull-right btnAction2" id ="producto-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
+                                    <a href="#" class="btn btn-link btn-xs pull-right btnAction2" id ="producto-{{$item->id}}-destroy" title="Eliminar">
                                         <i class="fa fa-trash bigger-110 red" ></i>
                                     </a>
                                 @endif

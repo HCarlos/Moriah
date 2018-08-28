@@ -24,6 +24,7 @@ class InitSIIFACSeeder extends Seeder
 
     public function run()
     {
+
         $IdEmp1 = Empresa::findOrCreateEmpresa('COMERCIALIZADORA ARJI, S.A. DE C.V.','COMERCIALIZADORA ARJI, S.A. DE C.V.','AV. MEXICO #2 COL. DEL BOSQUE, VILLAHERMOSA, TABASCO CP.86160','CAR-930816-FH0');
         $IdEmp2 = Empresa::findOrCreateEmpresa('LIBROS 2006/2007', 'LIBROS 2006/2007','AVENIDA MEXICO #2','');
         $IdEmp3 = Empresa::findOrCreateEmpresa('Empresa 3', 'Empresa 3','AVENIDA MEXICO #2','');
@@ -219,29 +220,29 @@ class InitSIIFACSeeder extends Seeder
 //        $user->familiasClientes()->attach($IdFC2);
 //        $user->familiasClientes()->attach($IdFC3);
 
-        $Paq1 = Paquete::findOrCreatePaquete(1,'010100121111','PAQUETE DE KINDER 1',0,$IdEmp);
-        $Paq2 = Paquete::findOrCreatePaquete(1,'010100121112','PAQUETE DE KINDER 2',0,$IdEmp);
-        $Paq3 = Paquete::findOrCreatePaquete(1,'010100121113','PAQUETE DE KINDER 3',0,$IdEmp);
-        $Paq4 = Paquete::findOrCreatePaquete(1,'010200121114','PAQUETE 1 INGLES',0,$IdEmp);
-        $Paq5 = Paquete::findOrCreatePaquete(1,'010200121115','PAQUETE 1 PRIM',0,$IdEmp);
-        $Paq6 = Paquete::findOrCreatePaquete(1,'010200121116','PAQUETE 2 PRIM',0,$IdEmp);
-        $Paq7 = Paquete::findOrCreatePaquete(1,'010200121117','PAQUETE 3 PRIM',0,$IdEmp);
-        $Paq8 = Paquete::findOrCreatePaquete(1,'010200121118','PAQUETE 4 PRIM',0,$IdEmp);
-        $Paq9 = Paquete::findOrCreatePaquete(1,'010200121119','PAQUETE 5 PRIM',0,$IdEmp);
-        $Paq10 = Paquete::findOrCreatePaquete(1,'010200121130','PAQUETE 6 PRIM',0,$IdEmp);
-        $Paq11 = Paquete::findOrCreatePaquete(1,'010300121132','PAQUETE 1 SEC',0,$IdEmp);
-        $Paq12 = Paquete::findOrCreatePaquete(1,'010300121133','PAQUETE 2° SEC. ESPAÑOL',0,$IdEmp);
-        $Paq13 = Paquete::findOrCreatePaquete(1,'010300100060','PAQUETE 2° SEC. PET',0,$IdEmp);
-        $Paq14 = Paquete::findOrCreatePaquete(1,'010300100061','PAQUETE 2° SEC. FCE',0,$IdEmp);
-        $Paq15 = Paquete::findOrCreatePaquete(1,'010300121126','PAQUETE 3 SEC ESPAÑOL',0,$IdEmp);
-        $Paq16 = Paquete::findOrCreatePaquete(1,'010300121135','PAQUETE 3 SEC PET',0,$IdEmp);
-        $Paq17 = Paquete::findOrCreatePaquete(1,'010300131136','PAQUETE 3 SEC FCE',0,$IdEmp);
-        $Paq18 = Paquete::findOrCreatePaquete(1,'010400100001','PAQUETE 1° PREPA FCE',0,$IdEmp);
-        $Paq19 = Paquete::findOrCreatePaquete(1,'010400100002','PAQUETE 1° PREPA CAE',0,$IdEmp);
-        $Paq20 = Paquete::findOrCreatePaquete(1,'010400100003','PAQUETE 2° PREPA FCE',0,$IdEmp);
-        $Paq21 = Paquete::findOrCreatePaquete(1,'010400100004','PAQUETE 2° PREPA CAE',0,$IdEmp);
-        $Paq22 = Paquete::findOrCreatePaquete(1,'010400100005','PAQUETE 3° PREPA FCE',0,$IdEmp);
-        $Paq23 = Paquete::findOrCreatePaquete(1,'010400100006','PAQUETE 3° PREPA CAE',0,$IdEmp);
+        $Paq1 = Paquete::findOrCreatePaquete(1,'010100121111','PAQUETE DE KINDER 1',2045.01,$IdEmp);
+        $Paq2 = Paquete::findOrCreatePaquete(1,'010100121112','PAQUETE DE KINDER 2',2330.01,$IdEmp);
+        $Paq3 = Paquete::findOrCreatePaquete(1,'010100121113','PAQUETE DE KINDER 3',2330.01,$IdEmp);
+        $Paq4 = Paquete::findOrCreatePaquete(1,'010200121114','PAQUETE 1° INGLES',2675.01,$IdEmp);
+        $Paq5 = Paquete::findOrCreatePaquete(1,'010200121115','PAQUETE 1° PRIM',2310.01,$IdEmp);
+        $Paq6 = Paquete::findOrCreatePaquete(1,'010200121116','PAQUETE 2° PRIM',1995.01,$IdEmp);
+        $Paq7 = Paquete::findOrCreatePaquete(1,'010200121117','PAQUETE 3° PRIM',1880.01,$IdEmp);
+        $Paq8 = Paquete::findOrCreatePaquete(1,'010200121118','PAQUETE 4° PRIM',1880.01,$IdEmp);
+        $Paq9 = Paquete::findOrCreatePaquete(1,'010200121119','PAQUETE 5° PRIM',3395.01,$IdEmp);
+        $Paq10 = Paquete::findOrCreatePaquete(1,'010200121130','PAQUETE 6° PRIM',1880.01,$IdEmp);
+        $Paq11 = Paquete::findOrCreatePaquete(1,'010300121132','PAQUETE 1° SEC',4830.01,$IdEmp);
+        $Paq12 = Paquete::findOrCreatePaquete(1,'010300121133','PAQUETE 2° SEC. ESPAÑOL',3055.01,$IdEmp);
+        $Paq13 = Paquete::findOrCreatePaquete(1,'010300100060','PAQUETE 2° SEC. PET',1970.01,$IdEmp);
+        $Paq14 = Paquete::findOrCreatePaquete(1,'010300100061','PAQUETE 2° SEC. FCE',1970.01,$IdEmp);
+        $Paq15 = Paquete::findOrCreatePaquete(1,'010300121126','PAQUETE 3 SEC ESPAÑOL',3045.01,$IdEmp);
+        $Paq16 = Paquete::findOrCreatePaquete(1,'010300121135','PAQUETE 3 SEC PET',2280.01,$IdEmp);
+        $Paq17 = Paquete::findOrCreatePaquete(1,'010300131136','PAQUETE 3 SEC FCE',2280.01,$IdEmp);
+        $Paq18 = Paquete::findOrCreatePaquete(1,'010400100001','PAQUETE 1° PREPA FCE',2715.01,$IdEmp);
+        $Paq19 = Paquete::findOrCreatePaquete(1,'010400100002','PAQUETE 1° PREPA CAE',2740.01,$IdEmp);
+        $Paq20 = Paquete::findOrCreatePaquete(1,'010400100003','PAQUETE 2° PREPA FCE',3945.01,$IdEmp);
+        $Paq21 = Paquete::findOrCreatePaquete(1,'010400100004','PAQUETE 2° PREPA CAE',3970.01,$IdEmp);
+        $Paq22 = Paquete::findOrCreatePaquete(1,'010400100005','PAQUETE 3° PREPA FCE',805.01,$IdEmp);
+        $Paq23 = Paquete::findOrCreatePaquete(1,'010400100006','PAQUETE 3° PREPA CAE',835.01,$IdEmp);
 
         $PaqDet01 = PaqueteDetalle::findOrCreatePaqueteDetalle(1,26);
         $PaqDet02 = PaqueteDetalle::findOrCreatePaqueteDetalle(1,77);
@@ -360,9 +361,12 @@ class InitSIIFACSeeder extends Seeder
         $PaqDet138 = PaqueteDetalle::findOrCreatePaqueteDetalle(23,65);
         $PaqDet139 = PaqueteDetalle::findOrCreatePaqueteDetalle(23,132);
 
-        $role1 = Role::find(2);
-        $role2 = Role::find(3);
-        $role3 = Role::find(4);
+        $IdEmp = Empresa::find(1);
+        $IdEmp = $IdEmp->id;
+
+        $role1 = Role::find(3);
+        $role2 = Role::find(4);
+        $role3 = Role::find(5);
 
         $IdUser1 = User::findOrCreateUserWithRole3('7335167628289061','per2024','PAULINA','SANSORES','NARAVE','per2024@example.com','per2024',false,false,false,false,false,0,0,'','','',0,0,1,7267,$IdEmp,$role1,$role2,$role3,'CARDENAS','112','','PLAZA VILLAHERMOSA','VILLAHERMOSA','TABASCO','MÉXICO','','');
         $IdUser2 = User::findOrCreateUserWithRole3('7335154025884008','per0250','JOSE','REVUELTAS','RODRIGUEZ','per0250@example.com','per0250',false,false,false,true,true,100,15000,'','','',0,0,1,4131,$IdEmp,$role1,$role2,$role3,'TULIPAN','199','','FRACC. REAL DEL ANGEL','VILLAHERMOSA','TABASCO','MÉXICO','86153','');

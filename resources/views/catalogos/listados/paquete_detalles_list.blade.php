@@ -4,7 +4,6 @@
     <div class="panel panel-moriah" id="catalogosList0">
         <div class="panel-heading">
             <span id="titulo_catalogo">Cargando... </span> |
-            {{--<a href="{{ route('paqueteDetalleNewAjax', ['paquete_id' => $idItem,'paquete_detalle_id' => 0]) }}" class="btn btn-info btn-xs btnAction1" target="_blank" title="Agregar nuevo registro">--}}
             <a href="#" id="/new_paquete_detalle_ajax/-{{$idItem}}-0" class="btn btn-info btn-xs btnAction1" data-toggle="modal" data-target="#myModal" title="Agregar nuevo registro">
                 <i class="fa fa-plus-circle bigger-150"></i>
             </a>
@@ -45,7 +44,7 @@
                                             {{--</a>--}}
                                         {{--@endif--}}
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="paquete_detalle-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="paquete_detalle-{{$item->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif

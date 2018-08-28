@@ -63,14 +63,25 @@ class PanelControlOneRequest extends FormRequest
     {
         $F = (new FuncionesController);
 
-        $f1    = $F->fechaDateTimeFormat($this->fecha1);
-        $f2    = $F->fechaDateTimeFormat($this->fecha2,true);
+        $f1          = $F->fechaDateTimeFormat($this->fecha1);
+        $f2          = $F->fechaDateTimeFormat($this->fecha2,true);
         $vendedor_id = $this->vendedor_id;
         $metodo_pago = $this->metodo_pago;
+        $tipo_venta  = $this->tipo_venta;
+        $empresa_id  = $this->empresa_id;
 
         $Movs = Ingreso::select()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
+//            ->where('empresa_id','=', $empresa_id)
+            ->where(function ($q) use($tipo_venta) {
+                if ($tipo_venta > -1)
+                    $q->where('tipoventa', $tipo_venta);
+            })
+            ->whereHas('empresas', function ($q) use($empresa_id) {
+                if ($empresa_id > 0)
+                    $q->where('empresa_id', $empresa_id);
+            })
             ->whereHas('vendedores', function ($q) use($vendedor_id) {
                 if ($vendedor_id > 0)
                     $q->where('vendedor_id', $vendedor_id);

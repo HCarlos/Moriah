@@ -43,7 +43,7 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="{{ route('paqueteDetalleIndex', ['npage' => 1, 'tpaginas' => 0,'id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Paquete">
+                                            <a href="{{ route('paqueteDetalleIndex', ['id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Paquete">
                                                 <i class="fa fa-cubes bigger-150 purple"></i>
                                             </a>
                                         @endif
@@ -53,7 +53,7 @@
                                             </a>
                                         @endif
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="paquete-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="paquete-{{$item->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif

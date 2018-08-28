@@ -11,7 +11,7 @@ class Ingreso extends Model
 {
     use SoftDeletes;
 
-    protected $guard_name = 'web'; // or whatever guard you want to use
+    protected $guard_name = 'web';
     protected $table = 'ingresos';
 
     protected $fillable = [
@@ -38,6 +38,10 @@ class Ingreso extends Model
 
     public function empresa(){
         return $this->belongsTo(Empresa::class);
+    }
+
+    public function empresas(){
+        return $this->belongsToMany(Empresa::class);
     }
 
     public function clientes(){
@@ -99,6 +103,7 @@ class Ingreso extends Model
         $Ing->users()->attach($user_id);
         $Ing->vendedores()->attach($Ven->vendedor_id);
         $Ing->clientes()->attach($Ven->user_id);
+        $Ing->empresas()->attach($Ven->empresa_id);
 
         return $Ing;
 

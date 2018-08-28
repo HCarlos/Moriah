@@ -395,6 +395,11 @@ fieldset[disabled] .btn-cafe.active {
 .wellcome-pos-twitter{
 	position: absolute; top: 94%; left: 91%;
 }
+
 .wellcome-pos-version{
     position: absolute; top: 94%; left: 3%;
+}
+
+.form-error {
+	border: 1px solid #e74c3c !important;
 }

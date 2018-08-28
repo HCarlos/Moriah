@@ -24,19 +24,18 @@ class EmpresaController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($npage = 1, $tpaginas = 0)
+    public function index()
     {
-        $page = Input::get('p');
-        if ( $page ) $npage = $page;
 
         $this->tableName = 'empresas';
-        $items = Empresa::all('id','rs','ncomer','rfc')
-            ->sortByDesc('id')
-            ->forPage($npage,$this->itemPorPagina);
+        $items = Empresa::select('id','rs','ncomer','rfc')
+            ->orderBy('id')
+            ->paginate();
+
+        $items->appends(request(['search']))->fragment('table');
+        $items->links();
+
         $user = Auth::User();
-        $tpaginator = Empresa::paginate($this->itemPorPagina,['*'],'p');
-        $tpaginas = $tpaginas == 0 ? $tpaginator->lastPage() : $tpaginas;
-        $tpaginator->withPath("/index_empresa/$npage/$tpaginas");
 
         return view ('catalogos.listados.empresas_list',
             [
@@ -44,10 +43,8 @@ class EmpresaController extends Controller
                 'titulo_catalogo' => "Catálogo de ".ucwords($this->tableName),
                 'user' => $user,
                 'tableName'=>$this->tableName,
-                'npage'=> $npage,
-                'tpaginas' => $tpaginas,
             ]
-        )->with("paginator" , $tpaginator);
+        );
 
     }
 

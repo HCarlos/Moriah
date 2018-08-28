@@ -25,6 +25,25 @@
                         {{--@endif--}}
 
                         <div class="form-group row">
+                            <label for="tipo_venta" class="col-md-1 control-label">Tipo:</label>
+                            <div class="col-md-2">
+                                <select name="tipo_venta" id="tipo_venta" class="form-control" size="1">
+                                    <option value="-1" selected>Cualquiera</option>
+                                    <option value="0">Contado</option>
+                                    <option value="1">Credito</option>
+                                </select>
+                            </div>
+                            <label for="empresa_id" class="col-md-1 control-label">Almacén:</label>
+                            <div class="col-md-2">
+                                <select name="empresa_id" id="empresa_id" class="form-control" size="1">
+                                    @foreach ($empresas as $key => $value)
+                                        <option value="{{ $key }}"@if ($key == 1) selected @endif>{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-group row">
                             <label for="vendedor_id" class="col-md-1 control-label">Vendedor:</label>
                             <div class="col-md-2">
                                 <select name="vendedor_id" id="vendedor_id" class="form-control" size="1">
@@ -45,18 +64,18 @@
                             </div>
                         </div>
                         <br/>
-                        <div class="form-group {{$errors->has("fecha1") || $errors->has("fecha2") ? "has-error " : ""}} row">
+                        <div class="form-group row">
                             <label for="fecha1" class="col-md-1 control-label has-warning">Desde:</label>
-                            <div class="col-md-2">
-                                {{ Form::date('fecha1', old("fecha1", \Carbon\Carbon::now() ), ['id'=>'fecha1','class'=>'col-md-2 form-control']) }}
+                            <div class="col-md-2 ">
+                                {{ Form::date('fecha1', old("fecha1", \Carbon\Carbon::now() ), ['id'=>'fecha1','class'=> $errors->has("fecha1") ? "form-control has-error form-error" : 'col-md-2 form-control']) }}
                                 @if ($errors->has('fecha1'))
                                     <span class="text-danger">{{ $errors->first('fecha1') }}</span>
                                 @endif
                             </div>
 
                             <label for="fecha2" class="col-md-1 control-label ">Hasta:</label>
-                            <div class="col-md-2">
-                                {{ Form::date('fecha2', old("fecha2", \Carbon\Carbon::now() ), ['id'=>'fecha2','class'=>'col-md-2 form-control']) }}
+                            <div class="col-md-2 {{$errors->has("fecha2") ? "has-error form-error" : ""}}">
+                                {{ Form::date('fecha2', old("fecha2", \Carbon\Carbon::now() ), ['id'=>'fecha2','class'=> $errors->has("fecha2") ? "form-control form-error" :'col-md-2 form-control']) }}
                                 @if ($errors->has('fecha2'))
                                     <span class="text-danger">{{ $errors->first('fecha2') }}</span>
                                 @endif

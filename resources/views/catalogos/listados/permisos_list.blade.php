@@ -15,7 +15,7 @@
                     <td>{{ $item->name }}</td>
                     <td width="100">
                         @if ($user->hasAnyPermission(['all']))
-                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="role-{{$item->id.'-'.$item->id.'-'.$id.'-'.$npage.'-'.$tpaginas}}-2-/destroy_permission/" title="Eliminar">
+                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="role-{{$item->id.'-'.$item->id.'-'.$id}}-2-/destroy_permission/" title="Eliminar">
                                 {{--<a href="{{ route('roleDestroy/', array('id' => $item->id,'idItem' => $item->id,'action' => 2)) }}" class="btn btn-link btn-xs pull-right" title="Eliminar">--}}
                                 <i class="fa fa-trash fa-lg red" ></i>
                             </a>

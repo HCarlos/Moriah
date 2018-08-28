@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('subirFotoProfile/', 'Storage\StorageProfileController@subirArchivoProfile')->name('subirArchivoProfile/');
     Route::get('quitarFotoProfile/', 'Storage\StorageProfileController@quitarArchivoProfile')->name('quitarArchivoProfile/');
 
-    Route::get('/index/{id}/{npage}/{tpaginas}/','Catalogos\CatalogosListController@index')->name('listItem');
+    Route::get('/index/{id}/','Catalogos\CatalogosListController@index')->name('listItem');
     Route::post('/catalogo/search/','Catalogos\CatalogosListController@indexSearch')->name('listItemSearch');
 
     Route::get('catalogos/{id}/{idItem}/{action}', 'Catalogos\CatalogosController@index')->name('catalogos/');
@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 //        Route::get('/catajax/{id}', 'Catalogos\CatalogosListController@ajaxIndex')->name('ajaxIndexCatList');
 
     // Empresas
-    Route::get('/index_empresa/{npage}/{tpaginas}','SIIFAC\EmpresaController@index')->name('empresaIndex');
+    Route::get('/index_empresa/','SIIFAC\EmpresaController@index')->name('empresaIndex');
     Route::get('/new_empresa/{idItem}', 'SIIFAC\EmpresaController@new')->name('empresaNew');
     Route::get('/edit_empresa/{idItem}', 'SIIFAC\EmpresaController@edit')->name('empresaEdit');
     Route::post('/store_empresa','SIIFAC\EmpresaController@store')->name('empresaStore/');
@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_empresa/{id}', 'SIIFAC\EmpresaController@destroy')->name('empresaDestroy/');
 
     // Almacenes
-    Route::get('/index_almacen/{npage}/{tpaginas}','SIIFAC\AlmacenController@index')->name('almacenIndex');
+    Route::get('/index_almacen','SIIFAC\AlmacenController@index')->name('almacenIndex');
     Route::get('/new_almacen/{idItem}', 'SIIFAC\AlmacenController@new')->name('almacenNew');
     Route::get('/edit_almacen/{idItem}', 'SIIFAC\AlmacenController@edit')->name('almacenEdit');
     Route::post('/store_almacen','SIIFAC\AlmacenController@store')->name('almacenStore/');
@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_almacen/{id}', 'SIIFAC\AlmacenController@destroy')->name('almacenDestroy/');
 
     // Productos
-    Route::get('/index_producto/{npage}/{tpaginas}','SIIFAC\ProductoController@index')->name('productoIndex');
+    Route::get('/index_producto','SIIFAC\ProductoController@index')->name('productoIndex');
     Route::get('/new_producto/{idItem}', 'SIIFAC\ProductoController@new')->name('productoNew');
     Route::get('/edit_producto/{idItem}', 'SIIFAC\ProductoController@edit')->name('productoEdit');
     Route::post('/store_producto','SIIFAC\ProductoController@store')->name('productoStore/');
@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/imprimir_codigos_de_barras/', 'Externos\BarCodeController@imprimir_todos_codigos_barras')->name('imprimirTodosCodigosBarras/');
 
     // Paquetes
-    Route::get('/index_paquete/{npage}/{tpaginas}','SIIFAC\PaqueteController@index')->name('paqueteIndex');
+    Route::get('/index_paquete','SIIFAC\PaqueteController@index')->name('paqueteIndex');
     Route::get('/new_paquete/{idItem}', 'SIIFAC\PaqueteController@new')->name('paqueteNew');
     Route::get('/edit_paquete/{idItem}', 'SIIFAC\PaqueteController@edit')->name('paqueteEdit');
     Route::post('/store_paquete','SIIFAC\PaqueteController@store')->name('paqueteStore/');
@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/quitar_imagen_paquete/{idItem}','Storage\StoragePaqueteController@quitarArchivoPaquete')->name('storagePaqueteRemove/');
 
     // Paquete Detalles
-    Route::get('/index_paquete_detalle/{npage}/{tpaginas}/{id}','SIIFAC\PaqueteDetalleController@index')->name('paqueteDetalleIndex');
+    Route::get('/index_paquete_detalle/{id}','SIIFAC\PaqueteDetalleController@index')->name('paqueteDetalleIndex');
     Route::get('/new_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@new_ajax')->name('paqueteDetalleNewAjax');
     Route::post('/store_paquete_detalle_ajax','SIIFAC\PaqueteDetalleController@store_ajax')->name('paqueteDetalleStoreAjax/');
     Route::get('/edit_paquete_detalle_ajax/{paquete_id}/{paquete_detalle_id}', 'SIIFAC\PaqueteDetalleController@edit_ajax')->name('paqueteDetalleEditAjax');
@@ -112,13 +112,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_paquete_detalle/{id}', 'SIIFAC\PaqueteDetalleController@destroy')->name('paqueteDetalleDestroy/');
 
     // Pedidos
-    Route::get('/index_pedido/{npage}/{tpaginas}','SIIFAC\PedidoController@index')->name('pedidoIndex');
+    Route::get('/index_pedido','SIIFAC\PedidoController@index')->name('pedidoIndex');
     Route::get('/new_pedido/{idItem}', 'SIIFAC\PedidoController@new')->name('pedidoNew');
     Route::post('/store_pedido','SIIFAC\PedidoController@store')->name('pedidoStore/');
     Route::get('/destroy_pedido/{id}', 'SIIFAC\PedidoController@destroy')->name('pedidoDestroy/');
 
     // Pedido Detalles
-    Route::get('/index_pedido_detalle/{npage}/{tpaginas}/{id}','SIIFAC\PedidoDetalleController@index')->name('pedidoDetalleIndex');
+    Route::get('/index_pedido_detalle/{id}','SIIFAC\PedidoDetalleController@index')->name('pedidoDetalleIndex');
     Route::get('/new_pedido_detalle_ajax/{pedido_id}/{pedido_detalle_id}', 'SIIFAC\PedidoDetalleController@new_ajax')->name('pedidoDetalleNewAjax');
     Route::post('/store_pedido_detalle_ajax','SIIFAC\PedidoDetalleController@store_ajax')->name('pedidoDetalleStoreAjax/');
     Route::get('/destroy_pedido_detalle/{id}', 'SIIFAC\PedidoDetalleController@destroy')->name('pedidoDetalleDestroy/');
@@ -162,7 +162,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/destroy_compra_detalle/{id}', 'SIIFAC\CompraDetalleController@destroy')->name('compraDetalleDestroy/');
 
     // Usuarios
-    Route::get('/index_usuario/{npage}/{tpaginas}','SIIFAC\UsuarioController@index')->name('usuarioIndex');
+    Route::get('/index_usuario','SIIFAC\UsuarioController@index')->name('usuarioIndex');
     Route::get('/new_usuario/{idItem}', 'SIIFAC\UsuarioController@new')->name('usuarioNew');
     Route::get('/edit_usuario/{idItem}', 'SIIFAC\UsuarioController@edit')->name('usuarioEdit');
     Route::post('/store_usuario','SIIFAC\UsuarioController@store')->name('usuarioStore/');

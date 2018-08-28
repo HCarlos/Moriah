@@ -40,7 +40,7 @@
                                     <div class="visible-desktop action-buttons">
 
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="{{ route('pedidoDetalleIndex', ['npage' => 1, 'tpaginas' => 0,'id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Pedido">
+                                            <a href="{{ route('pedidoDetalleIndex', ['id' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Construir Pedido">
                                                 <i class="fa fa-cubes bigger-150 purple"></i>
                                             </a>
                                         @endif
@@ -51,7 +51,7 @@
                                             {{--</a>--}}
                                         {{--@endif--}}
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="pedido-{{$item->id.'-'.$npage.'-'.$tpaginas}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="pedido-{{$item->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif

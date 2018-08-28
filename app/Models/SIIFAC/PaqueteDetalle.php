@@ -61,6 +61,9 @@ class PaqueteDetalle extends Model
             $det->productos()->attach($prod);
             $paq->detalles()->attach($det);
             $paq->productos()->attach($prod);
+
+            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
+
             return $det;
         }
         return $obj;
@@ -92,6 +95,8 @@ class PaqueteDetalle extends Model
 
             $det->productos()->attach($prod);
             $paq->productos()->attach($prod);
+
+            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
 
             return $det;
 
