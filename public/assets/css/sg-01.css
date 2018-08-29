@@ -201,6 +201,8 @@
 .padBot2em{padding-bottom: 1em !important; padding-top: 1em !important; }
 .padBot2emWithLine{padding-bottom: 1em !important; padding-top: 1em !important; border-bottom: dotted 1px !important;}
 .paddingTop1em{padding-top: 1em !important;}
+.marginRight1em{margin-right: 1em !important;}
+.marginRight2em{margin-right: 2em !important;}
 
 .transparent{
   background: transparent !important;

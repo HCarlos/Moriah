@@ -42,6 +42,7 @@ return array(
     'App\\Http\\Controllers\\Externos\\TarjetaMovtosController' => $baseDir . '/app/Http/Controllers/Externos/TarjetaMovtosController.php',
     'App\\Http\\Controllers\\Externos\\TicketController' => $baseDir . '/app/Http/Controllers/Externos/TicketController.php',
     'App\\Http\\Controllers\\Externos\\TwilioSMSController' => $baseDir . '/app/Http/Controllers/Externos/TwilioSMSController.php',
+    'App\\Http\\Controllers\\Externos\\VentaRealizadaController' => $baseDir . '/app/Http/Controllers/Externos/VentaRealizadaController.php',
     'App\\Http\\Controllers\\FormController' => $baseDir . '/app/Http/Controllers/Admin/FormController.php',
     'App\\Http\\Controllers\\Funciones\\FuncionesController' => $baseDir . '/app/Http/Controllers/Funciones/FuncionesController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',

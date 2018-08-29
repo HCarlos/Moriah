@@ -634,6 +634,7 @@ class ComposerStaticInitb7affa5781194bbab3aff7e0eff0cb0c
         'App\\Http\\Controllers\\Externos\\TarjetaMovtosController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/TarjetaMovtosController.php',
         'App\\Http\\Controllers\\Externos\\TicketController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/TicketController.php',
         'App\\Http\\Controllers\\Externos\\TwilioSMSController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/TwilioSMSController.php',
+        'App\\Http\\Controllers\\Externos\\VentaRealizadaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/VentaRealizadaController.php',
         'App\\Http\\Controllers\\FormController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FormController.php',
         'App\\Http\\Controllers\\Funciones\\FuncionesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Funciones/FuncionesController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',

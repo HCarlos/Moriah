@@ -138,6 +138,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pagar_venta_ajax','SIIFAC\VentaController@pagar_venta_ajax')->name('pagarVentaAjax/');
     Route::get('/llamar_busqueda_individual_ajax/{tipo}','SIIFAC\VentaController@llamar_busquedaIndividual')->name('llamarBusquedaIndividualAjax/');
     Route::post('/busqueda_individual','SIIFAC\VentaController@busquedaIndividual')->name('busquedaIndividual/');
+    Route::get('/llamar_venta_fecha_ajax','SIIFAC\VentaController@llamar_venta_en_fecha')->name('llamarVentaFechaAjax/');
+    Route::post('/ventas_rango_fechas','SIIFAC\VentaController@ventas_rango_fechas')->name('ventasRangoFechas/');
 
     // Venta_Detalles
     Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');

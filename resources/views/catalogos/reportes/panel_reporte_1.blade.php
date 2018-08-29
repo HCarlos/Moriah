@@ -81,6 +81,16 @@
                                 @endif
                             </div>
                         </div>
+                        <br/>
+                        <div class="form-group row">
+                            <label for="tipo_reporte" class="col-md-1 control-label has-warning">Reporte:</label>
+                            <div class="col-md-5 ">
+                                <select name="tipo_reporte" id="tipo_reporte" class="form-control" size="1">
+                                    <option value="0"selected>Reporte de Ingresos</option>
+                                    <option value="1">Reporte de Ventas</option>
+                                </select>
+                            </div>
+                        </div>
                         <hr>
 
                         <div class="form-group row">

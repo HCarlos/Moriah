@@ -289,20 +289,63 @@ class VentaController extends Controller
         $user = Auth::User();
         switch ($tipo){
             case 0:
-                $items = Venta::all()->where('id',$dato);
+                $items = Venta::select()
+                    ->where('id',$dato)
+                    ->where(function ($q) use($user) {
+                        if (!$user->hasRole('administrator|sysop'))
+                            $q->where('vendedor_id', $user->id);
+                    })
+                    ->orderBy('created_at')
+                    ->get();
                 break;
             case 1:
-                $items = Venta::BuscarClientePorNombreCompleto($dato);
+                $items = Venta::BuscarClientePorNombreCompleto($dato,$user);
                 break;
             case 2:
-                $items = Venta::BuscarProductoPorNombre($dato);
+                $items = Venta::BuscarProductoPorNombre($dato,$user);
                 break;
             case 3:
-                $items = Venta::BuscarProductoPorCodigo($dato);
+                $items = Venta::BuscarProductoPorCodigo($dato,$user);
                 break;
         }
+        return view ('catalogos.operaciones.ventas',
+            [
+                'tableName' => 'ventas',
+                'ventas' => $items,
+                'user' => $user,
+                'totalVentas' => 0,
+                'fecha' => $dato,
+            ]
+        );
+    }
 
-//        dd($items);
+
+
+    public function llamar_venta_en_fecha(){
+        return view (
+            'catalogos.operaciones.busquedas.busqueda_venta_en_fecha'
+        );
+    }
+
+    public function ventas_rango_fechas(Request $request)
+    {
+        $F = (new FuncionesController);
+
+        $data = $request->all();
+        $f1 = $F->fechaDateTimeFormat($data['fecha1']);
+        $f2 = $F->fechaDateTimeFormat($data['fecha2'],true);
+
+        $dato = "Desde ".$f1." Hasta ".$f2;
+        $user = Auth::User();
+                $items = Venta::select()
+                    ->where('fecha','>=',$f1)
+                    ->where('fecha','<=',$f2)
+                    ->where(function ($q) use($user) {
+                        if (!$user->hasRole('administrator|sysop'))
+                            $q->where('vendedor_id', $user->id);
+                    })
+                    ->orderBy('created_at')
+                    ->get();
 
         return view ('catalogos.operaciones.ventas',
             [
@@ -313,8 +356,8 @@ class VentaController extends Controller
                 'fecha' => $dato,
             ]
         );
-
     }
+
 
     public function destroy($id=0){
         $venta = Venta::findOrFail($id);

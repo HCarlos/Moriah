@@ -5,9 +5,6 @@
 
 @section('scripts')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"> </script>
-{{--<script src="{{ asset('js/jquery.dataTables.bootstrap.js') }}"> </script>--}}
-{{--<script src="{{ asset('js/date-time/bootstrap-datepicker.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/date-time/bootstrap-timepicker.min.js') }}"></script>--}}
 <script>
     jQuery(function($) {
         $(document).ready(function() {

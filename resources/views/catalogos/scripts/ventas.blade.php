@@ -45,6 +45,23 @@
                     });
                 }
 
+                if ( $(".btnVentaDate") ){
+                    $(".btnVentaDate").on("click", function (event) {
+                        event.preventDefault();
+                        var ids =event.currentTarget.id.split('-');
+                        $("#myModal .modal-body").empty();
+                        $("#myModal .modal-footer").hide();
+                        $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-cog fa-spin"></i> Cargado datos...</div>');
+                        $("#myModal").modal('show');
+                        $(function () {
+                            $.ajax({method: "get", url: '/llamar_venta_fecha_ajax'})
+                                .done(function (response) {
+                                    $("#myModal .modal-body").html(response);
+                                });
+                        });
+                    });
+                }
+
             });
         });
 

@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Controllers\Externos\CorteCajaController;
+use App\Http\Controllers\Externos\VentaRealizadaController;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Ingreso;
+use App\Models\SIIFAC\Venta;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PanelControlOneRequest extends FormRequest
@@ -73,7 +75,6 @@ class PanelControlOneRequest extends FormRequest
         $Movs = Ingreso::select()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-//            ->where('empresa_id','=', $empresa_id)
             ->where(function ($q) use($tipo_venta) {
                 if ($tipo_venta > -1)
                     $q->where('tipoventa', $tipo_venta);
@@ -105,6 +106,46 @@ class PanelControlOneRequest extends FormRequest
 
     }
 
+    public function ventaRealizada($pdf)
+    {
+        $F = (new FuncionesController);
+
+        $f1          = $F->fechaDateTimeFormat($this->fecha1);
+        $f2          = $F->fechaDateTimeFormat($this->fecha2,true);
+        $vendedor_id = $this->vendedor_id;
+        $metodo_pago = $this->metodo_pago;
+        $tipo_venta  = $this->tipo_venta;
+        $empresa_id  = $this->empresa_id;
+
+        $Movs = Venta::select()
+            ->where('fecha','>=', $f1)
+            ->where('fecha','<=', $f2)
+            ->where(function ($q) use($tipo_venta) {
+                if ($tipo_venta > -1)
+                    $q->where('tipoventa', $tipo_venta);
+            })
+            ->whereHas('empresas', function ($q) use($empresa_id) {
+                if ($empresa_id > 0)
+                    $q->where('empresa_id', $empresa_id);
+            })
+            ->whereHas('vendedores', function ($q) use($vendedor_id) {
+                if ($vendedor_id > 0)
+                    $q->where('vendedor_id', $vendedor_id);
+            })
+            ->orderBy('fecha')
+            ->get();
+
+        $m = $Movs->first();
+        $f1 = $F->fechaEspanol($this->fecha1);
+        $f2 = $F->fechaEspanol($this->fecha2);
+        $vendedor = 'none';
+        if ( !is_null($m) )
+            $vendedor = trim($m->vendedor->FullName);
+
+        $x = new VentaRealizadaController();
+        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs);
+
+    }
 
 
 

@@ -17,6 +17,7 @@ class Venta extends Model
     protected $table = 'ventas';
 
     protected $fillable = [
+        'id',
         'fecha', 'clave', 'foliofac','tipoventa','cuenta',
         'isimp', 'cantidad', 'importe','descto','subtotal',
         'iva', 'total', 'ispagado','f_pagado','user_id',
@@ -112,29 +113,46 @@ class Venta extends Model
         return $F->fechaEspanolComplete($this->attributes['fecha'],true);
     }
 
-    public function scopeBuscarClientePorNombreCompleto($query,$dato) {
-        $dato = strtoupper($dato);
-        return
-            $this::whereHas('users', function ($q) use($dato) {
-                $q->where(DB::raw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre)") , "similar to" , "%".$dato."%");
-            })->get();
+    public function getAbonosAttribute() {
+        return Ingreso::where('venta_id',$this->attributes['id'])->sum('total');
     }
 
-    public function scopeBuscarProductoPorNombre($query,$dato) {
+    public function scopeBuscarClientePorNombreCompleto($query,$dato,$user) {
         $dato = strtoupper($dato);
         return
-            $this::whereHas('ventaDetalles', function ($q) use($dato) {
+            $this::whereHas('users', function ($q) use($dato, $user) {
+                $q->where(DB::raw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre)") , "similar to" , "%".$dato."%");
+            })
+            ->where(function ($q) use($user) {
+                if (!$user->hasRole('administrator|sysop'))
+                    $q->where('vendedor_id', $user->id);
+            })
+            ->get();
+    }
+
+    public function scopeBuscarProductoPorNombre($query,$dato,$user) {
+        $dato = strtoupper($dato);
+        return
+            $this::whereHas('ventaDetalles', function ($q) use($dato, $user) {
                 $q->where('descripcion', "similar to" , "%".$dato."%");
             })
-                ->distinct()
-                ->get();
+            ->where(function ($q) use($user) {
+                if (!$user->hasRole('administrator|sysop'))
+                    $q->where('vendedor_id', $user->id);
+            })
+            ->distinct()
+            ->get();
     }
 
-    public function scopeBuscarProductoPorCodigo($query,$dato) {
+    public function scopeBuscarProductoPorCodigo($query,$dato,$user) {
         $dato = strtoupper($dato);
         return
-            $this::whereHas('ventaDetalles', function ($q) use($dato) {
+            $this::whereHas('ventaDetalles', function ($q) use($dato, $user) {
                 $q->where('codigo', "similar to" , "%".$dato."%");
+            })
+            ->where(function ($q) use($user) {
+                if (!$user->hasRole('administrator|sysop'))
+                    $q->where('vendedor_id', $user->id);
             })
             ->distinct()
             ->get();
