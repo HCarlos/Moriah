@@ -41,6 +41,14 @@ $(document).ready(function() {
         $(this).addClass("active open");
     }
 
+    // $('[data-rel=tooltip]').tooltip();
+    // $('[data-rel=popover]').popover(
+    //     {html:true, show:true}
+    //     ).click(function(){
+    //         $(this).popover('show');
+    // })
+
+
 });
 
 </script>

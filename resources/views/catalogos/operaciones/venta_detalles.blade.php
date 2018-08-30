@@ -27,7 +27,7 @@
             <div class="widget-body">
                 <div class="widget-main">
                     <form method="post"  id="frmSearchCode" class="form-inline">
-                        {{ csrf_field() }}
+                        @csrf
                         <div class="form-group">
                             <label class="sr-only" for="codigo">Código de barras</label>
                             <div class="input-group">
@@ -41,9 +41,14 @@
                         </div>
                         <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
                         <div class="form-group">
-                            <span id="titulo_catalogo" class="bigger-140 marginLeft1em "><strong class="orange2 font_PT_Sans_Narrow">VENTA <b class="purple font_Roboto_400">{{$venta_id}}</b></strong> </span>
+                            <span id="titulo_catalogo" class="bigger-140 marginLeft1em ">
+                                <strong class="orange2 font_PT_Sans_Narrow">VENTA <b class="purple font_Roboto_400" >{{$venta_id}}</b></strong>
+                            </span>
                         </div>
-                        <h4 class="pull-right"><i class="glyphicon glyphicon-shopping-cart green3"></i> <strong class="orange font_PT_Sans_Narrow"> DETALLES DE LA VENTA</strong></h4>
+                        <h4 class="btn btn-inverse btn-sm pull-right btnShowProperties" id="/show_prop_venta/{{$venta_id}}" data-toggle="modal" data-target="#myModal">
+                            <i class="glyphicon glyphicon-shopping-cart green3"></i>
+                            <strong class="orange2 font_PT_Sans_Narrow"> DETALLES DE LA VENTA</strong>
+                        </h4>
                     </form>
                 </div>
             </div>

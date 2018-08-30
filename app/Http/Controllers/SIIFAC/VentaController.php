@@ -358,6 +358,23 @@ class VentaController extends Controller
         );
     }
 
+    public function call_show_prop_ajax($venta_id)
+    {
+        $F = (new FuncionesController);
+
+        $oView  = 'catalogos.operaciones.ficha_propiedades.';
+        $views  = 'venta_propiedades';
+        $venta  = Venta::findOrFail($venta_id);
+        $user  = Auth::User();
+
+        return view ($oView.$views,
+            [
+                'user'  => $user,
+                'venta' => $venta,
+                'fecha' => Carbon::parse($venta->fecha)->format('d-m-Y h:m:s a'),
+            ]
+        );
+    }
 
     public function destroy($id=0){
         $venta = Venta::findOrFail($id);
