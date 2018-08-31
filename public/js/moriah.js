@@ -8,13 +8,13 @@ $(document).ready(function() {
     if ( $(".btnAction2") ){
         $('.btnAction2').on('click', function(event) {
             event.preventDefault();
-            // alert(event.currentTarget.id);
             var aID = event.currentTarget.id.split('-');
             var x = confirm("Desea eliminar el registro: "+aID[1]);
 
             if (!x){
                 return false;
             }
+
             var Url = '/'+aID[2]+'_'+aID[0]+'/'+aID[1];
 
             $(function() {

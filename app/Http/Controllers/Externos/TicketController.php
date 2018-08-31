@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
 use App\Http\Controllers\Controller;
@@ -22,6 +23,8 @@ class TicketController extends Controller
     protected $metodo_pago = "";
     protected $referencia  = "";
     protected $tipo_venta  = "";
+    protected $title       = "";
+
 
     public function header($pdf){
         $pdf->AddPage();
@@ -47,7 +50,7 @@ class TicketController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,utf8_decode("NOTA DE REMISIÓN"),"",1,"C",true);
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"C",true);
         $pdf->Ln(5);
         $pdf->Line(32,11,32,29);
         $pdf->Line(32.5,11,32.5,29);
@@ -86,6 +89,8 @@ class TicketController extends Controller
         $pdf->setX(10);
     }
 
+
+
     public function print_tiket($venta_id)
     {
         $Ven               = Venta::find($venta_id);
@@ -100,6 +105,7 @@ class TicketController extends Controller
         $this->metodo_pago = strtoupper($Ven->MetodoPago);
         $this->referencia  = $Ven->referencia;
         $this->tipo_venta  = strtoupper($Ven->TipoVenta);
+        $this->title       = "NOTA DE REMISIÓN";
 
         $pdf               = new FPDF('P','mm','Letter');
 
@@ -122,7 +128,87 @@ class TicketController extends Controller
         $pdf->Ln();
         $pdf->Output();
         exit;
+    }
 
+
+    public function header2($pdf){
+        $pdf->AddPage();
+        $pdf->setY(10);
+        $pdf->setX(10);
+        $pdf->SetTextColor(0,0,0);
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->SetFont('Arial','',7);
+        $pdf->SetFillColor(212,212,212);
+        $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode("Av. México Núm. 2, Col. Del Bosque, Villahermosa, Tabasco. CP 86160"),"",0,"L");
+        $pdf->Cell(10,$this->alto,"FOLIO: ","",0,"R");
+        $pdf->SetFont('Arial','',8);
+        $pdf->SetFillColor(240,240,240);
+        $pdf->Cell(10,$this->alto,$this->folio,"",1,"R");
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"C",true);
+        $pdf->Ln(7);
+        $pdf->setX(10);
+        $this->alto  = 10;
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(40,$this->alto,"FECHA",1,0,"C",true);
+        $pdf->Cell(60,$this->alto,utf8_decode("MÉTODO DE PAGO"),1,0,"L",true);
+        $pdf->Cell(65,$this->alto,utf8_decode("REFERENCIA"),1,0,"L",true);
+        $pdf->Cell(30,$this->alto,"IMPORTE",1,1,"R",true);
+        $this->alto  = 6;
+        $pdf->setX(10);
+    }
+
+    public function print_history_pay($venta_id)
+    {
+        $Ven               = Venta::find($venta_id);
+        $VD                = Ingreso::all()->where('venta_id',$venta_id);
+        $this->timex       = Carbon::now()->format('d-m-Y h:i:s a');
+        $this->folio       = $venta_id;
+        $this->cliente_id  = $Ven->user_id;
+        $this->vendedor_id = $Ven->vendedor_id;
+        $this->cliente     = $Ven->user->FullName;
+        $this->vendedor    = $Ven->vendedor->FullName;
+        $this->status      = "";
+        $this->metodo_pago = strtoupper($Ven->MetodoPago);
+        $this->referencia  = $Ven->referencia;
+        $this->tipo_venta  = strtoupper($Ven->TipoVenta);
+        $this->title       = "HISTORIAL DE PAGOS";
+
+        $pdf               = new FPDF('P','mm','Letter');
+
+        $pdf->AliasNbPages();
+        $pdf->SetFillColor(192,192,192);
+        $this->header2($pdf);
+        $this->alto  = 10;
+        $pdf->SetFont('Arial','',8);
+        //dd($Ven);
+        foreach ($VD as $vd){
+            $pdf->Cell(40,$this->alto,Carbon::parse($vd->fecha)->format('d-m-Y H:i:ss a'),1,0,"C");
+            $pdf->Cell(60,$this->alto,utf8_decode($vd->MetodoPago),1,0,"L");
+            $pdf->Cell(65,$this->alto,utf8_decode($vd->referencia),1,0,"L");
+            $pdf->Cell(30,$this->alto,number_format($vd->total,2),1,1,"R");
+            $pdf->setX(10);
+
+        }
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(165,$this->alto,"TOTAL PAGADO $ ",1,0,"R",true);
+        $pdf->Cell(30,$this->alto,number_format($Ven->Abonos,2),1,1,"R",true);
+        $pdf->setX(10);
+
+        $pdf->Ln();
+        $pdf->Output();
+        exit;
     }
 
 }

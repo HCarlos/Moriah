@@ -369,9 +369,10 @@ class VentaController extends Controller
 
         return view ($oView.$views,
             [
-                'user'  => $user,
-                'venta' => $venta,
-                'fecha' => Carbon::parse($venta->fecha)->format('d-m-Y h:m:s a'),
+                'user'   => $user,
+                'venta'  => $venta,
+                'fecha'  => Carbon::parse($venta->fecha)->format('d-m-Y h:m:s a'),
+                'Abonos' => $venta->Abonos,
             ]
         );
     }

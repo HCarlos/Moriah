@@ -42,7 +42,15 @@
                 <div class="profile-info-name"> Abonos </div>
 
                 <div class="profile-info-value">
-                    <span>{{ number_format($venta->Abonos,2) }}</span>
+                    <span>{{ number_format($Abonos,2) }}</span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> Adeudo </div>
+
+                <div class="profile-info-value">
+                    <span>{{ number_format(($venta->total - $Abonos),2) }}</span>
                 </div>
             </div>
 
@@ -52,9 +60,9 @@
                 <div class="profile-info-value">
                     <span>
                         @if( $venta->isPagado() )
-                            <b class="green2">Pagado</b>
+                            <b class="text-success">Pagado</b>
                         @else
-                            'No Pagado'
+                            No Pagado
                         @endif
                     </span>
                 </div>
@@ -70,7 +78,7 @@
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name"> Venedor </div>
+                <div class="profile-info-name"> Vendedor </div>
 
                 <div class="profile-info-value">
                     <span>{{$venta->vendedor->id.' '.$venta->vendedor->FullName}}</span>

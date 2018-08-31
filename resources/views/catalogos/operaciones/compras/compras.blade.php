@@ -46,7 +46,7 @@
                                     <div class="visible-desktop action-buttons">
 
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="compra-{{$compra->id.'-0-0'}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="compra-{{$compra->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-110 red" ></i>
                                             </a>
                                             <a href="{{ route('compraDetalleIndex', array('compra_id' => $compra->id)) }}" class="btn btn-link pull-right editarReg" target="_blank" title="Editar">

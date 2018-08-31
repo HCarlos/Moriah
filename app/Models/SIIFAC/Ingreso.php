@@ -20,6 +20,15 @@ class Ingreso extends Model
         'status_ingreso','fecha','tipoventa',
     ];
 
+    public static $metodos_pago =
+        [
+            0 => "Efectivo", 1 => "Cheque Nominativo", 2 => "Transferencia Electrónica de Fondos",
+            3 => "Tarjeta de Crédito", 4 => "Monedero Electrónico", 5 => "Dinero Elctrónico",
+            6 => "Vales de Despensa", 7 => "Tarjeta de Debito", 8 => "Tarjeta de Servicio",
+            9 => "Otros",
+        ];
+
+
     public function users(){
         return $this->belongsToMany(User::class);
     }
@@ -74,6 +83,9 @@ class Ingreso extends Model
         return $this->attributes['tipoventa'] == 0 ? 0 : 1;
     }
 
+    public function getMetodoPagoAttribute() {
+        return self::$metodos_pago[ $this->attributes['metodo_pago'] ];
+    }
 
     public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id=0)
     {

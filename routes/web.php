@@ -148,6 +148,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store_venta_detalle_normal_ajax','SIIFAC\VentaDetalleController@store_normal_ajax')->name('ventaDetalleNormalAjax/');
 //    Route::get('/excel/1','SIIFAC\ExcelController@toexcel')->name('toExcelTest/');
     Route::get('/print_venta_detalle/{venta_id}', 'Externos\TicketController@print_tiket')->name('printTicket/');
+    Route::get('/print_historial_pagos/{venta_id}', 'Externos\TicketController@print_history_pay')->name('printHistoryPay/');
 
 
     // Compras

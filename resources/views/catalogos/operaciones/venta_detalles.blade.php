@@ -16,6 +16,10 @@
                 <i class="fa fa-print bigger-150"></i>
             </a>
 
+            <a href="{{ route('printHistoryPay/', ['venta_id' => $venta_id]) }}" class="btn btn-purple btn-minier icon-only marginLeft2em " title="Imprimir historial de abonos" target="_blank">
+                <i class="fa fa-history bigger-150"></i>
+            </a>
+
             <span id="guardandoVenta" class="bigger-180 marginLeft2em" style="display: none;"><i class="fa fa-spinner fa-w-16 fa-spin fa-lg"></i>  Guardando... </span>
 
             <a class="btn btn-info btn-minier icon-only pull-right btnCloseVentaDetalleNormal" title="Cerrar Ventana">
@@ -88,7 +92,7 @@
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             @if( !$Venta->isPagado() )
-                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="ventadetalle-{{$vd->id.'-0-0'}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="ventadetalle-{{$vd->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                             @endif
