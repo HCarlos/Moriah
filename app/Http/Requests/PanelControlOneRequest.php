@@ -100,7 +100,7 @@ class PanelControlOneRequest extends FormRequest
         $vendedor = 'none';
         if ( !is_null($m) )
             $vendedor = trim($m->vendedor->FullName);
-
+//        dd($Movs);
         $x = new CorteCajaController();
         $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs);
 

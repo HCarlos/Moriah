@@ -97,7 +97,7 @@ class CorteCajaController extends Controller
             $pdf->Cell(63, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
             $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->FullName)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
-            $pdf->Cell(22, $this->alto, substr(utf8_decode(Venta::$metodos_pago[$Mov->metodo_pago]),0,20), "LTB", 0,"L");
+            $pdf->Cell(22, $this->alto, substr(utf8_decode($Mov->MetodoPago),0,20), "LTB", 0,"L");
             $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
             $totalContado += $Mov->total;
             $pdf->SetFont('AndaleMono','',7);
