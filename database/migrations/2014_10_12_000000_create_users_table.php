@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-
+/*
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre')->nullable();
@@ -72,6 +72,9 @@ class CreateUsersTable extends Migration
             $table->index('idemp');
 
         });
+
+*/        
+
     }
 
     /**
@@ -81,6 +84,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+
+        // Schema::dropIfExists('users');
+    
     }
 }

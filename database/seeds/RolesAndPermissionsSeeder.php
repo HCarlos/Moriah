@@ -13,8 +13,10 @@ class RolesAndPermissionsSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
+    public function run(){
+
+/* 
+
         $F = new FuncionesController();
         $ip   = 'root_init';//$_SERVER['REMOTE_ADDR'];
         $host = 'root_init';//gethostbyaddr($_SERVER['REMOTE_ADDR']);
@@ -227,6 +229,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->permissions()->attach($P6);
         $F->validImage($user,'profile','profile/');
 
+
+*/
 
     }
 

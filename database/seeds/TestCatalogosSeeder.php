@@ -13,7 +13,7 @@ class TestCatalogosSeeder extends Seeder
      */
     public function run()
     {
-        factory(Almacen::class,10)->create();
-        factory(Concepto::class,10)->create();
+        // factory(Almacen::class,10)->create();
+        // factory(Concepto::class,10)->create();
     }
 }

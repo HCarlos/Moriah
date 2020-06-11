@@ -49,11 +49,16 @@
 
                 <div class="form-group row">
 
-                    <label for = "importe" class="col-md-1 col-form-label text-md-left">Importe</label>
                     <div class="col-md-2">
+                        <label for = "importe" class="col-md-1 col-form-label text-md-left">Importe</label>
                         <input type="number" name="importe" id="importe" value="{{ old('importe') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" readonly/>
                     </div>
-                    <div class="col-md-9"></div>
+                    <div class="col-md-2">
+                        <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupos PS</label>
+                        <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control" />
+                    </div>
+                    <div class="col-md-7"></div>
+
                 </div>
 
                 <div>

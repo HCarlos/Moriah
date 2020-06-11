@@ -53,10 +53,11 @@ trait HasRoles
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
+     * @param string $guard
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeRole(Builder $query, $roles): Builder
+    public function scopeRole(Builder $query, $roles, $guard = null): Builder
     {
         if ($roles instanceof Collection) {
             $roles = $roles->all();
@@ -66,12 +67,15 @@ trait HasRoles
             $roles = [$roles];
         }
 
-        $roles = array_map(function ($role) {
+        $roles = array_map(function ($role) use ($guard) {
             if ($role instanceof Role) {
                 return $role;
             }
 
-            return $this->getRoleClass()->findByName($role, $this->getDefaultGuardName());
+            $method = is_numeric($role) ? 'findById' : 'findByName';
+            $guard = $guard ?: $this->getDefaultGuardName();
+
+            return $this->getRoleClass()->{$method}($role, $guard);
         }, $roles);
 
         return $query->whereHas('roles', function ($query) use ($roles) {
@@ -110,7 +114,25 @@ trait HasRoles
             ->map->id
             ->all();
 
-        $this->roles()->sync($roles, false);
+        $model = $this->getModel();
+
+        if ($model->exists) {
+            $this->roles()->sync($roles, false);
+            $model->load('roles');
+        } else {
+            $class = \get_class($model);
+
+            $class::saved(
+                function ($object) use ($roles, $model) {
+                    static $modelLastFiredOn;
+                    if ($modelLastFiredOn !== null && $modelLastFiredOn === $model) {
+                        return;
+                    }
+                    $object->roles()->sync($roles, false);
+                    $object->load('roles');
+                    $modelLastFiredOn = $object;
+                });
+        }
 
         $this->forgetCachedPermissions();
 
@@ -125,6 +147,12 @@ trait HasRoles
     public function removeRole($role)
     {
         $this->roles()->detach($this->getStoredRole($role));
+
+        $this->load('roles');
+
+        $this->forgetCachedPermissions();
+
+        return $this;
     }
 
     /**
@@ -144,7 +172,7 @@ trait HasRoles
     /**
      * Determine if the model has (one of) the given role(s).
      *
-     * @param string|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
+     * @param string|int|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
@@ -156,6 +184,10 @@ trait HasRoles
 
         if (is_string($roles)) {
             return $this->roles->contains('name', $roles);
+        }
+
+        if (is_int($roles)) {
+            return $this->roles->contains('id', $roles);
         }
 
         if ($roles instanceof Role) {
@@ -212,7 +244,7 @@ trait HasRoles
             return $role instanceof Role ? $role->name : $role;
         });
 
-        return $roles->intersect($this->roles->pluck('name')) == $roles;
+        return $roles->intersect($this->getRoleNames()) == $roles;
     }
 
     /**

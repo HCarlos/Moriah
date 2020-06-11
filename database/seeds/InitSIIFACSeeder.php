@@ -22,8 +22,9 @@ class InitSIIFACSeeder extends Seeder
      * @return void
      */
 
-    public function run()
-    {
+    public function run(){
+
+/*        
 
         $IdEmp1 = Empresa::findOrCreateEmpresa('COMERCIALIZADORA ARJI, S.A. DE C.V.','COMERCIALIZADORA ARJI, S.A. DE C.V.','AV. MEXICO #2 COL. DEL BOSQUE, VILLAHERMOSA, TABASCO CP.86160','CAR-930816-FH0');
         $IdEmp2 = Empresa::findOrCreateEmpresa('LIBROS 2006/2007', 'LIBROS 2006/2007','AVENIDA MEXICO #2','');
@@ -1713,6 +1714,7 @@ class InitSIIFACSeeder extends Seeder
         $IdUser1343 = User::findOrCreateUserWithRole3('','per0406','ROCIO','JAIMES','SALGADO','per0406@mimail.com','per0406',false,false,false,false,false,0,0,'','','',0,0,1,3983,$IdEmp,$role1,$role2,$role3,'AZALEAS # 120','FRACC. REAL DEL ANGEL','','VILLAHERMOSA','VILLAHERMOSA','TABASCO','MÉXICO','','');
         $IdUser1344 = User::findOrCreateUserWithRole3('','per0333','ANA CECILIA','RODRIGUEZ','QUEVEDO','per0333@mimail.com','per0333',false,false,false,false,false,0,0,'','','',0,0,1,4049,$IdEmp,$role1,$role2,$role3,'MIGUEL HIDALGO','221-1','','EL AGUILA','VILLAHERMOSA','TABASCO','MÉXICO','','');
 
+*/
 
 
     }

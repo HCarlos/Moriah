@@ -54,7 +54,11 @@
                     <div class="col-md-2">
                         <input type="number" name="importe" id="importe" value="{{ old('importe',$items->importe) }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" readonly/>
                     </div>
-                    <div class="col-md-9"></div>
+                    <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupo PS</label>
+                    <div class="col-md-2">
+                        <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource',$items->grupos_platsource) }}" class="form-control" />
+                    </div>
+                    <div class="col-md-5"></div>
                 </div>
 
                 <div>

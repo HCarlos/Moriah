@@ -24,6 +24,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\MyResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use \Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable
 {
@@ -31,6 +32,7 @@ class User extends Authenticatable
     use Notifiable;
     use HasRolesAndAbilities;
     use HasRoles;
+    use CanResetPassword;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'users';

@@ -85,7 +85,7 @@ database:
     ],
 ```
 
-Finally, configure Geocoder for Laraver to use this store. Edit
+Finally, configure Geocoder for Laravel to use this store. Edit
 `config/geocoder.php`:
 ```php
     "cache" => [
@@ -99,7 +99,7 @@ Finally, configure Geocoder for Laraver to use this store. Edit
 If you are upgrading and have previously published the geocoder config file, you
  need to add the `cache-duration` variable, otherwise cache will be disabled
  (it will default to a `0` cache duration). The default cache duration provided
- by the config file is `999999999` minutes, essentially forever.
+ by the config file is `999999999` seconds, essentially forever.
 
 By default, the configuration specifies a Chain provider, containing the
  GoogleMaps provider for addresses as well as reverse lookups with lat/long,
@@ -152,7 +152,7 @@ return [
     'providers' => [
         Chain::class => [
             GoogleMaps::class => [
-                env('GOOGLE_MAPS_LOCALE', 'en-US'),
+                env('GOOGLE_MAPS_LOCALE', 'us'),
                 env('GOOGLE_MAPS_API_KEY'),
             ],
             GeoPlugin::class  => [],
@@ -182,7 +182,8 @@ return [
     |
     | You can specify a reader for specific providers, like GeoIp2, which
     | connect to a local file-database. The reader should be set to an
-    | instance of the required reader class.
+    | instance of the required reader class or an array containing the reader
+    | class and arguments.
     |
     | Please consult the official Geocoder documentation for more info.
     | https://github.com/geocoder-php/geoip2-provider

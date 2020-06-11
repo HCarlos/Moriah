@@ -13,6 +13,8 @@ class CreateSiifacTables extends Migration
      */
     public function up()
     {
+
+ /*       
        $tableNames = config('siifac.table_names');
 
         Schema::create($tableNames['empresas'], function (Blueprint $table) {
@@ -2005,6 +2007,8 @@ class CreateSiifacTables extends Migration
 
         });
 
+*/
+
     }
 
     /**
@@ -2014,99 +2018,105 @@ class CreateSiifacTables extends Migration
      */
     public function down()
     {
-        $tableNames = config('siifac.table_names');
-
-        Schema::dropIfExists($tableNames['compra_almacen']);
-        Schema::dropIfExists($tableNames['compra_proveedor']);
-        Schema::dropIfExists($tableNames['cuenta_por_cobrar_user']);
-        Schema::dropIfExists($tableNames['ingreso_user']);
-        Schema::dropIfExists($tableNames['ingreso_cuenta_por_cobrar']);
-        Schema::dropIfExists($tableNames['ingreso_cliente']);
-        Schema::dropIfExists($tableNames['ingreso_venta']);
-        Schema::dropIfExists($tableNames['cliente_ingreso']);
-        Schema::dropIfExists($tableNames['ingreso_vendedor']);
-        Schema::dropIfExists($tableNames['almacen_producto']);
-        Schema::dropIfExists($tableNames['almacen_empresa']);
-        Schema::dropIfExists($tableNames['familia_producto_producto']);
-        Schema::dropIfExists($tableNames['medida_producto']);
-        Schema::dropIfExists($tableNames['producto_medida']);
-        Schema::dropIfExists($tableNames['empresa_paquete']);
-        Schema::dropIfExists($tableNames['empresa_pedido']);
-        Schema::dropIfExists($tableNames['empresa_ingreso']);
-        Schema::dropIfExists($tableNames['ingreso_empresa']);
-
-        Schema::dropIfExists($tableNames['familia_cliente_user']);
-
-        Schema::dropIfExists($tableNames['paquete_user']);
-        Schema::dropIfExists($tableNames['paquete_producto']);
-        Schema::dropIfExists($tableNames['paquete_empresa']);
-        Schema::dropIfExists($tableNames['paquete_detalle_producto']);
-        Schema::dropIfExists($tableNames['paquete_detalle_medida']);
-        Schema::dropIfExists($tableNames['paquete_paquete_detalle']);
-        Schema::dropIfExists($tableNames['paquete_detalle']);
-
-        Schema::dropIfExists($tableNames['pedido_user']);
-        Schema::dropIfExists($tableNames['pedido_paquete']);
-        Schema::dropIfExists($tableNames['pedido_producto']);
-        Schema::dropIfExists($tableNames['pedido_pedido_detalle']);
-        Schema::dropIfExists($tableNames['pedido_detalle_user']);
-        Schema::dropIfExists($tableNames['pedido_detalle_producto']);
-        Schema::dropIfExists($tableNames['pedido_detalle_medida']);
-
-        Schema::dropIfExists($tableNames['movimiento_user']);
-        Schema::dropIfExists($tableNames['movimiento_cliente']);
-        Schema::dropIfExists($tableNames['compra_movimiento']);
-        Schema::dropIfExists($tableNames['movimiento_producto']);
-        Schema::dropIfExists($tableNames['pedido_movimiento']);
-        Schema::dropIfExists($tableNames['movimiento_paquete']);
-        Schema::dropIfExists($tableNames['movimiento_proveedor']);
-        Schema::dropIfExists($tableNames['almacen_movimiento']);
-        Schema::dropIfExists($tableNames['medida_movimiento']);
-        Schema::dropIfExists($tableNames['movimiento_venta']);
-        Schema::dropIfExists($tableNames['empresa_movimiento']);
-
-        Schema::dropIfExists($tableNames['empresa_producto']);
-        Schema::dropIfExists($tableNames['producto_proveedor']);
-
-        Schema::dropIfExists($tableNames['nota_credito_detalle']);
-        Schema::dropIfExists($tableNames['notas_credito']);
-
-        Schema::dropIfExists($tableNames['pedido_venta']);
-        Schema::dropIfExists($tableNames['paquete_venta']);
-
-        Schema::dropIfExists($tableNames['pedido_detalle']);
-        Schema::dropIfExists($tableNames['familia_cliente']);
-        Schema::dropIfExists($tableNames['conceptos']);
-        Schema::dropIfExists($tableNames['config']);
-        Schema::dropIfExists($tableNames['ingresos']);
-        Schema::dropIfExists($tableNames['cuentas_por_cobrar']);
-
-        Schema::dropIfExists($tableNames['empresa_venta']);
-        Schema::dropIfExists($tableNames['user_venta']);
-        Schema::dropIfExists($tableNames['vendedor_venta']);
-
-        Schema::dropIfExists($tableNames['venta_venta_detalle']);
-        Schema::dropIfExists($tableNames['user_venta_detalle']);
-        Schema::dropIfExists($tableNames['producto_venta_detalle']);
-        Schema::dropIfExists($tableNames['paquete_venta_detalle']);
-        Schema::dropIfExists($tableNames['pedido_venta_detalle']);
-        Schema::dropIfExists($tableNames['almacen_venta_detalle']);
-        Schema::dropIfExists($tableNames['empresa_venta_detalle']);
 
 
-        Schema::dropIfExists($tableNames['pedidos']);
-        Schema::dropIfExists($tableNames['compras']);
-        Schema::dropIfExists($tableNames['venta_detalles']);
-        Schema::dropIfExists($tableNames['ventas']);
-        Schema::dropIfExists($tableNames['paquetes']);
-        Schema::dropIfExists($tableNames['movimientos']);
-        Schema::dropIfExists($tableNames['productos']);
-        Schema::dropIfExists($tableNames['proveedores']);
-        Schema::dropIfExists($tableNames['almacenes']);
-        Schema::dropIfExists($tableNames['familia_producto']);
-        Schema::dropIfExists($tableNames['medidas']);
 
-        Schema::dropIfExists($tableNames['empresas']);
+
+        // $tableNames = config('siifac.table_names');
+
+        // Schema::dropIfExists($tableNames['compra_almacen']);
+        // Schema::dropIfExists($tableNames['compra_proveedor']);
+        // Schema::dropIfExists($tableNames['cuenta_por_cobrar_user']);
+        // Schema::dropIfExists($tableNames['ingreso_user']);
+        // Schema::dropIfExists($tableNames['ingreso_cuenta_por_cobrar']);
+        // Schema::dropIfExists($tableNames['ingreso_cliente']);
+        // Schema::dropIfExists($tableNames['ingreso_venta']);
+        // Schema::dropIfExists($tableNames['cliente_ingreso']);
+        // Schema::dropIfExists($tableNames['ingreso_vendedor']);
+        // Schema::dropIfExists($tableNames['almacen_producto']);
+        // Schema::dropIfExists($tableNames['almacen_empresa']);
+        // Schema::dropIfExists($tableNames['familia_producto_producto']);
+        // Schema::dropIfExists($tableNames['medida_producto']);
+        // Schema::dropIfExists($tableNames['producto_medida']);
+        // Schema::dropIfExists($tableNames['empresa_paquete']);
+        // Schema::dropIfExists($tableNames['empresa_pedido']);
+        // Schema::dropIfExists($tableNames['empresa_ingreso']);
+        // Schema::dropIfExists($tableNames['ingreso_empresa']);
+
+        // Schema::dropIfExists($tableNames['familia_cliente_user']);
+
+        // Schema::dropIfExists($tableNames['paquete_user']);
+        // Schema::dropIfExists($tableNames['paquete_producto']);
+        // Schema::dropIfExists($tableNames['paquete_empresa']);
+        // Schema::dropIfExists($tableNames['paquete_detalle_producto']);
+        // Schema::dropIfExists($tableNames['paquete_detalle_medida']);
+        // Schema::dropIfExists($tableNames['paquete_paquete_detalle']);
+        // Schema::dropIfExists($tableNames['paquete_detalle']);
+
+        // Schema::dropIfExists($tableNames['pedido_user']);
+        // Schema::dropIfExists($tableNames['pedido_paquete']);
+        // Schema::dropIfExists($tableNames['pedido_producto']);
+        // Schema::dropIfExists($tableNames['pedido_pedido_detalle']);
+        // Schema::dropIfExists($tableNames['pedido_detalle_user']);
+        // Schema::dropIfExists($tableNames['pedido_detalle_producto']);
+        // Schema::dropIfExists($tableNames['pedido_detalle_medida']);
+
+        // Schema::dropIfExists($tableNames['movimiento_user']);
+        // Schema::dropIfExists($tableNames['movimiento_cliente']);
+        // Schema::dropIfExists($tableNames['compra_movimiento']);
+        // Schema::dropIfExists($tableNames['movimiento_producto']);
+        // Schema::dropIfExists($tableNames['pedido_movimiento']);
+        // Schema::dropIfExists($tableNames['movimiento_paquete']);
+        // Schema::dropIfExists($tableNames['movimiento_proveedor']);
+        // Schema::dropIfExists($tableNames['almacen_movimiento']);
+        // Schema::dropIfExists($tableNames['medida_movimiento']);
+        // Schema::dropIfExists($tableNames['movimiento_venta']);
+        // Schema::dropIfExists($tableNames['empresa_movimiento']);
+
+        // Schema::dropIfExists($tableNames['empresa_producto']);
+        // Schema::dropIfExists($tableNames['producto_proveedor']);
+
+        // Schema::dropIfExists($tableNames['nota_credito_detalle']);
+        // Schema::dropIfExists($tableNames['notas_credito']);
+
+        // Schema::dropIfExists($tableNames['pedido_venta']);
+        // Schema::dropIfExists($tableNames['paquete_venta']);
+
+        // Schema::dropIfExists($tableNames['pedido_detalle']);
+        // Schema::dropIfExists($tableNames['familia_cliente']);
+        // Schema::dropIfExists($tableNames['conceptos']);
+        // Schema::dropIfExists($tableNames['config']);
+        // Schema::dropIfExists($tableNames['ingresos']);
+        // Schema::dropIfExists($tableNames['cuentas_por_cobrar']);
+
+        // Schema::dropIfExists($tableNames['empresa_venta']);
+        // Schema::dropIfExists($tableNames['user_venta']);
+        // Schema::dropIfExists($tableNames['vendedor_venta']);
+
+        // Schema::dropIfExists($tableNames['venta_venta_detalle']);
+        // Schema::dropIfExists($tableNames['user_venta_detalle']);
+        // Schema::dropIfExists($tableNames['producto_venta_detalle']);
+        // Schema::dropIfExists($tableNames['paquete_venta_detalle']);
+        // Schema::dropIfExists($tableNames['pedido_venta_detalle']);
+        // Schema::dropIfExists($tableNames['almacen_venta_detalle']);
+        // Schema::dropIfExists($tableNames['empresa_venta_detalle']);
+
+
+        // Schema::dropIfExists($tableNames['pedidos']);
+        // Schema::dropIfExists($tableNames['compras']);
+        // Schema::dropIfExists($tableNames['venta_detalles']);
+        // Schema::dropIfExists($tableNames['ventas']);
+        // Schema::dropIfExists($tableNames['paquetes']);
+        // Schema::dropIfExists($tableNames['movimientos']);
+        // Schema::dropIfExists($tableNames['productos']);
+        // Schema::dropIfExists($tableNames['proveedores']);
+        // Schema::dropIfExists($tableNames['almacenes']);
+        // Schema::dropIfExists($tableNames['familia_producto']);
+        // Schema::dropIfExists($tableNames['medidas']);
+
+        // Schema::dropIfExists($tableNames['empresas']);
+
+
 
 
     }

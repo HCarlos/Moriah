@@ -37,6 +37,7 @@ DATE                | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DATE
 DATEDIF             | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DATEDIF
 DATEVALUE           | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DATEVALUE
 DAY                 | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DAYOFMONTH
+DAYS                | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DAYS
 DAYS360             | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DAYS360
 EDATE               | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::EDATE
 EOMONTH             | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::EOMONTH
@@ -45,6 +46,7 @@ ISOWEEKNUM          | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::ISOWEEKNUM
 MINUTE              | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::MINUTE
 MONTH               | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::MONTHOFYEAR
 NETWORKDAYS         | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::NETWORKDAYS
+NETWORKDAYS.INTL    | **Not yet Implemented**
 NOW                 | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DATETIMENOW
 SECOND              | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::SECOND
 TIME                | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::TIME
@@ -53,6 +55,7 @@ TODAY               | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DATENOW
 WEEKDAY             | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::WEEKDAY
 WEEKNUM             | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::WEEKNUM
 WORKDAY             | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::WORKDAY
+WORKDAY.INTL        | **Not yet Implemented**
 YEAR                | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::YEAR
 YEARFRAC            | \PhpOffice\PhpSpreadsheet\Calculation\DateTime::YEARFRAC
 
@@ -67,6 +70,11 @@ BESSELY             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BESSELY
 BIN2DEC             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BINTODEC
 BIN2HEX             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BINTOHEX
 BIN2OCT             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BINTOOCT
+BITAND              | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BITAND
+BITLSHIFT           | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BITLSHIFT
+BITOR               | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BITOR
+BITRSHIFT           | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BITRSHIFT
+BITXOR              | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::BITOR
 COMPLEX             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::COMPLEX
 CONVERT             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::CONVERTUOM
 DEC2BIN             | \PhpOffice\PhpSpreadsheet\Calculation\Engineering::DECTOBIN
@@ -176,21 +184,21 @@ YIELDMAT            | \PhpOffice\PhpSpreadsheet\Calculation\Financial::YIELDMAT
 Excel Function      | PhpSpreadsheet Function
 --------------------|-------------------------------------------
 CELL                | **Not yet Implemented**
-ERROR.TYPE          | \PhpOffice\PhpSpreadsheet\Calculation\Functions::ERROR_TYPE
+ERROR.TYPE          | \PhpOffice\PhpSpreadsheet\Calculation\Functions::errorType
 INFO                | **Not yet Implemented**
-ISBLANK             | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_BLANK
-ISERR               | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_ERR
-ISERROR             | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_ERROR
-ISEVEN              | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_EVEN
-ISFORMULA           | \PhpOffice\PhpSpreadsheet\Calculation\Functions::ISFORMULA
-ISLOGICAL           | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_LOGICAL
-ISNA                | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_NA
-ISNONTEXT           | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_NONTEXT
-ISNUMBER            | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_NUMBER
-ISODD               | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_ODD
+ISBLANK             | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isBlank
+ISERR               | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isErr
+ISERROR             | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isError
+ISEVEN              | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isEven
+ISFORMULA           | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isFormula
+ISLOGICAL           | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isLogical
+ISNA                | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isNa
+ISNONTEXT           | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isNonText
+ISNUMBER            | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isNumber
+ISODD               | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isOdd
 ISREF               | **Not yet Implemented**
-ISTEXT              | \PhpOffice\PhpSpreadsheet\Calculation\Functions::IS_TEXT
-N                   | \PhpOffice\PhpSpreadsheet\Calculation\Functions::N
+ISTEXT              | \PhpOffice\PhpSpreadsheet\Calculation\Functions::isText
+N                   | \PhpOffice\PhpSpreadsheet\Calculation\Functions::n
 NA                  | \PhpOffice\PhpSpreadsheet\Calculation\Functions::NA
 TYPE                | \PhpOffice\PhpSpreadsheet\Calculation\Functions::TYPE
 
@@ -200,10 +208,13 @@ Excel Function      | PhpSpreadsheet Function
 --------------------|-------------------------------------------
 AND                 | \PhpOffice\PhpSpreadsheet\Calculation\Logical::logicalAnd
 FALSE               | \PhpOffice\PhpSpreadsheet\Calculation\Logical::FALSE
-IF                  | \PhpOffice\PhpSpreadsheet\Calculation\Logical::STATEMENT_IF
+IF                  | \PhpOffice\PhpSpreadsheet\Calculation\Logical::statementIf
 IFERROR             | \PhpOffice\PhpSpreadsheet\Calculation\Logical::IFERROR
+IFNA                | \PhpOffice\PhpSpreadsheet\Calculation\Logical::IFNA
+IFS                 | **Not yet Implemented**
 NOT                 | \PhpOffice\PhpSpreadsheet\Calculation\Logical::NOT
 OR                  | \PhpOffice\PhpSpreadsheet\Calculation\Logical::logicalOr
+SWITCH              | \PhpOffice\PhpSpreadsheet\Calculation\Logical::statementSwitch
 TRUE                | \PhpOffice\PhpSpreadsheet\Calculation\Logical::TRUE
 XOR                 | \PhpOffice\PhpSpreadsheet\Calculation\Logical::logicalXor
 
@@ -211,7 +222,7 @@ XOR                 | \PhpOffice\PhpSpreadsheet\Calculation\Logical::logicalXor
 
 Excel Function      | PhpSpreadsheet Function
 --------------------|-------------------------------------------
-ADDRESS             | \PhpOffice\PhpSpreadsheet\Calculation\LookupRef::CELL_ADDRESS
+ADDRESS             | \PhpOffice\PhpSpreadsheet\Calculation\LookupRef::cellAddress
 AREAS               | **Not yet Implemented**
 CHOOSE              | \PhpOffice\PhpSpreadsheet\Calculation\LookupRef::CHOOSE
 COLUMN              | \PhpOffice\PhpSpreadsheet\Calculation\LookupRef::COLUMN
@@ -240,11 +251,13 @@ ACOS                | acos
 ACOSH               | acosh
 ACOT                | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::ACOT
 ACOTH               | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::ACOTH
+ARABIC              | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::ARABIC
 ASIN                | asin
 ASINH               | asinh
 ATAN                | atan
-ATAN2               | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::REVERSE_ATAN2
+ATAN2               | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::ATAN2
 ATANH               | atanh
+BASE                | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::BASE
 CEILING             | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::CEILING
 COMBIN              | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::COMBIN
 COS                 | cos
@@ -263,7 +276,7 @@ GCD                 | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::GCD
 INT                 | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::INT
 LCM                 | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::LCM
 LN                  | log
-LOG                 | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::LOG_BASE
+LOG                 | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::logBase
 LOG10               | log10
 MDETERM             | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::MDETERM
 MINVERSE            | \PhpOffice\PhpSpreadsheet\Calculation\MathTrig::MINVERSE
@@ -325,7 +338,7 @@ COUNT               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::COUNT
 COUNTA              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::COUNTA
 COUNTBLANK          | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::COUNTBLANK
 COUNTIF             | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::COUNTIF
-COUNTIFS            | **Not yet Implemented**
+COUNTIFS            | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::COUNTIFS
 COVAR               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::COVAR
 CRITBINOM           | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::CRITBINOM
 DEVSQ               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::DEVSQ
@@ -353,12 +366,12 @@ LOGINV              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::LOGINV
 LOGNORMDIST         | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::LOGNORMDIST
 MAX                 | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MAX
 MAXA                | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MAXA
-MAXIF               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MAXIF
+MAXIFS              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MAXIFS
 MEDIAN              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MEDIAN
 MEDIANIF            | **Not yet Implemented**
 MIN                 | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MIN
 MINA                | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MINA
-MINIF               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MINIF
+MINIFS              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MINIFS
 MODE                | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MODE
 MODE.SNGL           | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::MODE
 NEGBINOMDIST        | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::NEGBINOMDIST
@@ -380,8 +393,8 @@ SLOPE               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::SLOPE
 SMALL               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::SMALL
 STANDARDIZE         | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STANDARDIZE
 STDEV               | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEV
-STDEV.S             | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEV
 STDEV.P             | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEVP
+STDEV.S             | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEV
 STDEVA              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEVA
 STDEVP              | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEVP
 STDEVPA             | \PhpOffice\PhpSpreadsheet\Calculation\Statistical::STDEVPA

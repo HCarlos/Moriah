@@ -1,9 +1,34 @@
 # Change Log
 
-## Unreleased
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 2.1.0 - 2019-12-27
+
+### Added
+
+- Symfony 5 support
+
+## 2.0.0 - 2019-03-05
+
+### Removed
+
+- HHVM support removed.
+
+### Changed
+
+- Minimal PHP version changed to 7.1.
+- `Client::__construct` now expects PSR-17 factories instead of HTTPlug ones. 
+
+### Added
+
+- #41: Support [PSR-17](https://www.php-fig.org/psr/psr-17/) and
+  [PSR-18](https://www.php-fig.org/psr/psr-18/). 
 
 
-## 1.7.1 - 2018-03-36
+## 1.7.1 - 2018-03-26
 
 ### Fixed
 
