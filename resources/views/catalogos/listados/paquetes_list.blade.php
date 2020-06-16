@@ -26,6 +26,7 @@
                             <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
                             <th aria-label="Importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Importe</th>
+                            <th aria-label="GpoPS" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Grupos</th>
                             <th aria-label="" style="width: 120px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
@@ -40,6 +41,7 @@
                                     @endif
                                 </td>
                                 <td class="text-right">{{ $item->importe}} </td>
+                                <td class="text-right">{{ $item->grupos_platsource}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )

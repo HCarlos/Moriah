@@ -32,7 +32,7 @@ class PaqueteController extends Controller
     {
 
         $this->tableName = 'paquetes';
-        $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id','filename')
+        $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id','filename','root','grupos_platsource')
             ->orderBy('id','desc')
             ->paginate();
         $user = Auth::User();
