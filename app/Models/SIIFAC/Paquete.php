@@ -18,6 +18,7 @@ class Paquete extends Model
     protected $fillable = [
         'id',
         'user_id', 'codigo', 'descripcion_paquete','root','filename','importe',
+        'grupos_platsource', 'isvisibleinternet', 'total_internet',
         'empresa_id', 'status_paquete','idemp','ip','host',
     ];
 

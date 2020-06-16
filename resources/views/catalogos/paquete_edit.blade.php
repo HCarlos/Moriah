@@ -73,7 +73,9 @@
                     </a>
                 </div>
 
-                <input type="hidden" name="idItem" value="{{$idItem}}" />
+                <input type="hidden" id = "idItem"name="idItem" value="{{$idItem}}" />
+                <input type="hidden" id = "isvisibleinternet" name="isvisibleinternet" value="1" />
+                <input type="hidden" id = "total_internet" name="total_internet" value="0.00" />
 
             </form>
         </div>

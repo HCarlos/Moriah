@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SIIFAC\PaqueteDetalle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use App\User;
 
 class PaqueteController extends Controller
 {
@@ -108,6 +110,11 @@ class PaqueteController extends Controller
         $data['descripcion_paquete'] = $descripcion_paquete;
         $data['empresa_id']          = $data['empresa_id'];
         $data['codigo']              = $data['codigo'];
+
+        $data['grupos_platsource']   = $data['grupos_platsource'];
+        $data['isvisibleinternet']   = $data['isvisibleinternet'];
+        $data['total_internet']      = $data['total_internet'];
+
         $data['user_id']             = Auth::user()->id;
         $data["idemp"]               = $F->getIHE(0);
         $data["ip"]                  = $F->getIHE(1);
@@ -146,11 +153,17 @@ class PaqueteController extends Controller
         $data['descripcion_paquete'] = $descripcion_paquete;
         $data['empresa_id']          = $data['empresa_id'];
         $data['codigo']              = $data['codigo'];
+
+        $data['grupos_platsource']   = $data['grupos_platsource'];
+        $data['isvisibleinternet']   = $data['isvisibleinternet'];
+        $data['total_internet']      = $data['total_internet'];
+
+
         $data["idemp"]               = $F->getIHE(0);
         $data["ip"]                  = $F->getIHE(1);
         $data["host"]                = $F->getIHE(2);
 
-        $user = User::find($data['user_id']);
+        $user = Auth::User();
         $emp  = Empresa::find($data['empresa_id']);
 
         $paq->update($data);
@@ -191,5 +204,30 @@ class PaqueteController extends Controller
         }
 
     }
+
+    public function getLibrosPS($grupo_ps){
+
+        $grupos = explode(',',$grupo_ps);
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupos)
+               ->get();
+
+        foreach($paqs as $paq){
+            $pd = PaqueteDetalle::select('codigo','descripcion','cant','pv')
+                  ->where('paquete_id',$paq->id)
+                  ->get();
+            $paq->libros = $pd;
+        }       
+        
+        return Response::json(['mensaje' => 'OK', 'encabezado_paquete' => $paqs, 'status' => '200'], 200);
+
+    }
+
+
+
+
+
+
+
+
 
 }

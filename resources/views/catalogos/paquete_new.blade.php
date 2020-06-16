@@ -57,7 +57,11 @@
                         <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupos PS</label>
                         <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control" />
                     </div>
-                    <div class="col-md-7"></div>
+                    <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupo PS</label>
+                    <div class="col-md-2">
+                        <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control" />
+                    </div>
+                    <div class="col-md-5"></div>
 
                 </div>
 

@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/imagen_paquete/{idItem}', 'SIIFAC\PaqueteController@imagen')->name('paqueteImagen');
     Route::post('/subir_imagen_paquete/{oPaquete}','Storage\StoragePaqueteController@subirArchivoPaquete')->name('storagePaqueteUpload/');
     Route::get('/quitar_imagen_paquete/{idItem}','Storage\StoragePaqueteController@quitarArchivoPaquete')->name('storagePaqueteRemove/');
+    Route::get('/getLibrosPS/{grupo_ps}', 'SIIFAC\PaqueteController@getLibrosPS')->name('getLibrosPS');
 
     // Paquete Detalles
     Route::get('/index_paquete_detalle/{id}','SIIFAC\PaqueteDetalleController@index')->name('paqueteDetalleIndex');

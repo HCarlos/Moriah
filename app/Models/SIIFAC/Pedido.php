@@ -10,13 +10,14 @@ use Request;
 class Pedido extends Model
 {
     use SoftDeletes;
-
+    
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'pedidos';
 
     protected $fillable = [
         'id',
         'user_id', 'paquete_id', 'descripcion_pedido','fecha','codigo','root','filename','importe',
+        'fecha_vencimiento', 'isactivo', 'referencia', 'observaciones','total_internet', 
         'empresa_id', 'status_pedido','idemp','ip','host',
     ];
 
