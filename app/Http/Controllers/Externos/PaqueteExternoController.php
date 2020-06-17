@@ -28,20 +28,13 @@ class PaqueteExternoController extends Controller{
             }                  
             $paq->detalle_paquete = $pd;
         }       
-        $arr = [
+        
+        return Response::json([
             'mensaje' => 'OK', 
             'encabezado_paquete' => $paqs, 
             'author' => '@DevCH', 
-            'status' => '200'];
-
-        // return Response::json([
-        //     'mensaje' => 'OK', 
-        //     'encabezado_paquete' => $paqs, 
-        //     'author' => '@DevCH', 
-        //     'status' => '200'], 
-        //     200);
-        
-        return json_encode($arr);
+            'status' => '200'], 
+            200);
 
     }
 
