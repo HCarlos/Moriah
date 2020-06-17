@@ -19,7 +19,7 @@ class PaqueteExternoController extends Controller{
                ->get();
 
         foreach($paqs as $paq){
-            $pd = PaqueteDetalle::select('producto_id','codigo','descripcion','cant','pv')
+            $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
                   ->where('paquete_id',$paq->id)
                   ->get();
             foreach($pd as $p){
@@ -55,7 +55,7 @@ class PaqueteExternoController extends Controller{
 
     public function getPaqueteLibroDetalle($paquete_id){
 
-        $pd = PaqueteDetalle::select('producto_id','codigo','descripcion','cant','pv')
+        $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
         ->where('paquete_id',$paquete_id)
         ->get();
         foreach($pd as $p){

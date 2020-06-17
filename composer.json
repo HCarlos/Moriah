@@ -28,7 +28,6 @@
         "spatie/laravel-permission": "^2.9",
         "styde/html": "~1.5",
         "toin0u/geocoder-laravel": "^4.0",
-        "twilio/sdk": "^5.21",
         "yajra/laravel-datatables-oracle": "^8.4"
     },
     "require-dev": {
