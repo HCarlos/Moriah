@@ -214,7 +214,8 @@ Route::get('/admin', function () {
     return view('/admin/dashboard');
 })->name('dashboard')->middleware(['auth', 'admin']);
 
-
-Route::get('/getPaquetesLibrosPSAll/{grupo_ps}', 'Externos\PaqueteExternoController@getPaquetesLibrosPSAll')->name('getPaquetesLibrosPSAll');
-Route::get('/getPaqueteLibro/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibro')->name('getPaqueteLibro');
-Route::get('/getPaqueteLibroDetalle/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibroDetalle')->name('getPaqueteLibroDetalle');
+Route::group(['middleware' => ['cors']], function () {
+    Route::get('/getPaquetesLibrosPSAll/{grupo_ps}', 'Externos\PaqueteExternoController@getPaquetesLibrosPSAll')->name('getPaquetesLibrosPSAll');
+    Route::get('/getPaqueteLibro/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibro')->name('getPaqueteLibro');
+    Route::get('/getPaqueteLibroDetalle/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibroDetalle')->name('getPaqueteLibroDetalle');
+});
