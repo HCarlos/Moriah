@@ -123,10 +123,10 @@ class PedidoDetalle extends Model
     
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
 
-            return $det;
+            return $pd;
 
         }
-        return $det;
+        return $dets;
     }
 
 
