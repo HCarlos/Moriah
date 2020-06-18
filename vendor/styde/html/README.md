@@ -18,6 +18,14 @@ This is an extension of the Laravel Collective [HTML package](https://github.com
 
 1. The preferred way to install this package is through Composer:
 
+**Laravel 5.8 users**:
+
+Install by running `composer require "styde/html=~1.7"` or adding `"styde/html": "~1.7"` to your `composer.json` file and then running `composer update`.
+
+**Laravel 5.7 users**:
+
+Install by running `composer require "styde/html=~1.6"` or adding `"styde/html": "~1.6"` to your `composer.json` file and then running `composer update`.
+
 **Laravel 5.6 users**:
 
 Install by running `composer require "styde/html=~1.5"` or adding `"styde/html": "~1.5"` to your `composer.json` file and then running `composer update`.
@@ -52,11 +60,12 @@ Install by running `composer require "styde/html=~1.0"` or adding `"styde/html":
 ],
 ```
 
-3. Also, you need to register in the `app/Http/Kernel.php` file the `\Styde\Html\Alert\Middleware::class` middleware **BEFORE** the `EncryptCookies` middleware. For Laravel 5.4, it's in the `$middlewareGroups` array and for previous versions (Laravel 5.3, 5.2, 5.1) it's in the `$middleware` array:
+3. Also, you need to register in the `app/Http/Kernel.php` file the `\Styde\Html\Alert\Middleware::class` middleware **BEFORE** the `EncryptCookies` middleware, for Laravel 5.8 and later the middleware needs to be registered **AFTER** the `StartSession` middleware. For Laravel 5.4 and later, it's in the `$middlewareGroups` array and for previous versions (Laravel 5.3, 5.2, 5.1) it's in the `$middleware` array:
 
 ```php
-// For Laravel 5.4 and 5.5
+// For Laravel 5.4 and later
 protected $middlewareGroups = [
+    // For Laravel 5.8 and later this needs to be after the StartSession middleware
     \Styde\Html\Alert\Middleware::class,
     //...
 ];
@@ -235,7 +244,9 @@ In addition of using the facade methods `Alert::message` and `Menu::make`, you c
 alert('this is the message', 'type-of-message')
 ```
 
-`menu($items, $classes)`
+```php
+menu($items, $classes)
+```
 
 ## Access handler
 
@@ -255,7 +266,7 @@ i.e.:
 
 ## Themes
 
-There are a lot of CSS frameworks out there, this package was created with that in mind, and even though only Twitter Bootstrap is included out of the box, we plan to add more packages in the future (we also invite you to collaborate).
+There are a lot of CSS frameworks out there, this package was created with that in mind, and even though *Bootstrap* (version 3 and 4) and *Bulma* are included out of the box, we plan to add more packages in the future (we also invite you to collaborate).
 
 But you can also create your own themes with ease, or modify the existing one:
 

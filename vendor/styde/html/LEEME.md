@@ -7,11 +7,27 @@ Este paquete contiene una colección de clases de PHP Laravel diseñado para gen
 * Form fields
 * Colección de radios y checkboxes
 
-Éste es una extensión del [paquete HTML de Laravel Collective](https://github.com/laravelcollective/html) y será útil si estás trabajando en un CMS personalizado, un panel de administración o básicamente cualquier proyecto que necesite generar HTML dinámicamente.
+Styde Html es una extensión del [paquete HTML de Laravel Collective](https://github.com/laravelcollective/html) y será útil si estás trabajando en un CMS personalizado, un panel de administración o básicamente cualquier proyecto que necesite generar HTML dinámicamente.
 
 ## Cómo instalar 
 
 1. La mejor forma de instalar este paquete es a través de Composer.
+
+**Para Laravel 5.8**:
+
+Instala ejecutando `composer require "styde/html=~1.7"` o agregando `"styde/html": "~1.7"` a tu archivo `composer.json` y luego ejecuta `composer update`.
+
+**Para Laravel 5.7**:
+
+Instala ejecutando `composer require "styde/html=~1.6"` o agregando `"styde/html": "~1.6"` a tu archivo `composer.json` y luego ejecuta `composer update`.
+
+**Para Laravel 5.6**:
+
+Instala ejecutando `composer require "styde/html=~1.5"` o agregando `"styde/html": "~1.5"` a tu archivo `composer.json` y luego ejecuta `composer update`.
+
+**Para Laravel 5.5**:
+
+Instala ejecutando `composer require "styde/html=~1.4"` o agregando `"styde/html": "~1.4"` a tu archivo `composer.json` y luego ejecuta `composer update`.
 
 **Para Laravel 5.4**:
 
@@ -39,10 +55,10 @@ Instala ejecutando `composer require "styde/html=~1.0"` o agregando `"styde/html
 ],
 ```
 
-3. Agrega el middleware `\Styde\Html\Alert\Middleware::class` **ANTES** del middleware `EncryptCookies` que se encuentra en el array `$middleware` (si es Laravel 5.1, 5.2 y 5.3)  o en el array `$middlewareGroups` (en Laravel 5.4) del archivo `app/Http/Kernel.php` : 
+3. Agrega el middleware `\Styde\Html\Alert\Middleware::class` **ANTES** del middleware `EncryptCookies` que se encuentra en el array `$middleware` (si es Laravel 5.1, 5.2 y 5.3)  o en el array `$middlewareGroups` (en Laravel 5.4 y posteriores) del archivo `app/Http/Kernel.php` : 
 
 ```php
-// Para Laravel 5.4
+// Para Laravel 5.4 y posteriores
 protected $middlewareGroups = [
     \Styde\Html\Alert\Middleware::class,
     //...
@@ -220,7 +236,9 @@ Además de utilizar los métodos facade `Alert::message` y `Menu::make`, puedes 
 alert('this is the message', 'type-of-message')
 ```
 
-`menu($items, $clases)`
+```php
+menu($items, $clases)
+```
 
 ## Access handler
 
@@ -240,7 +258,7 @@ Es decir:
 
 ## Themes
 
-Este paquete fue creado pensando que hay muchos frameworks de CSS por ahí, y aunque sólo Twitter Bootstrap es incluído por defecto, planeamos agregar más paquetes en el futuro (y también invitamos a colaborar).
+Este paquete fue creado pensando que hay muchos frameworks de CSS por ahí, y aunque Bootstrap (versión 3 y 4) y Bulma (version 0.7.2) son incluídos por defecto, planeamos agregar más paquetes en el futuro (y también invitamos a colaborar).
 
 Puedes crear tus propios temas o modificar el existente con facilidad:
 

@@ -6,6 +6,8 @@ use Closure;
 use App\User;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 use Silber\Bouncer\Database\Scope\Scope;
 use Silber\Bouncer\Contracts\Scope as ScopeContract;
 
@@ -55,6 +57,8 @@ class Models
     public static function setAbilitiesModel($model)
     {
         static::$models[Ability::class] = $model;
+
+        static::updateMorphMap([$model]);
     }
 
     /**
@@ -66,6 +70,8 @@ class Models
     public static function setRolesModel($model)
     {
         static::$models[Role::class] = $model;
+
+        static::updateMorphMap([$model]);
     }
 
     /**
@@ -90,6 +96,8 @@ class Models
     public static function setTables(array $map)
     {
         static::$tables = array_merge(static::$tables, $map);
+
+        static::updateMorphMap();
     }
 
     /**
@@ -160,6 +168,24 @@ class Models
         }
 
         return $model;
+    }
+
+    /**
+     * Update Eloquent's morph map with the Bouncer models and tables.
+     *
+     * @param  array|null  $classNames
+     * @return void
+     */
+    public static function updateMorphMap($classNames = null)
+    {
+        if (is_null($classNames)) {
+            $classNames = [
+                static::classname(Role::class),
+                static::classname(Ability::class),
+            ];
+        }
+
+        Relation::morphMap($classNames);
     }
 
     /**
@@ -253,15 +279,18 @@ class Models
     /**
      * Get a new query builder instance.
      *
+     * @param  string  $table
      * @return \Illuminate\Database\Query\Builder
      */
-    public static function newQueryBuilder()
+    public static function query($table)
     {
-        return new Builder(
+        $query = new Builder(
             $connection = static::user()->getConnection(),
             $connection->getQueryGrammar(),
             $connection->getPostProcessor()
         );
+
+        return $query->from(static::table($table));
     }
 
     /**

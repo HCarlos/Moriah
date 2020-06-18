@@ -171,16 +171,19 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Collective\Remote\RemoteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        yajra\Datatables\DatatablesServiceProvider::class,
+//        yajra\Datatables\DatatablesServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Geocoder\Laravel\Providers\GeocoderService::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-        Styde\Html\HtmlServiceProvider::class,
+//        Barryvdh\Debugbar\ServiceProvider::class,
+//        Styde\Html\HtmlServiceProvider::class,
         Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
 //        Codedge\Fpdf\FpdfServiceProvider::class,
 //        Anouar\Fpdf\FpdfServiceProvider::class,
-        Silber\Bouncer\BouncerServiceProvider::class,
-//        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+//        Silber\Bouncer\BouncerServiceProvider::class,
+
+        //        Maatwebsite\Excel\ExcelServiceProvider::class,
+
         Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
@@ -237,11 +240,11 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'SSH' => Collective\Remote\RemoteFacade::class,
         'Datatables' => yajra\Datatables\Datatables::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+//        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Access' => Styde\Html\Facades\Access::class,
 //        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
 //        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
-        'Bouncer' => Silber\Bouncer\BouncerFacade::class,
+//        'Bouncer' => Silber\Bouncer\BouncerFacade::class,
 //        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 

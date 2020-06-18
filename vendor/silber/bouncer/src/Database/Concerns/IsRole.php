@@ -36,6 +36,10 @@ trait IsRole
                 $role->title = RoleTitle::from($role)->toString();
             }
         });
+
+        static::deleted(function ($role) {
+            $role->abilities()->detach();
+        });
     }
 
     /**
@@ -49,7 +53,7 @@ trait IsRole
             Models::classname(User::class),
             'entity',
             Models::table('assigned_roles')
-        );
+        )->withPivot('scope');
 
         return Models::scope()->applyToRelation($relation);
     }
@@ -191,12 +195,12 @@ trait IsRole
         list($model, $keys) = Helpers::extractModelAndKeys($model, $keys);
 
         $query = $this->newBaseQueryBuilder()
-            ->from($table = Models::table('assigned_roles'))
+            ->from(Models::table('assigned_roles'))
             ->where('role_id', $this->getKey())
             ->where('entity_type', $model->getMorphClass())
             ->whereIn('entity_id', $keys);
 
-        Models::scope()->applyToRelationQuery($query, $table);
+        Models::scope()->applyToRelationQuery($query, $query->from);
 
         $query->delete();
 

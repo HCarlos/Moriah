@@ -104,13 +104,17 @@ class Scope implements ScopeContract
      * Scope the given model query to the current tenant.
      *
      * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $table
+     * @param  string|null  $table
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
      */
-    public function applyToModelQuery($query, $table)
+    public function applyToModelQuery($query, $table = null)
     {
         if (is_null($this->scope) || $this->onlyScopeRelations) {
             return $query;
+        }
+
+        if (is_null($table)) {
+            $table = $query->getModel()->getTable();
         }
 
         return $this->applyToQuery($query, $table);
@@ -168,6 +172,16 @@ class Scope implements ScopeContract
     }
 
     /**
+     * Get the current scope value.
+     *
+     * @return mixed
+     */
+    public function get()
+    {
+        return $this->scope;
+    }
+
+    /**
      * Get the additional attributes for pivot table records.
      *
      * @param  string|null  $authority
@@ -179,12 +193,52 @@ class Scope implements ScopeContract
             return [];
         }
 
-        if (! $this->scopeRoleAbilities && $this->isRoleClass($authority))
-        {
+        if (! $this->scopeRoleAbilities && $this->isRoleClass($authority)) {
             return [];
         }
 
         return ['scope' => $this->scope];
+    }
+
+    /**
+     * Run the given callback with the given temporary scope.
+     *
+     * @param  mixed   $scope
+     * @param  callable  $callback
+     * @return mixed
+     */
+    public function onceTo($scope, callable $callback)
+    {
+        $mainScope = $this->scope;
+
+        $this->scope = $scope;
+
+        $result = $callback();
+
+        $this->scope = $mainScope;
+
+        return $result;
+    }
+
+    /**
+     * Remove the scope completely.
+     *
+     * @return $this
+     */
+    public function remove()
+    {
+        $this->scope = null;
+    }
+
+    /**
+     * Run the given callback without the scope applied.
+     *
+     * @param  callable  $callback
+     * @return mixed
+     */
+    public function removeOnce(callable $callback)
+    {
+        return $this->onceTo(null, $callback);
     }
 
     /**

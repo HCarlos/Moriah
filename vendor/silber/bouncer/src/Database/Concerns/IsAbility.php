@@ -5,6 +5,8 @@ namespace Silber\Bouncer\Database\Concerns;
 use App\User;
 use Silber\Bouncer\Database\Role;
 use Silber\Bouncer\Database\Models;
+use Silber\Bouncer\Constraints\Group;
+use Silber\Bouncer\Constraints\constrainer;
 use Silber\Bouncer\Database\Titles\AbilityTitle;
 use Silber\Bouncer\Database\Scope\BaseTenantScope;
 use Silber\Bouncer\Database\Queries\AbilitiesForModel;
@@ -27,6 +29,72 @@ trait IsAbility
                 $ability->title = AbilityTitle::from($ability)->toString();
             }
         });
+    }
+
+    /**
+     * Get the options attribute.
+     *
+     * @return array
+     */
+    public function getOptionsAttribute()
+    {
+        if (empty($this->attributes['options'])) {
+            return [];
+        }
+
+        return json_decode($this->attributes['options'], true);
+    }
+
+    /**
+     * Set the "options" attribute.
+     *
+     * @param  array  $options
+     * @return void
+     */
+    public function setOptionsAttribute(array $options)
+    {
+        $this->attributes['options'] = json_encode($options);
+    }
+
+    /**
+     * CHecks if the ability has constraints.
+     *
+     * @return bool
+     */
+    public function hasConstraints()
+    {
+        return ! empty($this->options['constraints']);
+    }
+
+    /**
+     * Get the ability's constraints.
+     *
+     * @return \Silber\Bouncer\Constraints\Constrainer
+     */
+    public function getConstraints()
+    {
+        if (empty($this->options['constraints'])) {
+            return new Group();
+        }
+
+        $data = $this->options['constraints'];
+
+        return $data['class']::fromData($data['params']);
+    }
+
+    /**
+     * Set the ability's constraints.
+     *
+     * @param  \Silber\Bouncer\Constraints\Constrainer  $constrainer
+     * @return $this
+     */
+    public function setConstraints(Constrainer $constrainer)
+    {
+        $this->options = array_merge($this->options, [
+            'constraints' => $constrainer->data(),
+        ]);
+
+        return $this;
     }
 
     /**
@@ -85,7 +153,7 @@ trait IsAbility
             Models::classname(Role::class),
             'entity',
             Models::table('permissions')
-        );
+        )->withPivot('forbidden', 'scope');
 
         return Models::scope()->applyToRelation($relation);
     }
@@ -101,7 +169,7 @@ trait IsAbility
             Models::classname(User::class),
             'entity',
             Models::table('permissions')
-        );
+        )->withPivot('forbidden', 'scope');
 
         return Models::scope()->applyToRelation($relation);
     }
@@ -152,7 +220,7 @@ trait IsAbility
     {
         $names = (array) $name;
 
-        if ( ! $strict) {
+        if (! $strict && $name !== '*') {
             $names[] = '*';
         }
 

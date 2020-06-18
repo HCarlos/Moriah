@@ -5,6 +5,9 @@ namespace App\Providers;
 use Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use App\Providers\Debugbar;
+use Barryvdh\Debugbar\Middleware\DebugbarEnabled;
+use DebugBar\DebugBar as DebugBarDebugBar;
 
 class AppServiceProvider extends ServiceProvider
 {

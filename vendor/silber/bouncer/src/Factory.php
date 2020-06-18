@@ -7,7 +7,6 @@ use Illuminate\Cache\ArrayStore;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
-use Silber\Bouncer\Contracts\Clipboard as ClipboardContract;
 
 class Factory
 {
@@ -40,6 +39,20 @@ class Factory
     protected $user;
 
     /**
+     * Determines whether the clipboard instance will be registered at the container.
+     *
+     * @var bool
+     */
+    protected $registerAtContainer = true;
+
+    /**
+     * Determines whether the guard instance will be registered at the gate.
+     *
+     * @var bool
+     */
+    protected $registerAtGate = true;
+
+    /**
      * Create a new Factory instance.
      *
      * @param mixed  $user
@@ -56,11 +69,20 @@ class Factory
      */
     public function create()
     {
-        $clipboard = $this->getClipboard();
+        $gate = $this->getGate();
+        $guard = $this->getGuard();
 
-        $clipboard->registerAt($gate = $this->getGate());
+        $bouncer = (new Bouncer($guard))->setGate($gate);
 
-        return (new Bouncer($clipboard))->setGate($gate);
+        if ($this->registerAtGate) {
+            $guard->registerAt($gate);
+        }
+
+        if ($this->registerAtContainer) {
+            $bouncer->registerClipboardAtContainer();
+        }
+
+        return $bouncer;
     }
 
     /**
@@ -82,7 +104,7 @@ class Factory
      * @param  \Silber\Bouncer\Contracts\Clipboard  $clipboard
      * @return $this
      */
-    public function withClipboard(ClipboardContract $clipboard)
+    public function withClipboard(Contracts\Clipboard $clipboard)
     {
         $this->clipboard = $clipboard;
 
@@ -113,6 +135,42 @@ class Factory
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * Set whether the factory registers the clipboard instance with the container.
+     *
+     * @param  bool  $bool
+     * @return $this
+     */
+    public function registerClipboardAtContainer($bool = true)
+    {
+        $this->registerAtContainer = $bool;
+
+        return $this;
+    }
+
+    /**
+     * Set whether the factory registers the guard instance with the gate.
+     *
+     * @param  bool  $bool
+     * @return $this
+     */
+    public function registerAtGate($bool = true)
+    {
+        $this->registerAtGate = $bool;
+
+        return $this;
+    }
+
+    /**
+     * Get an instance of the clipboard.
+     *
+     * @return \Silber\Bouncer\Guard
+     */
+    protected function getGuard()
+    {
+        return new Guard($this->getClipboard());
     }
 
     /**

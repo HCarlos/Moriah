@@ -2,9 +2,8 @@
 
 namespace Silber\Bouncer;
 
-use Silber\Bouncer\Database\Role;
+use Illuminate\Support\Arr;
 use Silber\Bouncer\Database\Models;
-use Silber\Bouncer\Database\Ability;
 use Silber\Bouncer\Console\CleanCommand;
 
 use Illuminate\Cache\ArrayStore;
@@ -21,9 +20,8 @@ class BouncerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerClipboard();
-        $this->registerCommands();
         $this->registerBouncer();
+        $this->registerCommands();
     }
 
     /**
@@ -33,15 +31,51 @@ class BouncerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerAtGate();
         $this->registerMorphs();
         $this->setTablePrefix();
         $this->setUserModel();
+
+        $this->registerAtGate();
 
         if ($this->runningInConsole()) {
             $this->publishMiddleware();
             $this->publishMigrations();
         }
+    }
+
+    /**
+     * Register Bouncer as a singleton.
+     *
+     * @return void
+     */
+    protected function registerBouncer()
+    {
+        $this->app->singleton(Bouncer::class, function () {
+            return Bouncer::make()
+                ->withClipboard(new CachedClipboard(new ArrayStore))
+                ->withGate($this->app->make(Gate::class))
+                ->create();
+        });
+    }
+
+    /**
+     * Register Bouncer's commands with artisan.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands(CleanCommand::class);
+    }
+
+    /**
+     * Register Bouncer's models in the relation morph map.
+     *
+     * @return void
+     */
+    protected function registerMorphs()
+    {
+        Models::updateMorphMap();
     }
 
     /**
@@ -65,59 +99,9 @@ class BouncerServiceProvider extends ServiceProvider
     {
         $config = $this->app->config['database'];
 
-        $connection = array_get($config, 'default');
+        $connection = Arr::get($config, 'default');
 
-        return array_get($config, "connections.{$connection}.prefix");
-    }
-
-    /**
-     * Register Bouncer's commands with artisan.
-     *
-     * @return void
-     */
-    protected function registerCommands()
-    {
-        $this->commands(CleanCommand::class);
-    }
-
-    /**
-     * Register the cache clipboard as a singleton.
-     *
-     * @return void
-     */
-    protected function registerClipboard()
-    {
-        $this->app->singleton(Clipboard::class, function () {
-            return new CachedClipboard(new ArrayStore);
-        });
-    }
-
-    /**
-     * Register Bouncer as a singleton.
-     *
-     * @return void
-     */
-    protected function registerBouncer()
-    {
-        $this->app->singleton(Bouncer::class, function () {
-            return Bouncer::make()
-                ->withClipboard($this->app->make(Clipboard::class))
-                ->withGate($this->app->make(Gate::class))
-                ->create();
-        });
-    }
-
-    /**
-     * Register Bouncer's models in the relation morph map.
-     *
-     * @return void
-     */
-    protected function registerMorphs()
-    {
-        Relation::morphMap([
-            Models::classname(Role::class),
-            Models::classname(Ability::class),
-        ]);
+        return Arr::get($config, "connections.{$connection}.prefix");
     }
 
     /**
@@ -152,20 +136,6 @@ class BouncerServiceProvider extends ServiceProvider
         $target = $this->app->databasePath().'/migrations/'.$timestamp.'_create_bouncer_tables.php';
 
         $this->publishes([$stub => $target], 'bouncer.migrations');
-    }
-
-    /**
-     * Register the bouncer's clipboard at the gate.
-     *
-     * @return void
-     */
-    protected function registerAtGate()
-    {
-        $gate = $this->app->make(Gate::class);
-
-        $clipboard = $this->app->make(Clipboard::class);
-
-        $clipboard->registerAt($gate);
     }
 
     /**
@@ -211,6 +181,19 @@ class BouncerServiceProvider extends ServiceProvider
         }
 
         return $config->get("auth.providers.{$provider}.model");
+    }
+
+    /**
+     * Register the bouncer's clipboard at the gate.
+     *
+     * @return void
+     */
+    protected function registerAtGate()
+    {
+        // When creating a Bouncer instance thru the Factory class, it'll
+        // auto-register at the gate. We already registered Bouncer in
+        // the container using the Factory, so now we'll resolve it.
+        $this->app->make(Bouncer::class);
     }
 
     /**

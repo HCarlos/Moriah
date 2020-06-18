@@ -16,11 +16,11 @@ use Silber\Bouncer\Database\Models;
 class Bouncer
 {
     /**
-     * The bouncer clipboard instance.
+     * The bouncer guard instance.
      *
-     * @var \Silber\Bouncer\Contracts\Clipboard
+     * @var \Silber\Bouncer\Guard
      */
-    protected $clipboard;
+    protected $guard;
 
     /**
      * The access gate instance.
@@ -32,11 +32,11 @@ class Bouncer
     /**
      * Constructor.
      *
-     * @param \Silber\Bouncer\Contracts\Clipboard  $clipboard
+     * @param \Silber\Bouncer\Guard  $guard
      */
-    public function __construct(Contracts\Clipboard $clipboard)
+    public function __construct(Guard $guard)
     {
-        $this->clipboard = $clipboard;
+        $this->guard = $guard;
     }
 
     /**
@@ -73,6 +73,16 @@ class Bouncer
     }
 
     /**
+     * Start a chain, to allow everyone an ability.
+     *
+     * @return \Silber\Bouncer\Conductors\GivesAbilities
+     */
+    public function allowEveryone()
+    {
+        return new Conductors\GivesAbilities();
+    }
+
+    /**
      * Start a chain, to disallow the given authority an ability.
      *
      * @param  \Illuminate\Database\Eloquent\Model|string  $authority
@@ -81,6 +91,16 @@ class Bouncer
     public function disallow($authority)
     {
         return new Conductors\RemovesAbilities($authority);
+    }
+
+    /**
+     * Start a chain, to disallow everyone the an ability.
+     *
+     * @return \Silber\Bouncer\Conductors\RemovesAbilities
+     */
+    public function disallowEveryone()
+    {
+        return new Conductors\RemovesAbilities();
     }
 
     /**
@@ -95,6 +115,16 @@ class Bouncer
     }
 
     /**
+     * Start a chain, to forbid everyone an ability.
+     *
+     * @return \Silber\Bouncer\Conductors\GivesAbilities
+     */
+    public function forbidEveryone()
+    {
+        return new Conductors\ForbidsAbilities();
+    }
+
+    /**
      * Start a chain, to unforbid the given authority an ability.
      *
      * @param  \Illuminate\Database\Eloquent\Model|string  $authority
@@ -103,6 +133,16 @@ class Bouncer
     public function unforbid($authority)
     {
         return new Conductors\UnforbidsAbilities($authority);
+    }
+
+    /**
+     * Start a chain, to unforbid an ability from everyone.
+     *
+     * @return \Silber\Bouncer\Conductors\RemovesAbilities
+     */
+    public function unforbidEveryone()
+    {
+        return new Conductors\UnforbidsAbilities();
     }
 
     /**
@@ -146,26 +186,65 @@ class Bouncer
      */
     public function is(Model $authority)
     {
-        return new Conductors\ChecksRoles($authority, $this->clipboard);
+        return new Conductors\ChecksRoles($authority, $this->getClipboard());
     }
 
     /**
-     * Use the given cache instance.
+     * Get the clipboard instance.
+     *
+     * @return \Silber\Bouncer\Contracts\Clipboard
+     */
+    public function getClipboard()
+    {
+        return $this->guard->getClipboard();
+    }
+
+    /**
+     * Set the clipboard instance used by bouncer.
+     *
+     * Will also register the given clipboard with the container.
+     *
+     * @param  \Silber\Bouncer\Contracts\Clipboard
+     * @return $this
+     */
+    public function setClipboard(Contracts\Clipboard $clipboard)
+    {
+        $this->guard->setClipboard($clipboard);
+
+        return $this->registerClipboardAtContainer();
+    }
+
+    /**
+     * Register the guard's clipboard at the container.
+     *
+     * @return $this
+     */
+    public function registerClipboardAtContainer()
+    {
+        $clipboard = $this->guard->getClipboard();
+
+        Container::getInstance()->instance(Contracts\Clipboard::class, $clipboard);
+
+        return $this;
+    }
+
+    /**
+     * Use a cached clipboard with the given cache instance.
      *
      * @param  \Illuminate\Contracts\Cache\Store  $cache
      * @return $this
      */
     public function cache(Store $cache = null)
     {
-        if (! $this->usesCachedClipboard()) {
-            throw new RuntimeException('To use caching, you must use an instance of CachedClipboard.');
-        }
-
         $cache = $cache ?: $this->resolve(CacheRepository::class)->getStore();
 
-        $this->clipboard->setCache($cache);
+        if ($this->usesCachedClipboard()) {
+            $this->guard->getClipboard()->setCache($cache);
 
-        return $this;
+            return $this;
+        }
+
+        return $this->setClipboard(new CachedClipboard($cache));
     }
 
     /**
@@ -175,11 +254,7 @@ class Bouncer
      */
     public function dontCache()
     {
-        if ($this->usesCachedClipboard()) {
-            $this->clipboard->setCache(new NullStore);
-        }
-
-        return $this;
+        return $this->setClipboard(new Clipboard);
     }
 
     /**
@@ -191,7 +266,7 @@ class Bouncer
     public function refresh(Model $authority = null)
     {
         if ($this->usesCachedClipboard()) {
-            $this->clipboard->refresh($authority);
+            $this->getClipboard()->refresh($authority);
         }
 
         return $this;
@@ -206,7 +281,7 @@ class Bouncer
     public function refreshFor(Model $authority)
     {
         if ($this->usesCachedClipboard()) {
-            $this->clipboard->refreshFor($authority);
+            $this->getClipboard()->refreshFor($authority);
         }
 
         return $this;
@@ -258,7 +333,7 @@ class Bouncer
      */
     public function usesCachedClipboard()
     {
-        return $this->clipboard instanceof Contracts\CachedClipboard;
+        return $this->guard->usesCachedClipboard();
     }
 
     /**
@@ -363,6 +438,19 @@ class Bouncer
     public function ability(array $attributes = [])
     {
         return Models::ability($attributes);
+    }
+
+    /**
+     * Set Bouncer to run its checks after the policies.
+     *
+     * @param  bool  $boolean
+     * @return $this
+     */
+    public function runAfterPolicies($boolean = true)
+    {
+        $this->guard->slot($boolean ? 'after' : 'before');
+
+        return $this;
     }
 
     /**

@@ -111,7 +111,7 @@ class PaqueteController extends Controller
         $data['empresa_id']          = $data['empresa_id'];
         $data['codigo']              = $data['codigo'];
 
-        $data['grupos_platsource']   = $data['grupos_platsource'];
+        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
         $data['isvisibleinternet']   = $data['isvisibleinternet'];
         $data['total_internet']      = $data['total_internet'];
 
@@ -154,7 +154,7 @@ class PaqueteController extends Controller
         $data['empresa_id']          = $data['empresa_id'];
         $data['codigo']              = $data['codigo'];
 
-        $data['grupos_platsource']   = $data['grupos_platsource'];
+        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
         $data['isvisibleinternet']   = $data['isvisibleinternet'];
         $data['total_internet']      = $data['total_internet'];
 
@@ -165,6 +165,8 @@ class PaqueteController extends Controller
 
         $user = Auth::User();
         $emp  = Empresa::find($data['empresa_id']);
+        
+        // dd($data);
 
         $paq->update($data);
 

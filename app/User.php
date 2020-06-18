@@ -18,7 +18,7 @@ use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
+//use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -30,7 +30,7 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-    use HasRolesAndAbilities;
+//    use HasRolesAndAbilities;
     use HasRoles;
     use CanResetPassword;
 

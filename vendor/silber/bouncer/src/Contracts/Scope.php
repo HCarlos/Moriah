@@ -27,10 +27,10 @@ interface Scope
      * Scope the given model query to the current tenant.
      *
      * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $table
+     * @param  string|null  $table
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
      */
-    public function applyToModelQuery($query, $table);
+    public function applyToModelQuery($query, $table = null);
 
     /**
      * Scope the given relationship query to the current tenant.
@@ -50,10 +50,41 @@ interface Scope
     public function applyToRelation(BelongsToMany $relation);
 
     /**
+     * Get the current scope value.
+     *
+     * @return mixed
+     */
+    public function get();
+
+    /**
      * Get the additional attributes for pivot table records.
      *
      * @param  string|null  $authority
      * @return array
      */
     public function getAttachAttributes($authority = null);
+
+    /**
+     * Run the given callback with the given temporary scope.
+     *
+     * @param  mixed   $scope
+     * @param  callable  $callback
+     * @return mixed
+     */
+    public function onceTo($scope, callable $callback);
+
+    /**
+     * Remove the scope completely.
+     *
+     * @return $this
+     */
+    public function remove();
+
+    /**
+     * Run the given callback without the scope applied.
+     *
+     * @param  callable  $callback
+     * @return mixed
+     */
+    public function removeOnce(callable $callback);
 }
