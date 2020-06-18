@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,6 +62,7 @@ class Pedido extends Model
 
     public static function findOrCreatePedido($user_id, $paquete_id, $empresa_id)
     {
+        $f = new FuncionesController();
         $user = User::find($user_id);
         $emp = Empresa::find($empresa_id);
         $paq = Paquete::find($paquete_id);
@@ -74,9 +76,9 @@ class Pedido extends Model
             'importe' => $paq->importe,
             'fecha' => NOW(),
             'empresa_id' => $empresa_id,
-            'idemp' => 1,
-            'ip' => Request::ip(),
-            'host' => Request::getHttpHost(),
+            'idemp' => $paq->idemp,
+            'ip' => $f->getIHE(1),
+            'host' => $f->getIHE(1),
         ]);
         $ped->users()->attach($user);
         $ped->empresas()->attach($emp);
@@ -85,16 +87,20 @@ class Pedido extends Model
 
     }
 
-    public static function UpdateImporteFromPedidoDetalle($pedido_id){
-        $pd = PedidoDetalle::where('pedido_id',$pedido_id)->get();
+    public static function UpdateImporteFromPedidoDetalle($detalles){
+        $paq = $detalles->first();
+        $paqid = $paq->paquete_id;
+        $dets = PedidoDetalle::where('pedido_id',$paqid)->get();
         $importe = 0;
-        foreach ($pd as $p){
+        foreach ($dets as $p){
             $importe += $p->pv;
         }
-        $pq = static::where('id',$pedido_id)->first();
+        $pq = static::where('id',$paqid)->first();
         $pq->importe = $importe;
         $pq->save();
         return $pq->importe;
+
+
     }
 
 

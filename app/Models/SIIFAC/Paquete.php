@@ -82,13 +82,15 @@ class Paquete extends Model
         return $obj;
     }
 
-    public static function UpdateImporteFromPaqueteDetalle($paquete_id){
-        $pd = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
+    public static function UpdateImporteFromPaqueteDetalle($detalles){
+        $paq = $detalles->first();
+        $paqid = $paq->paquete_id;
+        $dets = PaqueteDetalle::where('paquete_id',$paqid)->get();
         $importe = 0;
-        foreach ($pd as $p){
+        foreach ($dets as $p){
             $importe += $p->pv;
         }
-        $pq = static::where('id',$paquete_id)->first();
+        $pq = static::where('id',$paqid)->first();
         $pq->importe = $importe;
         $pq->save();
         return $pq->importe;

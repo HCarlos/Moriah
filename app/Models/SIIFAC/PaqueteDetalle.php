@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Request;
@@ -62,7 +63,7 @@ class PaqueteDetalle extends Model
             $paq->detalles()->attach($det);
             $paq->productos()->attach($prod);
 
-            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
+            Paquete::UpdateImporteFromPaqueteDetalle($det);
 
             return $det;
         }
@@ -96,7 +97,7 @@ class PaqueteDetalle extends Model
             $det->productos()->attach($prod);
             $paq->productos()->attach($prod);
 
-            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
+            Paquete::UpdateImporteFromPaqueteDetalle($det);
 
             return $det;
 
@@ -104,6 +105,36 @@ class PaqueteDetalle extends Model
         return $det;
     }
 
+
+    public static function updatePaqueteDetalleFromProducto(Producto $prod){
+        $f = new FuncionesController();
+        $dets = static::all()->where('producto_id',$prod->id);
+
+        foreach ($dets as $det){
+            
+            // $paq = Paquete::find($det->paquete_id);
+            $det->update([
+                'paquete_id'=>$det->paquete_id,
+                'producto_id'=>$prod->id,
+                'codigo' => $prod->codigo,
+                'medida_id' => $prod->medida_id,
+                'descripcion' => $prod->descripcion,
+                'cant' => $prod->cant,
+                'pv' => $prod->pv,
+                'comp1' => $prod->comp1,
+                'empresa_id' => $prod->empresa_id,
+                'idemp' => $prod->idemp,
+                'ip' => $f->getIHE(1),
+                'host' => $f->getIHE(2),
+            ]);
+
+            Paquete::UpdateImporteFromPaqueteDetalle($dets);
+
+            return $det;
+
+        }
+        return $det;
+    }
 
 
 

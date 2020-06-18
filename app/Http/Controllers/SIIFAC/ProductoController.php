@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Models\SIIFAC\PaqueteDetalle;
+use App\Models\SIIFAC\PedidoDetalle;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 use Picqer\Barcode\Exceptions\BarcodeException;
 
@@ -171,7 +173,9 @@ class ProductoController extends Controller
         $prod->medidas()->attach($med);
         $prod->empresas()->attach($emp);
         $prod->proveedores()->attach($prov);
-        $prod::ActualizaPaqueteDetalles($prod->id);
+        // $prod::ActualizaPaqueteDetalles($prod->id);
+        PaqueteDetalle::updatePaqueteDetalleFromProducto($prod);
+        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
 
         return redirect('/new_producto/'.$idItem);
     }
@@ -230,7 +234,10 @@ class ProductoController extends Controller
         $prod->medidas()->sync($med);
         $prod->empresas()->sync($emp);
         $prod->proveedores()->sync($prov);
-        $prod::ActualizaPaqueteDetalles($prod->id);
+
+        //$prod::ActualizaPaqueteDetalles($prod->id);
+        PaqueteDetalle::updatePaqueteDetalleFromProducto($prod);
+        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
 
         return redirect('/edit_producto/'.$idItem);
 

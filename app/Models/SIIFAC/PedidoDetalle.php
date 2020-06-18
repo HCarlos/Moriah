@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -55,9 +56,9 @@ class PedidoDetalle extends Model
     public static function asignProductoAPedidoDetalle($pedido_id, $user_id, $paquete_id, $empresa_id){
         $pqd = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($pqd as $p){
-            static::findOrCreatePedidoDetalle($pedido_id,$p->id,$user_id,$empresa_id,0);
+            $peds = static::findOrCreatePedidoDetalle($pedido_id,$p->id,$user_id,$empresa_id,0);
         }
-        Pedido::UpdateImporteFromPedidoDetalle($pedido_id);
+        Pedido::UpdateImporteFromPedidoDetalle($peds);
         return $pqd;
     }
 
@@ -99,5 +100,37 @@ class PedidoDetalle extends Model
         return $pd;
 
     }
+
+
+    public static function updatePedidoDetalleFromProducto(Producto $prod){
+        $f = new FuncionesController();
+        $dets = static::all()->where('producto_id',$prod->id);
+
+        foreach ($dets as $det){
+            
+            $pd = PedidoDetalle::create([
+                'producto_id' => $prod->id,
+                'medida_id' => $prod->medida_id,
+                'codigo' => $prod->codigo,
+                'descripcion_producto' => $prod->descripcion,
+                'pv' => $prod->pv,
+                'comp1' => $prod->comp1,
+                'empresa_id' => $prod->empresa_id,
+                'idemp' => $prod->idemp,
+                'ip' => $f->getIHE(1),
+                'host' => $f->getIHE(2),
+            ]);
+    
+            Paquete::UpdateImporteFromPaqueteDetalle($dets);
+
+            return $det;
+
+        }
+        return $det;
+    }
+
+
+
+
 
 }

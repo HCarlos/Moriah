@@ -157,11 +157,13 @@ class Producto extends Model
     public static function ActualizaPaqueteDetalles($id){
         $prod = static::select('pv')->where('id',$id)->first();
         $pqdts = PaqueteDetalle::all()->where('producto_id',$id);
-        foreach ($pqdts as $pd){
-            $pd->pv = $prod->pv;
-            $pd->save();
-            Paquete::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
-        }
+        // foreach ($pqdts as $pd){
+        //     $pd->pv = $prod->pv;
+        //     $pd->save();
+        //     Paquete::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
+        // }
+        Paquete::UpdateImporteFromPaqueteDetalle($pqdts);
+
     }
 
     public static function ActualizaDatosDesdeCompras($id,$data){
