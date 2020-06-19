@@ -17,7 +17,7 @@ class PaqueteExternoController extends Controller{
 
         $grupos = explode(',',$grupo_ps);
 
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupo_ps)
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupos)
                ->get();
 
         foreach($paqs as $paq){
