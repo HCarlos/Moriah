@@ -16,7 +16,8 @@ class PaqueteExternoController extends Controller{
     public function getPaquetesLibrosPSAll($grupo_ps){
 
         $grupos = explode(',',$grupo_ps);
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupos)
+
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupo_ps)
                ->get();
 
         foreach($paqs as $paq){
