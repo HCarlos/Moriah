@@ -75,9 +75,23 @@ class PaqueteExternoController extends Controller{
 
     public function savePedido($Data){
 
+        $arr = explode('¬',$Data);
+
+        $IdFamilia     = intval($arr[0]);
+        $IdAlumno      = intval($arr[1]);
+        $IdGrupo       = intval($arr[2]);
+        $IdUser        = intval($arr[3]);
+
+        $arrIds        = explode('|',$arr[4]);
+        $arrPrd        = explode('|',$arr[5]);
+        $arrCnt        = explode('|',$arr[6]);
+        $arrImp        = explode('|',$arr[7]);
+        $Referencia    = $arr[8];
+        $Observaciones = $arr[9];
+
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $Data, 
+            'data' => $arr[0].' - '.$arr[1].' - '.$arr[2].' - '.$arr[3].' - '.$arr[4].' - '.$arr[5].' - '.$arr[6].' - '.$arr[7].' - '.$arr[8].' - '.$arr[9], 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);

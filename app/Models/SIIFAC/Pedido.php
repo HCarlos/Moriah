@@ -104,4 +104,34 @@ class Pedido extends Model
     }
 
 
+    public static function createPedidoFromPlatsource($user_id, $paquete_id, $empresa_id)
+    {
+        $f = new FuncionesController();
+        $user = User::find($user_id);
+        $emp = Empresa::find($empresa_id);
+        $paq = Paquete::find($paquete_id);
+        $ped = static::create([
+            'user_id' => $user_id,
+            'paquete_id' => $paquete_id,
+            'descripcion_pedido' => $paq->descripcion_paquete,
+            'codigo' => $paq->codigo,
+            'filename' => $paq->root,
+            'filename' => $paq->filename,
+            'importe' => $paq->importe,
+            'fecha' => NOW(),
+            'empresa_id' => $empresa_id,
+            'idemp' => $paq->idemp,
+            'ip' => $f->getIHE(1),
+            'host' => $f->getIHE(1),
+        ]);
+        $ped->users()->attach($user);
+        $ped->empresas()->attach($emp);
+        PedidoDetalle::asignProductoAPedidoDetalle($ped->id,$user_id,$paquete_id,$empresa_id);
+        return $ped;
+
+    }
+
+
+
+
 }
