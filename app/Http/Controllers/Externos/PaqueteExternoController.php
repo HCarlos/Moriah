@@ -110,15 +110,15 @@ class PaqueteExternoController extends Controller{
         ->where('pedido_id',$ped->id)
         ->get();
 
-        $ped->contenido = $pd;
-
+//        $ped->contenido = $pd;
 
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $ped, 
+            'url' => 'https://moriah.mx/print_pedido/'.$ped->id, 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);
+
 
     }
     

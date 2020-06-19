@@ -24,7 +24,7 @@ class PDF_Sector extends FPDF
         $this->I=0;
         $this->U=0;
         $this->HREF='';
-        $this->fontlist=array('arial', 'times', 'courier', 'helvetica', 'symbol');
+        $this->fontlist=array('arial', 'times', 'courier', 'helvetica', 'symbol','AndaleMono');
         $this->issetfont=false;
         $this->issetcolor=false;
     }

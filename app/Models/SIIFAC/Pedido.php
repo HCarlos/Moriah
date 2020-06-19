@@ -23,6 +23,8 @@ class Pedido extends Model
         'empresa_id', 'status_pedido','idemp','ip','host',
     ];
 
+    protected $casts = ['isactivo'=>'boolean',];
+
     use SoftDeletes;
 
     public function user(){

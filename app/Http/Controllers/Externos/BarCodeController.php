@@ -59,6 +59,9 @@ class BarCodeController extends Controller
         $this->header($pdf);
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
+        $pdf->addFont('AndaleMono');
+        $pdf->addFont('arialn');
+
 
         $c  = 0;
         $ln = 1;

@@ -220,4 +220,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/getPaqueteLibro/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibro')->name('getPaqueteLibro');
     Route::get('/getPaqueteLibroDetalle/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibroDetalle')->name('getPaqueteLibroDetalle');
     Route::get('/savePedido/{Data}', 'Externos\PaqueteExternoController@savePedido')->name('savePedido');
+    Route::get('/print_pedido/{pedido_id}', 'Externos\PedidoPlatsourceController@print_pedido')->name('print_pedido/');
+
 });
