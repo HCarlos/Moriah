@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\Producto;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Response;
 
 class PaqueteExternoController extends Controller{
@@ -72,7 +73,16 @@ class PaqueteExternoController extends Controller{
 
     }
 
+    public function savePedido(Request $request){
 
+        return Response::json([
+            'mensaje' => 'OK', 
+            'data' => $request, 
+            'author' => '@DevCH', 
+            'status' => '200'], 
+            200);
+
+    }
     
 
 }
