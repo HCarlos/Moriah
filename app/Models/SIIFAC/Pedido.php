@@ -149,13 +149,14 @@ class Pedido extends Model
         $dets = PedidoDetalle::all()->where('pedido_id',$paqid);
         $importe = 0;
         foreach ($dets as $p){
-            $importe += ($p->cant * $p->pv);
+            $importe = $importe + ($p->cant * $p->pv);
         }
         $pq = static::find($paqid);
         if ( $pq ){
-            $pq->importe = $importe;
-            $pq->save();
-            return $pq->importe;
+//            $pq->importe = $importe;
+            $pq->update(['importe'=>$importe]);
+            dd($pq);
+            return $pq;
         }
         return 0;
 
