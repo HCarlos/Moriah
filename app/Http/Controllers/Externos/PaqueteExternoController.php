@@ -107,7 +107,7 @@ class PaqueteExternoController extends Controller{
  
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $ped, 
+            'data' => $Data, 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);

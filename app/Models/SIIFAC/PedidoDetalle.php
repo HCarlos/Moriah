@@ -101,7 +101,8 @@ class PedidoDetalle extends Model
             }
             
         }
-        Pedido::UpdateImporteFromPedidoDetalle($pd);
+        $pd = static::all()->where('pedido_id',$pedido_id);
+        Pedido::UpdateImporteFromPedidoDetallePlatsource($pd);
         return $pd;
     }
 

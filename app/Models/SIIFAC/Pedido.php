@@ -143,6 +143,24 @@ class Pedido extends Model
 
     }
 
+    public static function UpdateImporteFromPedidoDetallePlatsource($detalles){
+        $paq = $detalles->first();
+        $paqid = $paq->pedido_id;
+        $dets = PedidoDetalle::all()->where('pedido_id',$paqid);
+        $importe = 0;
+        foreach ($dets as $p){
+            $importe += ($p->cant * $p->pv);
+        }
+        $pq = static::where('id',$paqid)->first();
+        if ( $pq ){
+            $pq->importe = $importe;
+            $pq->save();
+            return $pq->importe;
+        }
+        return 0;
+
+    }
+
 
 
 
