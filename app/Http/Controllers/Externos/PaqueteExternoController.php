@@ -73,11 +73,11 @@ class PaqueteExternoController extends Controller{
 
     }
 
-    public function savePedido(Request $request){
+    public function savePedido($Data){
 
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $request, 
+            'data' => $Data, 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);

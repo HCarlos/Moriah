@@ -219,5 +219,5 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/getPaquetesLibrosPSAll/{grupo_ps}', 'Externos\PaqueteExternoController@getPaquetesLibrosPSAll')->name('getPaquetesLibrosPSAll');
     Route::get('/getPaqueteLibro/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibro')->name('getPaqueteLibro');
     Route::get('/getPaqueteLibroDetalle/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibroDetalle')->name('getPaqueteLibroDetalle');
-    Route::post('savePedido', 'Externos\PaqueteExternoController@savePedido')->name('savePedido');
+    Route::get('/savePedido/{Data}', 'Externos\PaqueteExternoController@savePedido')->name('savePedido');
 });
