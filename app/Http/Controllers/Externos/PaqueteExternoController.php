@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\Producto;
+use Composer\Package\Link;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Response;
 
@@ -15,9 +16,7 @@ class PaqueteExternoController extends Controller{
 
     public function getPaquetesLibrosPSAll($grupo_ps){
 
-        $grupos = explode(',',$grupo_ps);
-
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupos)
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->where('grupos_platsource','like','%'.$grupo_ps.'%' )
                ->get();
 
         foreach($paqs as $paq){
