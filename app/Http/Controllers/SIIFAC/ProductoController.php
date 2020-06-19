@@ -175,7 +175,7 @@ class ProductoController extends Controller
         $prod->proveedores()->attach($prov);
         // $prod::ActualizaPaqueteDetalles($prod->id);
         PaqueteDetalle::updatePaqueteDetalleFromProducto($prod);
-        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
+//        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
 
         return redirect('/new_producto/'.$idItem);
     }
@@ -237,7 +237,7 @@ class ProductoController extends Controller
 
         //$prod::ActualizaPaqueteDetalles($prod->id);
         PaqueteDetalle::updatePaqueteDetalleFromProducto($prod);
-        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
+//        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
 
         return redirect('/edit_producto/'.$idItem);
 

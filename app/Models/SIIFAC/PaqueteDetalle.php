@@ -127,13 +127,13 @@ class PaqueteDetalle extends Model
                 'ip' => $f->getIHE(1),
                 'host' => $f->getIHE(2),
             ]);
-
+                
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
 
             return $det;
 
         }
-        return $det;
+        return $dets;
     }
 
 

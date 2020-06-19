@@ -80,7 +80,8 @@ class PedidoDetalleController extends Controller
         try {
             $mensaje = "OK";
             PedidoDetalle::findOrCreatePedidoDetalle($pedido_id,0, $ped->user_id,$ped->empresa_id, $producto_id);
-            Pedido::UpdateImporteFromPedidoDetalle($pedido_id);
+            $dets = PedidoDetalle::all()->where('pedido_id',$pedido_id);
+            Pedido::UpdateImporteFromPedidoDetalle($dets);
         }
         catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
@@ -96,7 +97,8 @@ class PedidoDetalleController extends Controller
 
         $prod = Producto::find($pd->producto_id);
         $paq = Pedido::find($pd->pedido_id);
-        $paq::UpdateImporteFromPedidoDetalle($pd->pedido_id);
+        $dets = PedidoDetalle::all()->where('pedido_id',$pd->pedido_id);
+        $paq::UpdateImporteFromPedidoDetalle($dets);
 
         $pd->productos()->detach($prod);
         $paq->productos()->detach($prod);

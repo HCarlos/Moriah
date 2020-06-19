@@ -97,7 +97,8 @@ class PaqueteDetalleController extends Controller
         try {
             $mensaje = "OK";
             PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
-            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
+            $dets = PaqueteDetalle::all()->where('paquete_id',$paquete_id);
+            Paquete::UpdateImporteFromPaqueteDetalle($dets);
         }
         catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
@@ -118,7 +119,8 @@ class PaqueteDetalleController extends Controller
         try {
             $mensaje = "OK";
             $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old);
-            Paquete::UpdateImporteFromPaqueteDetalle($paquete_id);
+            $dets = PaqueteDetalle::all()->where('paquete_id',$paquete_id);
+            Paquete::UpdateImporteFromPaqueteDetalle($dets);
 
         }
         catch(QueryException $e){
@@ -136,7 +138,8 @@ class PaqueteDetalleController extends Controller
 
             $prod = Producto::find($pd->producto_id);
             $paq = Paquete::find($pd->paquete_id);
-            $paq::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
+            $dets = PaqueteDetalle::all()->where('paquete_id',$pd->paquete_id);
+            $paq::UpdateImporteFromPaqueteDetalle($dets);
 
             $pd->productos()->detach($prod);
             $paq->productos()->detach($prod);
