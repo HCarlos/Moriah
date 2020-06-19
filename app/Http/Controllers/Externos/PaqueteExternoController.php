@@ -88,10 +88,11 @@ class PaqueteExternoController extends Controller{
         $arrImp        = explode('|',$arr[7]);
         $Referencia    = $arr[8];
         $Observaciones = $arr[9];
+        $CadenaUsuario = $arr[10];
 
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $arr[0].' - '.$arr[1].' - '.$arr[2].' - '.$arr[3].' - '.$arr[4].' - '.$arr[5].' - '.$arr[6].' - '.$arr[7].' - '.$arr[8].' - '.$arr[9], 
+            'data' => $arr[0].' - '.$arr[1].' - '.$arr[2].' - '.$arr[3].' - '.$arr[4].' - '.$arr[5].' - '.$arr[6].' - '.$arr[7].' - '.$arr[8].' - '.$arr[9].' - '.$arr[10], 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);
