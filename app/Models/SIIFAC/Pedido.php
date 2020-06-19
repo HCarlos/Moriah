@@ -155,7 +155,7 @@ class Pedido extends Model
         if ( $pq ){
 //            $pq->importe = $importe;
             $pq->update(['importe'=>$importe]);
-            dd($pq);
+//            dd($pq);
             return $pq;
         }
         return 0;
