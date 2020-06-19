@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\Pedido;
+use App\Models\SIIFAC\PedidoDetalle;
 use App\Models\SIIFAC\Producto;
 use App\User;
 use Composer\Package\Link;
@@ -105,9 +106,16 @@ class PaqueteExternoController extends Controller{
 
         $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet);
  
+        $pd = PedidoDetalle::select('id','pedido_id','producto_id','codigo','descripcion_producto','cant','pv')
+        ->where('pedido_id',$ped->id)
+        ->get();
+
+        $ped->contenido = $pd;
+
+
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $Data, 
+            'data' => $ped, 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);
