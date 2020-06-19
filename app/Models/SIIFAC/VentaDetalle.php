@@ -88,7 +88,7 @@ class VentaDetalle extends Model
         $ven = Venta::find($venta_id);
         $paq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($paq as $pq){
-            static::agregarProductoAVenta($ven,$pq->producto_id,$cantidad);
+            static::agregarProductoAVenta($ven,$pq->producto_id,$cantidad,0);
         }
     }
 
@@ -96,16 +96,19 @@ class VentaDetalle extends Model
         $ven = Venta::find($venta_id);
         $ped  = PedidoDetalle::where('pedido_id',$pedido_id)->get();
         foreach ($ped as $pd){
-            static::agregarProductoAVenta($ven,$pd->producto_id,$cantidad);
+            $cantidad = $pd->cant;
+            $pv = $pd->pv;
+            static::agregarProductoAVenta($ven,$pd->producto_id,$cantidad,$pv);
         }
     }
 
     public static function venderNormalDetalles($ven, $producto_id, $cantidad){
-            static::agregarProductoAVenta($ven,$producto_id,$cantidad);
+            static::agregarProductoAVenta($ven,$producto_id,$cantidad,0);
     }
 
-    public static function agregarProductoAVenta($ven,$producto_id,$cantidad){
+    public static function agregarProductoAVenta($ven,$producto_id,$cantidad,$pv){
         $prod = Producto::find($producto_id);
+        $pv = $pv == 0 ? $prod->pv : $pv;
         $importe  = $prod->pv * $cantidad;
         $descto   = $prod->descto;
         $subtotal = $importe - $descto;
