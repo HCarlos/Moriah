@@ -46,7 +46,7 @@ class User extends Authenticatable
         'colonia','localidad','estado','pais','cp','email1','email2',
         'cel1','cel2','tel1','tel2','lugar_nacimiento','fecha_nacimiento','genero',
         'ocupacion','lugar_trabajo',
-        'root','filename','familia_cliente_id',
+        'root','filename','familia_cliente_id', 'iduser_ps', 
         'idemp','ip','host',
         'nombre','ap_paterno','ap_materno','celular','telefono',
     ];
@@ -158,6 +158,55 @@ class User extends Authenticatable
 //                $query->where('name', 'like', "%{$search}%");
 //            });
     }
+
+
+    public static function createUserFromPlatsourceTutor($Data, $iduser_ps){
+
+        $F = (new FuncionesController);
+
+        $data = explode('|',$Data);
+        
+//                              0            1                2                  3                 4                         5                          6                     7                    8                  9                     10                          
+ //       CadenaUsuario = item.data+'|'+item.idgrupo+'|'+item.idfamilia+'|'+item.idalumno+'|'+item.ap_paterno_tutor+'|'+item.ap_materno_tutor+'|'+item.nombre__tutor+'|'+item.cel1_tutor+'|'+item.tel1_tutor+'|'+item.email_tutor1+'|'+item.username_tutor;
+
+        $ap_paterno = $F->toMayus($data[4]);
+        $ap_materno = $F->toMayus($data[5]);
+        $nombre = $F->toMayus($data[6]);
+
+        $arrEmail = explode(',',$data[9]);
+    
+        $d['ap_paterno'] = $ap_paterno;
+        $d['ap_materno']   = $ap_materno;
+        $d['nombre'] = $nombre;
+        $d['username'] = $data[10];
+        $d['email'] = $arrEmail[0];
+        $d['cuenta'] = '';
+        $d['celular'] = is_null($data[7]) ? ' ' : $data[7];
+        $d['telefono'] = is_null($data[8]) ? ' ' : $data[8];
+        $d['iduser_ps'] = is_null(iduser_ps) ? ' ' : $iduser_ps;
+    
+        $d["idemp"]       = $F->getIHE(0);
+        $d["ip"]          = $F->getIHE(1);
+        $d["host"]        = $F->getIHE(2);
+        $d["familia_cliente_id"] = 5; //Profesores
+    
+        $role1 = Role::find(2);
+        $role2 = Role::find(3);
+        $role3 = Role::find(4);
+    
+        //dd($data);
+    
+        //User::create($data);
+        $user = User::findOrCreateUserWithRole3(
+            $d['cuenta'], $d['username'], $d['nombre'], $d['ap_paterno'], $d['ap_materno'], $d['email'],
+            '',false,false,false,false,false,0,0,
+            '', $d['celular'], $d['telefono'],0,0, $d['familia_cliente_id'],
+            $d['iduser_ps'],$d['idemp'],$role1,$role2,$role3);
+    
+        return $user;
+    }
+    
+
 
     public static function findOrCreateUserWithRole3(
         string $cuenta, string $username, string $nombre, string $ap_paterno, string $ap_materno, string $email, string $password,

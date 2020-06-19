@@ -4,6 +4,7 @@ namespace App\Models\SIIFAC;
 
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Request;
@@ -104,29 +105,38 @@ class Pedido extends Model
     }
 
 
-    public static function createPedidoFromPlatsource($user_id, $paquete_id, $empresa_id)
+    public static function createPedidoFromPlatsourceTutor($User_id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet)
     {
         $f = new FuncionesController();
-        $user = User::find($user_id);
-        $emp = Empresa::find($empresa_id);
-        $paq = Paquete::find($paquete_id);
+        $user = User::find($User_id);
+        $emp = Empresa::find($IdEmpresa);
+        $paq = Paquete::find($IdPaquete);
+
+        $date = Carbon::now();
+        $daysToAdd = 3;
+        $date = $date->addDays($daysToAdd);
+        
         $ped = static::create([
-            'user_id' => $user_id,
-            'paquete_id' => $paquete_id,
+            'user_id' => $User_id,
+            'paquete_id' => $IdPaquete,
             'descripcion_pedido' => $paq->descripcion_paquete,
             'codigo' => $paq->codigo,
             'filename' => $paq->root,
             'filename' => $paq->filename,
             'importe' => $paq->importe,
             'fecha' => NOW(),
-            'empresa_id' => $empresa_id,
+            'empresa_id' => $IdEmpresa,
             'idemp' => $paq->idemp,
+            'fecha_vencimiento' => $date,
+            'referencia' => $Referencia,
+            'observaciones' => $Observaciones,
+            'total_internet' => $TotalInternet,
             'ip' => $f->getIHE(1),
             'host' => $f->getIHE(1),
         ]);
         $ped->users()->attach($user);
         $ped->empresas()->attach($emp);
-        PedidoDetalle::asignProductoAPedidoDetalle($ped->id,$user_id,$paquete_id,$empresa_id);
+        PedidoDetalle::asignProductoAPedidoDetalleFromPlatsource($ped->id,$User_id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp);
         return $ped;
 
     }

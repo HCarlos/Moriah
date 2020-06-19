@@ -203,42 +203,7 @@ class UsuarioController extends Controller
 
 
 
-    public function createUserFromPlatsource($data){
 
-        $F = (new FuncionesController);
-    
-        $ap_paterno = $F->toMayus($data['ap_paterno']);
-        $ap_materno = $F->toMayus($data['ap_materno']);
-        $nombre = $F->toMayus($data['nombre']);
-    
-        $data['ap_paterno'] = $ap_paterno;
-        $data['ap_materno']   = $ap_materno;
-        $data['nombre'] = $nombre;
-        $data['cuenta'] = '';
-        $data['celular'] = is_null($data['celular']) ? ' ' : $data['celular'];
-        $data['telefono'] = is_null($data['telefono']) ? ' ' : $data['telefono'];
-        $data['iduser_ps'] = is_null($data['iduser_ps']) ? ' ' : $data['iduser_ps'];
-    
-        $data["idemp"]       = $F->getIHE(0);
-        $data["ip"]          = $F->getIHE(1);
-        $data["host"]        = $F->getIHE(2);
-    
-        $role1 = Role::find(2);
-        $role2 = Role::find(3);
-        $role3 = Role::find(4);
-    
-        //dd($data);
-    
-        //User::create($data);
-        $user = User::findOrCreateUserWithRole3(
-            $data['cuenta'], $data['username'], $data['nombre'], $data['ap_paterno'], $data['ap_materno'], $data['email'],
-            '',false,false,false,false,false,0,0,
-            '', $data['celular'], $data['telefono'],0,0, $data['familia_cliente_id'],
-            $data['iduser_ps'],$data['idemp'],$role1,$role2,$role3);
-    
-        return $user;
-    }
-    
     
 
 

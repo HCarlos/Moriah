@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\PaqueteDetalle;
+use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\Producto;
+use App\User;
 use Composer\Package\Link;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Response;
@@ -16,7 +18,7 @@ class PaqueteExternoController extends Controller{
 
     public function getPaquetesLibrosPSAll($grupo_ps){
 
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->where('grupos_platsource','like','%'.$grupo_ps.'%' )
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp')->where('grupos_platsource','like','%'.$grupo_ps.'%' )
                ->get();
 
         foreach($paqs as $paq){
@@ -41,7 +43,7 @@ class PaqueteExternoController extends Controller{
 
     public function getPaqueteLibro($paquete_id){
 
-        $paq = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')
+        $paq = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp')
                 ->where('id',$paquete_id)
                ->get();
 
@@ -90,6 +92,19 @@ class PaqueteExternoController extends Controller{
         $Observaciones = $arr[9];
         $CadenaUsuario = $arr[10];
         $TotalInternet = floatval($arr[11]);
+        $IdPaquete     = intval($arr[12]);
+        $IdEmpresa     = intval($arr[13]);
+        $IdEmp         = intval($arr[14]);
+
+        $userPS = User::select('id')->where('iduser_ps',$IdUser)->first();
+        if ( isNull($userPS) ){
+            $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser);
+        }else{
+            $User = $userPS;
+        }
+
+        $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet)
+ 
         return Response::json([
             'mensaje' => 'OK', 
             'data' => $arr[0].' - '.$arr[1].' - '.$arr[2].' - '.$arr[3].' - '.$arr[4].' - '.$arr[5].' - '.$arr[6].' - '.$arr[7].' - '.$arr[8].' - '.$arr[9].' - '.$arr[10].' - '.$TotalInternet, 
