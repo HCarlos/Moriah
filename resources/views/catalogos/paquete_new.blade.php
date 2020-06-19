@@ -57,10 +57,6 @@
                         <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupos PS</label>
                         <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control" />
                     </div>
-                    <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupo PS</label>
-                    <div class="col-md-2">
-                        <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control" />
-                    </div>
                     <div class="col-md-5"></div>
 
                 </div>
@@ -78,6 +74,8 @@
                 </div>
 
                 <input type="hidden" name="idItem" value="{{$idItem}}" />
+                <input type="hidden" id = "isvisibleinternet" name="isvisibleinternet" value="1" />
+                <input type="hidden" id = "total_internet" name="total_internet" value="0.00" />
 
             </form>
         </div>
