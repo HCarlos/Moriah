@@ -95,19 +95,19 @@ class PaqueteExternoController extends Controller{
         $IdPaquete     = intval($arr[12]);
         $IdEmpresa     = intval($arr[13]);
         $IdEmp         = intval($arr[14]);
-/*
+
         $userPS = User::select('id')->where('iduser_ps',$IdUser)->first();
-        if ( isNull($userPS) ){
+        if ( !$userPS ){
             $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser);
         }else{
             $User = $userPS;
         }
 
         $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet);
-*/ 
+ 
         return Response::json([
             'mensaje' => 'OK', 
-            'data' => $Data, 
+            'data' => $ped, 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);

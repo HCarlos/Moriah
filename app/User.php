@@ -183,7 +183,7 @@ class User extends Authenticatable
         $d['cuenta'] = '';
         $d['celular'] = is_null($data[7]) ? ' ' : $data[7];
         $d['telefono'] = is_null($data[8]) ? ' ' : $data[8];
-        $d['iduser_ps'] = is_null(iduser_ps) ? ' ' : $iduser_ps;
+        $d['iduser_ps'] = is_null($iduser_ps) ? ' ' : $iduser_ps;
     
         $d["idemp"]       = $F->getIHE(0);
         $d["ip"]          = $F->getIHE(1);

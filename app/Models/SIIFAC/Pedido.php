@@ -97,10 +97,12 @@ class Pedido extends Model
             $importe += $p->pv;
         }
         $pq = static::where('id',$paqid)->first();
-        $pq->importe = $importe;
-        $pq->save();
-        return $pq->importe;
-
+        if ( $pq ){
+            $pq->importe = $importe;
+            $pq->save();
+            return $pq->importe;
+        }
+        return 0;
 
     }
 

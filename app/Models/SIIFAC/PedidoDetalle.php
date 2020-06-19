@@ -65,37 +65,40 @@ class PedidoDetalle extends Model
 
     public static function asignProductoAPedidoDetalleFromPlatsource($pedido_id, $user_id, $paquete_id, $empresa_id,$arrIds,$arrPrd,$arrCnt,$arrImp){
         $f = new FuncionesController();
-        $_Ids = explode('|',$arrIds);
-        $_Prd = explode('|',$arrPrd);
-        $_Cnt = explode('|',$arrCnt);
-        $_Imp = explode('|',$arrImp);
+        $_Ids = $arrIds;
+        $_Prd = $arrPrd;
+        $_Cnt = $arrCnt;
+        $_Imp = $arrImp;
         foreach($_Ids as $i => $valor){
-            $p = Producto::find($_Prd[$i]);
-            $pd = PedidoDetalle::create([
-                'pedido_id' => $pedido_id,
-                'user_id' => $user_id,
-                'producto_id' => $p->id,
-                'medida_id' => $p->medida_id,
-                'codigo' => $p->codigo,
-                'descripcion_producto' => $p->descripcion,
-                'cant' => $_Cnt[$i],
-                'pv' => $p->pv,
-                'comp1' => $p->comp1,
-                'empresa_id' => $empresa_id,
-                'idemp' => $p->idemp,
-                'ip' => $f->getIHE(1),
-                'host' => $f->getIHE(1),
-            ]);
-            $ped = Pedido::find($pedido_id);
-            $prod = Producto::find($$_Prd[$i]);
+            $p = Producto::find( intval($_Prd[$i]) );
+            if ( $p ){
+                $pd = PedidoDetalle::create([
+                    'pedido_id' => $pedido_id,
+                    'user_id' => $user_id,
+                    'producto_id' => $p->id,
+                    'medida_id' => $p->medida_id,
+                    'codigo' => $p->codigo,
+                    'descripcion_producto' => $p->descripcion,
+                    'cant' => intval($_Cnt[$i]),
+                    'pv' => $p->pv,
+                    'comp1' => $p->comp1,
+                    'empresa_id' => $empresa_id,
+                    'idemp' => $p->idemp,
+                    'ip' => $f->getIHE(1),
+                    'host' => $f->getIHE(1),
+                ]);
+                $ped = Pedido::find($pedido_id);
+                $prod = Producto::find( intval($_Prd[$i]) );
+        
+                $pd->productos()->detach($prod);
+                $ped->detalles()->detach($pd);
+                $ped->productos()->detach($prod);
+        
+                $pd->productos()->attach($prod);
+                $ped->detalles()->attach($pd);
+                $ped->productos()->attach($prod);
     
-            $pd->productos()->detach($prod);
-            $ped->detalles()->detach($pd);
-            $ped->productos()->detach($prod);
-    
-            $pd->productos()->attach($prod);
-            $ped->detalles()->attach($pd);
-            $ped->productos()->attach($prod);
+            }
             
         }
         Pedido::UpdateImporteFromPedidoDetalle($pd);
