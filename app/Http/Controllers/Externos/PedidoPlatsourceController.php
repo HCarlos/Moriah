@@ -119,6 +119,12 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(195,$this->alto,utf8_decode($Ped->observaciones),0,1,"L");
         $pdf->setX(10);
 
+        $pdf->SetFont('Arial','',8);
+        $pdf->Cell(60,$this->alto,utf8_decode("FECHA DE VENCIMIENTO: "),0,0,"L");
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(50,$this->alto,$Ped->fecha_vencimiento,0,1,"L");
+        $pdf->setX(10);
+
         $pdf->Ln();
         $pdf->Output();
         exit;
