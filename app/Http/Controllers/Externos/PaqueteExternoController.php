@@ -16,13 +16,30 @@ use Illuminate\Support\Facades\Response;
 
 class PaqueteExternoController extends Controller{
 
+    protected $UrlBase = 'https://moriah.mx/print_pedido/';
 
-    public function getPaquetesLibrosPSAll($grupo_ps){
+    public function getPaquetesLibrosPSAll($grupo_ps, $iduser_ps){
+
+        $ps = User::select('id','ap_paterno','ap_materno','nombre')->where('iduser_ps',$iduser_ps)->first();
 
         $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp')->where('grupos_platsource','like','%'.$grupo_ps.'%' )
                ->get();
 
         foreach($paqs as $paq){
+
+            $peds = Pedido::select('id')
+            ->where('paquete_id',$paq->id)
+            ->where('user_id',$ps->id)
+            ->where('isactivo',true)
+            ->first();
+
+            if ( $peds ){
+                $paq->url_pedido = $this->UrlBase.$peds->id;
+            }else{
+                $paq->url_pedido = "";
+            }
+            $paq->Usuario = $ps->FullName;
+
             $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
                   ->where('paquete_id',$paq->id)
                   ->get();
@@ -31,6 +48,9 @@ class PaqueteExternoController extends Controller{
                 $p->existencia = $prod->exist;
             }                  
             $paq->detalle_paquete = $pd;
+
+            
+
         }       
         
         return Response::json([
@@ -110,11 +130,9 @@ class PaqueteExternoController extends Controller{
         ->where('pedido_id',$ped->id)
         ->get();
 
-//        $ped->contenido = $pd;
-
         return Response::json([
             'mensaje' => 'OK', 
-            'url' => 'https://moriah.mx/print_pedido/'.$ped->id, 
+            'url' => $this->UrlBase.$ped->id, 
             'author' => '@DevCH', 
             'status' => '200'], 
             200);

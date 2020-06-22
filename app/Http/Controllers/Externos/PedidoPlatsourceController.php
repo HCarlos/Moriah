@@ -75,8 +75,7 @@ class PedidoPlatsourceController extends Controller{
 
 
 
-    public function print_pedido($pedido_id)
-    {
+    public function print_pedido($pedido_id){
         $Ped               = Pedido::find($pedido_id);
         $Pdd               = PedidoDetalle::all()->where('pedido_id',$pedido_id);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
@@ -108,6 +107,15 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(170,$this->alto,"TOTAL A PAGAR $ ",1,0,"R",true);
         $pdf->Cell(25,$this->alto,number_format($Ped->total_internet,2),1,1,"R",true);
+        $pdf->setX(10);
+
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(35,$this->alto,"REFERENCIA Ó CONCEPTO PARA PAGAR: ",1,0,"L");
+        $pdf->Cell(50,$this->alto,$Ped->referencia,1,1,"L");
+        $pdf->setX(10);
+
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(195,$this->alto,$Ped->observaciones,1,1,"L");
         $pdf->setX(10);
 
         $pdf->Ln();
