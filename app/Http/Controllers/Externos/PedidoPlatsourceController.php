@@ -109,13 +109,14 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(25,$this->alto,number_format($Ped->total_internet,2),1,1,"R",true);
         $pdf->setX(10);
 
+        $pdf->SetFont('Arial','',8);
+        $pdf->Cell(35,$this->alto,"REFERENCIA Ó CONCEPTO PARA PAGAR: ",0,0,"L");
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(35,$this->alto,"REFERENCIA Ó CONCEPTO PARA PAGAR: ",1,0,"L");
-        $pdf->Cell(50,$this->alto,$Ped->referencia,1,1,"L");
+        $pdf->Cell(50,$this->alto,$Ped->referencia,0,1,"L");
         $pdf->setX(10);
 
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(195,$this->alto,$Ped->observaciones,1,1,"L");
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(195,$this->alto,$Ped->observaciones,0,1,"L");
         $pdf->setX(10);
 
         $pdf->Ln();
