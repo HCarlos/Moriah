@@ -32,6 +32,7 @@ class ProviderAndDumperAggregator
     protected $aggregator;
     protected $limit;
     protected $results;
+    protected $isCaching = true;
 
     public function __construct()
     {
@@ -57,6 +58,13 @@ class ProviderAndDumperAggregator
         return $this
             ->dump("geojson")
             ->first();
+    }
+
+    public function doNotCache() : self
+    {
+        $this->isCaching = false;
+
+        return $this;
     }
 
     public function dump(string $dumper) : Collection
@@ -122,12 +130,14 @@ class ProviderAndDumperAggregator
         return $this;
     }
 
-    /**
-     * @deprecated Use `getProviders()` instead.
-     */
     public function getProvider()
     {
-        return $this->getProviders()->first();
+        $reflectedClass = new ReflectionClass(ProviderAggregator::class);
+        $reflectedProperty = $reflectedClass->getProperty('provider');
+        $reflectedProperty->setAccessible(true);
+
+        return $reflectedProperty->getValue($this->aggregator)
+            ?? $this->getProviders()->first();
     }
 
     public function getProviders() : Collection
@@ -181,7 +191,13 @@ class ProviderAndDumperAggregator
 
     protected function cacheRequest(string $cacheKey, array $queryElements, string $queryType)
     {
-        $hashedCacheKey = sha1($cacheKey);
+        if (! $this->isCaching) {
+            $this->isCaching = true;
+
+            return collect($this->aggregator->{$queryType}(...$queryElements));
+        }
+
+        $hashedCacheKey = sha1($this->getProvider()->getName() . "-" . $cacheKey);
         $duration = config("geocoder.cache.duration", 0);
         $store = config('geocoder.cache.store');
 

@@ -85,7 +85,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endrole
-                @role('administrator')
+                @role('administrator|sysop')
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 0,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>
