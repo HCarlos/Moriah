@@ -114,21 +114,20 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(50,$this->alto,$Ped->referencia,0,1,"L");
         $pdf->setX(10);
-        $pdf->Ln();
-
+        
         $pdf->SetFont('Arial','',8);
-        $pdf->Cell(60,$this->alto,utf8_decode("OBSERVACIONES DE COMPRA Y ENTREGA: "),0,0,"L");
+        $pdf->Cell(60,$this->alto,utf8_decode("OBSERVACIONES DE COMPRA Y ENTREGA: "),0,1,"L");
         $pdf->SetFont('Arial','B',8);
-        $pdf->Cell(195,$this->alto,utf8_decode($Ped->observaciones),0,1,"L");
+        // $pdf->Cell(195,$this->alto,utf8_decode($Ped->observaciones),0,1,"L");
         $pdf->setX(10);
-        $pdf->Ln();
+        $pdf->MultiCell(99, 10, utf8_decode($Ped->observaciones),'', 'L');
+        $pdf->setX(10);
 
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(60,$this->alto,utf8_decode("FECHA DE VENCIMIENTO: "),0,0,"L");
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(50,$this->alto,$Ped->fecha_vencimiento,0,1,"L");
         $pdf->setX(10);
-        $pdf->Ln();
 
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(60,$this->alto,utf8_decode("DATOS PARA EL DEPOSITO: "),0,1,"L");
@@ -137,13 +136,11 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(60,$this->alto,utf8_decode("CTA: 6550 6038 586"),0,1,"L");
         $pdf->Cell(60,$this->alto,utf8_decode("CLABE: 0147 9065 5060 3858 69"),0,1,"L");
         $pdf->setX(10);
-        $pdf->Ln();
 
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(60,$this->alto,utf8_decode("IMPORTANTE: "),0,1,"L");
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(195,$this->alto,utf8_decode("Referencia Alfanumérica:____________(anotar la que generó su pedido)"),0,1,"L");
-        $pdf->Ln();
         $pdf->Cell(195,$this->alto,utf8_decode("Enviar comprobante de pago y datos de facturación en caso de requerirlo al correo: caja_arji@hotmail.com"),0,1,"L");
         $pdf->setX(10);
         $pdf->Ln();
