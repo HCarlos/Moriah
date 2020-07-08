@@ -109,6 +109,8 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(25,$this->alto,number_format($Ped->total_internet,2),1,1,"R",true);
         $pdf->setX(10);
 
+        $this->alto  = 6;
+
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(60,$this->alto,utf8_decode("REFERENCIA Ó CONCEPTO PARA PAGAR: "),0,0,"L");
         $pdf->SetFont('Arial','B',10);
@@ -120,7 +122,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',8);
         // $pdf->Cell(195,$this->alto,utf8_decode($Ped->observaciones),0,1,"L");
         $pdf->setX(10);
-        $pdf->MultiCell(99, 10, utf8_decode($Ped->observaciones),'', 'L');
+        $pdf->MultiCell(195, 10, utf8_decode($Ped->observaciones),'', 'L');
         $pdf->setX(10);
 
         $pdf->SetFont('Arial','',8);
