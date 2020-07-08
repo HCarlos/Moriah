@@ -35,7 +35,7 @@ class PaqueteDetalle extends Model
         return $this->belongsToMany(Producto::class);
     }
 
-    public static function findOrCreatePaqueteDetalle($paquete_id, $producto_id){
+    public static function findOrCreatePaqueteDetalle($paquete_id, $producto_id,$cantidad){
         $obj = static::all()->where('paquete_id', $paquete_id)->where('producto_id', $producto_id)->first();
         if (!$obj) {
             $paq = Paquete::find($paquete_id);
@@ -46,7 +46,7 @@ class PaqueteDetalle extends Model
                 'codigo' => $prod->codigo,
                 'medida_id' => $prod->medida_id,
                 'descripcion' => $prod->descripcion,
-                'cant' => $prod->cant,
+                'cant' => $cantidad,
                 'pv' => $prod->pv,
                 'comp1' => $prod->comp1,
                 'empresa_id' => $prod->empresa_id,
@@ -71,7 +71,7 @@ class PaqueteDetalle extends Model
     }
 
 
-    public static function updatePaqueteDetalle($paquete_id,$paquete_detalle_id,$producto_id,$producto_id_old){
+    public static function updatePaqueteDetalle($paquete_id,$paquete_detalle_id,$producto_id,$producto_id_old,$cantidad){
         $det = static::find($paquete_detalle_id);
         if ($det) {
             $paq = Paquete::find($paquete_id);
@@ -82,9 +82,8 @@ class PaqueteDetalle extends Model
                 'codigo' => $prod->codigo,
                 'medida_id' => $prod->medida_id,
                 'descripcion' => $prod->descripcion,
-                'cant' => $prod->cant,
+                'cant' => $cantidad,
                 'pv' => $prod->pv,
-                'cant' => $prod->cant,
                 'comp1' => $prod->comp1,
                 'empresa_id' => $prod->empresa_id,
                 'idemp' => 1,

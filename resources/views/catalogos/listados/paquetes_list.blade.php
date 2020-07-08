@@ -10,7 +10,10 @@
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
-            @include('catalogos.listados.paginate_list')
+            <a href="#" class="btn bt1n-small btn-danger no-border btn-xs btnRefreshPaquetes" title="Actualizar precios de paquetes" id="/actualizar_precio_paquetes" data-toggle="modal" data-target="#myModal">
+                <i class="ace-icon fa fa-adjust bigger-150 "></i>
+            </a>
+                @include('catalogos.listados.paginate_list')
         </div>
 
         <div class="panel-body">
@@ -81,3 +84,4 @@
 @endsection
 
 @include('catalogos.scripts.dataTable')
+@include('catalogos.scripts.paquetes')

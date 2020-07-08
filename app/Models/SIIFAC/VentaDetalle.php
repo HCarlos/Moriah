@@ -88,7 +88,7 @@ class VentaDetalle extends Model
         $ven = Venta::find($venta_id);
         $paq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($paq as $pq){
-            static::agregarProductoAVenta($ven,$pq->producto_id,$cantidad,0);
+            static::agregarProductoAVenta($ven,$pq->producto_id,$pq->cant,0);
         }
     }
 

@@ -51,7 +51,7 @@
                 </div>
                 <label for = "total_pagado" class="col-md-1 col-form-label text-md-left">Pago</label>
                 <div class="col-md-2">
-                    <input type="number" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" min="1" max="{{$total_a_pagar}}" required {{$venta->isPagado() ? 'disabled' : ''}} />
+                    <input type="number" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" max="{{$total_a_pagar}}" required {{$venta->isPagado() ? 'disabled' : ''}} />
                 </div>
             </div>
 

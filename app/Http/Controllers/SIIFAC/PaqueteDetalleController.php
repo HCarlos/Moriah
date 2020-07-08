@@ -91,12 +91,13 @@ class PaqueteDetalleController extends Controller
         $data        = $request->all();
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
+        $cantidad    = $data['cant'];
 
         //dd($paquete_id.', '.$producto_id);
 
         try {
             $mensaje = "OK";
-            PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id);
+            PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id,$cantidad);
             $dets = PaqueteDetalle::all()->where('paquete_id',$paquete_id);
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
         }
@@ -114,11 +115,12 @@ class PaqueteDetalleController extends Controller
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
         $producto_id_old = $data['producto_id_old'];
+        $cantidad    = $data['cant'];
 
         $pd = PaqueteDetalle::find($paquete_detalle_id);
         try {
             $mensaje = "OK";
-            $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old);
+            $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old,$cantidad);
             $dets = PaqueteDetalle::all()->where('paquete_id',$paquete_id);
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
 

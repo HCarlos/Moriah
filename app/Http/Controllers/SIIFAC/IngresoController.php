@@ -28,23 +28,24 @@ class IngresoController extends Controller
         if (is_null($fecha)){
             abort(500);
         }
-//        dd($fecha);
+        // dd($fecha);
         $user = Auth::User();
         $F = (new FuncionesController);
         $f = $F->getFechaFromNumeric($fecha);
+        // dd($f);
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 23:59:59';
         $items = Ingreso::all()
             ->where('f_pagado','>=', $f1)
             ->where('f_pagado','<=', $f2)
             ->sortBy('id');
-//        dd($items);
+    //    dd($items);
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->total;
         }
-//        dd($totalVenta);
-//        dd($items);
+    //    dd($totalVenta);
+    //    dd($items);
 
         return view('catalogos.operaciones.ingresos.ingresos',
             [

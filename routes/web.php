@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/imagen_paquete/{idItem}', 'SIIFAC\PaqueteController@imagen')->name('paqueteImagen');
     Route::post('/subir_imagen_paquete/{oPaquete}','Storage\StoragePaqueteController@subirArchivoPaquete')->name('storagePaqueteUpload/');
     Route::get('/quitar_imagen_paquete/{idItem}','Storage\StoragePaqueteController@quitarArchivoPaquete')->name('storagePaqueteRemove/');
+    Route::get('/actualizar_precio_paquetes', 'SIIFAC\PaqueteController@actualizar_precio_paquetes')->name('actualizar_precio_paquetes');
 
     // Paquete Detalles
     Route::get('/index_paquete_detalle/{id}','SIIFAC\PaqueteDetalleController@index')->name('paqueteDetalleIndex');
@@ -165,6 +166,37 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/form_compra_detalle_nueva_ajax/{compra_id}', 'SIIFAC\CompraDetalleController@new_compra_detalle_ajax')->name('selectCompraDetalleNewAjax/');
     Route::post('/store_compra_detalle_ajax','SIIFAC\CompraDetalleController@store_compra_detalle_ajax')->name('compraDetalleAjax/');
     Route::get('/destroy_compra_detalle/{id}', 'SIIFAC\CompraDetalleController@destroy')->name('compraDetalleDestroy/');
+
+    // Notas de Crédito
+    Route::get('/index_notacredito/{fecha}','SIIFAC\NotaCreditoController@index')->name('notacreditosIndex');
+    Route::post('/index_notacredito','SIIFAC\NotaCreditoController@index_post')->name('notacreditosPostIndex');
+    Route::get('/nueva_notacredito/{venta_id}', 'SIIFAC\NotaCreditoController@nueva_nota_credito')->name('nueva_notacredito/');
+    Route::put('/nueva_notacredito_put', 'SIIFAC\NotaCreditoController@nueva_nota_credito_put')->name('nueva_notacredito_put/');
+    Route::post('/guardar_notacredito', 'SIIFAC\NotaCreditoController@guardar_notacredito')->name('guardar_notacredito/');
+
+    Route::get('/print_nota_credito/{nota_credito_id}', 'Externos\NotaCreditoPrintController@print_nota_credito')->name('printNotaCredito/');
+
+
+//    Route::get('/form_notacredito_nueva_ajax/','SIIFAC\NotaCreditoController@nueva_notacredito_ajax')->name('formCompraNuevaAjax');
+//    Route::post('/store_notacredito_nueva_ajax','SIIFAC\NotaCreditoController@store_notacredito_nueva_ajax')->name('notacreditoNuevaAjax/');
+//    Route::get('/form_notacredito_editar_ajax/{notacredito_id}','SIIFAC\NotaCreditoController@editar_notacredito_ajax')->name('formCompraEditarAjax');
+//    Route::put('/store_notacredito_editada_ajax','SIIFAC\NotaCreditoController@store_notacredito_editada_ajax')->name('notacreditoEditadaAjax/');
+//    Route::get('/destroy_notacredito/{id}', 'SIIFAC\NotaCreditoController@destroy')->name('notacreditoDestroy/');
+
+    // Nota de Crédito Detalless
+
+    Route::get('/index_notacredito_detalle/{nota_credito_id}','SIIFAC\NotaCreditoDetalleController@index')->name('notaCreditoDetalleIndex');
+    Route::get('/destroy_notacreditodetalle/{id}', 'SIIFAC\NotaCreditoDetalleController@destroy')->name('notacreditoDetalleDestroy/');
+//    Route::get('/destroy_venta/{id}', 'SIIFAC\VentaController@destroy')->name('ventaDestroy/');
+
+    Route::get('/index_notacredito_detalle_ajax/{notacredito_id}','SIIFAC\NotaCreditoDetalleController@index')->name('notacreditoDetalleIndex');
+    Route::get('/form_notacredito_detalle_nueva_ajax/{notacredito_id}', 'SIIFAC\NotaCreditoDetalleController@new_notacredito_detalle_ajax')->name('selectNotaCreditoDetalleNewAjax/');
+    Route::post('/store_notacredito_detalle_ajax','SIIFAC\NotaCreditoDetalleController@store_notacredito_detalle_ajax')->name('notacreditoDetalleAjax/');
+
+    // Ingresos Detalles
+    Route::get('/index_ingreso/{fecha}','SIIFAC\IngresoController@index')->name('ingresosIndex');
+    Route::post('/index_ingreso','SIIFAC\IngresoController@index_post')->name('ingresosPostIndex');
+    Route::get('/destroy_ingreso/{id}', 'SIIFAC\IngresoController@destroy')->name('ingresoDestroy/');
 
     // Usuarios
     Route::get('/index_usuario','SIIFAC\UsuarioController@index')->name('usuarioIndex');

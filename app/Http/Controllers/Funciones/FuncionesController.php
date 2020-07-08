@@ -63,9 +63,10 @@ class FuncionesController extends Controller
         if(is_null($fecha)){
             $fecha = Carbon::today()->toDateString();
         }
-//        dd(Carbon::now());
-        $fecha = str_replace('20','',$fecha);
-        $fecha = str_replace('-','',$fecha);
+        $ano = substr($fecha,2,2);
+        $mes = substr($fecha,5,2);
+        $dia = substr($fecha,8,2);
+        $fecha = $ano.$mes.$dia;
         return $fecha;
     }
 

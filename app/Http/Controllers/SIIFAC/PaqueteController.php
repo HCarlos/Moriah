@@ -207,6 +207,16 @@ class PaqueteController extends Controller
 
     }
 
+    public function actualizar_precio_paquetes(){
+        $Paqs = Paquete::select('id')->get();
+        foreach ($Paqs as $Paq){
+            Paquete::UpdateImporteFromPaquete($Paq->id);        
+        }
+        return Response::json(['mensaje' => 'Precios de paquetes actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
+}
+
+
+
     public function getLibrosPS($grupo_ps){
 
         $grupos = explode(',',$grupo_ps);

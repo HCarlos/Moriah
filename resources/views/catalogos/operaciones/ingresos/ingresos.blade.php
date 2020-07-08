@@ -31,15 +31,16 @@
                 </div>
             </form>
 
-
         </div>
 
         <div class="panel-body">
             <div class="fa-2x" id="preloaderLocal">
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
+            @if ($ingresos)
+
             <div class="dataTables_wrapper" role="grid">
-                    <table id="tblCal" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
+                    <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable " >
                         <thead>
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
@@ -53,7 +54,6 @@
                         </tr>
                         </thead>
                             <tbody aria-relevant="all" aria-live="polite" role="alert">
-                            @if ($ingresos)
                                 @foreach ($ingresos as $ing)
                                     <tr>
                                         <td>{{ $ing->id }}</td>
@@ -76,10 +76,9 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            @endif
                             </tbody>
                     </table>
-
+                @endif
             </div>
         </div>
     </div>

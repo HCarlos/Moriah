@@ -9,6 +9,20 @@
             <b class="arrow"></b>
         </li>
         <li>
+            <a href="{{ route('ingresosIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
+                <i class="menu-icon fa fa-archive green"></i>
+                Ingresos
+            </a>
+            <b class="arrow"></b>
+        </li>
+        <li>
+            <a href="{{ route('notacreditosIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
+                <i class="menu-icon fa fa-archive green"></i>
+                Notas de Crédito
+            </a>
+            <b class="arrow"></b>
+        </li>
+        <li>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-book"></i>
 							<span class="menu-text">
