@@ -32,7 +32,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode("ALIMENTOS ESPECIALIZADOS DE TABASCO, S.A."),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -138,6 +138,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(60,$this->alto,utf8_decode("DATOS PARA EL DEPOSITO: "),0,1,"L");
         $pdf->SetFont('Arial','',10);
+        $pdf->Cell(120,$this->alto,utf8_decode("ALIMENTOS ESPECIALIZADOS DE TABASCO, S.A."),0,1,"L");
         $pdf->Cell(60,$this->alto,utf8_decode("BANCO SANTANDER"),0,1,"L");
         $pdf->Cell(60,$this->alto,utf8_decode("CTA: 6550 6038 586"),0,1,"L");
         $pdf->Cell(60,$this->alto,utf8_decode("CLABE: 0147 9065 5060 3858 69"),0,1,"L");
