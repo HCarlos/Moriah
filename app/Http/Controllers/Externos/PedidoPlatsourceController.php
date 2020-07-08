@@ -122,7 +122,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',8);
         // $pdf->Cell(195,$this->alto,utf8_decode($Ped->observaciones),0,1,"L");
         $pdf->setX(10);
-        $pdf->MultiCell(195, 10, utf8_decode($Ped->observaciones),'', 'L');
+        $pdf->MultiCell(195, 6, utf8_decode($Ped->observaciones),'', 'L');
         $pdf->setX(10);
 
         $pdf->SetFont('Arial','',8);
