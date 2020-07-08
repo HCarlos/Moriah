@@ -108,6 +108,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(170,$this->alto,"TOTAL A PAGAR $ ",1,0,"R",true);
         $pdf->Cell(25,$this->alto,number_format($Ped->total_internet,2),1,1,"R",true);
         $pdf->setX(10);
+        $pdf->Ln();
 
         $this->alto  = 6;
 
@@ -116,6 +117,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(50,$this->alto,$Ped->referencia,0,1,"L");
         $pdf->setX(10);
+        $pdf->Ln();
         
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(60,$this->alto,utf8_decode("OBSERVACIONES DE COMPRA Y ENTREGA: "),0,1,"L");
@@ -124,12 +126,14 @@ class PedidoPlatsourceController extends Controller{
         $pdf->setX(10);
         $pdf->MultiCell(195, 6, utf8_decode($Ped->observaciones),'', 'L');
         $pdf->setX(10);
+        $pdf->Ln();
 
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(60,$this->alto,utf8_decode("FECHA DE VENCIMIENTO: "),0,0,"L");
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(50,$this->alto,$Ped->fecha_vencimiento,0,1,"L");
         $pdf->setX(10);
+        $pdf->Ln();
 
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(60,$this->alto,utf8_decode("DATOS PARA EL DEPOSITO: "),0,1,"L");
@@ -138,6 +142,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(60,$this->alto,utf8_decode("CTA: 6550 6038 586"),0,1,"L");
         $pdf->Cell(60,$this->alto,utf8_decode("CLABE: 0147 9065 5060 3858 69"),0,1,"L");
         $pdf->setX(10);
+        $pdf->Ln();
 
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(60,$this->alto,utf8_decode("IMPORTANTE: "),0,1,"L");
