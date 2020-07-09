@@ -87,7 +87,8 @@ class Paquete extends Model
         $importe = 0;
         foreach ($dets as $p){
             $cant = $p->cant ?? 1;
-            $p->save(['cant'=>$cant]);
+            $p->cant = $cant;
+            $p->save();
             $importe += ($cant * $p->pv);
         }
         $pq = static::find($paquete_id);
@@ -102,7 +103,10 @@ class Paquete extends Model
         $dets = PaqueteDetalle::where('paquete_id',$paqid)->get();
         $importe = 0;
         foreach ($dets as $p){
-            $importe += $p->cant * $p->pv;
+            $cant = $p->cant ?? 1;
+            $p->cant = $cant;
+            $p->save();
+            $importe += ($p->cant * $p->pv);
         }
         $pq = static::where('id',$paqid)->first();
         $pq->update(['importe'=>$importe]);

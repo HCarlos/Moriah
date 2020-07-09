@@ -112,10 +112,10 @@ class PaqueteDetalleController extends Controller
     {
         $data = $request->all();
         $paquete_detalle_id = $data['paquete_detalle_id'];
-        $paquete_id  = $data['paquete_id'];
-        $producto_id = $data['producto_id'];
-        $producto_id_old = $data['producto_id_old'];
-        $cantidad    = $data['cant'];
+        $paquete_id         = $data['paquete_id'];
+        $producto_id        = $data['producto_id'];
+        $producto_id_old    = $data['producto_id_old'];
+        $cantidad           = $data['cant'];
 
         $pd = PaqueteDetalle::find($paquete_detalle_id);
         try {
