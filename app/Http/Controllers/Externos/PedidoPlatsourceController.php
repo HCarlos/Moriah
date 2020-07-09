@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Externos;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\PedidoDetalle;
 use Carbon\Carbon;
@@ -21,6 +22,8 @@ class PedidoPlatsourceController extends Controller{
     protected $referencia  = "";
     protected $title       = "";
     protected $observaciones = "";
+    protected $paquete_id    = 0;
+    protected $paquete       = "";
 
 
     public function header($pdf){
@@ -60,6 +63,12 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,utf8_decode(trim($this->cliente)),0,0,"L");
         $pdf->Cell(30,$this->alto,$this->status,0,1,"R");
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(25,$this->alto,"PAQUETE:",0,0,"R");
+        $pdf->Cell(10,$this->alto,$this->paquete_id,0,0,"R");
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(105,$this->alto,utf8_decode(trim($this->paquete)),0,1,"L");
         $pdf->Ln(5);
         $pdf->setX(10);
         $this->alto  = 10;
@@ -78,6 +87,7 @@ class PedidoPlatsourceController extends Controller{
     public function print_pedido($pedido_id){
         $Ped               = Pedido::find($pedido_id);
         $Pdd               = PedidoDetalle::all()->where('pedido_id',$pedido_id);
+        $Paq               = Paquete::find($Ped->paquete_id);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $this->folio       = $pedido_id;
         $this->cliente_id  = $Ped->user_id;
@@ -86,6 +96,8 @@ class PedidoPlatsourceController extends Controller{
         $this->referencia  = $Ped->referencia;
         $this->title       = "P  E  D  I  D  O";
         $this->observaciones = $Ped->observaciones;
+        $this->paquete_id    = $Paq->id;
+        $this->paquete       = $Paq->codigo.' '.$Paq->descripcion_paquete;
 
         $pdf               = new FPDF('P','mm','Letter');
 
@@ -115,7 +127,11 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(60,$this->alto,utf8_decode("REFERENCIA Ó CONCEPTO PARA PAGAR: "),0,0,"L");
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(50,$this->alto,$Ped->referencia,0,1,"L");
+        $ref0 = substr($Ped->referencia,0,4);
+        $ref1 = substr($Ped->referencia,4,4);
+        $ref2 = substr($Ped->referencia,8,4);
+        $ref3 = substr($Ped->referencia,12,4);
+        $pdf->Cell(50,$this->alto,$ref0.' '.$ref1.' '.$ref2.' '.$ref3,0,1,"L");
         $pdf->setX(10);
         $pdf->Ln();
         
