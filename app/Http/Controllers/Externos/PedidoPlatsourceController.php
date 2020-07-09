@@ -63,7 +63,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,utf8_decode(trim($this->cliente)),0,0,"L");
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(15,"ESTATUS:",0,0,"R");
+        $pdf->Cell(15,$this->alto,"ESTATUS:",0,0,"R");
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(15,$this->alto,$this->status,0,1,"L");
         $pdf->SetFont('Arial','B',10);
@@ -73,7 +73,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,utf8_decode(trim($this->paquete)),0,0,"L");
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(15,"GRUPO:",0,0,"R");
+        $pdf->Cell(15,$this->alto,"GRUPO:",0,0,"R");
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(15,$this->alto,$this->status,0,1,"L");
         $pdf->Ln(5);
