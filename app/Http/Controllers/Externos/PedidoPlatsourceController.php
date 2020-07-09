@@ -24,6 +24,10 @@ class PedidoPlatsourceController extends Controller{
     protected $observaciones = "";
     protected $paquete_id    = 0;
     protected $paquete       = "";
+    protected $ref0          = "";
+    protected $ref1          = "";
+    protected $ref2          = "";
+    protected $ref3          = "";
 
 
     public function header($pdf){
@@ -75,7 +79,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(15,$this->alto,"GRUPO:",0,0,"R");
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(15,$this->alto,$this->status,0,1,"L");
+        $pdf->Cell(15,$this->alto,$this->ref3,0,1,"L");
         $pdf->Ln(5);
         $pdf->setX(10);
         $this->alto  = 10;
@@ -106,6 +110,11 @@ class PedidoPlatsourceController extends Controller{
         $this->paquete_id    = $Paq->id;
         $this->paquete       = $Paq->codigo.' '.$Paq->descripcion_paquete;
 
+        $this->ref0 = substr($Ped->referencia,0,4);
+        $this->ref1 = substr($Ped->referencia,4,4);
+        $this->ref2 = substr($Ped->referencia,8,4);
+        $this->ref3 = substr($Ped->referencia,12,4);
+
         $pdf               = new FPDF('P','mm','Letter');
 
         $pdf->AliasNbPages();
@@ -134,11 +143,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(60,$this->alto,utf8_decode("REFERENCIA Ó CONCEPTO PARA PAGAR: "),0,0,"L");
         $pdf->SetFont('Arial','B',10);
-        $ref0 = substr($Ped->referencia,0,4);
-        $ref1 = substr($Ped->referencia,4,4);
-        $ref2 = substr($Ped->referencia,8,4);
-        $ref3 = substr($Ped->referencia,12,4);
-        $pdf->Cell(50,$this->alto,$ref0.' '.$ref1.' '.$ref2.' '.$ref3,0,1,"L");
+        $pdf->Cell(50,$this->alto,$this->ref0.' '.$this->ref1.' '.$this->ref2.' '.$this->ref3,0,1,"L");
         $pdf->setX(10);
         $pdf->Ln();
         
