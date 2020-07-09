@@ -22,18 +22,34 @@ class PaqueteExternoController extends Controller{
 
         $ps = User::select('id','ap_paterno','ap_materno','nombre')->where('iduser_ps',$iduser_ps)->first();
 
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp')->where('grupos_platsource','like','%'.$grupo_ps.'%' )
-               ->get();
-
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
+        ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
+        ->get();
+        $IdPaq = 0;
         foreach($paqs as $paq){
+            $arr = explode(',',$paq->grupos_platsource);
+            if (  in_array($grupo_ps,$arr) ){
+                $IdPaq = $paq->id;
+            }
+        }
+
+        // dd($IdPaq);
+
+        $paq = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
+        ->where('id',$IdPaq )
+        ->first();
+
+        // dd($paq);
+
+        // foreach($paqs as $paq){
 
             $peds = Pedido::select('id')
             ->where('paquete_id',$paq->id)
             ->where('user_id',$ps->id)
             ->where('isactivo',true)
             ->first();
-
-            if ( $peds ){
+            // dd($peds);    
+            if ( !is_null($peds) ){
                 $paq->url_pedido = $this->UrlBase.$peds->id;
             }else{
                 $paq->url_pedido = "";
@@ -49,9 +65,7 @@ class PaqueteExternoController extends Controller{
             }                  
             $paq->detalle_paquete = $pd;
 
-            
-
-        }       
+        // }       
         
         return Response::json([
             'mensaje' => 'OK', 
