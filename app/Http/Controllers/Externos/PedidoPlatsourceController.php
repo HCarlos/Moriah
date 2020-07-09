@@ -55,7 +55,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
         $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"C",true);
-        $pdf->Ln(5);
+        $pdf->Ln();
         $pdf->Line(32,11,32,29);
         $pdf->Line(32.5,11,32.5,29);
         $pdf->Line(33,11,33,29);
@@ -89,6 +89,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(25,$this->alto,"PRECIO",1,0,"C",true);
         $pdf->Cell(25,$this->alto,"IMPORTE",1,1,"R",true);
         $this->alto  = 6;
+        $pdf->Ln();
         $pdf->setX(10);
     }
 
