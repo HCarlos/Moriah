@@ -23,8 +23,10 @@
                         <thead>
                         <tr role="row">
                             <th style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
-                            <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Código</th>
-                            <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
+                            <th aria-label="fecha" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Fecha</th>
+                            <th aria-label="cliente" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Cliente</th>
+                            <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Código</th>
+                            <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting">Descripción</th>
                             <th aria-label="Importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Importe</th>
                             <th aria-label="" style="width: 120px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
@@ -33,6 +35,8 @@
                         @foreach ($items as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
+                                <td>{{ $item->fecha }}</td>
+                                <td>{{ $item->user->FullName }}</td>
                                 <td>{{ $item->codigo }}</td>
                                 <td>{{ $item->descripcion_pedido }}</td>
                                 <td class="text-right">{{ $item->importe}} </td>

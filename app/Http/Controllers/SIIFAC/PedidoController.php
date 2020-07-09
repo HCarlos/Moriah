@@ -31,8 +31,8 @@ class PedidoController extends Controller
     {
 
         $this->tableName = 'pedidos';
-        $items = Pedido::select('id','codigo','descripcion_pedido','importe','empresa_id','filename')
-            ->orderBy('id','desc')
+        $items = Pedido::query()
+            ->orderBy('id')
             ->paginate();
 
         $items->appends(request(['search']))->fragment('table');
