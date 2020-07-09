@@ -18,7 +18,7 @@
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
             <div class="dataTables_wrapper" role="grid">
-                @if ($items)
+                @if (!is_null($items) && $items->count() > 0 )
                     <table id="{{ $tableName}}" class="table table-striped table-bordered table-hover dataTable" >
                         <thead>
                         <tr role="row">
@@ -26,7 +26,7 @@
                             <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
                             <th aria-label="Cantidad" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Cantidad</th>
-                            <th aria-label="Importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Importe</th>
+                            <th aria-label="PV" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Precio</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>

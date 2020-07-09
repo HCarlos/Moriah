@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
+use Exception;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -134,6 +135,7 @@ class PaqueteDetalleController extends Controller
     }
 
     public function destroy($id=0){
+        try{
 
             $pd = PaqueteDetalle::findOrFail($id);
             $pd->forceDelete();
@@ -147,6 +149,11 @@ class PaqueteDetalleController extends Controller
             $paq->productos()->detach($prod);
 
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
+
+        }catch(Exception $e){
+            return Response::json(['mensaje' => 'Ocurrió un error: '.$e->getMessage(), 'data' => 'OK', 'status' => '200'], 200);
+
+        }
 
     }
 
