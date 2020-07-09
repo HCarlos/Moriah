@@ -26,10 +26,10 @@ class PaqueteExternoController extends Controller{
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
         ->get();
         $IdPaq = 0;
-        foreach($paqs as $paq){
-            $arr = explode(',',$paq->grupos_platsource);
+        foreach($paqs as $p){
+            $arr = explode(',',$p->grupos_platsource);
             if (  in_array($grupo_ps,$arr) ){
-                $IdPaq = $paq->id;
+                $IdPaq = $p->id;
             }
         }
 
@@ -48,7 +48,9 @@ class PaqueteExternoController extends Controller{
             ->where('user_id',$ps->id)
             ->where('isactivo',true)
             ->first();
+
             // dd($peds);    
+
             if ( !is_null($peds) ){
                 $paq->url_pedido = $this->UrlBase.$peds->id;
             }else{
