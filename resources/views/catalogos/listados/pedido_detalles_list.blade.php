@@ -26,6 +26,8 @@
                             <th style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
                             <th aria-label="codigo" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 200px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
+                            <th aria-label="Cant" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Cantidad</th>
+                            <th aria-label="PV" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Precio</th>
                             <th aria-label="Importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting text-right">Importe</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
@@ -36,7 +38,9 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->codigo }}</td>
                                 <td>{{ $item->producto->id.' - '.$item->descripcion_producto.' - '.$item->producto->medida->desc1 }}</td>
+                                <td class="text-right">{{ $item->cant}} </td>
                                 <td class="text-right">{{ $item->pv}} </td>
+                                <td class="text-right">{{ $item->cant * $item->pv}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
