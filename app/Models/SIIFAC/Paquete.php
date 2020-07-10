@@ -108,9 +108,14 @@ class Paquete extends Model
             $p->save();
             $importe += ($p->cant * $p->pv);
         }
-        $pq = static::where('id',$paqid)->first();
-        $pq->update(['importe'=>$importe]);
-        return $pq->importe;
+        // $pq = static::where('id',$paqid)->first();
+        $pq = static::find($paqid);
+        if (!is_null($pq)){
+            $pq->update(['importe'=>$importe]);
+            return $pq->importe;
+        }else{
+            return null;        
+        }
     }
 
 }
