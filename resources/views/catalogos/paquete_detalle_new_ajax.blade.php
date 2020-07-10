@@ -26,6 +26,15 @@
             </div>
 
             <div class="form-group row">
+                <label for = "cant" class="col-md-2 col-form-label text-md-left">Cantidad</label>
+                <div class="col-md-2">
+                    <input type="number" name="cant" id="cant" value="1" min="1" max="99" step="1" class="form-control" />
+                </div>
+                <div class="col-md-7"></div>
+            </div>
+
+
+            <div class="form-group row">
                 <div class="col-md-2"></div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary" id="btnForm1">
