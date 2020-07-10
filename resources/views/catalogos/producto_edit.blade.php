@@ -66,7 +66,7 @@
                         </div>
                         <label for = "codigo" class="col-md-1 col-form-label text-md-left">Código</label>
                         <div class="col-md-2">
-                            <input type="text" name="codigo" id="codigo" value="{{ old('codigo',$items->codigo) }}" min="1" max="999999" class="form-control" />
+                            <input type="number" name="codigo" id="codigo" value="{{ old('codigo',$items->codigo) }}" min="000000000001" max="999999999999" class="form-control" />
                         </div>
                         <div class="col-md-7"></div>
                     </div>
@@ -121,16 +121,32 @@
                         </div>
 
                     </div>
-                    <div>
-                        <label class="col-md-2 col-form-label text-md-right"></label>
-                        <div class="col-md-8" >
+                    <div class="form-group row">
+{{--                        <label class="col-md-2 col-form-label text-md-right"></label>--}}
+                        <div class="col-md-3 text-center" >
                             <button type="submit" class="btn btn-primary">
                                 Guardar
                             </button>
                         </div>
-                        <a class="btn btn-info float-md-right " href="#" onclick="window.close();">
+                        <div class="col-md-3 text-center" >
+{{--                            <a href="{{ route('actualizarExistProd/',['producto_id'=>$items->id])  }}" class="btn btn-danger " title="Imprimir tarjeta de movimientos" target="_blank">--}}
+{{--                                <i class="fa fa-list bigger-110 white"></i>--}}
+                            <a class="btn btn-danger btnActualizarExistProd" title="Actualizar Producto" id="/actualizar_producto/{{$items->id}}" data-toggle="modal" data-target="#myModal">
+                                <i class="ace-icon fa fa-adjust bigger-150 "></i>
+                                Actualizar Existencias
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center" >
+                            <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$items->id])  }}" class="btn btn-cafe " title="Imprimir tarjeta de movimientos" target="_blank">
+                                <i class="fa fa-list bigger-110 white"></i>
+                                Ver Tarjeta de Almacen
+                            </a>
+                        </div>
+                        <div class="col-md-3 text-center" >
+                        <a class="btn btn-info " href="#" onclick="window.close();">
                             Cerrar
                         </a>
+                        </div>
                     </div>
 
                     <input type="hidden" name="idItem" value="{{$idItem}}" />
@@ -152,3 +168,4 @@
     </div>
 </div>
 @endsection
+@include('catalogos.scripts.productos')

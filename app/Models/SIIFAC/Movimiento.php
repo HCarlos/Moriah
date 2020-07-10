@@ -4,9 +4,11 @@ namespace App\Models\SIIFAC;
 
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Request;
 
 class Movimiento extends Model
@@ -318,28 +320,36 @@ class Movimiento extends Model
     }
 
     public static function actualizaExistenciasYSaldo($Prod){
-        $MovInit = static::where('producto_id',$Prod->id)
-            ->where('status',0)
-            ->first();
+        $MovInit = static::query()
+        ->where('producto_id',$Prod->id)
+        ->where('status',0)
+        ->first();
+        try{
+            if (!is_null($MovInit)){
+                $Movs = static::query()
+                ->where('producto_id',$Prod->id)
+                ->where('status','>',0)
+                ->orderBy('id','asc')
+                ->get();
+                $exist = floatval($MovInit->existencia);
+                $saldo = floatval($MovInit->saldo);
+                foreach ($Movs as $mov){
+                    $exist0 = $mov->entrada - $mov->salida;
+                    $saldo0 = $mov->debe - $mov->haber;
+                    $mov->existencia  = $exist + $exist0;
+                    $mov->saldo       = $saldo + $saldo0;
+                    $mov->save();
+                    $exist           += $exist0;
+                    $saldo           += $saldo0;
+                }
+                $Prod->exist = $exist;
+                $Prod->saldo = $saldo;
+                $Prod->save();
+            }
 
-        $Movs = static::where('producto_id',$Prod->id)
-            ->where('status','>',0)
-            ->orderBy('id','asc')
-            ->get();
-
-        $exist = $MovInit->existencia;
-        $saldo = $MovInit->saldo;
-        foreach ($Movs as $mov){
-            $exist0 = $mov->entrada - $mov->salida;
-            $saldo0 = $mov->debe - $mov->haber;
-            $mov->existencia  = $exist + $exist0;
-            $mov->saldo       = $saldo + $saldo0;
-            $mov->save();
-            $exist           += $exist0;
-            $saldo           += $saldo0;
+        }catch(Exception $e){
+            Log::alert($MovInit.' => '.$e->getMessage());
+            return null;
         }
-        $Prod->exist = $exist;
-        $Prod->saldo = $saldo;
-        $Prod->save();
     }
 }

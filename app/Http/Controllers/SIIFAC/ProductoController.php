@@ -279,5 +279,14 @@ class ProductoController extends Controller
             return Response::json(['mensaje' => 'Inventario actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
     }
 
+    public function actualizar_producto($producto_id){
+        //        dd($producto_id);
+                $Prod = Producto::find($producto_id);
+                Movimiento::actualizaExistenciasYSaldo($Prod);
+                return Response::json(['mensaje' => 'Producto actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
+            }
+        
+
+
 }
 

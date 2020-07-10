@@ -50,7 +50,7 @@
                 </div>
                 <label for = "codigo" class="col-md-1 col-form-label text-md-left">Código</label>
                 <div class="col-md-2">
-                    <input type="text" name="codigo" id="codigo" value="{{ old('codigo') }}" min="1" max="999999" class="form-control" />
+                    <input type="number" name="codigo" id="codigo" value="{{ old('codigo') }}" min="000000000001" max="999999999999" class="form-control" />
                 </div>
                 <div class="col-md-7"></div>
             </div>
