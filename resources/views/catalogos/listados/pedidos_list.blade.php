@@ -10,6 +10,9 @@
             <a href="#" class="btn btn-info btn-xs " title="Actualizar" id="btnRefreshNavigator">
                 <i class="ace-icon fa fa-refresh bigger-150"></i>
             </a>
+            <a href="#" class="btn bt1n-small btn-danger no-border btn-xs btnRefreshPedidos" title="Actualizar precios de pedidos" id="/actualizar_precio_pedidos" data-toggle="modal" data-target="#myModal">
+                <i class="ace-icon fa fa-adjust bigger-150 "></i>
+            </a>
             @include('catalogos.listados.paginate_list')
         </div>
 
@@ -48,22 +51,16 @@
                                                 <i class="fa fa-cubes bigger-150 purple"></i>
                                             </a>
                                         @endif
-
-                                            {{--@if ($user->hasAnyPermission(['consultar','all','sysop']) )--}}
-                                            {{--<a href="{{ route('pedidoImagen', array('idItem' => $item->id)) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">--}}
-                                                {{--<i class="fa fa-picture-o bigger-150 orange2"></i>--}}
-                                            {{--</a>--}}
-                                        {{--@endif--}}
+                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
+                                            <a href="{{ $item->url_pedido }}" class="btn btn-link btn-xs pull-right" target="_blank" title="Imprimir Pedido">
+                                                <i class="fa fa-print bigger-150 green"></i>
+                                            </a>
+                                        @endif
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="#" class="btn btn-link btn-xs margen-izquierdo-03em pull-right btnAction2" id ="pedido-{{$item->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-150 red" ></i>
                                             </a>
                                         @endif
-                                        {{--@if ($user->hasAnyPermission(['consultar','all','sysop']) )--}}
-                                            {{--<a href="{{ route('pedidoEdit', ['idItem' => $item->id]) }}" class="btn btn-link btn-xs pull-right " target="_blank" title="Editar">--}}
-                                                {{--<i class="fa fa-pencil bigger-150 blue"></i>--}}
-                                            {{--</a>--}}
-                                        {{--@endif--}}
                                     </div>
                                 </td>
                             </tr>
@@ -81,3 +78,4 @@
 @endsection
 
 @include('catalogos.scripts.dataTable')
+@include('catalogos.scripts.pedidos')

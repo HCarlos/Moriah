@@ -25,8 +25,6 @@ class Pedido extends Model
 
     protected $casts = ['isactivo'=>'boolean',];
 
-    use SoftDeletes;
-
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -90,16 +88,14 @@ class Pedido extends Model
 
     }
 
-    public static function UpdateImporteFromPedidoDetalle($detalles){
-        $paq = $detalles->first();
-        $paqid = $paq->paquete_id;
-        $dets = PedidoDetalle::where('pedido_id',$paqid)->get();
+    public static function UpdateImporteFromPedidoDetalle($pedido_id){
+        $dets = PedidoDetalle::where('pedido_id',$pedido_id)->get();
         $importe = 0;
         foreach ($dets as $p){
-            $importe += $p->pv;
+            $importe += ($p->cant * $p->pv);
         }
-        $pq = static::where('id',$paqid)->first();
-        if ( $pq ){
+        $pq = static::find($pedido_id);
+        if ( !is_null($pq) ){
             $pq->importe = $importe;
             $pq->save();
             return $pq->importe;

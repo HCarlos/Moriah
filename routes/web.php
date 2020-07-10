@@ -119,6 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/new_pedido/{idItem}', 'SIIFAC\PedidoController@new')->name('pedidoNew');
     Route::post('/store_pedido','SIIFAC\PedidoController@store')->name('pedidoStore/');
     Route::get('/destroy_pedido/{id}', 'SIIFAC\PedidoController@destroy')->name('pedidoDestroy/');
+    Route::get('/actualizar_precio_pedidos', 'SIIFAC\PedidoController@actualizar_precio_pedidos')->name('actualizar_precio_pedidos');
 
     // Pedido Detalles
     Route::get('/index_pedido_detalle/{id}','SIIFAC\PedidoDetalleController@index')->name('pedidoDetalleIndex');

@@ -16,7 +16,9 @@ class GeneralFunctions
             3 => "Cheque Nominativo",
             4 => "Transferencia Electrónica de Fondos",
             100 => "-",
-            5 => "Nota de Crédito"
+            5 => "Nota de Crédito",
+            500 => "-",
+            600 => "Descuento vía Nómina"
         ];
 
     public static $movtos_inventario =
@@ -39,7 +41,9 @@ class GeneralFunctions
             100 => "-",
             200 => "Salida por Faltante",
             300 => "Salida por Merma",
-            400 => "Devolución Sobre Compra"
+            400 => "Devolución Sobre Compra",
+            500 => "-",
+            600 => "Descuento vía Nómina"
         ];
 
 

@@ -1,4 +1,4 @@
-    <div class="panel panel-moriah" id="frmEdit0">
+<div class="panel panel-moriah" id="frmEdit0">
     <div class="panel-heading">
         <span><strong>{{ ucwords($titulo) }}</strong> | Nuevo registro {{$pedido_id}}</span>
     </div>
@@ -18,8 +18,15 @@
             @endif
 
             <div class="form-group row">
-                <label for = "producto_id" class="col-md-2 col-form-label text-md-left">Producto</label>
-                <div class="col-md-9">
+                <label for = "cantidad" class="col-md-1 col-form-label text-md-left">Cantidad</label>
+                <div class="col-md-2">
+                    <input type="number" min="1" max="1000" value="1" name="cantidad" id="cantidad" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for = "producto_id" class="col-md-1 col-form-label text-md-left">Producto</label>
+                <div class="col-md-11">
                     {{ Form::select('producto_id', $Productos, null, ['id' => 'producto_id','class'=>'form-control']) }}
                 </div>
                 <div class="col-md-1"></div>

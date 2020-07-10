@@ -98,6 +98,7 @@ class Paquete extends Model
     }
 
     public static function UpdateImporteFromPaqueteDetalle($detalles){
+        
         $paq = $detalles->first();
         $paqid = $paq->paquete_id;
         $dets = PaqueteDetalle::where('paquete_id',$paqid)->get();
@@ -116,6 +117,7 @@ class Paquete extends Model
         }else{
             return null;        
         }
+
     }
 
 }

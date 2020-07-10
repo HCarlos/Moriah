@@ -213,7 +213,7 @@ class PaqueteController extends Controller
             Paquete::UpdateImporteFromPaquete($Paq->id);        
         }
         return Response::json(['mensaje' => 'Precios de paquetes actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
-}
+    }
 
 
 

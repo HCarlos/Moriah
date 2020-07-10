@@ -107,7 +107,7 @@ class PedidoDetalle extends Model
     }
 
     
-    public static function findOrCreatePedidoDetalle($pedido_id,$paquete_detalle_id,$user_id,$empresa_id,$producto_id){
+    public static function findOrCreatePedidoDetalle($pedido_id,$paquete_detalle_id,$user_id,$empresa_id,$producto_id,$cantidad){
         if ($paquete_detalle_id > 0) {
             $p = PaqueteDetalle::find($paquete_detalle_id);
             $producto_id = $p->producto_id;
@@ -122,7 +122,7 @@ class PedidoDetalle extends Model
             'medida_id' => $p->medida_id,
             'codigo' => $p->codigo,
             'descripcion_producto' => $p->descripcion,
-            'cant' => 1,
+            'cant' => $cantidad,
             'pv' => $p->pv,
             'comp1' => $p->comp1,
             'empresa_id' => $empresa_id,

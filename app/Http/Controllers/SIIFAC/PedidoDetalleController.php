@@ -73,13 +73,14 @@ class PedidoDetalleController extends Controller
         $data        = $request->all();
         $pedido_id  = $data['pedido_id'];
         $producto_id = $data['producto_id'];
+        $cantidad    = $data['cantidad'];
 
 //        dd($pedido_id.', '.$producto_id);
 
         $ped = Pedido::find($pedido_id);
         try {
             $mensaje = "OK";
-            PedidoDetalle::findOrCreatePedidoDetalle($pedido_id,0, $ped->user_id,$ped->empresa_id, $producto_id);
+            PedidoDetalle::findOrCreatePedidoDetalle($pedido_id,0, $ped->user_id,$ped->empresa_id, $producto_id,$cantidad);
             $dets = PedidoDetalle::all()->where('pedido_id',$pedido_id);
             Pedido::UpdateImporteFromPedidoDetalle($dets);
         }
@@ -96,12 +97,12 @@ class PedidoDetalleController extends Controller
         $pd->forceDelete();
 
         $prod = Producto::find($pd->producto_id);
-        $paq = Pedido::find($pd->pedido_id);
+        $ped = Pedido::find($pd->pedido_id);
         $dets = PedidoDetalle::all()->where('pedido_id',$pd->pedido_id);
-        $paq::UpdateImporteFromPedidoDetalle($dets);
+        Pedido::UpdateImporteFromPedidoDetalle($dets);
 
         $pd->productos()->detach($prod);
-        $paq->productos()->detach($prod);
+        $ped->productos()->detach($prod);
 
         return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
 

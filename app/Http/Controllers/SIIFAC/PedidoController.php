@@ -22,6 +22,7 @@ class PedidoController extends Controller
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
+    protected $UrlBase = 'https://moriah.mx/print_pedido/';
 
     public function __construct(){
         $this->middleware('auth');
@@ -34,7 +35,9 @@ class PedidoController extends Controller
         $items = Pedido::query()
             ->orderBy('id')
             ->paginate();
-
+        foreach($items as $item){
+                $item->url_pedido = $this->UrlBase.$item->id;
+        }
         $items->appends(request(['search']))->fragment('table');
         $items->links();
 
@@ -90,6 +93,19 @@ class PedidoController extends Controller
 
         return redirect('/new_pedido/'.$idItem);
     }
+
+
+    public function actualizar_precio_pedidos(){
+        $Peds = Pedido::select('id')->get();
+        foreach ($Peds as $Pd){
+            // $pds = PedidoDetalle::query()->where('pedido_id', $Pd->id)->get();
+            Pedido::UpdateImporteFromPedidoDetalle($Pd->id);        
+        }
+        return Response::json(['mensaje' => 'Precios de pedidos actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
+    }
+
+
+
 
     public function destroy($id=0){
         $mov = Movimiento::all()->where('pedido_id',$id)->first();

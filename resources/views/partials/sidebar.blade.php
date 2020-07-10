@@ -10,14 +10,14 @@
         </li>
         <li>
             <a href="{{ route('ingresosIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
-                <i class="menu-icon fa fa-archive green"></i>
+                <i class="menu-icon fa fa-money green"></i>
                 Ingresos
             </a>
             <b class="arrow"></b>
         </li>
         <li>
             <a href="{{ route('notacreditosIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
-                <i class="menu-icon fa fa-archive green"></i>
+                <i class="menu-icon fa fa-clipboard green"></i>
                 Notas de Crédito
             </a>
             <b class="arrow"></b>

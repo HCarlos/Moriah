@@ -19,7 +19,7 @@
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
             <div class="dataTables_wrapper" role="grid">
-                @if ($items)
+                @if (!is_null($items) && $items->count() > 0 )
                     <table id="{{ $tableName}}" class="table table-striped table-bordered table-hover dataTable" >
                         <thead>
                         <tr role="row">
