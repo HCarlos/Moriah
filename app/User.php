@@ -166,9 +166,6 @@ class User extends Authenticatable
 
         $data = explode('|',$Data);
         
-//                              0            1                2                  3                 4                         5                          6                     7                    8                  9                     10                          
- //       CadenaUsuario = item.data+'|'+item.idgrupo+'|'+item.idfamilia+'|'+item.idalumno+'|'+item.ap_paterno_tutor+'|'+item.ap_materno_tutor+'|'+item.nombre__tutor+'|'+item.cel1_tutor+'|'+item.tel1_tutor+'|'+item.email_tutor1+'|'+item.username_tutor;
-
         $ap_paterno = $F->toMayus($data[4]);
         $ap_materno = $F->toMayus($data[5]);
         $nombre = $F->toMayus($data[6]);
@@ -190,9 +187,9 @@ class User extends Authenticatable
         $d["host"]        = $F->getIHE(2);
         $d["familia_cliente_id"] = 5; //Profesores
     
-        $role1 = Role::find(2);
-        $role2 = Role::find(3);
-        $role3 = Role::find(4);
+        $role1 = Role::find(3);
+        $role2 = Role::find(4);
+        $role3 = Role::find(5);
     
         //dd($data);
     
