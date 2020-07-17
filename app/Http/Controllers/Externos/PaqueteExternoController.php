@@ -60,6 +60,7 @@ class PaqueteExternoController extends Controller{
 
             $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
                   ->where('paquete_id',$paq->id)
+                  ->orderBy('id')
                   ->get();
             foreach($pd as $p){
                 $prod = Producto::find($p->producto_id);
@@ -97,6 +98,7 @@ class PaqueteExternoController extends Controller{
 
         $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
         ->where('paquete_id',$paquete_id)
+        ->orderBy('id')
         ->get();
         foreach($pd as $p){
             $prod = Producto::find($p->producto_id);
@@ -144,6 +146,7 @@ class PaqueteExternoController extends Controller{
  
         $pd = PedidoDetalle::select('id','pedido_id','producto_id','codigo','descripcion_producto','cant','pv')
         ->where('pedido_id',$ped->id)
+        ->orderBy('id')
         ->get();
 
         return Response::json([
