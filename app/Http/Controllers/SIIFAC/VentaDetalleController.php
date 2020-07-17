@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use LogicException;
+
 //use Maatwebsite\Excel\Facades\Excel;
 
 class VentaDetalleController extends Controller
@@ -49,7 +50,7 @@ class VentaDetalleController extends Controller
             $ven         = Venta::findOrFail($venta_id);
             try {
                 $mensaje = "OK";
-                VentaDetalle::agregarProductoAVenta($ven,$producto_id,$cantidad);
+                VentaDetalle::agregarProductoAVenta($ven,$producto_id,$cantidad,$Prod->pv);
             }
             catch(LogicException $e){
                 $mensaje = "Error: ".$e->getMessage();

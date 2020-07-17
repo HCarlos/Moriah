@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Database\QueryException;
 
 class CompraDetalleController extends Controller
 {
@@ -80,7 +81,7 @@ class CompraDetalleController extends Controller
                 $producto_id = $Prod->id;
                 Producto::ActualizaDatosDesdeCompras($producto_id,$data);
             }
-            catch(LogicException $e){
+            catch(QueryException $e){
                 $mensaje = "Error: ".$e->getMessage();
             }
         }else{

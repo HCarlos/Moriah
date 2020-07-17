@@ -10,8 +10,10 @@ use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Proveedor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SIIFAC\Producto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Database\QueryException;
 
 class CompraController extends Controller
 {
@@ -69,7 +71,7 @@ class CompraController extends Controller
             $mensaje = "OK";
             Compra::create($data);
         }
-        catch(LogicException $e){
+        catch(QueryException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);

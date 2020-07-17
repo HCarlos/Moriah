@@ -25,7 +25,7 @@
                             <th aria-label="codigo" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Código</th>
                             <th aria-label="descripcion" style="width: 120px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
                             <th aria-label="cantidad" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Cant</th>
-                            <th aria-label="pv" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PV</th>
+                            <th aria-label="pc" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PC</th>
                             <th aria-label="importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Importe</th>
                             <th aria-label="iva" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="6" role="columnheader" class="sorting">IVA</th>
                             <th aria-label="total" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Total</th>
@@ -39,7 +39,7 @@
                                 <td class="font_Roboto_Mono_400">{{ $vd->codigo }}</td>
                                 <td>{{ $vd->producto->descripcion }}</td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->entrada}} </td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $vd->pu}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->cu}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->importe}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->iva}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->saldo}} </td>
