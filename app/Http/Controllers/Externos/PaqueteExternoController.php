@@ -19,8 +19,8 @@ class PaqueteExternoController extends Controller{
     protected $UrlBase = 'https://moriah.mx/print_pedido/';
 
 
-    public function getPaquetesLibrosPS($grupo_ps){
-
+    public function getPaquetesLibrosPS($grupo_ps, $iduser_ps){
+        $ps = User::select('id','ap_paterno','ap_materno','nombre')->where('iduser_ps',$iduser_ps)->first();
         $paqs = Paquete::select('id','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
         ->get();
@@ -39,6 +39,28 @@ class PaqueteExternoController extends Controller{
         $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
         ->whereIn('id', $arrCad)
         ->get();
+
+        foreach($paqs as $paq){
+            
+            if ( !is_null($ps) ){
+                $peds = Pedido::select('id')
+                ->where('paquete_id',$paq->id)
+                ->where('user_id',$ps->id)
+                ->where('isactivo',true)
+                ->first();
+    
+            }else{
+                $peds = null;
+            }
+
+            if ( !is_null($peds) ){
+                $paq->url_pedido = $this->UrlBase.$peds->id;
+            }else{
+                $paq->url_pedido = "";
+            }
+
+            $paq->Usuario = is_null($ps) ? "" : $ps->FullName;
+        }
 
         return Response::json([
             'mensaje' => 'OK', 
