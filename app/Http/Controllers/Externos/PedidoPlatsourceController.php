@@ -89,7 +89,6 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(25,$this->alto,"PRECIO",1,0,"C",true);
         $pdf->Cell(25,$this->alto,"IMPORTE",1,1,"R",true);
         $this->alto  = 6;
-        $pdf->Ln();
         $pdf->setX(10);
     }
 

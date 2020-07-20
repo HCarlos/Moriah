@@ -21,6 +21,9 @@ class PaqueteExternoController extends Controller{
     public function getPaquetesLibrosPSAll($grupo_ps, $iduser_ps){
 
         $ps = User::select('id','ap_paterno','ap_materno','nombre')->where('iduser_ps',$iduser_ps)->first();
+        // if ( is_null($ps) ){
+        //     $ps = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser);
+        // }
 
         $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
@@ -56,7 +59,7 @@ class PaqueteExternoController extends Controller{
             }else{
                 $paq->url_pedido = "";
             }
-            $paq->Usuario = $ps->FullName;
+            $paq->Usuario = is_null($ps) ? "" : $ps->FullName;
 
             $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
                   ->where('paquete_id',$paq->id)
