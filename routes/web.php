@@ -250,6 +250,7 @@ Route::get('/admin', function () {
 })->name('dashboard')->middleware(['auth', 'admin']);
 
 Route::group(['middleware' => ['cors']], function () {
+    Route::get('/getPaquetesLibrosPS/{grupo_ps}', 'Externos\PaqueteExternoController@getPaquetesLibrosPS')->name('getPaquetesLibrosPS');
     Route::get('/getPaquetesLibrosPSAll/{grupo_ps}/{iduser_ps}', 'Externos\PaqueteExternoController@getPaquetesLibrosPSAll')->name('getPaquetesLibrosPSAll');
     Route::get('/getPaqueteLibro/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibro')->name('getPaqueteLibro');
     Route::get('/getPaqueteLibroDetalle/{paquete_id}', 'Externos\PaqueteExternoController@getPaqueteLibroDetalle')->name('getPaqueteLibroDetalle');
