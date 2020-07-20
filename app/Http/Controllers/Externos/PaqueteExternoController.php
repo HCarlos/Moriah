@@ -45,7 +45,7 @@ class PaqueteExternoController extends Controller{
         // dd($paq);
 
         // foreach($paqs as $paq){
-            if ( !is_null($p) ){
+            if ( !is_null($ps) ){
                 $peds = Pedido::select('id')
                 ->where('paquete_id',$paq->id)
                 ->where('user_id',$ps->id)
@@ -58,6 +58,7 @@ class PaqueteExternoController extends Controller{
 
 
             // dd($peds);    
+
 
             if ( !is_null($peds) ){
                 $paq->url_pedido = $this->UrlBase.$peds->id;
