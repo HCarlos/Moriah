@@ -45,12 +45,17 @@ class PaqueteExternoController extends Controller{
         // dd($paq);
 
         // foreach($paqs as $paq){
+            if ( !is_null($p) ){
+                $peds = Pedido::select('id')
+                ->where('paquete_id',$paq->id)
+                ->where('user_id',$ps->id)
+                ->where('isactivo',true)
+                ->first();
+    
+            }else{
+                $peds = null;
+            }
 
-            $peds = Pedido::select('id')
-            ->where('paquete_id',$paq->id)
-            ->where('user_id',$ps->id)
-            ->where('isactivo',true)
-            ->first();
 
             // dd($peds);    
 
@@ -59,6 +64,7 @@ class PaqueteExternoController extends Controller{
             }else{
                 $paq->url_pedido = "";
             }
+
             $paq->Usuario = is_null($ps) ? "" : $ps->FullName;
 
             $pd = PaqueteDetalle::select('id','paquete_id','producto_id','codigo','descripcion','cant','pv')
