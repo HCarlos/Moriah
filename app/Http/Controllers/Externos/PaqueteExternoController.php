@@ -18,12 +18,27 @@ class PaqueteExternoController extends Controller{
 
     protected $UrlBase = 'https://moriah.mx/print_pedido/';
 
+
+    public function getPaquetesLibrosPS($grupo_ps){
+
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
+        ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
+        ->get();
+
+        return Response::json([
+            'mensaje' => 'OK', 
+            'encabezado_paquete' => $paqs, 
+            'author' => '@DevCH', 
+            'status' => '200'], 
+            200);
+
+    }
+
+
+
     public function getPaquetesLibrosPSAll($grupo_ps, $iduser_ps){
 
         $ps = User::select('id','ap_paterno','ap_materno','nombre')->where('iduser_ps',$iduser_ps)->first();
-        // if ( is_null($ps) ){
-        //     $ps = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser);
-        // }
 
         $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
@@ -90,10 +105,23 @@ class PaqueteExternoController extends Controller{
     }
 
     public function getPaqueteLibro($paquete_id){
-
+/*
         $paq = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp')
                 ->where('id',$paquete_id)
                ->get();
+*/
+
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
+        ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
+        ->get();
+        $IdPaq = 0;
+        foreach($paqs as $p){
+            $arr = explode(',',$p->grupos_platsource);
+            if (  in_array($grupo_ps,$arr) ){
+                $IdPaq = $p->id;
+            }
+        }
+
 
         return Response::json([
             'mensaje' => 'OK', 
