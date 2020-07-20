@@ -21,8 +21,23 @@ class PaqueteExternoController extends Controller{
 
     public function getPaquetesLibrosPS($grupo_ps){
 
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
+        $paqs = Paquete::select('id','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
+        ->get();
+        $cad = "";
+        foreach($paqs as $p){
+            $arr = explode(',',$p->grupos_platsource);
+            if (  in_array($grupo_ps,$arr) ){
+                if ($cad == ""){
+                    $cad .=$p->id; 
+                }else{
+                    $cad .=",".$p->id; 
+                }
+            }
+        }
+        $arrCad = explode(',',$cad);
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
+        ->whereIn('id', $arrCad)
         ->get();
 
         return Response::json([
