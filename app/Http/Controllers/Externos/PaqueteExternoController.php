@@ -211,11 +211,10 @@ class PaqueteExternoController extends Controller{
         $IdEmp         = intval($arr[14]);
 
         $userPS = User::select('id')->where('iduser_ps',$IdUser)->first();
-        if ( !$userPS ){
+        if ( is_null($userPS) ){
             $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser);
-        }else{
-            $User = $userPS;
         }
+        $User = $userPS;
 
         $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet);
  
