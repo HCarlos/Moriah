@@ -33,7 +33,7 @@ class PedidoController extends Controller
 
         $this->tableName = 'pedidos';
         $items = Pedido::query()
-            ->orderBy('id')
+            ->orderByDesc('id')
             ->paginate();
         foreach($items as $item){
                 $item->url_pedido = $this->UrlBase.$item->id;

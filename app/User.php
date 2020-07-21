@@ -218,6 +218,7 @@ class User extends Authenticatable
         $user = static::all()->where('username','=', trim($username))->first();
 
         if (is_null($user)) {
+            
             if ($cuenta == ''){
                 $timex  = Carbon::now()->format('ymdHisu');
                 $cuenta =  substr($timex,0,16);

@@ -19,8 +19,12 @@ class PaqueteExternoController extends Controller{
     protected $UrlBase = 'https://moriah.mx/print_pedido/';
 
 
-    public function getPaquetesLibrosPS($grupo_ps, $iduser_ps){
-        $ps = User::select('id','ap_paterno','ap_materno','nombre')->where('iduser_ps',$iduser_ps)->first();
+    public function getPaquetesLibrosPS($grupo_ps, $iduser_ps, $username){
+        $ps = User::select('id','ap_paterno','ap_materno','nombre')
+            ->where('iduser_ps',$iduser_ps)
+            ->whereRaw("username like ('%".trim($username)."%')")
+            ->first();
+
         $paqs = Paquete::select('id','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
         ->get();
