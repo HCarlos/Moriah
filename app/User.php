@@ -214,8 +214,10 @@ class User extends Authenticatable
         string $calle='', string $num_ext='', string $num_int='', string $colonia='', string $localidad='', string $estado='', string $pais='', string $cp='', string $curp='', string $rfc='', string $razon_social='',
         string $lugar_nacimiento='', Date $fecha_nacimiento=null, int $genero=null,
         string $ocupacion=''){
-        $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
-        if (!$user) {
+        // $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
+        $user = static::all()->where('username', trim($username))->first();
+
+        if (is_null($user)) {
             if ($cuenta == ''){
                 $timex  = Carbon::now()->format('ymdHisu');
                 $cuenta =  substr($timex,0,16);
