@@ -215,7 +215,7 @@ class User extends Authenticatable
         string $lugar_nacimiento='', Date $fecha_nacimiento=null, int $genero=null,
         string $ocupacion=''){
         // $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
-        $user = static::all()->where('username', trim($username))->first();
+        $user = static::all()->where('username','=', trim($username))->first();
 
         if (is_null($user)) {
             if ($cuenta == ''){
