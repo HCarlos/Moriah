@@ -160,7 +160,7 @@ class User extends Authenticatable
     }
 
 
-    public static function createUserFromPlatsourceTutor($Data, $iduser_ps){
+    public static function createUserFromPlatsourceTutor($Data, $iduser_ps, $IdUser){
 
         $F = (new FuncionesController);
 
@@ -180,7 +180,7 @@ class User extends Authenticatable
         $d['cuenta'] = '';
         $d['celular'] = is_null($data[7]) ? ' ' : $data[7];
         $d['telefono'] = is_null($data[8]) ? ' ' : $data[8];
-        $d['iduser_ps'] = is_null($iduser_ps) ? ' ' : $iduser_ps;
+        $d['iduser_ps'] = is_null($iduser_ps) ? $IdUser : $iduser_ps;
     
         $d["idemp"]       = $F->getIHE(0);
         $d["ip"]          = $F->getIHE(1);
@@ -214,8 +214,8 @@ class User extends Authenticatable
         string $calle='', string $num_ext='', string $num_int='', string $colonia='', string $localidad='', string $estado='', string $pais='', string $cp='', string $curp='', string $rfc='', string $razon_social='',
         string $lugar_nacimiento='', Date $fecha_nacimiento=null, int $genero=null,
         string $ocupacion=''){
-        // $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
-        $user = static::all()->where('username','=', trim($username))->first();
+        $user = static::all()->where('username', $username)->where('email', $email)->where('cuenta', $cuenta)->first();
+        // $user = static::all()->where('username','=', trim($username))->first();
 
         if (is_null($user)) {
             

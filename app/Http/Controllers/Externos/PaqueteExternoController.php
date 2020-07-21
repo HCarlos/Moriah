@@ -146,11 +146,6 @@ class PaqueteExternoController extends Controller{
     }
 
     public function getPaqueteLibro($paquete_id){
-/*
-        $paq = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp')
-                ->where('id',$paquete_id)
-               ->get();
-*/
 
         $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
@@ -213,10 +208,15 @@ class PaqueteExternoController extends Controller{
         $IdPaquete     = intval($arr[12]);
         $IdEmpresa     = intval($arr[13]);
         $IdEmp         = intval($arr[14]);
+        $Username      = intval($arr[15]);
 
-        $userPS = User::select('id')->where('iduser_ps',$IdUser)->first();
+        $userPS = User::select('id')
+        ->where('iduser_ps',$IdUser)
+        ->whereRaw("username like ('%".trim($Username)."%')")
+        ->first();
+        
         if ( is_null($userPS) ){
-            $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser);
+            $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser,$IdUser);
         }
         $User = $userPS;
 
