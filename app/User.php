@@ -153,8 +153,8 @@ class User extends Authenticatable
         $search = strtoupper($search);
         $query->whereRaw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre) like ?", "%{$search}%")
             ->orWhere('email', 'like', "%{$search}%")
-            ->orWhere('cuenta', 'like', "%{$search}%");
-            ->orWhere('username', 'like', "%{$search}%");
+            ->orWhere('cuenta', 'like', "%{$search}%")
+            ->orWhere('username', 'like', "%{$search}%")
             ->orWhere('id', 'like', "%{$search}%");
 //            ->orWhereHas('team', function ($query) use ($search) {
 //                $query->where('name', 'like', "%{$search}%");
