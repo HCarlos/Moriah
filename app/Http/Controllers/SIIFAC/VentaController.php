@@ -38,13 +38,17 @@ class VentaController extends Controller
         $f = $F->getFechaFromNumeric($fecha);
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 23:59:59';
+
+        // dd($f1.' '.$f2.' '.$f2.' '.$user->id);
+
+        $arr = array(1,$user->id);
+
         $items = Venta::all()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->where('vendedor_id',$user->id)
+            ->whereIn('vendedor_id',$arr)
             ->sortBy('id');
         
-        dd($items);
 
         $totalVenta = 0;
         foreach ($items as $i){
