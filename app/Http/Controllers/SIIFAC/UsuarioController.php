@@ -193,7 +193,7 @@ class UsuarioController extends Controller
 
         if ( !$mov ){
             $user = User::findOrFail($id);
-            $user->delete();
+            $user->forceDelete();
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
         }else{
             return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$mov->id.']', 'data' => 'Error', 'status' => '200'], 200);
