@@ -24,7 +24,7 @@ class PaqueteExternoController extends Controller{
             ->where('iduser_ps',$iduser_ps)
             ->whereRaw("username like ('%".trim($username)."%')")
             ->first();
-
+        
         $paqs = Paquete::select('id','grupos_platsource')
         ->where('grupos_platsource','like','%'.$grupo_ps.'%' )
         ->get();
@@ -39,6 +39,7 @@ class PaqueteExternoController extends Controller{
                 }
             }
         }
+
         $arrCad = explode(',',$cad);
         $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet','empresa_id','idemp','grupos_platsource')
         ->whereIn('id', $arrCad)
@@ -215,6 +216,8 @@ class PaqueteExternoController extends Controller{
         ->whereRaw("username like ('%".trim($Username)."%')")
         ->first();
         
+        dd($userPS);
+
         if ( is_null($userPS) ){
             $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser,$IdUser);
         }

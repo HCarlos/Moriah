@@ -88,8 +88,10 @@ class PedidoController extends Controller
         $paquete_id = $data['paquete_id'];
         $user_id    = $data['user_id'];
         $empresa_id    = $data['empresa_id'];
+        $referencia    = $data['referencia'];
+        $observaciones    = $data['observaciones'];
 
-        Pedido::findOrCreatePedido($user_id,$paquete_id,$empresa_id);
+        Pedido::findOrCreatePedido($user_id,$paquete_id,$empresa_id,$referencia,$observaciones);
 
         return redirect('/new_pedido/'.$idItem);
     }

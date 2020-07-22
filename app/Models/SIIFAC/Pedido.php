@@ -61,12 +61,18 @@ class Pedido extends Model
         return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_pedido']. ' - ' . $this->attributes['importe']. ' - ' . $this->user->FullName;
     }
 
-    public static function findOrCreatePedido($user_id, $paquete_id, $empresa_id)
+    public static function findOrCreatePedido($user_id, $paquete_id, $empresa_id,$referencia,$observaciones)
     {
         $f = new FuncionesController();
         $user = User::find($user_id);
         $emp = Empresa::find($empresa_id);
         $paq = Paquete::find($paquete_id);
+        $date = Carbon::now();
+        $daysToAdd = 3;
+        $date = $date->addDays($daysToAdd);
+        $daysToAdd = 3;
+        $date = $date->addDays($daysToAdd);
+
         $ped = static::create([
             'user_id' => $user_id,
             'paquete_id' => $paquete_id,
@@ -76,7 +82,10 @@ class Pedido extends Model
             'filename' => $paq->filename,
             'importe' => $paq->importe,
             'fecha' => NOW(),
+            'referencia' => $referencia,
+            'observaciones' => $observaciones,
             'empresa_id' => $empresa_id,
+            'fecha_vencimiento' => $date,
             'idemp' => $paq->idemp,
             'ip' => $f->getIHE(1),
             'host' => $f->getIHE(1),

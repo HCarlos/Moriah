@@ -55,6 +55,20 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for = "referencia" class="col-md-1 col-form-label text-md-left">Referencia</label>
+                    <div class="col-md-11">
+                        <input type="text" name="referencia" id="referencia" value="{{ old('referencia') }}" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for = "observaciones" class="col-md-1 col-form-label text-md-left">Observaciones</label>
+                    <div class="col-md-11">
+                        <input type="text" name="observaciones" id="observaciones" value="{{ old('observaciones') }}" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
 
                     <label for = "importe" class="col-md-1 col-form-label text-md-left">Importe</label>
                     <div class="col-md-2">

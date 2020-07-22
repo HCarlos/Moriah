@@ -56,9 +56,11 @@ class PedidoDetalle extends Model
     public static function asignProductoAPedidoDetalle($pedido_id, $user_id, $paquete_id, $empresa_id){
         $pqd = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($pqd as $p){
-            $peds = static::findOrCreatePedidoDetalle($pedido_id,$p->id,$user_id,$empresa_id,0);
+            $peds = static::findOrCreatePedidoDetalle($pedido_id,$p->id,$user_id,$empresa_id,0,1);
         }
-        Pedido::UpdateImporteFromPedidoDetalle($peds);
+        if ( !is_null($peds) ){
+            Pedido::UpdateImporteFromPedidoDetalle($peds->pedido_id);
+        }
         return $pqd;
     }
 
