@@ -211,15 +211,20 @@ class PaqueteExternoController extends Controller{
         $IdEmp         = intval($arr[14]);
         $Username      = intval($arr[15]);
 
+        $arrCad = explode('|',$CadenaUsuario);
+        $Username = $arrCad[10];
+
         $userPS = User::select('id')
         ->where('iduser_ps',$IdUser)
         ->whereRaw("username like ('%".trim($Username)."%')")
         ->first();
 
+
         if ( is_null($userPS) ){
             $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser,$IdUser);
         }
         $User = $userPS;
+
 
         $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet);
  
