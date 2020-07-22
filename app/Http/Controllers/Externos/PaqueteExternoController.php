@@ -215,8 +215,6 @@ class PaqueteExternoController extends Controller{
         ->where('iduser_ps',$IdUser)
         ->whereRaw("username like ('%".trim($Username)."%')")
         ->first();
-        
-        dd($userPS);
 
         if ( is_null($userPS) ){
             $User = User::createUserFromPlatsourceTutor($CadenaUsuario,$IdUser,$IdUser);
