@@ -39,7 +39,7 @@ class VentaController extends Controller
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 23:59:59';
 
-        dd($f1.' '.$f2.' '.$f2.' '.$user->id);
+        dd($f1.' => '.$f2.' | '.$user->id);
 
         $arr = array(1,$user->id);
 
