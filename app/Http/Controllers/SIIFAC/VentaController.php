@@ -43,7 +43,9 @@ class VentaController extends Controller
             ->where('fecha','<=', $f2)
             ->where('vendedor_id',$user->id)
             ->sortBy('id');
-//        dd($items);
+        
+        // dd($items);
+
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->total;
