@@ -37,7 +37,7 @@ class UsuarioController extends Controller
         $items = User::query()
             ->filtrar(request('search'))
             ->orderByDesc('created_at')
-            ->paginate();
+            ->paginate(250);
 
         $items->appends(request(['search']))->fragment('table');
         $items->links();
