@@ -46,7 +46,6 @@ class VentaController extends Controller
         $items = Venta::all()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->whereIn('vendedor_id',$arr)
             ->sortBy('id');
         
         dd($items);
