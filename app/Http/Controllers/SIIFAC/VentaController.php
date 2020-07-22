@@ -49,6 +49,7 @@ class VentaController extends Controller
             ->whereIn('vendedor_id',$arr)
             ->sortBy('id');
         
+        dd($items);
 
         $totalVenta = 0;
         foreach ($items as $i){
