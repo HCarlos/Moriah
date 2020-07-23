@@ -55,7 +55,7 @@ class User extends Authenticatable
     protected $casts = ['admin'=>'boolean','alumno'=>'boolean','foraneo'=>'boolean','exalumno'=>'boolean','credito'=>'boolean',];
 
     public static function findByEmail($email){
-        return static::where( compac('email') )->first();
+        return static::where('email', trim($email) )->first();
     }
 
     public function permissions() {
@@ -173,12 +173,13 @@ class User extends Authenticatable
         $nombre = $F->toMayus($data[6]);
 
         $arrEmail = explode(',',$data[9]);
+        $timestamp = now();
     
         $d['ap_paterno'] = $ap_paterno;
         $d['ap_materno']   = $ap_materno;
         $d['nombre'] = $nombre;
         $d['username'] = $data[10];
-        $d['email'] = $arrEmail[0];
+        $d['email'] = $timestamp."@example.com";
         $d['cuenta'] = '';
         $d['celular'] = is_null($data[7]) ? ' ' : $data[7];
         $d['telefono'] = is_null($data[8]) ? ' ' : $data[8];

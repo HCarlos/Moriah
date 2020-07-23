@@ -107,7 +107,7 @@ class CorteCajaController extends Controller
         if ($Movs->count() > 0){
             $pdf->SetFont('Arial','B',7);
             $pdf->Cell(179, $this->alto, 'TOTAL $ ', "LB", 0,"R");
-            $pdf->SetFont('andalemonomtstdbold','',7);
+            $pdf->SetFont('AndaleMonoMTStdBold','',7);
             $pdf->Cell(17, $this->alto, number_format($totalPagado,2), "LRB", 1,"R");
         }else{
             $pdf->SetFont('Arial','BI',10);
@@ -137,6 +137,10 @@ class CorteCajaController extends Controller
 
     protected function create_corte_caja_1(PanelControlOneRequest $request){
         $pdf  = new PDF_Diag('P','mm','Letter');
+        $pdf->addFont('AndaleMono');
+        $pdf->addFont('arialn');        
+        $pdf->addFont('AndaleMonoMTStdBold');
+
         $data = $request->all();
         $tipo_reporte = $data['tipo_reporte'];
         if ($tipo_reporte==0){

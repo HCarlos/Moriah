@@ -14,6 +14,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -148,7 +149,7 @@ class VentaController extends Controller
             $mensaje = "OK";
             Venta::venderPaquete($user->id,$paquete_id,$tipoventa,$user_id,$cantidad);
         }
-        catch(LogicException $e){
+        catch(QueryException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
@@ -167,7 +168,7 @@ class VentaController extends Controller
             $mensaje = "OK";
             Venta::venderPedido($user->id,$pedido_id,$tipoventa,$user_id,$cantidad);
         }
-        catch(LogicException $e){
+        catch(QueryException $e){
             $mensaje = "Error: ".$e->getMessage();
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
@@ -190,7 +191,7 @@ class VentaController extends Controller
                 $producto_id = $Prod->id;
                 Venta::venderNormal($user->id,$producto_id,$tipoventa,$user_id,$cantidad);
             }
-            catch(LogicException $e){
+            catch(QueryException $e){
                 $mensaje = "Error: ".$e->getMessage();
             }
         }else{
@@ -295,6 +296,7 @@ class VentaController extends Controller
         $dato = $data['dato'];
         $tipo = $data['type'];
         $user = Auth::User();
+        $user = User::find($user->id);
         switch ($tipo){
             case 0:
                 $items = Venta::select()
@@ -345,7 +347,8 @@ class VentaController extends Controller
 
         $dato = "Desde ".$f1." Hasta ".$f2;
         $user = Auth::User();
-                $items = Venta::select()
+        $user = User::find($user->id);
+        $items = Venta::select()
                     ->where('fecha','>=',$f1)
                     ->where('fecha','<=',$f2)
                     ->where(function ($q) use($user) {

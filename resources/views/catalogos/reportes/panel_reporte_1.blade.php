@@ -12,7 +12,7 @@
                 <div class="panel-heading">Corte de Caja</div>
                 <div class="panel-body">
 
-                    <form method="post" action="{{ route('corteCaja1') }}" >
+                    <form method="post" action="{{ route('corteCaja1') }}" target="_blank" >
                         {{ csrf_field() }}
                         {{--@if ($errors->any())--}}
                             {{--<div class="alert alert-danger">--}}

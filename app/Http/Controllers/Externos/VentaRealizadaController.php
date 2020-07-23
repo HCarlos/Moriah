@@ -81,7 +81,7 @@ class VentaRealizadaController extends Controller
         $total = $abono = $tresta = 0;
         foreach ($Movs as $Mov){
             $pdf->setX(10);
-            $pdf->SetFont('arialn','',8);
+            $pdf->SetFont('Arial','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
             $pdf->Cell(63, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
@@ -101,7 +101,7 @@ class VentaRealizadaController extends Controller
         if ($Movs->count() > 0){
             $pdf->SetFont('Arial','B',7);
             $pdf->Cell(117, $this->alto, 'TOTAL $ ', "LB", 0,"R");
-            $pdf->SetFont('andalemonomtstdbold','',7);
+            $pdf->SetFont('AndaleMonoMTStdBold','',7);
             $pdf->Cell(17, $this->alto, number_format($total,2), "LRB", 0,"R");
             $pdf->Cell(17, $this->alto, number_format($abono,2), "LRB", 0,"R");
             $pdf->Cell(17, $this->alto, number_format($tresta,2), "LRB", 1,"R");
