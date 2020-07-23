@@ -128,13 +128,14 @@ class PanelControlOneRequest extends FormRequest
                 if ($empresa_id > 0)
                     $q->where('empresa_id', $empresa_id);
             })
-            ->whereHas('vendedores', function ($q) use($vendedor_id) {
-                if ($vendedor_id > 0)
-                    $q->where('vendedor_id', $vendedor_id);
-            })
             ->orderBy('fecha')
             ->get();
         
+            // ->whereHas('vendedores', function ($q) use($vendedor_id) {
+            //     if ($vendedor_id > 0)
+            //         $q->where('vendedor_id', $vendedor_id);
+            // })
+
             // dd($Movs);
 
         $m = $Movs->first();
