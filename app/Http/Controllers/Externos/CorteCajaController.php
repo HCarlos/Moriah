@@ -12,8 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\PanelControlOneRequest;
 
-class CorteCajaController extends Controller
-{
+class CorteCajaController extends Controller{
 
     protected $alto     = 6;
     protected $aFT      = 205;
@@ -65,8 +64,8 @@ class CorteCajaController extends Controller
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
         $pdf->Cell(10, $this->alto, 'VENTA', "LTB", 0,"R");
-        $pdf->Cell(10, $this->alto, 'TIPO', "LTB", 0,"L");
-        $pdf->Cell(63, $this->alto, 'CLIENTE', "LTB", 0,"L");
+        $pdf->Cell(15, $this->alto, 'TIPO', "LTB", 0,"L");
+        $pdf->Cell(58, $this->alto, 'CLIENTE', "LTB", 0,"L");
         $pdf->Cell(19, $this->alto, 'VENDEDOR', "LTB", 0,"L");
         $pdf->Cell(15, $this->alto, 'FECHA', "LTB", 0,"R");
         $pdf->Cell(22, $this->alto, utf8_decode('MÉTODO PAGO'), "LTB", 0,"L");
@@ -93,9 +92,9 @@ class CorteCajaController extends Controller
             $pdf->SetFont('arialn','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, $Mov->venta_id, "LTB", 0,"R");
-            $pdf->Cell(10, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
-            $pdf->Cell(63, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
-            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->FullName)), "LTB", 0,"L");
+            $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
+            $pdf->Cell(58, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
+            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
             $pdf->Cell(22, $this->alto, substr(utf8_decode($Mov->MetodoPago),0,20), "LTB", 0,"L");
             $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
@@ -120,7 +119,7 @@ class CorteCajaController extends Controller
         $Cajeros = Venta::select(['vendedor_id'])
             ->distinct()
             ->get();
-        $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->FullName); });
+        $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->username).' - '.trim($v->vendedor->FullName); });
         $Cajeros = $Cajeros->sortBy('FullName')->pluck('FullName','vendedor_id');
         $metodo_pagos = Venta::$metodos_pago;
         $empresas     = Empresa::all()->sortBy('id')->pluck('ncomer','id');
