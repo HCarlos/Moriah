@@ -84,8 +84,8 @@ class VentaRealizadaController extends Controller
             $pdf->SetFont('Arial','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
-            $pdf->Cell(63, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
-            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->FullName)), "LTB", 0,"L");
+            $pdf->Cell(80, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
+            $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->vendedor->FullName)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
             $total += $Mov->total;
             $abonos = $Mov->Abonos;
@@ -100,7 +100,7 @@ class VentaRealizadaController extends Controller
         $pdf->setX(10);
         if ($Movs->count() > 0){
             $pdf->SetFont('Arial','B',7);
-            $pdf->Cell(117, $this->alto, 'TOTAL $ ', "LB", 0,"R");
+            $pdf->Cell(145, $this->alto, 'TOTAL $ ', "LB", 0,"R");
             $pdf->SetFont('AndaleMonoMTStdBold','',7);
             $pdf->Cell(17, $this->alto, number_format($total,2), "LRB", 0,"R");
             $pdf->Cell(17, $this->alto, number_format($abono,2), "LRB", 0,"R");
