@@ -98,11 +98,14 @@ class PanelControlOneRequest extends FormRequest
         $f1 = $F->fechaEspanol($this->fecha1);
         $f2 = $F->fechaEspanol($this->fecha2);
         $vendedor = 'none';
-        if ( !is_null($m) )
+        $empresa = 'none';
+        if ( !is_null($m) ){
             $vendedor = trim($m->vendedor->FullName);
-//        dd($Movs);
+            $empresa = trim($m->empresa->rs);
+
+        }
         $x = new CorteCajaController();
-        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs);
+        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa);
 
     }
 
@@ -145,11 +148,14 @@ class PanelControlOneRequest extends FormRequest
         $f1 = $F->fechaEspanol($this->fecha1);
         $f2 = $F->fechaEspanol($this->fecha2);
         $vendedor = 'none';
-        if ( !is_null($m) )
+        $empresa = 'none';
+        if ( !is_null($m) ){
             $vendedor = trim($m->vendedor->FullName);
+            $empresa = trim($m->empresa->rs);
+        }
 
         $x = new VentaRealizadaController();
-        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs);
+        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa);
 
     }
 

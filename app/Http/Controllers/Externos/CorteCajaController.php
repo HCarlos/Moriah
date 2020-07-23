@@ -20,6 +20,7 @@ class CorteCajaController extends Controller{
     protected $f1       = "";
     protected $f2       = "";
     protected $vendedor = "";
+    protected $empresa  = "";
     protected $F;
 
     public function __construct(){
@@ -36,7 +37,7 @@ class CorteCajaController extends Controller{
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode($this->empresa),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -74,11 +75,12 @@ class CorteCajaController extends Controller{
         $pdf->setX(10);
     }
 
-    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs)
+    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa)
     {
         $this->f1 = $f1;
         $this->f2 = $f2;
         $this->vendedor = $vendedor;
+        $this->empresa = $empresa;
         $this->timex = Carbon::now()->format('d-m-Y h:m:s a');
 
         $pdf->AliasNbPages();
