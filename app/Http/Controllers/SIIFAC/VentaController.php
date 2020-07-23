@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use PhpParser\Node\Expr\AssignOp\Concat;
 
@@ -33,6 +34,7 @@ class VentaController extends Controller
         if (is_null($fecha)){
             abort(500);
         }
+        Log::alert($fecha);
         $user = Auth::User();
         $F = (new FuncionesController);
         $f = $F->getFechaFromNumeric($fecha);
@@ -48,7 +50,7 @@ class VentaController extends Controller
             ->where('fecha','<=', $f2)
             ->sortBy('id');
         
-        dd($items);
+        // dd($items);
 
         $totalVenta = 0;
         foreach ($items as $i){
