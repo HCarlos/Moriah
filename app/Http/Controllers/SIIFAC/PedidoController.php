@@ -33,6 +33,7 @@ class PedidoController extends Controller
 
         $this->tableName = 'pedidos';
         $items = Pedido::query()
+            ->where('isactivo',true)
             ->orderByDesc('id')
             ->paginate();
         foreach($items as $item){

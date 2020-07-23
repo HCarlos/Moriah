@@ -104,7 +104,10 @@ class VentaController extends Controller
         $views  = 'venta_nueva_pedido_ajax';
         $user = Auth::User();
         $oView = 'catalogos.operaciones.';
-        $Pedidos = Pedido::all()->sortByDesc('FullDescriptionPedidoUser')->pluck('FullDescriptionPedidoUser', 'id');
+        $Pedidos = Pedido::all()
+                    ->where('isactivo',true)
+                    ->sortByDesc('id')
+                    ->pluck('FullDescriptionPedidoUser', 'id');
 //        dd($Pedidos);
         return view ($oView.$views,
             [

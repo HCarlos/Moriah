@@ -260,6 +260,12 @@ class Venta extends Model
             $Ven->ispagado = true;
             $Ven->isimp = true;
             $Ven->status_venta = 2;
+            if ( $Ven->pedido_id > 0 ){
+                $Ped = Pedido::find($Ven->pedido_id);
+                $Ped->isactivo = false;
+                $Ped->status_pedido = 2;
+                $Ped->save();
+            }
         }
         $Ven->save();
 

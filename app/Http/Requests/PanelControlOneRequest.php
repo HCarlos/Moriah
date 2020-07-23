@@ -134,6 +134,8 @@ class PanelControlOneRequest extends FormRequest
             })
             ->orderBy('fecha')
             ->get();
+        
+            // dd($Movs);
 
         $m = $Movs->first();
         $f1 = $F->fechaEspanol($this->fecha1);

@@ -58,8 +58,8 @@ class VentaRealizadaController extends Controller
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
         $pdf->Cell(10, $this->alto, 'TIPO', "LTB", 0,"L");
-        $pdf->Cell(63, $this->alto, 'CLIENTE', "LTB", 0,"L");
-        $pdf->Cell(19, $this->alto, 'VENDEDOR', "LTB", 0,"L");
+        $pdf->Cell(80, $this->alto, 'CLIENTE', "LTB", 0,"L");
+        $pdf->Cell(30, $this->alto, 'VENDEDOR', "LTB", 0,"L");
         $pdf->Cell(15, $this->alto, 'FECHA', "LTB", 0,"R");
         $pdf->Cell(17, $this->alto, 'IMPORTE', "LTB", 0,"R");
         $pdf->Cell(17, $this->alto, 'ABONO', "LTB", 0,"R");
