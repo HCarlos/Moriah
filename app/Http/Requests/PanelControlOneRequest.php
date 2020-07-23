@@ -72,7 +72,7 @@ class PanelControlOneRequest extends FormRequest
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
 
-        $Movs = Ingreso::select()
+        $Movs = Ingreso::query()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->where(function ($q) use($tipo_venta) {
@@ -117,7 +117,7 @@ class PanelControlOneRequest extends FormRequest
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
 
-        $Movs = Venta::select()
+        $Movs = Venta::query()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->where(function ($q) use($tipo_venta) {
