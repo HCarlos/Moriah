@@ -173,7 +173,7 @@ class User extends Authenticatable
         $nombre = $F->toMayus($data[6]);
 
         $arrEmail = explode(',',$data[9]);
-        $timestamp = now();
+        $timestamp = Carbon::now()->timestamp;
     
         $d['ap_paterno'] = $ap_paterno;
         $d['ap_materno']   = $ap_materno;

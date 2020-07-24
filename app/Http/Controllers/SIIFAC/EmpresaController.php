@@ -30,7 +30,7 @@ class EmpresaController extends Controller
         $this->tableName = 'empresas';
         $items = Empresa::select('id','rs','ncomer','rfc')
             ->orderBy('id')
-            ->paginate();
+            ->paginate(250);
 
         $items->appends(request(['search']))->fragment('table');
         $items->links();

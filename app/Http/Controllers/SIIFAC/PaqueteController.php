@@ -34,7 +34,7 @@ class PaqueteController extends Controller
         $this->tableName = 'paquetes';
         $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id','filename','root','grupos_platsource')
             ->orderBy('id','desc')
-            ->paginate();
+            ->paginate(250);
         $user = Auth::User();
         $items->appends(request(['search']))->fragment('table');
         $items->links();

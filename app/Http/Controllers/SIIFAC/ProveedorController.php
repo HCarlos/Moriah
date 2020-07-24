@@ -27,7 +27,7 @@ class ProveedorController extends Controller
         $this->tableName = 'proveedores';
         $items = Proveedor::select(['id','clave_proveedor', 'nombre_proveedor', 'contacto_proveedor','domicilio_fiscal_proveedor'])
             ->orderBy('id')
-            ->paginate();
+            ->paginate(250);
 
         $items->appends(request(['search']))->fragment('table');
         $items->links();

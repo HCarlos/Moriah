@@ -77,6 +77,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/update_almacen/{alma}','SIIFAC\AlmacenController@update')->name('almacenUpdate/');
     Route::get('/destroy_almacen/{id}', 'SIIFAC\AlmacenController@destroy')->name('almacenDestroy/');
 
+    // Proveedores
+    Route::get('/index_proveedor/','SIIFAC\ProveedorController@index')->name('proveedorIndex');
+    Route::get('/new_proveedor/{idItem}', 'SIIFAC\ProveedorController@new')->name('proveedorNew');
+    Route::get('/edit_proveedor/{idItem}', 'SIIFAC\ProveedorController@edit')->name('proveedorEdit');
+    Route::post('/store_proveedor','SIIFAC\ProveedorController@store')->name('proveedorStore/');
+    Route::put('/update_proveedor/{emp}','SIIFAC\ProveedorController@update')->name('proveedorUpdate/');
+    Route::get('/destroy_proveedor/{id}', 'SIIFAC\ProveedorController@destroy')->name('proveedorDestroy/');
+
     // Productos
     Route::get('/index_producto','SIIFAC\ProductoController@index')->name('productoIndex');
     Route::get('/new_producto/{idItem}', 'SIIFAC\ProductoController@new')->name('productoNew');

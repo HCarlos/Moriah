@@ -50,6 +50,13 @@
                     <b class="arrow"></b>
                 </li>
                 <li>
+                    <a href="{{ route('proveedorIndex') }}">
+                        <i class="menu-icon fa fa-book red"></i>
+                        Proveedores
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li>
                     <a href="{{ route('productoIndex') }}">
                         <i class="menu-icon fa fa-book red"></i>
                         Productos

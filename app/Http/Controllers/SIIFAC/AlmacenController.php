@@ -33,7 +33,7 @@ class AlmacenController extends Controller
         $items = Almacen::with('empresa')
             ->select('id','clave_almacen','descripcion','responsable','tipoinv','prefijo','empresa_id')
             ->orderBy('id','desc')
-            ->paginate();
+            ->paginate(250);
 
         $items->appends(request(['search']))->fragment('table');
         $items->links();

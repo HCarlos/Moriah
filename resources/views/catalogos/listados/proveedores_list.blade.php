@@ -18,7 +18,7 @@
                 <i class="fa fa-cog fa-spin"></i> Cargado datos...
             </div>
             <div class="dataTables_wrapper" role="grid">
-                <table id="tblCal" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
+                <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
                     <thead>
                     <tr role="row">
                         <th aria-label="id" style="width: 80px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>

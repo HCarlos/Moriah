@@ -35,7 +35,7 @@ class PedidoController extends Controller
         $items = Pedido::query()
             ->where('isactivo',true)
             ->orderByDesc('id')
-            ->paginate();
+            ->paginate(250);
         foreach($items as $item){
                 $item->url_pedido = $this->UrlBase.$item->id;
         }
