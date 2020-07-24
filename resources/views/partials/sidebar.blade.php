@@ -2,8 +2,15 @@
 
     <ul class="nav nav-list" id="menuPrincipal">
         <li>
+            <a href="{{ route('pedidoIndex') }}">
+                <i class="menu-icon fa fa-first-order"></i>
+                <span class="menu-text"> Pedidos </span>
+            </a>
+            <b class="arrow"></b>
+        </li>
+        <li>
             <a href="{{ route('ventasIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
-                <i class="menu-icon fa fa-tachometer"></i>
+                <i class="menu-icon fa fa-balance-scale"></i>
                 <span class="menu-text"> Ventas </span>
             </a>
             <b class="arrow"></b>
@@ -67,13 +74,6 @@
                     <a href="{{ route('paqueteIndex') }}">
                         <i class="menu-icon fa fa-cubes cafe"></i>
                         Paquetes
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="{{ route('pedidoIndex') }}">
-                        <i class="menu-icon fa fa-cubes purple"></i>
-                        Pedidos
                     </a>
                     <b class="arrow"></b>
                 </li>

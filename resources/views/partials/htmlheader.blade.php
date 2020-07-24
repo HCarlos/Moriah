@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('/css/ace-ie.css') }}" />
     {{--<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">--}}
     @yield('styles')
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/tecnointel.css') }}" />
     <link href="{{ asset('assets/css/sg-01.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my_style_sheet.css') }}" rel="stylesheet">
