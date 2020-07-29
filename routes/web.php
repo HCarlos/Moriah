@@ -245,10 +245,12 @@ Route::group(['middleware' => 'auth'], function () {
 //        return view('/home');
 //    });
 
-    // Panel de Control 1
+    // R E P O R T E S
     Route::get('show_panel_consulta_1','Externos\CorteCajaController@show_panel_consulta_1')->name('panelConsulta1');
     Route::post('create_corte_caja_1','Externos\CorteCajaController@create_corte_caja_1')->name('corteCaja1');
     Route::post('send_sms_one','Externos\TwilioSMSController@send_sms_one')->name('sendSMSOne');
+
+    Route::get('/imprimirListadoVentas/{f1}/{f2}/', 'Externos\VantasListadoController@imprimirListadoVentas')->name('imprimirListadoVentas/');
 
 
 });

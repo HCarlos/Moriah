@@ -18,16 +18,20 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use PhpParser\Node\Expr\AssignOp\Concat;
+use Illuminate\Support\Facades\Session;
 
 class VentaController extends Controller
 {
     protected $tableName = 'ventas';
     protected $redirectTo = '/home';
+    protected $FechaInicial = '';
+    protected $FechaFinal = '';
+
    protected $F;
     public function __construct(){
         $this->middleware('auth');
         $this->F = (new FuncionesController);
+
     }
 
     public function index($fecha)
@@ -42,7 +46,7 @@ class VentaController extends Controller
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 00:00:00';
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString().' 23:59:59';
 
-        // dd($f1.' => '.$f2.' | '.$user->id);
+        //dd($f1.' => '.$f2.' | '.$user->id);
 
         $arr = array(1,$user->id);
 
@@ -51,20 +55,28 @@ class VentaController extends Controller
             ->where('fecha','<=', $f2)
             ->sortBy('id');
         
-        // dd($items);
+
+            // dd($items);
 
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->total;
         }
 
+        Session::put('items', $items);
+        $this->FechaInicial = $f1;
+        $this->FechaFinal   = $f2;
+
         return view ('catalogos.operaciones.ventas',
             [
                 'tableName' => 'ventas',
                 'ventas' => $items,
+                'items' => $items,
                 'user' => $user,
                 'totalVentas' => number_format($totalVenta,2,'.',',') ,
                 'fecha' => $F->fechaEspanol($f),
+                'FechaInicial' => $this->FechaInicial,
+                'FechaFinal' => $this->FechaFinal,
             ]
         );
     }

@@ -61,6 +61,19 @@
                         </ul>
                     </div>
                 </div>
+                <div class="form-group  pull-right">
+                    <div class="col-md-1">
+                        <a id="btnPrintListado"
+                            href="{{ route('imprimirListadoVentas/',['f1'=>$FechaInicial,'f2'=>$FechaFinal]) }}" 
+                            class="btn btn-xs btn-cafe btnPrintListado"
+                            data-togle="tooltip" data-placement="top" title="Imprime listado actual"
+                            target="_blank"
+                            >
+                            <i class="fa fa-print default"></i>
+                        </a>
+                    </div>
+                </div>
+
             </form>
 
 
@@ -95,7 +108,7 @@
                                     <td>{{ $venta->paquete->FullDescription }}</td>
                                     <td>PAQUETE {{ $venta->TipoVenta }}</td>
                                 @elseif($venta->pedido_id > 0)
-                                    <td>{{ $venta->pedido_id }}</td>
+                                    <td>{{ $venta->pedido->FullDescription }}</td>
                                     <td>PEDIDO {{ $venta->TipoVenta }}</td>
                                 @else
                                     <td>{{ $venta->user->FullName }}</td>

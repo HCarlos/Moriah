@@ -3,6 +3,15 @@
     <script>
         jQuery(function($) {
             $(document).ready(function() {
+                
+                $(".btnPrintListado").hide();
+
+                var totalItems = {{ $items->count() }};
+                
+                if ( $(".btnPrintListado") && totalItems > 0){
+                    $(".btnPrintListado").show();
+                }
+
 
                 if ( $(".btnVentaPaquete") || $(".btnVentaPedido") || $(".btnVentaNormal") ){
                     $(".btnVentaPaquete, .btnVentaPedido, .btnVentaNormal").on("click", function (event) {
