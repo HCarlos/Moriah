@@ -98,8 +98,8 @@ class PedidoDetalleController extends Controller
 
         $prod = Producto::find($pd->producto_id);
         $ped = Pedido::find($pd->pedido_id);
-        $dets = PedidoDetalle::all()->where('pedido_id',$pd->pedido_id);
-        Pedido::UpdateImporteFromPedidoDetalle($dets);
+        // $dets = PedidoDetalle::all()->where('pedido_id',$pd->pedido_id);
+        Pedido::UpdateImporteFromPedidoDetalle($pd->pedido_id);
 
         $pd->productos()->detach($prod);
         $ped->productos()->detach($prod);

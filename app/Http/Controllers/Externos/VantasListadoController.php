@@ -73,7 +73,6 @@ class VantasListadoController extends Controller{
         $pdf->addFont('arialn');        
         $pdf->addFont('AndaleMonoMTStdBold');
 
-
         $pdf->AliasNbPages();
         $this->header($pdf);
         $pdf->SetFillColor(32,32,32);
@@ -94,7 +93,11 @@ class VantasListadoController extends Controller{
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
             $pdf->SetFont('AndaleMono','',7);
             $pdf->Cell(17, $this->alto, number_format($Mov->total,2), "LTB", 0,"R");
-            $pdf->Cell(108, $this->alto, utf8_decode(trim($Mov->observaciones)), "LRTB", 1,"C");
+            if ($Mov->pedido_id > 0)
+                $pdf->Cell(108, $this->alto, utf8_decode(trim($Mov->pedido->observaciones)), "LRTB", 1,"C");
+            else    
+                $pdf->Cell(108, $this->alto, '', "LRTB", 1,"C");
+  
             $total += $Mov->total;
         }
         $pdf->setX(10);
