@@ -93,10 +93,11 @@ class VantasListadoController extends Controller{
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
             $pdf->SetFont('AndaleMono','',7);
             $pdf->Cell(17, $this->alto, number_format($Mov->total,2), "LTB", 0,"R");
+            $pdf->SetFont('Arialn','',7);
             if ($Mov->pedido_id > 0)
-                $pdf->Cell(108, $this->alto, utf8_decode(trim($Mov->pedido->observaciones)), "LRTB", 1,"C");
+                $pdf->Cell(108, $this->alto, utf8_decode(trim($Mov->pedido->observaciones)), "LRTB", 1,"L");
             else    
-                $pdf->Cell(108, $this->alto, '', "LRTB", 1,"C");
+                $pdf->Cell(108, $this->alto, '', "LRTB", 1,"L");
   
             $total += $Mov->total;
         }
