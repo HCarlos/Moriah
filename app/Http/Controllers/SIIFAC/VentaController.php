@@ -233,6 +233,7 @@ class VentaController extends Controller
                     'paquete_id' => $venta->paquete_id,
                     'pedido_id' => $venta->pedido_id,
                     'totalVenta' => $venta->total,
+                    'abonoVenta' => $venta->total_pagado,
                     'Url' => '/add_venta_detalle_normal_ajax',
                 ]
             );

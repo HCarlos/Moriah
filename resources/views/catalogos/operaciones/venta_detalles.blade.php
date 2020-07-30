@@ -4,14 +4,10 @@
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
             @if( !$Venta->isPagado() )
-                {{--<a id="/form_venta_detalle_nueva_ajax/{{$venta_id}}" class="btn btn-purple btn-minier icon-only btnVentaDetalleNormal" title="Agregar Producto" data-toggle="modal" data-target="#myModal">--}}
-                    {{--<i class="fa fa-plus bigger-150"></i>--}}
-                {{--</a>--}}
                 <a id="/form_pagar_venta/{{$venta_id}}" class="btn btn-orange btn-minier icon-only btnPagarVenta" data-toggle="modal" data-target="#myModal" title="Pagar Venta" >
                     <i class="fa fa-money bigger-150"></i>
                 </a>
             @endif
-
             <a href="{{ route('printTicket/', ['venta_id' => $venta_id]) }}" class="btn btn-cafe btn-minier icon-only marginLeft2em " title="Imprimir" target="_blank">
                 <i class="fa fa-print bigger-150"></i>
             </a>
@@ -25,6 +21,13 @@
             <a class="btn btn-info btn-minier icon-only pull-right btnCloseVentaDetalleNormal" title="Cerrar Ventana">
                 <i class="fa fa-close bigger-150"></i>
             </a>
+
+            @if( !$Venta->isPagado() && $Venta->TotalAbonos <= 0 )
+                <a id="/form_anular_venta/{{$venta_id}}" class="btn btn-danger btn-minier icon-only btnAnularVenta marginRight2em  pull-right " data-toggle="modal" data-target="#myModal" title="Anular Venta" >
+                    <i class="fa fa-trash bigger-150"></i>
+                </a>
+            @endif
+
         </div>
 
         <div class="widget-box">
@@ -32,27 +35,28 @@
                 <div class="widget-main">
                     <form method="post"  id="frmSearchCode" class="form-inline">
                         @csrf
-                        <div class="form-group">
-                            <label class="sr-only" for="codigo">Código de barras</label>
-                            <div class="input-group">
+                        <div class="form-group" >
+{{--                            <label class="sr-only" for="codigo">Código de barras</label>--}}
+                            <div class="input-group col-xs-5">
                                 <div class="input-group-addon font_Roboto_500">Código</div>
                                 <input type="number" name="codigo" id="codigo" value="" class="form-control" required autofocus/>
-                                {{--<div class="input-group-addon">--}}
-                                {{--</div>--}}
                                 <input type="hidden" name="venta_id" value="{{$venta_id}}" >
-                                <input type="hidden" name="cantidad" value="1" >
                             </div>
-                        </div>
-                        <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
-                        <div class="form-group">
-                            <span id="titulo_catalogo" class="bigger-140 marginLeft1em ">
-                                <strong class="orange2 font_PT_Sans_Narrow">VENTA <b class="purple font_Roboto_400" >{{$venta_id}}</b></strong>
-                            </span>
+                            <div class="input-group col-xs-3">
+                                <div class="input-group-addon font_Roboto_500">Cant</div>
+                                <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="9999999" class="form-control " required/>
+                            </div>
+                            <div class="input-group col-xs-1">
+                                <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
+                            </div>
                         </div>
                         <h4 class="btn btn-inverse btn-sm pull-right btnShowProperties" id="/show_prop_venta/{{$venta_id}}" data-toggle="modal" data-target="#myModal">
                             <i class="glyphicon glyphicon-shopping-cart green3"></i>
                             <strong class="orange2 font_PT_Sans_Narrow"> DETALLES DE LA VENTA</strong>
                         </h4>
+                        <span id="titulo_catalogo" class="bigger-140 pull-right marginRight1em">
+                            <strong class="orange2 font_PT_Sans_Narrow">VENTA <b class="purple font_Roboto_400" >{{$venta_id}}</b></strong>
+                        </span>
                     </form>
                 </div>
             </div>
@@ -63,7 +67,7 @@
             </div>
             <div class="dataTables_wrapper" role="grid">
                 @if ($venta)
-                    <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
+                    <table id="{{ $tableName }}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
                         <thead>
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
@@ -104,14 +108,24 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7" class="text-right">
+                                <td colspan="5" class="text-right">
                                     <h3 class="smaller green font_Roboto_Mono_400">
                                         Total $
                                     </h3>
                                 </td>
                                 <td class="text-right" id="totalVenta">
                                     <h3 class=" smaller orange font_Roboto_Mono_400">
-                                    {{$totalVenta}}
+                                        {{$totalVenta}}
+                                    </h3>
+                                </td>
+                                <td class="text-right">
+                                    <h3 class="smaller green font_Roboto_Mono_400">
+                                        Abonos $
+                                    </h3>
+                                </td>
+                                <td class="text-right" id="totalVenta">
+                                    <h3 class=" smaller orange font_Roboto_Mono_400">
+                                    {{$abonoVenta}}
                                     </h3>
                                 </td>
                                 <td></td>
