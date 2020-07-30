@@ -54,9 +54,7 @@ class VantasListadoController extends Controller{
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
         $pdf->Cell(55, $this->alto, 'CLIENTE', "LTB", 0,"L");
         $pdf->Cell(55, $this->alto, 'PAQUETE', "LTB", 0,"L");
-        $pdf->Cell(15, $this->alto, 'FECHA', "LTB", 0,"R");
-        $pdf->Cell(17, $this->alto, 'IMPORTE', "LTB", 0,"R");
-        $pdf->Cell(108, $this->alto, 'OBSERVACIONES', "LRTB", 1,"C");
+        $pdf->Cell(140, $this->alto, 'OBSERVACIONES', "LRTB", 1,"C");
         $pdf->setX(10);
     }
 
@@ -90,21 +88,18 @@ class VantasListadoController extends Controller{
             else 
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->TipoVenta)), "LTB", 0,"L");
 
-            $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
-            $pdf->SetFont('AndaleMono','',7);
-            $pdf->Cell(17, $this->alto, number_format($Mov->total,2), "LTB", 0,"R");
             $pdf->SetFont('Arialn','',7);
             if ($Mov->pedido_id > 0)
-                $pdf->Cell(108, $this->alto, utf8_decode(trim($Mov->pedido->observaciones)), "LRTB", 1,"L");
+                $pdf->Cell(140, $this->alto, utf8_decode(trim($Mov->pedido->observaciones)), "LRTB", 1,"L");
             else    
-                $pdf->Cell(108, $this->alto, '', "LRTB", 1,"L");
+                $pdf->Cell(140, $this->alto, '', "LRTB", 1,"L");
   
             $total += $Mov->total;
         }
         $pdf->setX(10);
         if ($items->count() > 0){
             $pdf->SetFont('Arial','B',7);
-            $pdf->Cell(135, $this->alto, 'TOTAL $ ', "LB", 0,"R");
+            $pdf->Cell(103, $this->alto, 'TOTAL $ ', "LB", 0,"R");
             $pdf->SetFont('AndaleMonoMTStdBold','',7);
             $pdf->Cell(17, $this->alto, number_format($total,2), "LRB", 1,"R");
         }else{
