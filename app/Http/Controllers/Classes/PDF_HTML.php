@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Classes;
 use FPDF;
 
 class PDF_HTML extends FPDF

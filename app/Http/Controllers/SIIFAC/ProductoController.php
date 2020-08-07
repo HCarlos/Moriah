@@ -12,9 +12,10 @@ use App\Models\SIIFAC\Producto;
 use App\Models\SIIFAC\Proveedor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request  as Req;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
@@ -22,6 +23,7 @@ use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\PedidoDetalle;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 use Picqer\Barcode\Exceptions\BarcodeException;
+use Symfony\Component\Console\Input\Input;
 
 class ProductoController extends Controller
 {
@@ -37,8 +39,8 @@ class ProductoController extends Controller
 
     public function index($npage = 1, $tpaginas = 0)
     {
-        $page = Input::get('p');
-        if ( $page ) $npage = $page;
+        $page = Req::only('p');
+        if ( $page ) $npage = $page; 
 
         $this->tableName = 'productos';
         $items = Producto::select('id','clave','codigo','descripcion','pv','exist','empresa_id','almacen_id','familia_producto_id','medida_id','root','filename')

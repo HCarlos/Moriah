@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -21,9 +21,9 @@ use ReflectionMethod;
 use Throwable;
 
 /**
- * A TestSuite is a composite of Tests. It runs a collection of test cases.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class TestSuite implements IteratorAggregate, SelfDescribing, Test
+class TestSuite implements Test, SelfDescribing, IteratorAggregate
 {
     /**
      * Enable or disable the backup and restoration of the $GLOBALS array.
@@ -61,7 +61,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
     /**
      * The tests in the test suite.
      *
-     * @var Test[]
+     * @var TestCase[]
      */
     protected $tests = [];
 
@@ -108,6 +108,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
      * @param string $name
      *
      * @throws Exception
+     * @throws \ReflectionException
      */
     public static function createTest(ReflectionClass $theClass, $name): Test
     {
@@ -302,7 +303,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
             return true;
         }
 
-        $annotations = \PHPUnit\Util\Test::parseAnnotations($method->getDocComment());
+        $annotations = \PHPUnit\Util\Test::parseAnnotations((string) $method->getDocComment());
 
         return isset($annotations['test']);
     }
@@ -327,6 +328,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
      * @param string $name
      *
      * @throws Exception
+     * @throws \ReflectionException
      */
     public function __construct($theClass = '', $name = '')
     {
@@ -358,7 +360,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
         }
 
         if (!$theClass->isSubclassOf(TestCase::class)) {
-            $this->setName($theClass);
+            $this->setName((string) $theClass);
 
             return;
         }
@@ -439,6 +441,8 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
      * Adds a test to the suite.
      *
      * @param array $groups
+     *
+     * @throws \ReflectionException
      */
     public function addTest(Test $test, $groups = []): void
     {
@@ -474,6 +478,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
      * Adds the tests from the given class to the suite.
      *
      * @throws Exception
+     * @throws \ReflectionException
      */
     public function addTestSuite($testClass): void
     {
@@ -524,6 +529,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
      * leaving the current test run untouched.
      *
      * @throws Exception
+     * @throws \ReflectionException
      */
     public function addTestFile(string $filename): void
     {
@@ -603,6 +609,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
      * @param array|Iterator $fileNames
      *
      * @throws Exception
+     * @throws \ReflectionException
      */
     public function addTestFiles($fileNames): void
     {
@@ -673,7 +680,15 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
     /**
      * Runs the tests and collects their result in a TestResult.
      *
+     * @throws \PHPUnit\Framework\CodeCoverageException
+     * @throws \ReflectionException
+     * @throws \SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException
+     * @throws \SebastianBergmann\CodeCoverage\InvalidArgumentException
+     * @throws \SebastianBergmann\CodeCoverage\MissingCoversAnnotationException
+     * @throws \SebastianBergmann\CodeCoverage\RuntimeException
+     * @throws \SebastianBergmann\CodeCoverage\UnintentionallyCoveredCodeException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws Warning
      */
     public function run(TestResult $result = null): TestResult
     {
@@ -750,7 +765,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
             foreach ($hookMethods['afterClass'] as $afterClassMethod) {
                 if ($this->testCase === true && \class_exists($this->name, false) && \method_exists(
                     $this->name,
-                    $afterClassMethod
+                        $afterClassMethod
                 )) {
                     \call_user_func([$this->name, $afterClassMethod]);
                 }
@@ -758,13 +773,11 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
         } catch (Throwable $t) {
             $message = "Exception in {$this->name}::$afterClassMethod" . \PHP_EOL . $t->getMessage();
             $error   = new SyntheticError($message, 0, $t->getFile(), $t->getLine(), $t->getTrace());
+            $test    = new \Failure($afterClassMethod);
 
-            $placeholderTest = clone $test;
-            $placeholderTest->setName($afterClassMethod);
-
-            $result->startTest($placeholderTest);
-            $result->addFailure($placeholderTest, $error, 0);
-            $result->endTest($placeholderTest, 0);
+            $result->startTest($test);
+            $result->addFailure($test, $error, 0);
+            $result->endTest($test, 0);
         }
 
         $this->tearDown();
@@ -800,8 +813,6 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
 
     /**
      * Returns the tests as an enumeration.
-     *
-     * @return Test[]
      */
     public function tests(): array
     {
@@ -810,8 +821,6 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
 
     /**
      * Set tests of the test suite
-     *
-     * @param Test[] $tests
      */
     public function setTests(array $tests): void
     {
@@ -895,6 +904,7 @@ class TestSuite implements IteratorAggregate, SelfDescribing, Test
 
     /**
      * @throws Exception
+     * @throws \ReflectionException
      */
     protected function addTestMethod(ReflectionClass $class, ReflectionMethod $method): void
     {

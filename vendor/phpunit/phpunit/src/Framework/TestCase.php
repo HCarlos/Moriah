@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -23,6 +23,7 @@ use PHPUnit\Framework\MockObject\Matcher\InvokedAtMostCount as InvokedAtMostCoun
 use PHPUnit\Framework\MockObject\Matcher\InvokedCount as InvokedCountMatcher;
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\RuntimeException;
 use PHPUnit\Framework\MockObject\Stub\ConsecutiveCalls as ConsecutiveCallsStub;
 use PHPUnit\Framework\MockObject\Stub\Exception as ExceptionStub;
 use PHPUnit\Framework\MockObject\Stub\ReturnArgument as ReturnArgumentStub;
@@ -53,7 +54,7 @@ use SebastianBergmann\ObjectEnumerator\Enumerator;
 use Text_Template;
 use Throwable;
 
-abstract class TestCase extends Assert implements SelfDescribing, Test
+abstract class TestCase extends Assert implements Test, SelfDescribing
 {
     private const LOCALE_CATEGORIES = [\LC_ALL, \LC_COLLATE, \LC_CTYPE, \LC_MONETARY, \LC_NUMERIC, \LC_TIME];
 
@@ -118,12 +119,12 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
     private $expectedException;
 
     /**
-     * @var null|string
+     * @var string
      */
     private $expectedExceptionMessage;
 
     /**
-     * @var null|string
+     * @var string
      */
     private $expectedExceptionMessageRegExp;
 
@@ -390,28 +391,28 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
     /**
      * This method is called before the first test of this test class is run.
      */
-    public static function setUpBeforeClass()/* The :void return type declaration that should be here would cause a BC issue */
+    public static function setUpBeforeClass(): void
     {
     }
 
     /**
      * This method is called after the last test of this test class is run.
      */
-    public static function tearDownAfterClass()/* The :void return type declaration that should be here would cause a BC issue */
+    public static function tearDownAfterClass(): void
     {
     }
 
     /**
      * This method is called before each test.
      */
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
     }
 
     /**
      * This method is called after each test.
      */
-    protected function tearDown()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function tearDown(): void
     {
     }
 
@@ -520,7 +521,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
             return $this->output;
         }
 
-        return \ob_get_contents();
+        return (string) \ob_get_contents();
     }
 
     public function hasOutput(): bool
@@ -569,12 +570,12 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         return $this->expectedExceptionCode;
     }
 
-    public function getExpectedExceptionMessage(): ?string
+    public function getExpectedExceptionMessage(): string
     {
         return $this->expectedExceptionMessage;
     }
 
-    public function getExpectedExceptionMessageRegExp(): ?string
+    public function getExpectedExceptionMessageRegExp(): string
     {
         return $this->expectedExceptionMessageRegExp;
     }
@@ -614,7 +615,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         $this->expectExceptionCode($exception->getCode());
     }
 
-    public function expectNotToPerformAssertions()
+    public function expectNotToPerformAssertions(): void
     {
         $this->doesNotPerformAssertions = true;
     }
@@ -916,7 +917,6 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         $this->unregisterCustomComparators();
         $this->cleanupIniSettings();
         $this->cleanupLocaleSettings();
-        \libxml_clear_errors();
 
         // Perform assertion on output.
         if (!isset($e)) {
@@ -1242,7 +1242,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Exception
      */
-    protected function iniSet(string $varName, $newValue): void
+    protected function iniSet(string $varName, string $newValue): void
     {
         $currentValue = \ini_set($varName, $newValue);
 
@@ -1303,8 +1303,9 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @param string|string[] $originalClassName
      *
-     * @throws Exception
-     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
+     * @throws \PHPUnit\Framework\Exception
+     * @throws RuntimeException
      */
     protected function createMock($originalClassName): MockObject
     {
@@ -1321,8 +1322,9 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @param string|string[] $originalClassName
      *
-     * @throws Exception
-     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
+     * @throws \PHPUnit\Framework\Exception
+     * @throws RuntimeException
      */
     protected function createConfiguredMock($originalClassName, array $configuration): MockObject
     {
@@ -1341,8 +1343,9 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      * @param string|string[] $originalClassName
      * @param string[]        $methods
      *
-     * @throws Exception
-     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
+     * @throws \PHPUnit\Framework\Exception
+     * @throws RuntimeException
      */
     protected function createPartialMock($originalClassName, array $methods): MockObject
     {
@@ -1358,8 +1361,9 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
     /**
      * Returns a test proxy for the specified class.
      *
-     * @throws Exception
-     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
+     * @throws \PHPUnit\Framework\Exception
+     * @throws RuntimeException
      */
     protected function createTestProxy(string $originalClassName, array $constructorArguments = []): MockObject
     {
@@ -1382,7 +1386,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Exception
      * @throws ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
      */
     protected function getMockClass($originalClassName, $methods = [], array $arguments = [], $mockClassName = '', $callOriginalConstructor = false, $callOriginalClone = true, $callAutoload = true, $cloneArguments = false): string
     {
@@ -1415,7 +1419,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Exception
      * @throws ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
      */
     protected function getMockForAbstractClass($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false): MockObject
     {
@@ -1446,7 +1450,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Exception
      * @throws ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
      */
     protected function getMockFromWsdl($wsdlFile, $originalClassName = '', $mockClassName = '', array $methods = [], $callOriginalConstructor = true, array $options = []): MockObject
     {
@@ -1496,7 +1500,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Exception
      * @throws ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
      */
     protected function getMockForTrait($traitName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false): MockObject
     {
@@ -1527,7 +1531,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Exception
      * @throws ReflectionException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
      *
      * @return object
      */
@@ -1568,7 +1572,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * This method is called between setUp() and test.
      */
-    protected function assertPreConditions()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function assertPreConditions(): void
     {
     }
 
@@ -1577,7 +1581,7 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * This method is called between test and tearDown().
      */
-    protected function assertPostConditions()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function assertPostConditions(): void
     {
     }
 
@@ -1586,13 +1590,17 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
      *
      * @throws Throwable
      */
-    protected function onNotSuccessfulTest(Throwable $t)/* The :void return type declaration that should be here would cause a BC issue */
+    protected function onNotSuccessfulTest(Throwable $t): void
     {
         throw $t;
     }
 
     private function setExpectedExceptionFromAnnotation(): void
     {
+        if ($this->name === null) {
+            return;
+        }
+
         try {
             $expectedException = \PHPUnit\Util\Test::getExpectedException(
                 \get_class($this),
@@ -1600,6 +1608,8 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
             );
 
             if ($expectedException !== false) {
+                $this->addWarning('The @expectedException, @expectedExceptionCode, @expectedExceptionMessage, and @expectedExceptionMessageRegExp annotations are deprecated. They will be removed in PHPUnit 9. Refactor your test to use expectException(), expectExceptionCode(), expectExceptionMessage(), or expectExceptionMessageRegExp() instead.');
+
                 $this->expectException($expectedException['class']);
 
                 if ($expectedException['code'] !== null) {
@@ -1631,6 +1641,11 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         }
     }
 
+    /**
+     * @throws Warning
+     * @throws SkippedTestError
+     * @throws SyntheticSkippedError
+     */
     private function checkRequirements(): void
     {
         if (!$this->name || !\method_exists($this, $this->name)) {
@@ -1647,6 +1662,9 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         }
     }
 
+    /**
+     * @throws Throwable
+     */
     private function verifyMockObjects(): void
     {
         foreach ($this->mockObjects as $mockObject) {
@@ -1662,19 +1680,29 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         if ($this->prophet !== null) {
             try {
                 $this->prophet->checkPredictions();
-            } finally {
-                foreach ($this->prophet->getProphecies() as $objectProphecy) {
-                    foreach ($objectProphecy->getMethodProphecies() as $methodProphecies) {
-                        /** @var MethodProphecy[] $methodProphecies */
-                        foreach ($methodProphecies as $methodProphecy) {
-                            $this->numAssertions += \count($methodProphecy->getCheckedPredictions());
-                        }
+            } catch (Throwable $t) {
+                /* Intentionally left empty */
+            }
+
+            foreach ($this->prophet->getProphecies() as $objectProphecy) {
+                foreach ($objectProphecy->getMethodProphecies() as $methodProphecies) {
+                    foreach ($methodProphecies as $methodProphecy) {
+                        \assert($methodProphecy instanceof MethodProphecy);
+
+                        $this->numAssertions += \count($methodProphecy->getCheckedPredictions());
                     }
                 }
+            }
+
+            if (isset($t)) {
+                throw $t;
             }
         }
     }
 
+    /**
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     private function handleDependencies(): bool
     {
         if (!empty($this->dependencies) && !$this->inIsolation) {
@@ -1718,11 +1746,22 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
                 }
 
                 if (!isset($passedKeys[$dependency])) {
-                    if (!\is_callable($dependency, false, $callableName) || $dependency !== $callableName) {
-                        $this->markWarningForUncallableDependency($dependency);
-                    } else {
-                        $this->markSkippedForMissingDependecy($dependency);
-                    }
+                    $this->status = BaseTestRunner::STATUS_SKIPPED;
+
+                    $this->result->startTest($this);
+
+                    $this->result->addError(
+                        $this,
+                        new SkippedTestError(
+                            \sprintf(
+                                'This test depends on "%s" to pass.',
+                                $dependency
+                            )
+                        ),
+                        0
+                    );
+
+                    $this->result->endTest($this, 0);
 
                     return false;
                 }
@@ -1759,40 +1798,6 @@ abstract class TestCase extends Assert implements SelfDescribing, Test
         }
 
         return true;
-    }
-
-    private function markSkippedForMissingDependecy(string $dependency): void
-    {
-        $this->status = BaseTestRunner::STATUS_SKIPPED;
-        $this->result->startTest($this);
-        $this->result->addError(
-            $this,
-            new SkippedTestError(
-                \sprintf(
-                    'This test depends on "%s" to pass.',
-                    $dependency
-                )
-            ),
-            0
-        );
-        $this->result->endTest($this, 0);
-    }
-
-    private function markWarningForUncallableDependency(string $dependency): void
-    {
-        $this->status = BaseTestRunner::STATUS_WARNING;
-        $this->result->startTest($this);
-        $this->result->addWarning(
-            $this,
-            new Warning(
-                \sprintf(
-                    'This test depends on "%s" which does not exist.',
-                    $dependency
-                )
-            ),
-            0
-        );
-        $this->result->endTest($this, 0);
     }
 
     /**

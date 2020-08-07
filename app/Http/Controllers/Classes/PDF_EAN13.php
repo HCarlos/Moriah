@@ -6,7 +6,7 @@
  * Time: 08:37 PM
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Classes;
 use FPDF;
 
 

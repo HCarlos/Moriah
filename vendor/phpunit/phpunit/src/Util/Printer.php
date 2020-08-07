@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,7 +12,7 @@ namespace PHPUnit\Util;
 use PHPUnit\Framework\Exception;
 
 /**
- * Utility class that can print to STDOUT or write to a file.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 class Printer
 {
@@ -36,39 +36,35 @@ class Printer
     /**
      * Constructor.
      *
-     * @param null|mixed $out
+     * @param null|resource|string $out
      *
      * @throws Exception
      */
     public function __construct($out = null)
     {
-        if ($out === null) {
-            return;
-        }
+        if ($out !== null) {
+            if (\is_string($out)) {
+                if (\strpos($out, 'socket://') === 0) {
+                    $out = \explode(':', \str_replace('socket://', '', $out));
 
-        if (\is_string($out) === false) {
-            $this->out = $out;
+                    if (\count($out) !== 2) {
+                        throw new Exception;
+                    }
 
-            return;
-        }
+                    $this->out = \fsockopen($out[0], $out[1]);
+                } else {
+                    if (\strpos($out, 'php://') === false && !Filesystem::createDirectory(\dirname($out))) {
+                        throw new Exception(\sprintf('Directory "%s" was not created', \dirname($out)));
+                    }
 
-        if (\strpos($out, 'socket://') === 0) {
-            $out = \explode(':', \str_replace('socket://', '', $out));
+                    $this->out = \fopen($out, 'wt');
+                }
 
-            if (\count($out) !== 2) {
-                throw new Exception;
+                $this->outTarget = $out;
+            } else {
+                $this->out = $out;
             }
-
-            $this->out = \fsockopen($out[0], $out[1]);
-        } else {
-            if (\strpos($out, 'php://') === false && !Filesystem::createDirectory(\dirname($out))) {
-                throw new Exception(\sprintf('Directory "%s" was not created', \dirname($out)));
-            }
-
-            $this->out = \fopen($out, 'wt');
         }
-
-        $this->outTarget = $out;
     }
 
     /**

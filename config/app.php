@@ -169,22 +169,25 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Collective\Remote\RemoteServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
+//        Collective\Remote\RemoteServiceProvider::class,
+//        Collective\Html\HtmlServiceProvider::class,
 //        yajra\Datatables\DatatablesServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
-        Geocoder\Laravel\Providers\GeocoderService::class,
+
+//        Geocoder\Laravel\Providers\GeocoderService::class,
+
 //        Barryvdh\Debugbar\ServiceProvider::class,
 //        Styde\Html\HtmlServiceProvider::class,
-        Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
-//        Codedge\Fpdf\FpdfServiceProvider::class,
+
+//        Acacha\AceTemplateLaravel\Providers\AceTemplateLaravelServiceProvider::class,
+
 //        Anouar\Fpdf\FpdfServiceProvider::class,
 
 //        Silber\Bouncer\BouncerServiceProvider::class,
 
         //        Maatwebsite\Excel\ExcelServiceProvider::class,
 
-        Barryvdh\DomPDF\ServiceProvider::class,
+//        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 

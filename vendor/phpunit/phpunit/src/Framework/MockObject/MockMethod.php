@@ -14,6 +14,9 @@ use ReflectionException;
 use ReflectionMethod;
 use Text_Template;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
+ */
 final class MockMethod
 {
     /**
@@ -81,6 +84,9 @@ final class MockMethod
      */
     private $allowsReturnNull;
 
+    /**
+     * @throws RuntimeException
+     */
     public static function fromReflection(ReflectionMethod $method, bool $callOriginalMethod, bool $cloneArguments): self
     {
         if ($method->isPrivate()) {
@@ -102,7 +108,7 @@ final class MockMethod
         }
 
         if ($method->hasReturnType()) {
-            $returnType = $method->getReturnType()->getName();
+            $returnType = (string) $method->getReturnType();
         } else {
             $returnType = '';
         }
@@ -175,7 +181,6 @@ final class MockMethod
     /**
      * @throws \ReflectionException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
-     * @throws \InvalidArgumentException
      */
     public function generateCode(): string
     {
@@ -301,8 +306,8 @@ final class MockMethod
                     $nullable = '?';
                 }
 
-                if ($parameter->hasType() && $parameter->getType()->getName() !== 'self') {
-                    $typeDeclaration = $parameter->getType()->getName() . ' ';
+                if ($parameter->hasType() && (string) $parameter->getType() !== 'self') {
+                    $typeDeclaration = $parameter->getType() . ' ';
                 } else {
                     try {
                         $class = $parameter->getClass();
@@ -326,14 +331,13 @@ final class MockMethod
 
                 if (!$parameter->isVariadic()) {
                     if ($parameter->isDefaultValueAvailable()) {
-                        try {
+                        $value = $parameter->getDefaultValueConstantName();
+
+                        if ($value === null) {
                             $value = \var_export($parameter->getDefaultValue(), true);
-                        } catch (\ReflectionException $e) {
-                            throw new RuntimeException(
-                                $e->getMessage(),
-                                (int) $e->getCode(),
-                                $e
-                            );
+                        } elseif (!\defined($value)) {
+                            $rootValue = \preg_replace('/^.*\\\\/', '', $value);
+                            $value     = \defined($rootValue) ? $rootValue : $value;
                         }
 
                         $default = ' = ' . $value;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 class JsonTest extends TestCase
 {
     /**
+     * @testdox Canonicalize $actual
      * @dataProvider canonicalizeProvider
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -40,6 +41,7 @@ class JsonTest extends TestCase
     }
 
     /**
+     * @testdox Prettify $actual to $expected
      * @dataProvider prettifyProvider
      *
      * @throws \PHPUnit\Framework\Exception

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -16,7 +16,7 @@ use ReflectionObject;
 use SebastianBergmann\Exporter\Exporter;
 
 /**
- * Represents a static invocation.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 class StaticInvocation implements Invocation, SelfDescribing
 {
@@ -69,11 +69,6 @@ class StaticInvocation implements Invocation, SelfDescribing
      * @var bool
      */
     private $isReturnTypeNullable = false;
-
-    /**
-     * @var bool
-     */
-    private $proxiedCall = false;
 
     /**
      * @param string $className
@@ -143,7 +138,7 @@ class StaticInvocation implements Invocation, SelfDescribing
      */
     public function generateReturnValue()
     {
-        if ($this->isReturnTypeNullable || $this->proxiedCall) {
+        if ($this->isReturnTypeNullable) {
             return;
         }
 
@@ -189,11 +184,6 @@ class StaticInvocation implements Invocation, SelfDescribing
 
                 return $generator->getMock($this->returnType, [], [], '', false);
         }
-    }
-
-    public function setProxiedCall(): void
-    {
-        $this->proxiedCall = true;
     }
 
     public function toString(): string

@@ -1,10 +1,10 @@
 --TEST--
 \PHPUnit\Framework\MockObject\Generator::generate('Foo', [], 'MockFoo', true, true)
 --FILE--
-<?php
+<?php declare(strict_types=1);
 class Foo
 {
-    public function bar(int $baz = PHP_INT_MAX)
+    public function bar(int $baz = PHP_INT_MIN)
     {
     }
 }
@@ -23,7 +23,7 @@ $mock = $generator->generate(
 
 print $mock['code'];
 ?>
---EXPECTF--
+--EXPECT--
 class MockFoo extends Foo implements PHPUnit\Framework\MockObject\MockObject
 {
     private $__phpunit_invocationMocker;
@@ -36,7 +36,7 @@ class MockFoo extends Foo implements PHPUnit\Framework\MockObject\MockObject
         $this->__phpunit_invocationMocker = clone $this->__phpunit_getInvocationMocker();
     }
 
-    public function bar(int $baz = %d)
+    public function bar(int $baz = PHP_INT_MIN)
     {
         $__phpunit_arguments = [$baz];
         $__phpunit_count     = func_num_args();

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -47,6 +47,7 @@ class ResultCacheExtensionTest extends TestCase
     }
 
     /**
+     * @testdox Clean up test name $_dataName
      * @dataProvider longTestNamesDataprovider
      */
     public function testStripsDataproviderParametersFromTestName(string $testName, string $expectedTestName): void

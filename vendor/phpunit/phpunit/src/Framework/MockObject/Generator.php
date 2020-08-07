@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -22,9 +22,9 @@ use Text_Template;
 use Traversable;
 
 /**
- * Mock Object Code Generator
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class Generator
+final class Generator
 {
     /**
      * @var array
@@ -138,7 +138,7 @@ class Generator
 
         if (null !== $methods) {
             foreach ($methods as $method) {
-                if (!\preg_match('~[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*~', $method)) {
+                if (!\preg_match('~[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*~', (string) $method)) {
                     throw new RuntimeException(
                         \sprintf(
                             'Cannot stub or mock method with invalid name "%s"',
@@ -374,14 +374,7 @@ class Generator
             ]
         );
 
-        return $this->getObject(
-            $classTemplate->render(),
-            $className['className'],
-            '',
-            $callOriginalConstructor,
-            $callAutoload,
-            $arguments
-        );
+        return $this->getObject($classTemplate->render(), $className['className']);
     }
 
     /**
@@ -465,16 +458,18 @@ class Generator
         $methodsBuffer  = '';
 
         foreach ($_methods as $method) {
-            \preg_match_all('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\(/', $method, $matches, \PREG_OFFSET_CAPTURE);
-            $lastFunction = \array_pop($matches[0]);
-            $nameStart    = $lastFunction[1];
-            $nameEnd      = $nameStart + \strlen($lastFunction[0]) - 1;
-            $name         = \str_replace('(', '', $lastFunction[0]);
+            $nameStart = \strpos($method, ' ') + 1;
+            $nameEnd   = \strpos($method, '(');
+            $name      = \substr($method, $nameStart, $nameEnd - $nameStart);
 
             if (empty($methods) || \in_array($name, $methods, true)) {
-                $args = \explode(
+                $args    = \explode(
                     ',',
-                    \str_replace(')', '', \substr($method, $nameEnd + 1))
+                    \substr(
+                        $method,
+                        $nameEnd + 1,
+                        \strpos($method, ')') - $nameEnd - 1
+                    )
                 );
 
                 foreach (\range(0, \count($args) - 1) as $i) {
@@ -545,6 +540,7 @@ class Generator
 
     /**
      * @throws \ReflectionException
+     * @throws RuntimeException
      *
      * @return MockMethod[]
      */
@@ -557,27 +553,6 @@ class Generator
             if (($method->isPublic() || $method->isAbstract()) && $this->canMockMethod($method)) {
                 $methods[] = MockMethod::fromReflection($method, $callOriginalMethods, $cloneArguments);
             }
-        }
-
-        return $methods;
-    }
-
-    /**
-     * @throws \ReflectionException
-     *
-     * @return \ReflectionMethod[]
-     */
-    private function userDefinedInterfaceMethods(string $interfaceName): array
-    {
-        $interface = new ReflectionClass($interfaceName);
-        $methods   = [];
-
-        foreach ($interface->getMethods() as $method) {
-            if (!$method->isUserDefined()) {
-                continue;
-            }
-
-            $methods[] = $method;
         }
 
         return $methods;
@@ -602,7 +577,9 @@ class Generator
     {
         $this->evalClass($code, $className);
 
-        if ($callOriginalConstructor) {
+        if ($callOriginalConstructor &&
+            \is_string($type) &&
+            !\interface_exists($type, $callAutoload)) {
             if (\count($arguments) === 0) {
                 $object = new $className;
             } else {
@@ -658,7 +635,6 @@ class Generator
      * @param bool         $cloneArguments
      * @param bool         $callOriginalMethods
      *
-     * @throws \InvalidArgumentException
      * @throws \ReflectionException
      * @throws RuntimeException
      *
@@ -754,49 +730,16 @@ class Generator
 
             // @see https://github.com/sebastianbergmann/phpunit/issues/2995
             if ($isInterface && $class->implementsInterface(\Throwable::class)) {
-                $actualClassName        = \Exception::class;
                 $additionalInterfaces[] = $class->getName();
                 $isInterface            = false;
 
-                try {
-                    $class = new \ReflectionClass($actualClassName);
-                } catch (\ReflectionException $e) {
-                    throw new RuntimeException(
-                        $e->getMessage(),
-                        (int) $e->getCode(),
-                        $e
-                    );
-                }
-
-                foreach ($this->userDefinedInterfaceMethods($mockClassName['fullClassName']) as $method) {
-                    $methodName = $method->getName();
-
-                    if ($class->hasMethod($methodName)) {
-                        try {
-                            $classMethod = $class->getMethod($methodName);
-                        } catch (\ReflectionException $e) {
-                            throw new RuntimeException(
-                                $e->getMessage(),
-                                (int) $e->getCode(),
-                                $e
-                            );
-                        }
-
-                        if (!$this->canMockMethod($classMethod)) {
-                            continue;
-                        }
-                    }
-
-                    $mockMethods->addMethods(
-                        MockMethod::fromReflection($method, $callOriginalMethods, $cloneArguments)
-                    );
-                }
-
                 $mockClassName = $this->generateClassName(
-                    $actualClassName,
-                    $mockClassName['className'],
+                    \Exception::class,
+                    '',
                     'Mock_'
                 );
+
+                $class = new ReflectionClass($mockClassName['fullClassName']);
             }
 
             // https://github.com/sebastianbergmann/phpunit-mock-objects/issues/103
@@ -861,7 +804,6 @@ class Generator
         $mockedMethods = '';
         $configurable  = [];
 
-        /** @var MockMethod $mockMethod */
         foreach ($mockMethods->asArray() as $mockMethod) {
             $mockedMethods .= $mockMethod->generateCode();
             $configurable[] = \strtolower($mockMethod->getName());
@@ -937,7 +879,7 @@ class Generator
         if ($className === '') {
             do {
                 $className = $prefix . $type . '_' .
-                             \substr(\md5(\mt_rand()), 0, 8);
+                             \substr(\md5((string) \mt_rand()), 0, 8);
             } while (\class_exists($className, false));
         }
 
@@ -1012,8 +954,6 @@ class Generator
 
     /**
      * @param string $template
-     *
-     * @throws \InvalidArgumentException
      *
      * @return Text_Template
      */

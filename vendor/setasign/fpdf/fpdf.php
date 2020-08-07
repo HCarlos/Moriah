@@ -112,9 +112,8 @@ function __construct($orientation='P', $unit='mm', $size='A4')
 		$this->fontpath = dirname(__FILE__).'/font/';
 	else
 		$this->fontpath = '';
-//	dd($this->fontpath);	
 	// Core fonts
-	$this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats', 'AndaleMono');
+	$this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats');
 	// Scale factor
 	if($unit=='pt')
 		$this->k = 1;

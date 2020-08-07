@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -63,15 +63,5 @@ EOF
         }
 
         $this->fail();
-    }
-
-    /**
-     * @ticket https://github.com/sebastianbergmann/phpunit/issues/3743
-     */
-    public function test_EmptyIterator_is_handled_correctly(): void
-    {
-        $constraint = new IsEmpty;
-
-        $this->assertTrue($constraint->evaluate(new \EmptyIterator, '', true));
     }
 }

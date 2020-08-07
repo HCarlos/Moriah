@@ -1,7 +1,7 @@
 --TEST--
 \PHPUnit\Framework\MockObject\Generator::generate('Foo', null, 'ProxyFoo', true, true, true, true)
 --FILE--
-<?php
+<?php declare(strict_types=1);
 class Foo
 {
     public function bar(Foo $foo)
@@ -49,15 +49,11 @@ class ProxyFoo extends Foo implements PHPUnit\Framework\MockObject\MockObject
             }
         }
 
-        $__phpunit_invocation = new \PHPUnit\Framework\MockObject\Invocation\ObjectInvocation(
-            'Foo', 'bar', $__phpunit_arguments, '', $this, true
+        $this->__phpunit_getInvocationMocker()->invoke(
+            new \PHPUnit\Framework\MockObject\Invocation\ObjectInvocation(
+                'Foo', 'bar', $__phpunit_arguments, '', $this, true
+            )
         );
-
-        $__phpunit_invocation->setProxiedCall();
-
-        $this->__phpunit_getInvocationMocker()->invoke($__phpunit_invocation);
-
-        unset($__phpunit_invocation);
 
         return call_user_func_array(array($this->__phpunit_originalObject, "bar"), $__phpunit_arguments);
     }
@@ -75,15 +71,11 @@ class ProxyFoo extends Foo implements PHPUnit\Framework\MockObject\MockObject
             }
         }
 
-        $__phpunit_invocation = new \PHPUnit\Framework\MockObject\Invocation\ObjectInvocation(
-            'Foo', 'baz', $__phpunit_arguments, '', $this, true
+        $this->__phpunit_getInvocationMocker()->invoke(
+            new \PHPUnit\Framework\MockObject\Invocation\ObjectInvocation(
+                'Foo', 'baz', $__phpunit_arguments, '', $this, true
+            )
         );
-
-        $__phpunit_invocation->setProxiedCall();
-
-        $this->__phpunit_getInvocationMocker()->invoke($__phpunit_invocation);
-
-        unset($__phpunit_invocation);
 
         return call_user_func_array(array($this->__phpunit_originalObject, "baz"), $__phpunit_arguments);
     }

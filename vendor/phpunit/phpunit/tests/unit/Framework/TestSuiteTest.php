@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -167,7 +167,7 @@ class TestSuiteTest extends TestCase
         $lastSkippedResult = \array_pop($skipped);
         $message           = $lastSkippedResult->thrownException()->getMessage();
 
-        $this->assertContains('Test for DataProviderDependencyTest::testDependency skipped by data provider', $message);
+        $this->assertStringContainsString('Test for DataProviderDependencyTest::testDependency skipped by data provider', $message);
     }
 
     public function testIncompleteTestDataProvider(): void
@@ -208,6 +208,9 @@ class TestSuiteTest extends TestCase
 
     public function testCreateTestForConstructorlessTestClass(): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('No valid test provided.');
+
         $reflection = $this->getMockBuilder(\ReflectionClass::class)
             ->setConstructorArgs([$this])
             ->getMock();
