@@ -108,7 +108,7 @@
                                     <td>{{ $venta->paquete->FullDescription }}</td>
                                     <td>PAQUETE {{ $venta->TipoVenta }}</td>
                                 @elseif($venta->pedido_id > 0)
-                                    <td>{{ $venta->pedido->FullDescription }}</td>
+                                    <td>{{ $venta->pedido_id }}</td>
                                     <td>PEDIDO {{ $venta->TipoVenta }}</td>
                                 @else
                                     <td>{{ $venta->user->FullName }}</td>
