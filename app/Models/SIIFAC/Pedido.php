@@ -54,10 +54,16 @@ class Pedido extends Model
     }
 
     public function getFullDescriptionAttribute(){
+        if (is_null($this->attributes['id'])){
+            return "Pedido";
+        }
         return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_pedido']. ' - ' . $this->attributes['importe'];
     }
 
     public function getFullDescriptionPedidoUserAttribute(){
+        if (is_null($this->attributes['id'])){
+            return "Pedido";
+        }
         return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_pedido']. ' - ' . $this->attributes['importe']. ' - ' . $this->user->FullName;
     }
 
