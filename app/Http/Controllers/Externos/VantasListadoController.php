@@ -84,7 +84,7 @@ class VantasListadoController extends Controller{
             if ($Mov->paquete_id > 0)
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->paquete->FullDescription)), "LTB", 0,"L");
             else if ($Mov->pedido_id > 0)
-                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->pedido->FullDescription)), "LTB", 0,"L");
+                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->pedido_id)), "LTB", 0,"L");
             else 
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->TipoVenta)), "LTB", 0,"L");
 
