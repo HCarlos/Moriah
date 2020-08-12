@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Externos;
 use App\Http\Controllers\Classes\PDF_Diag;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Models\SIIFAC\Pedido;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
@@ -81,16 +82,17 @@ class VantasListadoController extends Controller{
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
+            $Ped = Pedido::find($Mov->pedido_id);
             if ($Mov->paquete_id > 0)
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->paquete->FullDescription)), "LTB", 0,"L");
-            else if ($Mov->pedido_id > 0)
-                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->pedido_id)), "LTB", 0,"L");
+            else if ( !is_null($Ped) )
+                $pdf->Cell(55, $this->alto, utf8_decode(trim($Ped->FullDescription)), "LTB", 0,"L");
             else 
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->TipoVenta)), "LTB", 0,"L");
 
             $pdf->SetFont('Arialn','',7);
-            if ($Mov->pedido_id > 0)
-                $pdf->Cell(140, $this->alto, utf8_decode(trim($Mov->pedido->observaciones)), "LRTB", 1,"L");
+            if ( !is_null($Ped) )
+                $pdf->Cell(140, $this->alto, utf8_decode(trim($Ped->observaciones)), "LRTB", 1,"L");
             else    
                 $pdf->Cell(140, $this->alto, '', "LRTB", 1,"L");
   
