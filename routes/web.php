@@ -251,6 +251,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('send_sms_one','Externos\TwilioSMSController@send_sms_one')->name('sendSMSOne');
 
     Route::get('/imprimirListadoVentas/{f1}/{f2}/', 'Externos\VantasListadoController@imprimirListadoVentas')->name('imprimirListadoVentas/');
+    Route::get('/imprimirListadoVentasExcel/{f1}/{f2}/', 'Externos\VentasListadoExcelController@imprimirListadoVentasExcel')->name('imprimirListadoVentasExcel/');
 
 
 });

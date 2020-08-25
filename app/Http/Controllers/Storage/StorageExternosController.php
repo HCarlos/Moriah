@@ -35,7 +35,13 @@ class StorageExternosController extends Controller
             }
             $file = $request->file('base_file');
             $ext = $file->extension();
-            $fileName = "base." . $ext;
+
+            
+            $afname   = explode('.',$request->file('base_file')->getClientOriginalName() );
+            $fname    = $afname[0];
+
+            $fileName = $fname.'.'.$ext;
+//            $fileName = "base." . $ext;
 
             Storage::disk('externo')->put($fileName, File::get($file));
 

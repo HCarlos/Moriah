@@ -64,6 +64,8 @@ class VantasListadoController extends Controller{
         $this->f1 = $f1;
         $this->f2 = $f2;
         $items = Session::get('items');
+        
+
         $Emp = $items->first();
         $this->empresa = $Emp->empresa->rs;
         $this->timex = Carbon::now()->format('d-m-Y h:m:s a');

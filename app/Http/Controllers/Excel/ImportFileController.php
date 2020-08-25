@@ -14,11 +14,14 @@ class ImportFileController extends Controller
     }
 
     public static function getFileExistencias($extension){
-//        $fl = Storage::disk('externo')->get('/base.' . $extension);
         return storage_path('app/public/externo') . '/base.' . $extension;
-//        return $fl;
     }
 
+    public static function getFileVentas1List($extension){
+        // return storage_path('app/public/externo') . '/ventas1.' . $extension;
+        return storage_path('externo') . '/ventas1.' . $extension;
+    }
+        
     public static function getFileInventario($extension){
         return storage_path('externo') . '/inventario.' . $extension;
     }

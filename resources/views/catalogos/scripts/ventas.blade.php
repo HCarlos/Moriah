@@ -5,11 +5,14 @@
             $(document).ready(function() {
                 
                 $(".btnPrintListado").hide();
+                $(".btnPrintListadoExcel").hide();
 
-                var totalItems = {{ $items->count() }};
+                var totalItems = @if ( isset( $items ) && $items->count() > 0 ) {{ $items->count() }} @else 0 @endif;
                 
                 if ( $(".btnPrintListado") && totalItems > 0){
                     $(".btnPrintListado").show();
+                    $(".btnPrintListadoExcel").show();
+                    
                 }
 
 

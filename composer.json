@@ -21,7 +21,7 @@
         "picqer/php-barcode-generator": "^0.2.2",
         "predis/predis": "^1.1.1",
         "setasign/fpdf": "^1.8.2",
-        "spatie/laravel-permission": "^3.13.0",
+        "spatie/laravel-permission": "^3.16",
         "styde/html": "^1.9",
         "yajra/laravel-datatables-oracle": "^9.10"
     },

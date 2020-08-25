@@ -73,6 +73,18 @@
                         </a>
                     </div>
                 </div>
+                <div class="form-group  pull-right">
+                    <div class="col-md-1">
+                        <a id="btnPrintListadoExcel"
+                            href="{{ route('imprimirListadoVentasExcel/',['f1'=>$FechaInicial,'f2'=>$FechaFinal]) }}" 
+                            class="btn btn-xs btn-verde btnPrintListadoExcel"
+                            data-togle="tooltip" data-placement="top" title="Exporta listado actual a MS Excel"
+                            target="_blank"
+                            >
+                            <i class="fa fa-print default"></i>
+                        </a>
+                    </div>
+                </div>
 
             </form>
 

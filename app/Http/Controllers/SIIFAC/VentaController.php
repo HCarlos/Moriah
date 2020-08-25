@@ -64,8 +64,11 @@ class VentaController extends Controller
         }
 
         Session::put('items', $items);
+
         $this->FechaInicial = $f1;
         $this->FechaFinal   = $f2;
+
+        // dd( $items );
 
         return view ('catalogos.operaciones.ventas',
             [
@@ -310,6 +313,12 @@ class VentaController extends Controller
     {
         $data = $request->all();
         $dato = $data['dato'];
+
+        $F = (new FuncionesController);
+
+        $f1 = $F->fechaDateTimeFormat(now());
+        $f2 = $F->fechaDateTimeFormat(now(),true);
+
         $tipo = $data['type'];
         $user = Auth::User();
         $user = User::find($user->id);
@@ -334,13 +343,29 @@ class VentaController extends Controller
                 $items = Venta::BuscarProductoPorCodigo($dato,$user);
                 break;
         }
+
+        $totalVenta = 0;
+        foreach ($items as $i){
+            $totalVenta += $i->total;
+        }
+
+        Session::put('items', $items);
+
+        $this->FechaInicial = $f1;
+        $this->FechaFinal   = $f2;
+
+
         return view ('catalogos.operaciones.ventas',
             [
                 'tableName' => 'ventas',
                 'ventas' => $items,
+                'items' => $items,
                 'user' => $user,
                 'totalVentas' => 0,
                 'fecha' => $dato,
+                'FechaInicial' => $f1,
+                'FechaFinal' => $f2,
+
             ]
         );
     }
@@ -374,13 +399,29 @@ class VentaController extends Controller
                     ->orderBy('created_at')
                     ->get();
 
+        $totalVenta = 0;
+        foreach ($items as $i){
+            $totalVenta += $i->total;
+        }
+
+        Session::put('items', $items);
+
+        $this->FechaInicial = $f1;
+        $this->FechaFinal   = $f2;
+
+        // dd( $items );
+            
+
         return view ('catalogos.operaciones.ventas',
             [
                 'tableName' => 'ventas',
                 'ventas' => $items,
+                'items' => $items,
                 'user' => $user,
-                'totalVentas' => 0,
+                'totalVentas' => $totalVenta,
                 'fecha' => $dato,
+                'FechaInicial' => $f1,
+                'FechaFinal' => $f2,
             ]
         );
     }

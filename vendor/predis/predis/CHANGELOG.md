@@ -1,3 +1,25 @@
+v1.1.3 (2020-08-18)
+================================================================================
+
+- Ensure compatibility with PHP 8.
+
+- Moved repository from `github.com/nrk/predis` to `github.com/predis/predis`.
+
+- __FIX__: Moved `cweagans/composer-patches` dependency to `require-dev`.
+
+- __FIX__: Include PHPUnit `.patch` files in exports.
+
+
+v1.1.2 (2020-08-11)
+================================================================================
+
+- __FIX__: pure CRC16 implementation failed to calculate the correct hash when
+  the input value passed to the `hash()` method is an integer (PR #450).
+
+- __FIX__: make PHP iterator abstractions for `ZSCAN` and `HSCAN` working with
+  PHP 7.2 due to a breaking change, namely the removal of `each()` (PR #448).
+
+
 v1.1.1 (2016-06-16)
 ================================================================================
 
