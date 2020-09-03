@@ -23,17 +23,17 @@ final class NameFilterIterator extends RecursiveFilterIterator
     /**
      * @var string
      */
-    protected $filter;
+    private $filter;
 
     /**
      * @var int
      */
-    protected $filterMin;
+    private $filterMin;
 
     /**
      * @var int
      */
-    protected $filterMax;
+    private $filterMax;
 
     /**
      * @throws \Exception
@@ -60,12 +60,10 @@ final class NameFilterIterator extends RecursiveFilterIterator
 
         if ($test instanceof WarningTestCase) {
             $name = $test->getMessage();
+        } elseif ($tmp[0] !== '') {
+            $name = \implode('::', $tmp);
         } else {
-            if ($tmp[0] !== '') {
-                $name = \implode('::', $tmp);
-            } else {
-                $name = $tmp[1];
-            }
+            $name = $tmp[1];
         }
 
         $accepted = @\preg_match($this->filter, $name, $matches);
@@ -81,7 +79,7 @@ final class NameFilterIterator extends RecursiveFilterIterator
     /**
      * @throws \Exception
      */
-    protected function setFilter(string $filter): void
+    private function setFilter(string $filter): void
     {
         if (RegularExpression::safeMatch($filter, '') === false) {
             // Handles:
@@ -94,8 +92,8 @@ final class NameFilterIterator extends RecursiveFilterIterator
                         $matches[1]
                     );
 
-                    $this->filterMin = $matches[2];
-                    $this->filterMax = $matches[3];
+                    $this->filterMin = (int) $matches[2];
+                    $this->filterMax = (int) $matches[3];
                 } else {
                     $filter = \sprintf(
                         '%s.*with data set #%s$',

@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -84,10 +85,12 @@ class Ingreso extends Model
     }
 
     public function getMetodoPagoAttribute() {
-        return self::$metodos_pago[ $this->attributes['metodo_pago'] ];
+        //return self::$metodos_pago[ $this->attributes['metodo_pago'] ];
+        return GeneralFunctions::$metodos_pagos_complete[ $this->attributes['metodo_pago'] ];
+
     }
 
-    public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id=0)
+    public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id)
     {
         $user = Auth::user();
         $user_id = $user->id;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Externos;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Producto;
 use Carbon\Carbon;
 use FPDF;
@@ -13,6 +14,7 @@ class ExistenciasController extends Controller
     protected $alto        = 6;
     protected $aFT         = 205;
     protected $timex       = "";
+    protected $empresa     = "";
 
     public function header($pdf){
         $pdf->AddPage();
@@ -23,7 +25,7 @@ class ExistenciasController extends Controller
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode(""),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -59,7 +61,11 @@ class ExistenciasController extends Controller
     public function imprimir_existencias()
     {
         $Prod              = Producto::all()->sortBy('descripcion');
+        // dd($Prod);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
+        $P                 = $Prod->first();
+        $Emp               = Empresa::find($P->empresa_id);
+        $this->empresa     = $Emp->rs;
 
         $pdf               = new FPDF('P','mm','Letter');
 

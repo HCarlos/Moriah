@@ -37,6 +37,7 @@ class NotaCreditoDetalleController extends Controller
         foreach ($items as $i){
             $totalVenta += $i->importe;
         }
+        // dd($nota_credito_id);
         return view ('catalogos.operaciones.notasdecredito_detalles_edit',
             [
                 'tableName' => 'Nota_de_Credito',

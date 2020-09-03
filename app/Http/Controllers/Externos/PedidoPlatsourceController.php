@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Models\SIIFAC\Empresa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Paquete;
@@ -28,6 +29,7 @@ class PedidoPlatsourceController extends Controller{
     protected $ref1          = "";
     protected $ref2          = "";
     protected $ref3          = "";
+    protected $empresa       = "";
 
 
     public function header($pdf){
@@ -39,7 +41,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("ALIMENTOS ESPECIALIZADOS DE TABASCO, S.A."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode($this->empresa),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -108,6 +110,8 @@ class PedidoPlatsourceController extends Controller{
         $this->observaciones = $Ped->observaciones;
         $this->paquete_id    = $Paq->id;
         $this->paquete       = $Paq->codigo.' '.$Paq->descripcion_paquete;
+        $Emp               = Empresa::find($Paq->empresa_id);
+        $this->empresa     = $Emp->rs;
 
         $this->ref0 = substr($Ped->referencia,0,4);
         $this->ref1 = substr($Ped->referencia,4,4);

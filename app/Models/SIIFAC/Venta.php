@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Carbon\Carbon;
@@ -31,7 +32,7 @@ class Venta extends Model
     public static $metodos_pago =
         [
             0 => "Efectivo", 1 => "Cheque Nominativo", 2 => "Transferencia Electrónica de Fondos",
-            3 => "Tarjeta de Crédito", 4 => "Monedero Electrónico", 5 => "Dinero Elctrónico",
+            3 => "Tarjeta de Crédito", 4 => "Monedero Electrónico", 5 => "Nota de Crédito",
             6 => "Vales de Despensa", 7 => "Tarjeta de Debito", 8 => "Tarjeta de Servicio",
             9 => "Otros",
         ];
@@ -159,7 +160,9 @@ class Venta extends Model
     }
 
     public function getMetodoPagoAttribute() {
-        return self::$metodos_pago[ $this->attributes['metodo_pago'] ];
+        //return self::$metodos_pago[ $this->attributes['metodo_pago'] ];
+        return GeneralFunctions::$metodos_pagos_complete[ $this->attributes['metodo_pago'] ];
+
     }
 
     public static function venderPaquete($vendedor_id, $paquete_id, $tipoventa, $user_id, $cantidad){
@@ -268,12 +271,60 @@ class Venta extends Model
             }
         }
         $Ven->save();
-
-        Ingreso::pagar($venta_id,$total_pagado,$metodo_pago,$referencia,0);
+        $IdNC = intval($metodo_pago) == 5 ? intval($referencia) : 0;
+        Ingreso::pagar($venta_id,$total_pagado,$metodo_pago,$referencia,$IdNC);
 
         return $Ven;
 
     }
+
+    public static function anularVenta($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia)
+    {
+        $Ven = static::findOrFail($venta_id);
+//        $Ven->total_pagado = $total_pagado;
+//        $Ven->total = $total_a_pagar;
+        $Ven->total_pagado = 0;
+        $Ven->total = 0;
+        $Ven->metodo_pago = $metodo_pago;
+        $Ven->referencia = $referencia;
+        $Ven->f_pagado = now();
+        $Ven->ispagado = true;
+        $Ven->isimp = true;
+        $Ven->status_venta = 2;
+        $Ven->save();
+        $Movs = Movimiento::all()->where('venta_id', $venta_id);
+        foreach ($Movs as $Mov) {
+            $Mov->status = $metodo_pago;
+            $Mov->save();
+        }
+        $nc = $metodo_pago == 5 ? $referencia : 0;
+        Ingreso::pagar($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia, $nc);
+        return $Ven;
+    }
+
+    public function getTotalAbonosAttribute($id=0)
+    {
+        return static::getTotalAbonosIngresos($this->id);
+    }
+
+    public static function getTotalAbonosIngresos($id=0)
+    {
+        return Ingreso::where('venta_id', $id)->sum('total');
+    }
+
+    public function CanCreateNotaCredito(){
+        return self::ICanCreateNotaCredito($this->id);
+    }
+
+    public static function ICanCreateNotaCredito($Id){
+        $keys =  array_keys(GeneralFunctions::$metodos_pago);
+        $Ings =  Ingreso::where('venta_id',$Id)
+            ->whereIn('metodo_pago',$keys)
+            ->get();
+        return $Ings->count() > 0;
+    }
+
+
 
 
 }

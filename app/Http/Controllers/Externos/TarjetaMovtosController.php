@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Externos;
 
-use App\Http\Controllers\PDF_EAN13;
+// use App\Http\Controllers\PDF_EAN13;
+use App\Http\Controllers\Classes\PDF_EAN13;
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Producto;
 use App\Http\Controllers\Controller;
@@ -15,6 +17,7 @@ class TarjetaMovtosController extends Controller
     protected $aFT           = 205;
     protected $timex         = "";
     protected $producto_name = "";
+    protected $empresa       = "";
 
     public function header($pdf){
         $pdf->AddPage();
@@ -25,7 +28,7 @@ class TarjetaMovtosController extends Controller
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode(""),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -72,12 +75,18 @@ class TarjetaMovtosController extends Controller
         $Prod                = Producto::find($producto_id);
         $Movs                = Movimiento::all()->where('producto_id',$producto_id)->sortBy('id');
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
+        $Emp                 = Empresa::find($Prod->empresa_id);
+        $this->empresa       = $Emp->rs;
 
         $pdf                 = new PDF_EAN13('P','mm','Letter');
         $this->producto_name = $Prod->descripcion;
 
         $pdf->AliasNbPages();
         $pdf->SetFillColor(192,192,192);
+        $pdf->SetFont('Arial','',6);
+        $pdf->addFont('AndaleMono');
+        $pdf->addFont('arialn');
+
         $this->header($pdf);
         $this->alto  = 8;
         $pdf->SetFont('Arial','',8);

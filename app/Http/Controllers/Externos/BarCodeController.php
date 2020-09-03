@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Http\Controllers\Classes\PDF_EAN13;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\PDF_EAN13;
+//use App\Http\Controllers\PDF_EAN13;
 use App\Models\SIIFAC\Producto;
 
 class BarCodeController extends Controller

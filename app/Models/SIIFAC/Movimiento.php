@@ -204,6 +204,77 @@ class Movimiento extends Model
 
     }
 
+
+    public static function agregarDesdeNotaCreditoDetalle($NCd)
+    {
+
+        $Venta = Venta::findOrFail($NCd->venta_id);
+        $Vd    = VentaDetalle::findOrFail($NCd->venta_detalle_id);
+        $Prod = Producto::findOrFail($NCd->producto_id);
+        $Fecha = Carbon::now();
+        $user = Auth::User();
+//        dd("Entro");
+        $cu         = $Prod->cu;
+        $cantidad   = $NCd->cant;
+        $existencia = $Prod->exist + $NCd->cant;
+        $saldo      = $cu * $cantidad;
+
+        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
+//        $total = $saldo + $iva;
+        $total = $saldo;
+
+        $Mov  =  static::create([
+            'user_id'          => $Venta->vendedor_id,
+            'cliente_id'       => $Vd->user_id,
+            'venta_id'         => $Vd->venta_id,
+            'venta_detalle_id' => $Vd->id,
+            'producto_id'      => $Prod->id,
+            'paquete_id'       => $Vd->paquete_id,
+            'pedido_id'        => $Vd->pedido_id,
+            'compra_id'        => 0,
+            'empresa_id'       => $Vd->empresa_id,
+            'proveedor_id'     => $Prod->proveedor_id,
+            'almacen_id'       => $Prod->almacen_id,
+            'medida_id'        => $Prod->medida_id,
+            'clave'            => $Prod->clave,
+            'codigo'           => $Prod->codigo,
+            'folio'            => $Prod->folio,
+            'foliofac'         => 0,
+            'nota'             => 0,
+            'ejercicio'        => $Fecha->year,
+            'periodo'          => $Fecha->month,
+            'fecha'            => $Fecha,
+            'entrada'          => $cantidad,
+            'existencia'       => $existencia,
+            'cu'               => $Prod->cu,
+            'pu'               => $NCd->pv,
+            'debe'             => $saldo,
+            'descto'           => 0,
+            'importe'          => $saldo,
+            'iva'              => $iva,
+            'saldo'            => $total,
+            'status'           => 11,
+            'idemp'            => 1,
+            'ip'               => Request::ip(),
+            'host'             => Request::getHttpHost(),
+        ]);
+        $Prod->exist = $existencia;
+        $Prod->saldo = $saldo;
+        $Prod->save();
+
+        $Mov->users()->attach($NCd->user_id);
+        $Mov->empresas()->attach($NCd->empresa_id);
+        $Mov->productos()->attach($Prod->id);
+        $Mov->proveedores()->attach($Prod->proveedor_id);
+        $Mov->almacenes()->attach($Prod->almacen_id);
+        $Mov->medidas()->attach($Prod->medida_id);
+
+        return $Mov;
+
+    }
+
+
+
     public static function agregarDesdeCompraDetalle($Comp, $Prod, $data)
     {
         $Fecha      = Carbon::now();

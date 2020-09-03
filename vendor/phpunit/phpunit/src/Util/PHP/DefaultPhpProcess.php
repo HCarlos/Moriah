@@ -28,7 +28,7 @@ class DefaultPhpProcess extends AbstractPhpProcess
      */
     public function runJob(string $job, array $settings = []): array
     {
-        if ($this->useTemporaryFile() || $this->stdin) {
+        if ($this->stdin || $this->useTemporaryFile()) {
             if (!($this->tempFile = \tempnam(\sys_get_temp_dir(), 'PHPUnit')) ||
                 \file_put_contents($this->tempFile, $job) === false) {
                 throw new Exception(
@@ -144,16 +144,14 @@ class DefaultPhpProcess extends AbstractPhpProcess
 
                         $line = \fread($pipe, 8192);
 
-                        if ($line === '') {
+                        if ($line === '' || $line === false) {
                             \fclose($pipes[$pipeOffset]);
 
                             unset($pipes[$pipeOffset]);
+                        } elseif ($pipeOffset === 1) {
+                            $stdout .= $line;
                         } else {
-                            if ($pipeOffset === 1) {
-                                $stdout .= $line;
-                            } else {
-                                $stderr .= $line;
-                            }
+                            $stderr .= $line;
                         }
                     }
 

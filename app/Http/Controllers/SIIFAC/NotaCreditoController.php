@@ -30,17 +30,19 @@ class NotaCreditoController extends Controller
         }
         $user = Auth::User();
         $F = (new FuncionesController);
+
         $f = $F->getFechaFromNumeric($fecha);
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString();
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString();
         $items = NotaCredito::all()
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->sortBy('id');
+            ->sortByDesc('id');
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->importe;
         }
+//        dd($items);
         return view ('catalogos.operaciones.notasdecredito',
             [
                 'tableName' => 'Nota_de_Credito',
@@ -61,8 +63,7 @@ class NotaCreditoController extends Controller
 
     }
 
-    public function nueva_nota_credito($venta_id,$msg=null)
-    {
+    public function nueva_nota_credito($venta_id,$msg=null){
         $Ven = Venta::select(['id'])
             ->where('id',$venta_id)
             ->where('ispagado',true)
@@ -110,8 +111,10 @@ class NotaCreditoController extends Controller
 
     public function guardar_notacredito(NotaCreditoRequest $request){
         $data = $request->all();
+
         if ( !isset($data['vd_id']) ){
             $venta_id = $data['venta_id'];
+
             return $this->nueva_nota_credito($venta_id,'No hay datos que guardar');
         }
 

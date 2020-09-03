@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Classes\PDF_Diag;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
@@ -123,7 +124,9 @@ class CorteCajaController extends Controller{
             ->get();
         $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->username).' - '.trim($v->vendedor->FullName); });
         $Cajeros = $Cajeros->sortBy('FullName')->pluck('FullName','vendedor_id');
-        $metodo_pagos = Venta::$metodos_pago;
+//        $metodo_pagos = Venta::$metodos_pago;
+        $metodo_pagos =  GeneralFunctions::$metodos_pagos_complete;
+
         $empresas     = Empresa::all()->sortBy('id')->pluck('ncomer','id');
 
         return view('catalogos.reportes.panel_reporte_1',[

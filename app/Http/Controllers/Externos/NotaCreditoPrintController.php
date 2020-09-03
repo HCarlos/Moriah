@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\NotaCredito;
 use App\Models\SIIFAC\NotaCreditoDetalle;
@@ -28,6 +29,7 @@ class NotaCreditoPrintController extends Controller
     protected $referencia  = "";
     protected $tipo_venta  = "";
     protected $title       = "";
+    protected $empresa     = "";
 
 
     public function header($pdf){
@@ -39,7 +41,7 @@ class NotaCreditoPrintController extends Controller
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode($this->empresa),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -88,8 +90,11 @@ class NotaCreditoPrintController extends Controller
         $VD                = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $this->folio       = $nota_credito_id;
+
         $this->cliente_id  = $Ven->user_id;
         $this->cliente     = $Ven->user->FullName;
+        $Emp               = Empresa::find($Ven->empresa_id);
+        $this->empresa     = $Emp->rs;
 
         $this->status      = "";
         $this->metodo_pago = strtoupper($Ven->MetodoPago);

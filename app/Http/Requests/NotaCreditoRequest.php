@@ -45,9 +45,12 @@ class NotaCreditoRequest extends FormRequest
             return "No se encontraron datos para guardar";
         }
 
-        $item = [];
+        $Item = [];
         try {
-            if ($this->id <= 0){
+            $this->id = intval($this->id);
+            $this->venta_id = intval($this->venta_id);
+            // dd($this->id);
+            if ( $this->id <= 0 || is_null($this->id) ){
                 $Ven = Venta::find($this->venta_id);
                 $Item = [
                     'user_id'          => $Ven->user_id,
@@ -55,8 +58,8 @@ class NotaCreditoRequest extends FormRequest
                     'empresa_id'       => $Ven->empresa_id,
                     'fecha'            => now(),
                     ];
+                //dd($Item);
                 $NC = NotaCredito::create($Item);
-//                dd($Item);
                 $suma = 0;
                 foreach ($this->vd_id as $key => $value){
                     if ($value > 0) {
@@ -75,7 +78,6 @@ class NotaCreditoRequest extends FormRequest
                             'venta_detalle_id' => $arrVal[0],
                             'empresa_id'       => $Ven->empresa_id,
                             'producto_id'      => $Prod->id,
-                            'folio'            => $this->venta_id,
                             'fecha'            => now(),
                             'codigo'           => $Prod->codigo,
                             'descripcion_producto' => $Prod->descripcion,
@@ -84,9 +86,12 @@ class NotaCreditoRequest extends FormRequest
                             'importe'          => $Subtotal,
                             'empresa_id'       => $Ven->empresa_id
                         ];
+
                         $NCD = NotaCreditoDetalle::create($Item);
+                        // dd($NCD);
                         $vd->cantidad_devuelta = $vd->cantidad_devuelta + $value;
-                        $vd->save();
+                        $xd = $vd->save();
+
                         $resp = Movimiento::agregarDesdeNotaCreditoDetalle($NCD);
 //                        dd($resp);
 

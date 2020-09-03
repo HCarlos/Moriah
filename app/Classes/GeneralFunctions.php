@@ -11,13 +11,13 @@ class GeneralFunctions
     public static $metodos_pago =
         [
             0 => "Efectivo",
-            1 => "Tarjeta de Crédito",
+            3 => "Tarjeta de Crédito",
             2 => "Tarjeta de Debito",
-            3 => "Cheque Nominativo",
+            1 => "Cheque Nominativo",
             4 => "Transferencia Electrónica de Fondos",
             100 => "-",
             5 => "Nota de Crédito",
-            500 => "-",
+            101 => "-",
             600 => "Descuento vía Nómina"
         ];
 
@@ -28,22 +28,23 @@ class GeneralFunctions
             400 => "Devolución Sobre Compra"
         ];
 
-
     public static $metodos_pagos_complete =
         [
             0 => "Efectivo",
-            1 => "Tarjeta de Crédito",
+            3 => "Tarjeta de Crédito",
             2 => "Tarjeta de Debito",
-            3 => "Cheque Nominativo",
+            1 => "Cheque Nominativo",
             4 => "Transferencia Electrónica de Fondos",
             100 => "-",
             5 => "Nota de Crédito",
-            100 => "-",
+            101 => "-",
             200 => "Salida por Faltante",
             300 => "Salida por Merma",
             400 => "Devolución Sobre Compra",
-            500 => "-",
-            600 => "Descuento vía Nómina"
+            102 => "-",
+            600 => "Descuento vía Nómina",
+            103 => "-",
+            9 => "Otros"
         ];
 
 

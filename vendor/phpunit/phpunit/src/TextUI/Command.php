@@ -17,7 +17,6 @@ use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestListener;
 use PHPUnit\Framework\TestSuite;
-use PHPUnit\Runner\PhptTestCase;
 use PHPUnit\Runner\StandardTestSuiteLoader;
 use PHPUnit\Runner\TestSuiteLoader;
 use PHPUnit\Runner\TestSuiteSorter;
@@ -32,7 +31,6 @@ use PHPUnit\Util\Printer;
 use PHPUnit\Util\TestDox\CliTestDoxPrinter;
 use PHPUnit\Util\TextTestListRenderer;
 use PHPUnit\Util\XmlTestListRenderer;
-use ReflectionClass;
 use SebastianBergmann\FileIterator\Facade as FileIteratorFacade;
 
 use Throwable;
@@ -44,7 +42,7 @@ use Throwable;
 class Command
 {
     /**
-     * @var array
+     * @var array<string,mixed>
      */
     protected $arguments = [
         'listGroups'              => false,
@@ -58,12 +56,12 @@ class Command
     ];
 
     /**
-     * @var array
+     * @var array<string,mixed>
      */
     protected $options = [];
 
     /**
-     * @var array
+     * @var array<string,mixed>
      */
     protected $longOptions = [
         'atleast-version='          => null,
@@ -107,6 +105,7 @@ class Command
         'no-configuration'          => null,
         'no-coverage'               => null,
         'no-logging'                => null,
+        'no-interaction'            => null,
         'no-extensions'             => null,
         'order-by='                 => null,
         'printer='                  => null,
@@ -147,27 +146,24 @@ class Command
     ];
 
     /**
+     * @var @psalm-var list<string>
+     */
+    private $warnings = [];
+
+    /**
      * @var bool
      */
     private $versionStringPrinted = false;
 
     /**
-     * @throws \ReflectionException
-     * @throws \RuntimeException
      * @throws \PHPUnit\Framework\Exception
-     * @throws \InvalidArgumentException
      */
     public static function main(bool $exit = true): int
     {
-        $command = new static;
-
-        return $command->run($_SERVER['argv'], $exit);
+        return (new static)->run($_SERVER['argv'], $exit);
     }
 
     /**
-     * @throws \RuntimeException
-     * @throws \ReflectionException
-     * @throws \InvalidArgumentException
      * @throws Exception
      */
     public function run(array $argv, bool $exit = true): int
@@ -205,7 +201,7 @@ class Command
         unset($this->arguments['test'], $this->arguments['testFile']);
 
         try {
-            $result = $runner->doRun($suite, $this->arguments, $exit);
+            $result = $runner->doRun($suite, $this->arguments, $this->warnings, $exit);
         } catch (Exception $e) {
             print $e->getMessage() . \PHP_EOL;
         }
@@ -277,7 +273,6 @@ class Command
      * </code>
      *
      * @throws Exception
-     * @throws \ReflectionException
      */
     protected function handleArguments(array $argv): void
     {
@@ -376,7 +371,7 @@ class Command
                         if (isset($ini[1])) {
                             \ini_set($ini[0], $ini[1]);
                         } else {
-                            \ini_set($ini[0], true);
+                            \ini_set($ini[0], '1');
                         }
                     }
 
@@ -640,6 +635,11 @@ class Command
 
                     break;
 
+                case '--no-interaction':
+                    $this->arguments['noInteraction'] = true;
+
+                    break;
+
                 case '--globals-backup':
                     $this->arguments['backupGlobals'] = true;
 
@@ -780,27 +780,54 @@ class Command
 
         $this->handleCustomTestSuite();
 
+        if (!isset($this->arguments['testSuffixes'])) {
+            $this->arguments['testSuffixes'] = ['Test.php', '.phpt'];
+        }
+
+        if (isset($this->options[1][0]) &&
+            \substr($this->options[1][0], -5, 5) !== '.phpt' &&
+            \substr($this->options[1][0], -4, 4) !== '.php' &&
+            \substr($this->options[1][0], -1, 1) !== '/' &&
+            !\is_dir($this->options[1][0])) {
+            $this->warnings[] = 'Invocation with class name is deprecated';
+        }
+
         if (!isset($this->arguments['test'])) {
             if (isset($this->options[1][0])) {
                 $this->arguments['test'] = $this->options[1][0];
             }
 
             if (isset($this->options[1][1])) {
-                $this->arguments['testFile'] = \realpath($this->options[1][1]);
+                $testFile = \realpath($this->options[1][1]);
+
+                if ($testFile === false) {
+                    $this->exitWithErrorMessage(
+                        \sprintf(
+                            'Cannot open file "%s".',
+                            $this->options[1][1]
+                        )
+                    );
+                }
+                $this->arguments['testFile'] = $testFile;
             } else {
                 $this->arguments['testFile'] = '';
             }
 
             if (isset($this->arguments['test']) &&
                 \is_file($this->arguments['test']) &&
-                \substr($this->arguments['test'], -5, 5) != '.phpt') {
+                \strrpos($this->arguments['test'], '.') !== false &&
+                \substr($this->arguments['test'], -5, 5) !== '.phpt') {
                 $this->arguments['testFile'] = \realpath($this->arguments['test']);
                 $this->arguments['test']     = \substr($this->arguments['test'], 0, \strrpos($this->arguments['test'], '.'));
             }
-        }
 
-        if (!isset($this->arguments['testSuffixes'])) {
-            $this->arguments['testSuffixes'] = ['Test.php', '.phpt'];
+            if (isset($this->arguments['test']) &&
+                \is_string($this->arguments['test']) &&
+                \substr($this->arguments['test'], -5, 5) === '.phpt') {
+                $suite = new TestSuite;
+                $suite->addTestFile($this->arguments['test']);
+                $this->arguments['test'] = $suite;
+            }
         }
 
         if (isset($includePath)) {
@@ -877,11 +904,7 @@ class Command
             }
 
             if (!isset($this->arguments['printer']) && isset($phpunitConfiguration['printerClass'])) {
-                if (isset($phpunitConfiguration['printerFile'])) {
-                    $file = $phpunitConfiguration['printerFile'];
-                } else {
-                    $file = '';
-                }
+                $file = $phpunitConfiguration['printerFile'] ?? '';
 
                 $this->arguments['printer'] = $this->handlePrinter(
                     $phpunitConfiguration['printerClass'],
@@ -890,11 +913,7 @@ class Command
             }
 
             if (isset($phpunitConfiguration['testSuiteLoaderClass'])) {
-                if (isset($phpunitConfiguration['testSuiteLoaderFile'])) {
-                    $file = $phpunitConfiguration['testSuiteLoaderFile'];
-                } else {
-                    $file = '';
-                }
+                $file = $phpunitConfiguration['testSuiteLoaderFile'] ?? '';
 
                 $this->arguments['loader'] = $this->handleLoader(
                     $phpunitConfiguration['testSuiteLoaderClass'],
@@ -922,13 +941,6 @@ class Command
             $this->arguments['printer'] = $this->handlePrinter($this->arguments['printer']);
         }
 
-        if (isset($this->arguments['test']) && \is_string($this->arguments['test']) && \substr($this->arguments['test'], -5, 5) == '.phpt') {
-            $test = new PhptTestCase($this->arguments['test']);
-
-            $this->arguments['test'] = new TestSuite;
-            $this->arguments['test']->addTest($test);
-        }
-
         if (!isset($this->arguments['test'])) {
             $this->showHelp();
             exit(TestRunner::EXCEPTION_EXIT);
@@ -937,8 +949,6 @@ class Command
 
     /**
      * Handles the loading of the PHPUnit\Runner\TestSuiteLoader implementation.
-     *
-     * @throws \ReflectionException
      */
     protected function handleLoader(string $loaderClass, string $loaderFile = ''): ?TestSuiteLoader
     {
@@ -957,11 +967,24 @@ class Command
         }
 
         if (\class_exists($loaderClass, false)) {
-            $class = new ReflectionClass($loaderClass);
+            try {
+                $class = new \ReflectionClass($loaderClass);
+                // @codeCoverageIgnoreStart
+            } catch (\ReflectionException $e) {
+                throw new Exception(
+                    $e->getMessage(),
+                    (int) $e->getCode(),
+                    $e
+                );
+            }
+            // @codeCoverageIgnoreEnd
 
-            if ($class->implementsInterface(TestSuiteLoader::class) &&
-                $class->isInstantiable()) {
-                return $class->newInstance();
+            if ($class->implementsInterface(TestSuiteLoader::class) && $class->isInstantiable()) {
+                $object = $class->newInstance();
+
+                \assert($object instanceof TestSuiteLoader);
+
+                return $object;
             }
         }
 
@@ -981,8 +1004,6 @@ class Command
 
     /**
      * Handles the loading of the PHPUnit\Util\Printer implementation.
-     *
-     * @throws \ReflectionException
      *
      * @return null|Printer|string
      */
@@ -1011,7 +1032,17 @@ class Command
             );
         }
 
-        $class = new ReflectionClass($printerClass);
+        try {
+            $class = new \ReflectionClass($printerClass);
+            // @codeCoverageIgnoreStart
+        } catch (\ReflectionException $e) {
+            throw new Exception(
+                $e->getMessage(),
+                (int) $e->getCode(),
+                $e
+            );
+            // @codeCoverageIgnoreEnd
+        }
 
         if (!$class->implementsInterface(TestListener::class)) {
             $this->exitWithErrorMessage(
@@ -1089,7 +1120,7 @@ class Command
     protected function showHelp(): void
     {
         $this->printVersionString();
-        (new \Help())->writeToConsole();
+        (new Help)->writeToConsole();
     }
 
     /**
@@ -1121,9 +1152,7 @@ class Command
 
     private function handleExtensions(string $directory): void
     {
-        $facade = new FileIteratorFacade;
-
-        foreach ($facade->getFilesAsArray($directory, '.phar') as $file) {
+        foreach ((new FileIteratorFacade)->getFilesAsArray($directory, '.phar') as $file) {
             if (!\file_exists('phar://' . $file . '/manifest.xml')) {
                 $this->arguments['notLoadedExtensions'][] = $file . ' is not an extension for PHPUnit';
 
@@ -1194,9 +1223,7 @@ class Command
             $this->arguments['configuration']
         );
 
-        $suiteNames = $configuration->getTestSuiteNames();
-
-        foreach ($suiteNames as $suiteName) {
+        foreach ($configuration->getTestSuiteNames() as $suiteName) {
             \printf(
                 ' - %s' . \PHP_EOL,
                 $suiteName
@@ -1262,16 +1289,6 @@ class Command
 
                     break;
 
-                case 'reverse':
-                    $this->arguments['executionOrder'] = TestSuiteSorter::ORDER_REVERSED;
-
-                    break;
-
-                case 'random':
-                    $this->arguments['executionOrder'] = TestSuiteSorter::ORDER_RANDOMIZED;
-
-                    break;
-
                 case 'defects':
                     $this->arguments['executionOrderDefects'] = TestSuiteSorter::ORDER_DEFECTS_FIRST;
 
@@ -1282,8 +1299,28 @@ class Command
 
                     break;
 
+                case 'duration':
+                    $this->arguments['executionOrder'] = TestSuiteSorter::ORDER_DURATION;
+
+                    break;
+
                 case 'no-depends':
                     $this->arguments['resolveDependencies'] = false;
+
+                    break;
+
+                case 'random':
+                    $this->arguments['executionOrder'] = TestSuiteSorter::ORDER_RANDOMIZED;
+
+                    break;
+
+                case 'reverse':
+                    $this->arguments['executionOrder'] = TestSuiteSorter::ORDER_REVERSED;
+
+                    break;
+
+                case 'size':
+                    $this->arguments['executionOrder'] = TestSuiteSorter::ORDER_SIZE;
 
                     break;
 

@@ -23,7 +23,7 @@ final class Json
      */
     public static function prettify(string $json): string
     {
-        $decodedJson = \json_decode($json, true);
+        $decodedJson = \json_decode($json, false);
 
         if (\json_last_error()) {
             throw new Exception(
@@ -31,7 +31,7 @@ final class Json
             );
         }
 
-        return \json_encode($decodedJson, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES);
+        return \json_encode($decodedJson, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
     }
 
     /*
@@ -63,7 +63,7 @@ final class Json
      */
     private static function recursiveSort(&$json): void
     {
-        if (\is_array($json) === false) {
+        if (!\is_array($json)) {
             // If the object is not empty, change it to an associative array
             // so we can sort the keys (and we will still re-encode it
             // correctly, since PHP encodes associative arrays as JSON objects.)

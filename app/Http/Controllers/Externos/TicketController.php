@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
@@ -24,6 +25,7 @@ class TicketController extends Controller
     protected $referencia  = "";
     protected $tipo_venta  = "";
     protected $title       = "";
+    protected $empresa     = "";
 
 
     public function header($pdf){
@@ -35,7 +37,7 @@ class TicketController extends Controller
         $pdf->SetFont('Arial','B',12);
         $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(150,$this->alto,utf8_decode("COMERCIALIZADORA ARJÍ A.C."),"",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode($this->empresa),"",0,"L");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(212,212,212);
         $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
@@ -106,6 +108,8 @@ class TicketController extends Controller
         $this->referencia  = $Ven->referencia;
         $this->tipo_venta  = strtoupper($Ven->TipoVenta);
         $this->title       = "NOTA DE REMISIÓN";
+        $Emp                 = Empresa::find($Ven->empresa_id);
+        $this->empresa       = $Emp->rs;
 
         $pdf               = new FPDF('P','mm','Letter');
 

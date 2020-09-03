@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Movimiento;
@@ -253,7 +254,8 @@ class VentaController extends Controller
         $venta  = Venta::findOrFail($venta_id);
         $abono  = Ingreso::Abonos($venta_id);
         $apagar = $venta->total - $abono;
-        $metodo_pagos = Venta::$metodos_pago;
+/*        $metodo_pagos = Venta::$metodos_pago;*/
+        $metodo_pagos = GeneralFunctions::$metodos_pagos_complete;
         $user  = Auth::User();
         return view ($oView.$views,
             [
@@ -279,7 +281,9 @@ class VentaController extends Controller
         $referencia    = $data['referencia'];
         $venta_id      = $data['venta_id'];
         $mensaje       = "OK";
-//        dd($total_pagado);
+
+//        dd($referencia);
+
         Venta::pagarVenta($venta_id,$total_a_pagar,$total_pagado,$metodo_pago,$referencia);
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
