@@ -74,8 +74,6 @@ class Ingreso extends Model
         return $query->where('venta_id',$venta_id)->sum('total');
     }
 
-
-
     public function getTipoVentaAttribute() {
         return $this->attributes['tipoventa'] == 0 ? 'Contado' : 'Crédito';
     }

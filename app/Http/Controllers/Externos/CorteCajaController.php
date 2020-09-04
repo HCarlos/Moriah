@@ -90,6 +90,7 @@ class CorteCajaController extends Controller{
         $pdf->SetFont('Arial','',6);
         $totalPagado = $totalContado = $totalCredito = 0;
         foreach ($Movs as $Mov){
+            //dd($Mov);
             $totalPagado += $Mov->total;
             $pdf->setX(10);
             $pdf->SetFont('arialn','',8);
@@ -99,7 +100,7 @@ class CorteCajaController extends Controller{
             $pdf->Cell(58, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
             $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
-            $pdf->Cell(22, $this->alto, substr(utf8_decode($Mov->MetodoPago),0,20), "LTB", 0,"L");
+            $pdf->Cell(22, $this->alto, substr(utf8_decode($Mov->metodo_pago),0,20), "LTB", 0,"L");
             $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
             $totalContado += $Mov->total;
             $pdf->SetFont('AndaleMono','',7);

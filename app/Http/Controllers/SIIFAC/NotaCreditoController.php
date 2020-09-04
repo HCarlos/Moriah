@@ -121,7 +121,8 @@ class NotaCreditoController extends Controller
         $msg = $request->manage();
         if ($msg == "OK"){
             $fecha = Carbon::now()->format('ymd');
-            $fecha = $this->F->setDateTo6Digit($fecha);
+            //$fecha = $this->F->setDateTo6Digit($fecha);
+            //dd($fecha);
             return redirect('index_notacredito/'. $fecha);
         }else{
             $data = $request->all();
