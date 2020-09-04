@@ -61,7 +61,7 @@
                                         <td>{{ $ing->f_pagado }}</td>
                                         <td>{{ $ing->cliente->FullName }}</td>
                                         <td>{{ $ing->vendedor->FullName }}</td>
-                                        <td>{{ $ing->metodo_pago }}</td>
+                                        <td>{{ $ing->metodo_pago.' '.$ing->referencia }}</td>
                                         <td class="text-right font_Roboto_Mono_400">{{ $ing->total}} </td>
                                         <td >
                                             <div class="visible-desktop action-buttons">

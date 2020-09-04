@@ -11,6 +11,7 @@ use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\Producto;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
+use App\Models\SIIFAC\NotaCredito;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -237,7 +238,7 @@ class VentaController extends Controller
                     'paquete_id' => $venta->paquete_id,
                     'pedido_id' => $venta->pedido_id,
                     'totalVenta' => $venta->total,
-                    'abonoVenta' => $venta->total_pagado,
+                    'abonoVenta' => $venta->Abonos,
                     'Url' => '/add_venta_detalle_normal_ajax',
                 ]
             );
@@ -448,6 +449,89 @@ class VentaController extends Controller
             ]
         );
     }
+
+
+
+    public function ya_se_utilizo_nota_credito_ajax(Request $request){
+        $msg = "OK";
+        $Ok  = "OK";
+        $fueUtilizada = false;
+        $data = $request->all();
+        $nota_credito_id = $data['referencia'];
+        $total_a_pagar   = $data['total_pagado'];
+        $metodo_pago     = intval($data['metodo_pago']);
+        $NC = NotaCredito::find($nota_credito_id);
+        if ( $NC ){
+            NotaCredito::totalNotaCreditoFromDetalle($nota_credito_id);
+            $totalPagado = NotaCredito::getTotalNotaCreditoFromIngresos($nota_credito_id);
+            $tT = $totalPagado + $total_a_pagar;
+            $dif = $NC->Saldo ;
+            if ( $tT > $NC->importe && ($dif > 0 || $dif < 0) ) {
+                $fueUtilizada = true;
+                $msg = "El pago excede el límite de la Nota de Crédito. \n\nMonto de la Nota de Crédito: $NC->importe \nMonto utilizado: $totalPagado \nSaldo: $dif ";
+                $Ok = "Error";
+            }else if ( $total_a_pagar <= 0 ){
+                    $fueUtilizada = true;
+                    $msg = "No se aceptan pagos menores a 1. \n\nMonto de la Nota de Crédito: $NC->importe \nMonto utilizado: $totalPagado \nSaldo: $dif ";
+                    $Ok  = "Error";
+            }else{
+                $fueUtilizada = ($totalPagado >= $NC->importe);
+                if ($fueUtilizada){
+                    $msg = "Nota de Crédito ya fue utilizada \n\nNota de Crédito: $NC->importe \nUtilizado: $totalPagado \nSaldo: $dif";
+                    $Ok  = "Error";
+                }
+            }
+        }else{
+            $msg = "Nota de Crédito no existe!";
+            $Ok  = "Error";
+        }
+        return Response::json(['mensaje' => $msg, 'data' => $Ok, 'status' => '200'], 200);
+
+    }
+
+/* ANULAR VENTA */
+
+    public function call_anular_venta_ajax($venta_id)
+    {
+        $oView  = 'catalogos.operaciones.';
+        $views  = 'anular_venta_ajax';
+        $venta  = Venta::findOrFail($venta_id);
+        $abono  = Ingreso::Abonos($venta_id);
+        $apagar = $venta->total - $abono;
+        $movtos_inventario = GeneralFunctions::$movtos_inventario;
+        $user  = Auth::User();
+        return view ($oView.$views,
+            [
+                'user'              => $user,
+                'venta'             => $venta,
+                'venta_id'          => $venta_id,
+                'total'             => $venta->total,
+                'total_abonos'      => $abono,
+                'movtos_inventario' => $movtos_inventario,
+                'total_a_pagar'     => $apagar,
+                'Url'               => '/anular_venta_ajax',
+            ]
+        );
+    }
+
+    public function anular_venta_ajax(Request $request)
+    {
+        $data              = $request->all();
+        $total_pagado      = $data['total_pagado'];
+        $total_a_pagar     = $data['total_a_pagar'];
+        $movtos_inventario = intval($data['movtos_inventario']);
+        $referencia        = $data['referencia'];
+        $venta_id          = $data['venta_id'];
+        $mensaje           = "Venta anulada con éxito!";
+
+        Venta::anularVenta($venta_id, $total_a_pagar, $total_pagado, $movtos_inventario, $referencia);
+
+        return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
+
+    }
+
+/* FIN ANULAR VENTA */
+
 
     public function destroy($id=0){
         $venta = Venta::findOrFail($id);

@@ -41,7 +41,11 @@
                 <div class="col-md-4">
                     <select name="metodo_pago" id="metodo_pago" class="form-control" size="1">
                         @foreach ($metodo_pagos as $key => $value)
-                            <option value="{{ $key }}"@if ($key == 3) selected @endif>{{ $value }}</option>
+                            @if ($value!=="-")
+                            <option value="{{ $key }}" @if ($key == 1) selected @endif>{{ $value }}</option>
+                            @else
+                                <option disabled>────────────────────</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -51,14 +55,15 @@
                 </div>
                 <label for = "total_pagado" class="col-md-1 col-form-label text-md-left">Pago</label>
                 <div class="col-md-2">
-                    <input type="number" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" max="{{$total_a_pagar}}" required {{$venta->isPagado() ? 'disabled' : ''}} />
+                    <input type="text" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" min="1" max="{{$total_a_pagar}}" required {{$venta->isPagado() ? 'disabled' : ''}} pattern="[-+]?[0-9]*[.,]?[0-9]+" />
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-10"></div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary" id="btnVentaDetalleNormalSubmit" {{$venta->isPagado() ? 'disabled' : ''}}>
+                <div class="col-md-9"></div>
+                <div class="col-md-3 ">
+                    <span id="preloader_siifac"><i class="fa fa-cog fa-spin green pull-left"></i> Pagando...</span>
+                    <button type="submit" class="btn btn-primary pull-right" id="btnVentaDetalleNormalSubmit" {{$venta->isPagado() ? 'disabled' : ''}}>
                         Pagar
                     </button>
                 </div>
@@ -69,16 +74,83 @@
     </div>
 </div>
 <script >
+    $("#preloader_siifac").hide();
 
-    var Url      = "{{$Url}}";
-    var Venta_Id = "{{$venta_id}}";
-    // alert(Url);
+    var Url         = "{{$Url}}";
+    var Venta_Id    = "{{$venta_id}}";
+    var totalAPagar = "{{$total_a_pagar}}";
+    var mensaje     = "Error al pagar";
+    var msg         = "Error";
 
     if ( $("#frmPagoVenta0") ) {
 
         $("#frmPagoVenta0").on("submit", function (event) {
             event.preventDefault();
+            showPreloader();
             var frmSerialize = $("#frmPagoVenta0").serialize();
+            var metodo_pago = $("#metodo_pago").val();
+            var referencia = $("#referencia").val();
+            msg = validMetodoPago(metodo_pago, referencia, frmSerialize);
+            if ( msg == "OK" ){
+                realizarPago(Url, frmSerialize);
+            }else{
+                 if ( !isNaN(msg) )
+                    alert(msg);
+            }
+            hidePreloader();
+            return false;
+
+        });
+
+        function validMetodoPago(metodoPago,referencia,frmSerialize){
+            var mP = parseInt(metodoPago);
+            var ref = Number.parseInt(referencia,10);
+            var total_pagado = parseFloat($("#total_pagado").val());
+            msg = "OK";
+            switch(mP){
+                case 0:
+                    msg = validIsPago(total_pagado,totalAPagar, mP);
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    if ( $.trim(referencia) == "" ) msg = "Falta la referencia";
+                    else msg = validIsPago(total_pagado,totalAPagar, mP);
+                    break;
+                case 5:
+                    if ( isNaN(ref) ) msg = "Falta la referencia";
+                    else msg = yaSeUtilizoLaNotaDeCredito(frmSerialize);
+                    break;
+                default:
+                    break;
+            }
+            return msg;
+        }
+
+        function yaSeUtilizoLaNotaDeCredito(frmSerialize){
+            $.ajax({
+                cache: false,
+                type: 'post',
+                url: '/ya_se_utilizo_nota_credito_ajax',
+                data:  frmSerialize,
+                dataType: 'json',
+                success: function(data) {
+                    msg = data.mensaje;
+                    hidePreloader();
+                    if (msg != "OK") alert(msg);
+                    else realizarPago(Url, frmSerialize);
+                    return msg;
+                }
+            });
+
+        }
+
+        function realizarPago(Url, frmSerialize){
             $.ajax({
                 cache: false,
                 type: 'post',
@@ -86,19 +158,65 @@
                 data:  frmSerialize,
                 dataType: 'json',
                 success: function(data) {
-                    if (data.mensaje == "OK"){
-                        alert('Pago realizado éxito');
-                        $("#myModal").modal( 'hide' );
-                        window.location.href = "/print_venta_detalle/"+Venta_Id;
-                    }else{
-                        alert(data.mensaje);
+                    if (data.data == "OK"){
+                        //alert(data.mensaje);
+                        window.open(
+                            '/print_venta_detalle/'+Venta_Id,
+                            '_blank'
+                        );
+                        document.location.reload();
                     }
+                    return data.data;
                 }
             });
 
+        }
+
+        function showPreloader(){
+            $("#preloader_siifac").show();
+            $("#btnVentaDetalleNormalSubmit").prop('disabled',true);
+        }
+
+        function hidePreloader(){
+            $("#preloader_siifac").hide();
+            $("#btnVentaDetalleNormalSubmit").prop('disabled',false);
+        }
+
+        $("#metodo_pago").on("change",function(event){
+            event.preventDefault();
+            var valor = Number.parseFloat($(this).val());
+            if (valor == 0 || valor == 1 || valor == 2 || valor == 3 || valor == 4 || valor == 6 || valor == 7 || valor == 8 || valor == 9 ){
+                var total_pagado = parseFloat( $("#total_pagado").val() );
+                $("#total_pagado").val(total_pagado);
+                $("#total_pagado").prop('readonly',false);
+            }
         });
+
+
+        function validIsPago(total_pagado,totalAPagar, mP){
+            var msg = "OK";
+            switch(mP){
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    if (total_pagado <= 0 || total_pagado > totalAPagar){
+                        msg = "Hay un problema con el pago";
+                    }
+                    break;
+            }
+            return msg;
+        }
+
         $("#codigo").focus();
 
+        // alert("Entro bien")
 
     }
 

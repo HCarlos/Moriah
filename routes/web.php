@@ -147,12 +147,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_venta_detalle/{venta_id}', 'SIIFAC\VentaController@edit')->name('ventaDetalleEdit');
     Route::get('/destroy_venta/{id}', 'SIIFAC\VentaController@destroy')->name('ventaDestroy/');
     Route::get('/form_pagar_venta/{venta_id}', 'SIIFAC\VentaController@call_pagar_venta_ajax')->name('callPagarVentaAjax/');
+    Route::get('/form_anular_venta/{venta_id}', 'SIIFAC\VentaController@call_anular_venta_ajax')->name('callAnularVentaAjax/');
+    Route::post('/anular_venta_ajax','SIIFAC\VentaController@anular_venta_ajax')->name('anularVentaAjax/');
     Route::get('/show_prop_venta/{venta_id}', 'SIIFAC\VentaController@call_show_prop_ajax')->name('callShowPropVentaAjax/');
     Route::post('/pagar_venta_ajax','SIIFAC\VentaController@pagar_venta_ajax')->name('pagarVentaAjax/');
     Route::get('/llamar_busqueda_individual_ajax/{tipo}','SIIFAC\VentaController@llamar_busquedaIndividual')->name('llamarBusquedaIndividualAjax/');
     Route::post('/busqueda_individual','SIIFAC\VentaController@busquedaIndividual')->name('busquedaIndividual/');
     Route::get('/llamar_venta_fecha_ajax','SIIFAC\VentaController@llamar_venta_en_fecha')->name('llamarVentaFechaAjax/');
     Route::post('/ventas_rango_fechas','SIIFAC\VentaController@ventas_rango_fechas')->name('ventasRangoFechas/');
+    Route::post('/ya_se_utilizo_nota_credito_ajax','SIIFAC\VentaController@ya_se_utilizo_nota_credito_ajax')->name('yaSeUtilizoNotaCreditoAjax/');
 
     // Venta_Detalles
     Route::get('/destroy_ventadetalle/{id}', 'SIIFAC\VentaDetalleController@destroy')->name('ventaDetalleDestroy/');

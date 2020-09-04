@@ -72,10 +72,12 @@ class IngresoController extends Controller
 
     public function destroy($id=0){
         $msg = "Ingreso eliminado con éxito";
+        $OK = "OK";
         try {
 
             $Ing = Ingreso::find($id);
             if ( intval($Ing->metodos_pagos) == 5){
+                $OK = "Error";
                 $msg = "No se puede eliminar el ingreso de una Nota de Crédito";
             }else{
                 $vID = $Ing->venta_id;
@@ -89,7 +91,7 @@ class IngresoController extends Controller
         }catch (Exception $e){
             $msg = $e->getMessage();
         }
-        return Response::json(['mensaje' => $msg, 'data' => $msg, 'status' => '200'], 200);
+        return Response::json(['mensaje' => $msg, 'data' => $OK, 'status' => '200'], 200);
     }
 
 
