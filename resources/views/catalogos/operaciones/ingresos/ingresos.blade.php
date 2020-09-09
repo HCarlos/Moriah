@@ -77,6 +77,21 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" class="text-right">
+                                        <h3 class="smaller green font_Roboto_Mono_400">
+                                            Total $
+                                        </h3>
+                                    </td>
+                                    <td class="text-right" id="totalVenta">
+                                        <h3 class=" smaller orange font_Roboto_Mono_400">
+                                            {{$totalIngresos}}
+                                        </h3>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                     </table>
                 @endif
             </div>

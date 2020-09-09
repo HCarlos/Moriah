@@ -53,7 +53,7 @@ class IngresoController extends Controller
                 'ingresos' => $items,
                 'Ingreso' => $totalVenta,
                 'user' => $user,
-                'totalVentas' => number_format($totalVenta,2,'.',',') ,
+                'totalIngresos' => number_format($totalVenta,2,'.',',') ,
                 'fecha' => $F->fechaEspanol($f),
             ]
         );
