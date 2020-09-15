@@ -51,7 +51,7 @@ class NotaCreditoDetalleController extends Controller
     }
 
     public function destroy($id=0){
-        $msg = "None";
+        $OK = "OK";
         try {
             $ncd = NotaCreditoDetalle::findOrFail($id);
             $notacredito_id = $ncd->nota_credito_id;
@@ -70,9 +70,10 @@ class NotaCreditoDetalleController extends Controller
                 $msg = 'Registro eliminado con éxito';
             }else{
                 $msg = 'No se puede quitar el elemento';
+                $OK = $msg;
             }
         }catch (\Exception $e){
-            $msg = $e->getMessage();
+            $OK = $e->getMessage();
         }
 
         return Response::json(['mensaje' => $msg, 'data' => $msg, 'status' => '200'], 200);

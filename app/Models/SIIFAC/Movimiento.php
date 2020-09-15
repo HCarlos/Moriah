@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Classes\GeneralFunctions;
 use Request;
 
-class Movimiento extends Model
-{
+class Movimiento extends Model{
+    
     use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
@@ -130,6 +131,25 @@ class Movimiento extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
+    // public function getStatusAttribute() {
+    //     $mp = "";
+    //     switch ($this->attributes['status']){
+    //         case 0:
+    //             $mp = "INICIO";
+    //             break;
+    //         case 1:
+    //             $mp = "COMPRA";
+    //             break;
+    //         case 2:
+    //             $mp = "VENTA";
+    //             break;
+    //         default:
+    //             $mp = "Indefinido";
+    //             break;
+    //     }
+    //     return $mp;
+    // }
+
     public function getStatusAttribute() {
         $mp = "";
         switch ($this->attributes['status']){
@@ -142,12 +162,100 @@ class Movimiento extends Model
             case 2:
                 $mp = "VENTA";
                 break;
+            case 11:
+                $mp = "ENTRADA NC";
+                break;
+            case 12:
+                $mp = "SALIDA NC";
+                break;
+            case 200:
+                $mp = "FALTANTE";
+                break;
+            case 300:
+                $mp = "MERMA";
+                break;
+            case 400:
+                $mp = "DEV S/COMPRA";
+                break;
+            case 500:
+                $mp = "SOBRANTE";
+                break;
+            case 600:
+                $mp = "DEV P/PROV";
+                break;
             default:
                 $mp = "Indefinido";
                 break;
         }
-        return $mp;
+
+        return GeneralFunctions::getTiposMovto( $this->attributes['status'] ); // $mp;
+
     }
+
+
+    public static function quitarDesdeNotaCreditoDetalle($NCd)
+    {
+        $Venta = Venta::findOrFail($NCd->venta_id);
+        $Vd = VentaDetalle::find($NCd->venta_detalle_id);
+        $Prod = Producto::findOrFail($Vd->producto_id);
+        $cu         = $Prod->cu;
+        $cantidad   = $NCd->cant;
+        $Existencia = $Prod->exist - $NCd->cant;
+        $saldo      = $cu * $cantidad;
+
+        $Fecha = Carbon::now();
+
+        $user = Auth::User();
+
+        $Mov  =  static::create([
+            'user_id'          => $Venta->vendedor_id,
+            'cliente_id'       => $NCd->user_id,
+            'venta_id'         => $Vd->venta_id,
+            'venta_detalle_id' => $Vd->id,
+            'producto_id'      => $Prod->id,
+            'paquete_id'       => $Vd->paquete_id,
+            'pedido_id'        => $Vd->pedido_id,
+            'empresa_id'       => $Vd->empresa_id,
+            'proveedor_id'     => $Prod->proveedor_id,
+            'almacen_id'       => $Prod->almacen_id,
+            'medida_id'        => $Prod->medida_id,
+            'folio'            => $Vd->folio,
+            'clave'            => $Vd->clave_producto,
+            'codigo'           => $Vd->codigo,
+            'ejercicio'        => $Fecha->year,
+            'periodo'          => $Fecha->month,
+            'fecha'            => $Fecha,
+            'salida'           => $NCd->cant,
+            'existencia'       => $Existencia,
+            'cu'               => $Prod->cu,
+            'pu'               => $NCd->pv,
+            'haber'            => $NCd->importe,
+            'descto'           =>  $Vd->descto,
+            'importe'          =>  $Vd->subtotal,
+            'iva'              =>  $Vd->iva,
+            'saldo'            =>  $Vd->total,
+            'status'           => 12,
+            'idemp'            => 1,
+            'ip'               => Request::ip(),
+            'host'             => Request::getHttpHost(),
+        ]);
+        $Prod->exist = $Existencia;
+        $Prod->saldo = $saldo;
+        $Prod->save();
+
+        $Mov->users()->attach($Venta->vendedor_id);
+        $Mov->clientes()->attach($Vd->user_id);
+        $Mov->empresas()->attach($Vd->empresa_id);
+//        $Mov->ventas()->attach($Vd->venta_id);
+        $Mov->productos()->attach($Prod->id);
+        $Mov->proveedores()->attach($Prod->proveedor_id);
+        $Mov->almacenes()->attach($Vd->almacen_id);
+        $Mov->medidas()->attach($Prod->medida_id);
+
+        return $Mov;
+
+    }
+    
 
     public static function agregarDesdeVentaDetalle($Vd)
     {
