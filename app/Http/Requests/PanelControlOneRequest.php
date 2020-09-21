@@ -79,10 +79,6 @@ class PanelControlOneRequest extends FormRequest
                 if ($tipo_venta > -1)
                     $q->where('tipoventa', $tipo_venta);
             })
-            ->whereHas('empresas', function ($q) use($empresa_id) {
-                if ($empresa_id > 0)
-                    $q->where('empresa_id', $empresa_id);
-            })
             ->whereHas('vendedores', function ($q) use($vendedor_id) {
                 if ($vendedor_id > 0)
                     $q->where('vendedor_id', $vendedor_id);
@@ -129,10 +125,6 @@ class PanelControlOneRequest extends FormRequest
             ->where(function ($q) use($tipo_venta) {
                 if ($tipo_venta > -1)
                     $q->where('tipoventa', $tipo_venta);
-            })
-            ->whereHas('empresas', function ($q) use($empresa_id) {
-                if ($empresa_id > 0)
-                    $q->where('empresa_id', $empresa_id);
             })
             ->whereHas('vendedores', function ($q) use($vendedor_id) {
                 if ($vendedor_id > 0)
