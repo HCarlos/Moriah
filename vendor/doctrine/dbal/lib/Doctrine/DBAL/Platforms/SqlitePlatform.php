@@ -2,7 +2,7 @@
 
 namespace Doctrine\DBAL\Platforms;
 
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Constraint;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
@@ -697,7 +697,7 @@ class SqlitePlatform extends AbstractPlatform
     protected function getPreAlterTableIndexForeignKeySQL(TableDiff $diff)
     {
         if (! $diff->fromTable instanceof Table) {
-            throw new DBALException(
+            throw new Exception(
                 'Sqlite platform requires for alter table the table diff with reference to original table schema'
             );
         }
@@ -720,7 +720,7 @@ class SqlitePlatform extends AbstractPlatform
     protected function getPostAlterTableIndexForeignKeySQL(TableDiff $diff)
     {
         if (! $diff->fromTable instanceof Table) {
-            throw new DBALException(
+            throw new Exception(
                 'Sqlite platform requires for alter table the table diff with reference to original table schema'
             );
         }
@@ -792,11 +792,6 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function supportsForeignKeyConstraints()
     {
-        return true;
-    }
-
-    public function supportsCreateDropForeignKeyConstraints(): bool
-    {
         return false;
     }
 
@@ -805,7 +800,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getCreatePrimaryKeySQL(Index $index, $table)
     {
-        throw new DBALException('Sqlite platform does not support alter primary key.');
+        throw new Exception('Sqlite platform does not support alter primary key.');
     }
 
     /**
@@ -813,10 +808,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getCreateForeignKeySQL(ForeignKeyConstraint $foreignKey, $table)
     {
-        throw new DBALException(
-            'Sqlite platform does not support alter foreign key, '
-            . 'the table must be fully recreated using getAlterTableSQL.'
-        );
+        throw new Exception('Sqlite platform does not support alter foreign key.');
     }
 
     /**
@@ -824,10 +816,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getDropForeignKeySQL($foreignKey, $table)
     {
-        throw new DBALException(
-            'Sqlite platform does not support alter foreign key, '
-            . 'the table must be fully recreated using getAlterTableSQL.'
-        );
+        throw new Exception('Sqlite platform does not support alter foreign key.');
     }
 
     /**
@@ -835,7 +824,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public function getCreateConstraintSQL(Constraint $constraint, $table)
     {
-        throw new DBALException('Sqlite platform does not support alter constraint.');
+        throw new Exception('Sqlite platform does not support alter constraint.');
     }
 
     /**
@@ -875,7 +864,7 @@ class SqlitePlatform extends AbstractPlatform
 
         $fromTable = $diff->fromTable;
         if (! $fromTable instanceof Table) {
-            throw new DBALException(
+            throw new Exception(
                 'Sqlite platform requires for alter table the table diff with reference to original table schema'
             );
         }
