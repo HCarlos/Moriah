@@ -13,7 +13,7 @@
         "fideloper/proxy": "^4.4.0",
         "fruitcake/laravel-cors": "^2.0.2",
         "intervention/image": "^2.5.1",
-        "laravel/framework": "7.28",
+        "laravel/framework": "^7.30.4",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "php-parallel-lint/php-console-color": "^0.3.0",

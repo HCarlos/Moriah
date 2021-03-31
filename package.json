@@ -13,6 +13,7 @@
         "axios": "^0.21.1",
         "bootstrap": "^4.6.0",
         "cross-env": "^7.0.3",
+        "is-svg": "^4.3.1",
         "jquery": "^3.6.0",
         "laravel-mix": "^6.0.13",
         "lodash": "^4.17.21",
