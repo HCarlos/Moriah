@@ -25,6 +25,10 @@ class Venta extends Model
         'metodo_pago','referencia','total_pagado',
         'empresa_id','paquete_id','pedido_id','vendedor_id',
         'status_venta','idemp','ip','host',
+        'idciclo_ps', 'ciclo','idgrado_ps','grado',
+        'idgrupo_ps', 'grupo','idalumno_ps','alumno',
+        'idtutor_ps', 'turor','idfamilia_ps','familia',
+        'alu_ap_paterno', 'alu_ap_materno','alu_nombre',
     ];
 
     protected $casts = ['isimp'=>'boolean','ispagado'=>'boolean','iscredito'=>'boolean','iscontado'=>'boolean',];
@@ -195,25 +199,43 @@ class Venta extends Model
     }
 
     public static function venderPedido($vendedor_id, $pedido_id, $tipoventa, $user_id, $cantidad){
-        $paq   = Pedido::find($pedido_id);
+        $Ped   = Pedido::find($pedido_id);
         $timex = Carbon::now()->format('ymdHisu');
         $timex = substr($timex,0,16);
 
         $Ven  =  static::create([
             'fecha'       => now(),
-            'clave'       => $paq->clave,
+            'clave'       => $Ped->clave,
             'tipoventa'   => $tipoventa,
             'cuenta'      => $timex,
             'cantidad'    => $cantidad,
-            'total'       => $paq->importe,
-            'empresa_id'  => $paq->empresa_id,
+            'total'       => $Ped->importe,
+            'empresa_id'  => $Ped->empresa_id,
             'paquete_id'  => 0,
             'pedido_id'   => $pedido_id,
             'user_id'     => $user_id,
             'vendedor_id' => $vendedor_id,
+
+            'idciclo_ps'     => $Ped->idciclo_ps,
+            'ciclo'          => $Ped->ciclo,
+            'idgrado_ps'     => $Ped->idgrado_ps,
+            'grado'          => $Ped->grado,
+            'idgrupo_ps'     => $Ped->idgrupo_ps,
+            'grupo'          => $Ped->grupo,
+            'idalumno_ps'    => $Ped->idalumno_ps,
+            'alumno'         => $Ped->alumno,
+            'idtutor_ps'     => $Ped->idtutor_ps,
+            'turor'          => $Ped->turor,
+            'idfamilia_ps'   => $Ped->idfamilia_ps,
+            'familia'        => $Ped->familia,
+            'alu_ap_paterno' => $Ped->alu_ap_paterno,
+            'alu_am_paterno' => $Ped->alu_am_paterno,
+            'alu_nombre'     => $Ped->alu_nombre,
+
+
         ]);
 
-        $Ven->empresas()->attach($paq->empresa_id);
+        $Ven->empresas()->attach($Ped->empresa_id);
         $Ven->pedidos()->attach($pedido_id);
         $Ven->users()->attach($user_id);
         $Ven->vendedores()->attach($vendedor_id);
@@ -240,6 +262,7 @@ class Venta extends Model
             'pedido_id'   => 0,
             'user_id'     => $user_id,
             'vendedor_id' => $vendedor_id,
+
         ]);
 
         $Ven->empresas()->attach($Prod->empresa_id);

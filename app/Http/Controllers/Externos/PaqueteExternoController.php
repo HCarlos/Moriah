@@ -228,7 +228,7 @@ class PaqueteExternoController extends Controller{
         }
         $User = $userPS;
 
-        $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet);
+        $ped = Pedido::createPedidoFromPlatsourceTutor($User->id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet,$CadenaUsuario);
  
         $pd = PedidoDetalle::select('id','pedido_id','producto_id','codigo','descripcion_producto','cant','pv')
         ->where('pedido_id',$ped->id)

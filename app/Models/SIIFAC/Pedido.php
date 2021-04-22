@@ -21,6 +21,10 @@ class Pedido extends Model
         'user_id', 'paquete_id', 'descripcion_pedido','fecha','codigo','root','filename','importe',
         'fecha_vencimiento', 'isactivo', 'referencia', 'observaciones','total_internet', 
         'empresa_id', 'status_pedido','idemp','ip','host',
+        'idciclo_ps', 'ciclo','idgrado_ps','grado',
+        'idgrupo_ps', 'grupo','idalumno_ps','alumno',
+        'idtutor_ps', 'turor','idfamilia_ps','familia',
+        'alu_ap_paterno', 'alu_ap_materno','alu_nombre',
     ];
 
     protected $casts = ['isactivo'=>'boolean',];
@@ -120,7 +124,7 @@ class Pedido extends Model
     }
 
 
-    public static function createPedidoFromPlatsourceTutor($User_id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet)
+    public static function createPedidoFromPlatsourceTutor($User_id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet,$CadenaUsuario)
     {
         $f = new FuncionesController();
         $user = User::find($User_id);
@@ -130,24 +134,68 @@ class Pedido extends Model
         $date = Carbon::now();
         $daysToAdd = 3;
         $date = $date->addDays($daysToAdd);
-        
+
+        /*
+        CadenaUsuario =
+            item . data + '|' +0
+            item.idgrupo+'|'+1
+            item.idfamilia+'|'+2
+            item.idalumno+'|'+3
+            item.ap_paterno_tutor+'|'+4
+            item.ap_materno_tutor+'|'+5
+            item.nombre__tutor+'|'+6
+            item.cel1_tutor+'|'+7
+            item.tel1_tutor+'|'+8
+            item.email_tutor1+'|'+9
+            item.username_tutor+'|'+10
+            item.idcliclo+'|'+11
+            item.ciclo+'|'+12
+            item.grupo+'|'+13
+            item.nombre+'|'+14
+            item.ap_paterno+'|'+15
+            item.ap_materno+'|'+16
+            item.grado+'|'+17
+            item.idciclo+'|'+18
+            item.ciclo;+ 19
+            item.familia+'|'+20
+*/
+        $Alu = explode('|',$CadenaUsuario);
+
+
         $ped = static::create([
-            'user_id' => $User_id,
-            'paquete_id' => $IdPaquete,
+            'user_id'           => $User_id,
+            'paquete_id'        => $IdPaquete,
             'descripcion_pedido' => $paq->descripcion_paquete,
-            'codigo' => $paq->codigo,
-            'filename' => $paq->root,
-            'filename' => $paq->filename,
-            'importe' => $paq->importe,
-            'fecha' => NOW(),
-            'empresa_id' => $IdEmpresa,
-            'idemp' => $paq->idemp,
+            'codigo'            => $paq->codigo,
+            'filename'          => $paq->root,
+            'filename'          => $paq->filename,
+            'importe'           => $paq->importe,
+            'fecha'             => NOW(),
+            'empresa_id'        => $IdEmpresa,
+            'idemp'             => $paq->idemp,
             'fecha_vencimiento' => $date,
-            'referencia' => $Referencia,
-            'observaciones' => $Observaciones,
-            'total_internet' => $TotalInternet,
-            'ip' => $f->getIHE(1),
-            'host' => $f->getIHE(1),
+            'referencia'        => $Referencia,
+            'observaciones'     => $Observaciones,
+            'total_internet'    => $TotalInternet,
+
+            'idciclo_ps'        => $Alu[11],
+            'ciclo'             =>  $Alu[12],
+            'idgrado_ps'        =>  0,
+            'grado'             =>  $Alu[17],
+            'idgrupo_ps'        =>  $Alu[1],
+            'grupo'             =>  $Alu[13],
+            'idalumno_ps'       =>  $Alu[3],
+            'alumno'            =>  $Alu[14],
+            'idtutor_ps'        => 0,
+            'turor'             => $Alu[10],
+            'idfamilia_ps'      => $Alu[2],
+            'familia'           => $Alu[20],
+            'alu_ap_paterno'    => $Alu[14],
+            'alu_am_paterno'    => $Alu[15],
+            'alu_nombre'        => $Alu[16],
+
+            'ip'                => $f->getIHE(1),
+            'host'              => $f->getIHE(1),
         ]);
         $ped->users()->attach($user);
         $ped->empresas()->attach($emp);
