@@ -190,7 +190,7 @@ class Pedido extends Model
             'idfamilia_ps'      => $Alu[2],
             'familia'           => $Alu[19],
             'alu_ap_paterno'    => $Alu[14],
-            'alu_am_paterno'    => $Alu[15],
+            'alu_ap_materno'    => $Alu[15],
             'alu_nombre'        => $Alu[16],
 
             'ip'                => $f->getIHE(1),

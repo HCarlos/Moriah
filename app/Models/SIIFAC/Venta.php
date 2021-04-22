@@ -229,7 +229,7 @@ class Venta extends Model
             'idfamilia_ps'   => $Ped->idfamilia_ps,
             'familia'        => $Ped->familia,
             'alu_ap_paterno' => $Ped->alu_ap_paterno,
-            'alu_am_paterno' => $Ped->alu_am_paterno,
+            'alu_ap_materno' => $Ped->alu_ap_materno,
             'alu_nombre'     => $Ped->alu_nombre,
 
 
