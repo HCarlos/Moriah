@@ -156,8 +156,7 @@ class Pedido extends Model
             item.ap_materno+'|'+16
             item.grado+'|'+17
             item.idciclo+'|'+18
-            item.ciclo;+ 19
-            item.familia+'|'+20
+            item.familia+'|'+19
 */
         $Alu = explode('|',$CadenaUsuario);
 
@@ -189,7 +188,7 @@ class Pedido extends Model
             'idtutor_ps'        => 0,
             'turor'             => $Alu[10],
             'idfamilia_ps'      => $Alu[2],
-            'familia'           => $Alu[20],
+            'familia'           => $Alu[19],
             'alu_ap_paterno'    => $Alu[14],
             'alu_am_paterno'    => $Alu[15],
             'alu_nombre'        => $Alu[16],
