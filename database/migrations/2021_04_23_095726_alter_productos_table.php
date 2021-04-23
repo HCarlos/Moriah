@@ -14,8 +14,17 @@ class AlterProductosTable extends Migration
     public function up(){
 
         $tableNames = config('siifac.table_names');
+
         Schema::table($tableNames['productos'], function (Blueprint $table) use ($tableNames) {
             $table->unsignedInteger('status')->default(0)->nullable();
+        });
+
+        Schema::table($tableNames['pedidos'], function (Blueprint $table) use ($tableNames) {
+            $table->string('username_alu',20)->default('')->nullable();
+        });
+
+        Schema::table($tableNames['ventas'], function (Blueprint $table) use ($tableNames) {
+            $table->string('username_alu',20)->default('')->nullable();
         });
 
     }
@@ -28,8 +37,17 @@ class AlterProductosTable extends Migration
     public function down(){
 
         $tableNames = config('siifac.table_names');
+
         Schema::table($tableNames['productos'], function (Blueprint $table) use ($tableNames) {
             $table->dropColumn('status');
+        });
+
+        Schema::table($tableNames['pedidos'], function (Blueprint $table) use ($tableNames) {
+            $table->dropColumn('username_alu');
+        });
+
+        Schema::table($tableNames['ventas'], function (Blueprint $table) use ($tableNames) {
+            $table->dropColumn('username_alu');
         });
 
     }

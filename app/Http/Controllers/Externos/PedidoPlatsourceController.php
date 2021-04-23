@@ -34,6 +34,8 @@ class PedidoPlatsourceController extends Controller{
     protected $ref3          = "";
     protected $empresa       = "";
     protected $idalumno_ps   = "";
+    protected $username_tutor = "";
+    protected $username_alu  = "";
 
 
     public function header($pdf){
@@ -72,7 +74,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(10,$this->alto,$this->cliente_id,0,0,"R");
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(105,$this->alto,utf8_decode(trim($this->cliente)),0,0,"L");
+        $pdf->Cell(105,$this->alto,utf8_decode(trim($this->cliente.' - '.$this->username_tutor)),0,0,"L");
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(15,$this->alto,"ESTATUS:",0,0,"R");
         $pdf->SetFont('Arial','',10);
@@ -83,7 +85,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(10,$this->alto,$this->idalumno_ps,0,0,"R");
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(105,$this->alto,utf8_decode(trim($this->alumno)),0,0,"L");
+        $pdf->Cell(105,$this->alto,utf8_decode(trim($this->alumno.' - '.$this->username_alu)),0,0,"L");
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(15,$this->alto,"GRADO:",0,0,"R");
         $pdf->SetFont('Arial','',10);
@@ -135,10 +137,12 @@ class PedidoPlatsourceController extends Controller{
         $this->ref2 = substr($Ped->referencia,8,4);
         $this->ref3 = substr($Ped->referencia,12,4);
 
-        $this->alumno      = trim($Ped->nombre_completo_alumno);
-        $this->grado       = trim($Ped->grado);
-        $this->grupo       = trim($Ped->grupo);
-        $this->idalumno_ps = $Ped->idalumno_ps;
+        $this->alumno         = trim($Ped->nombre_completo_alumno);
+        $this->grado          = trim($Ped->grado);
+        $this->grupo          = trim($Ped->grupo);
+        $this->idalumno_ps    = $Ped->idalumno_ps;
+        $this->username_tutor = trim($Ped->turor);
+        $this->username_alu   = trim($Ped->username_alu);
 
         $pdf               = new FPDF('P','mm','Letter');
 

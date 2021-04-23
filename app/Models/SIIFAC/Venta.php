@@ -29,6 +29,7 @@ class Venta extends Model
         'idgrupo_ps', 'grupo','idalumno_ps','alumno',
         'idtutor_ps', 'turor','idfamilia_ps','familia',
         'alu_ap_paterno', 'alu_ap_materno','alu_nombre',
+        'username_alu',
     ];
 
     protected $casts = ['isimp'=>'boolean','ispagado'=>'boolean','iscredito'=>'boolean','iscontado'=>'boolean',];
@@ -236,6 +237,7 @@ class Venta extends Model
             'alu_ap_paterno' => $Ped->alu_ap_paterno,
             'alu_ap_materno' => $Ped->alu_ap_materno,
             'alu_nombre'     => $Ped->alu_nombre,
+            'username_alu'   => $Ped->username_alu,
 
 
         ]);

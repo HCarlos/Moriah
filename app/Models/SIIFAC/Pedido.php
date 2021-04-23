@@ -25,6 +25,7 @@ class Pedido extends Model
         'idgrupo_ps', 'grupo','idalumno_ps','alumno',
         'idtutor_ps', 'turor','idfamilia_ps','familia',
         'alu_ap_paterno', 'alu_ap_materno','alu_nombre',
+        'username_alu',
     ];
 
     protected $casts = ['isactivo'=>'boolean',];
@@ -197,6 +198,7 @@ class Pedido extends Model
             'alu_ap_paterno'    => $Alu[14],
             'alu_ap_materno'    => $Alu[15],
             'alu_nombre'        => $Alu[16],
+            'username_alu'      => $Alu[20],
 
             'ip'                => $f->getIHE(1),
             'host'              => $f->getIHE(1),
