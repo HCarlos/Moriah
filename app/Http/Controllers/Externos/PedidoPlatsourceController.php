@@ -25,6 +25,8 @@ class PedidoPlatsourceController extends Controller{
     protected $observaciones = "";
     protected $paquete_id    = 0;
     protected $paquete       = "";
+    protected $alumno        = "";
+    protected $grado         = "";
     protected $ref0          = "";
     protected $ref1          = "";
     protected $ref2          = "";
@@ -74,6 +76,14 @@ class PedidoPlatsourceController extends Controller{
         $pdf->Cell(15,$this->alto,$this->status,0,1,"L");
         $pdf->SetFont('Arial','B',10);
         $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(25,$this->alto,"ALUMNO:",0,0,"R");
+        $pdf->Cell(115,$this->alto,utf8_decode(trim($this->cliente)),0,0,"L");
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(15,$this->alto,"GRADO:",0,0,"R");
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(15,$this->alto,$this->grado,0,1,"L");
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFillColor(192,192,192);
         $pdf->Cell(25,$this->alto,"PAQUETE:",0,0,"R");
         $pdf->Cell(10,$this->alto,$this->paquete_id,0,0,"R");
         $pdf->SetFont('Arial','',10);
@@ -81,7 +91,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(15,$this->alto,"GRUPO:",0,0,"R");
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(15,$this->alto,$this->ref3,0,1,"L");
+        $pdf->Cell(15,$this->alto,$this->grupo,0,1,"L");
         $pdf->setX(10);
         $this->alto  = 10;
         $pdf->SetFont('Arial','B',10);

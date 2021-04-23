@@ -61,6 +61,7 @@ class AlterVentasTable extends Migration
      * @return void
      */
     public function down(){
+
         $tableNames = config('siifac.table_names');
 
         Schema::table($tableNames['ventas'], function (Blueprint $table) use ($tableNames) {
