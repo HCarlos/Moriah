@@ -27,6 +27,7 @@ class PedidoPlatsourceController extends Controller{
     protected $paquete       = "";
     protected $alumno        = "";
     protected $grado         = "";
+    protected $grupo         = "";
     protected $ref0          = "";
     protected $ref1          = "";
     protected $ref2          = "";
