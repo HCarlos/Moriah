@@ -59,7 +59,7 @@ class Pedido extends Model
     }
 
     public function getNombreCompletoAlumnoAttribute(){
-        return $this->attributes['alu_ap_paterno'] . ' - ' . $this->attributes['alu_ap_materno']. ' - ' . $this->attributes['alu_nombre'];
+        return $this->attributes['alu_ap_paterno'] . ' ' . $this->attributes['alu_ap_materno']. ' ' . $this->attributes['alu_nombre'];
     }
 
     public function getFullDescriptionAttribute(){

@@ -69,6 +69,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(25,$this->alto,"CLIENTE:",0,0,"R");
+        $pdf->SetFont('Arial','',8);
         $pdf->Cell(10,$this->alto,$this->cliente_id,0,0,"R");
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,utf8_decode(trim($this->cliente)),0,0,"L");
@@ -79,6 +80,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(25,$this->alto,"ALUMNO:",0,0,"R");
+        $pdf->SetFont('Arial','',8);
         $pdf->Cell(10,$this->alto,$this->idalumno_ps,0,0,"R");
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,utf8_decode(trim($this->alumno)),0,0,"L");
@@ -89,6 +91,7 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(25,$this->alto,"PAQUETE:",0,0,"R");
+        $pdf->SetFont('Arial','',8);
         $pdf->Cell(10,$this->alto,$this->paquete_id,0,0,"R");
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,utf8_decode(trim($this->paquete)),0,0,"L");
