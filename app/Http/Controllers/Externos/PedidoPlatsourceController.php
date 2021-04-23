@@ -33,6 +33,7 @@ class PedidoPlatsourceController extends Controller{
     protected $ref2          = "";
     protected $ref3          = "";
     protected $empresa       = "";
+    protected $idalumno_ps   = "";
 
 
     public function header($pdf){
@@ -78,7 +79,9 @@ class PedidoPlatsourceController extends Controller{
         $pdf->SetFont('Arial','B',10);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(25,$this->alto,"ALUMNO:",0,0,"R");
-        $pdf->Cell(115,$this->alto,utf8_decode(trim($this->cliente)),0,0,"L");
+        $pdf->Cell(10,$this->alto,$this->idalumno_ps,0,0,"R");
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(105,$this->alto,utf8_decode(trim($this->alumno)),0,0,"L");
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(15,$this->alto,"GRADO:",0,0,"R");
         $pdf->SetFont('Arial','',10);
@@ -129,9 +132,10 @@ class PedidoPlatsourceController extends Controller{
         $this->ref2 = substr($Ped->referencia,8,4);
         $this->ref3 = substr($Ped->referencia,12,4);
 
-        $this->alumno = trim($Ped->alumno);
-        $this->grado  = trim($Ped->grado);
-        $this->alumno = trim($Ped->nombre_completo_alumno);
+        $this->alumno      = trim($Ped->nombre_completo_alumno);
+        $this->grado       = trim($Ped->grado);
+        $this->grupo       = trim($Ped->grupo);
+        $this->idalumno_ps = $Ped->idalumno_ps;
 
         $pdf               = new FPDF('P','mm','Letter');
 
