@@ -40,6 +40,7 @@ class Venta extends Model
             6 => "Vales de Despensa", 7 => "Tarjeta de Debito", 8 => "Tarjeta de Servicio",
             9 => "Otros",
         ];
+    protected $appends = ['nombre_completo_alumno' => ''];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -111,6 +112,10 @@ class Venta extends Model
 
     public function isContado(){
         return $this->tipoventa == 0 ? true : false;
+    }
+
+    public function getNombreCompletoAlumnoAttribute(){
+        return $this->attributes['alu_ap_paterno'] . ' - ' . $this->attributes['alu_ap_materno']. ' - ' . $this->attributes['alu_nombre'];
     }
 
     public function getFechaVentaAttribute() {

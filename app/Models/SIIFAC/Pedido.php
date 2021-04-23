@@ -28,6 +28,7 @@ class Pedido extends Model
     ];
 
     protected $casts = ['isactivo'=>'boolean',];
+    protected $appends = ['nombre_completo_alumno' => ''];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -55,6 +56,10 @@ class Pedido extends Model
 
     public function IsEmptyPhoto(){
         return $this->filename == '' ? true : false;
+    }
+
+    public function getNombreCompletoAlumnoAttribute(){
+        return $this->attributes['alu_ap_paterno'] . ' - ' . $this->attributes['alu_ap_materno']. ' - ' . $this->attributes['alu_nombre'];
     }
 
     public function getFullDescriptionAttribute(){

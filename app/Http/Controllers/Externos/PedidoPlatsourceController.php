@@ -128,6 +128,10 @@ class PedidoPlatsourceController extends Controller{
         $this->ref2 = substr($Ped->referencia,8,4);
         $this->ref3 = substr($Ped->referencia,12,4);
 
+        $this->alumno = trim($Ped->alumno);
+        $this->grado  = trim($Ped->grado);
+        $this->alumno = trim($Ped->nombre_completo_alumno);
+
         $pdf               = new FPDF('P','mm','Letter');
 
         $pdf->AliasNbPages();
