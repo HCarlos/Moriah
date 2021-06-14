@@ -501,13 +501,13 @@ class Movimiento extends Model{
     public static function actualizaExistenciasYSaldo($Prod){
         $MovInit = static::query()
         ->where('producto_id',$Prod->id)
-        ->where('status',0)
         ->first();
+        //dd($MovInit);
         try{
             if (!is_null($MovInit)){
                 $Movs = static::query()
                 ->where('producto_id',$Prod->id)
-                ->where('status','>',0)
+                ->where('status','>=',0)
                 ->orderBy('id','asc')
                 ->get();
                 $exist = floatval($MovInit->existencia);
