@@ -134,7 +134,7 @@ class TarjetaMovtosController extends Controller
 
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
-        $pdf->EAN13(10,$pdf->getY()+10,$Prod->codigo,16,.35,'',number_format($pu,2,'.',',') );
+        $pdf->EAN13(10,$pdf->getY()+10,$Prod->codigo,16,.35,'',$pu );
 
         $pdf->Ln();
 
