@@ -510,8 +510,9 @@ class Movimiento extends Model{
                 ->where('status','>=',0)
                 ->orderBy('id','asc')
                 ->get();
-                $exist = floatval($MovInit->existencia);
-                $saldo = floatval($MovInit->saldo);
+                //dd($Movs);
+                $exist = floatval($MovInit->existencia) <= 0 ? 0 :  floatval($MovInit->existencia);
+                $saldo = floatval($MovInit->saldo) <= 0 ? 0 : floatval($MovInit->saldo) ;
                 foreach ($Movs as $mov){
                     $exist0 = $mov->entrada - $mov->salida;
                     $saldo0 = $mov->debe - $mov->haber;
