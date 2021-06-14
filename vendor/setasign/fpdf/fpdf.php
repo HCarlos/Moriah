@@ -106,12 +106,13 @@ function __construct($orientation='P', $unit='mm', $size='A4')
 	{
 		$this->fontpath = FPDF_FONTPATH;
 		if(substr($this->fontpath,-1)!='/' && substr($this->fontpath,-1)!='\\')
-			$this->fontpath .= '/';
+			$this->fontpath .= '/font/';
 	}
-	elseif(is_dir(dirname(__FILE__).'/font'))
-		$this->fontpath = dirname(__FILE__).'/font/';
-	else
-		$this->fontpath = '';
+	elseif(is_dir(dirname(__FILE__).'/public/font')){
+		$this->fontpath = dirname(__FILE__).'/public/font/';
+        //dd($this->fontpath);
+    }else
+		$this->fontpath = './font/';
 	// Core fonts
 	$this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats');
 	// Scale factor
@@ -1138,6 +1139,8 @@ protected function _loadfont($font)
 	// Load a font definition file from the font directory
 	if(strpos($font,'/')!==false || strpos($font,"\\")!==false)
 		$this->Error('Incorrect font definition file name: '.$font);
+        $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix();    
+    //dd($this->fontpath.$font);    
 	include($this->fontpath.$font);
 	if(!isset($name))
 		$this->Error('Could not include font definition file');

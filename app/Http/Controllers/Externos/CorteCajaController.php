@@ -12,6 +12,7 @@ use App\Models\SIIFAC\Venta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\PanelControlOneRequest;
+use FPDF;
 
 class CorteCajaController extends Controller{
 
@@ -23,6 +24,7 @@ class CorteCajaController extends Controller{
     protected $vendedor = "";
     protected $empresa  = "";
     protected $F;
+    
 
     public function __construct(){
         $this->middleware('auth');

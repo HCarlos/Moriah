@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Classes;
 
 use App\Http\Controllers\Classes\PDF_Sector;
 
+//define('FPDF_FONTPATH','font');
+define('FPDF_FONTPATH','./font/');
+
 class PDF_Diag extends PDF_Sector
 {
 
