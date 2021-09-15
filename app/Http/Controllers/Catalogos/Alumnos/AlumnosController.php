@@ -1,0 +1,114 @@
+<?php
+
+namespace App\Http\Controllers\Catalogos\Alumnos;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UserRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+
+class AlumnosController extends Controller{
+
+    protected $tableName = "personas";
+    protected $navCat = "personas";
+    protected $max_reg_con = 0;
+    protected $min_reg_con = 0;
+    protected $lim_max_reg = 0;
+    protected $lim_min_reg = 0;
+    protected $msg = "";
+
+// ***************** MUESTRA EL LISTADO DE Personas ++++++++++++++++++++ //
+    protected function index(Request $request){
+
+        $this->lim_max_reg = config('ibt.limite_maximo_registros');
+        $this->lim_min_reg = config('ibt.limite_minimo_registros');
+        $this->max_reg_con = config('ibt.maximo_registros_consulta');
+        $this->min_reg_con = config('ibt.minimo_registros_consulta');
+
+        @ini_set( 'upload_max_size' , '16384M' );
+        @ini_set( 'post_max_size', '16384M');
+        @ini_set( 'max_execution_time', '960000' );
+
+        $this->tableName = 'alumnos';
+
+        $items = User::query()->whereHas('roles', function ($query) {
+            return $query->whereIn('name', ['ALUMNO']);
+        })->get();
+
+//        $items = User::query()->whereHas('roles', function ($query) {
+//            return $query->whereIn('name', ['PADRE FAMILIA','MADRE FAMILIA','FAMILIAR']);
+//        })->get();
+
+//        $items = User::query()->get()->take(250);
+
+//        $items = User::query()->get();
+
+        $user = Auth::user();
+
+        $request->session()->put('items', $items);
+
+        return view('layouts.User.generales._users_list',[
+            "items"       => $items,
+            "user"        => $user,
+            "tituloTabla" => "Listado de Alumnos",
+            'editItem'    => 'editUsuario',
+            'removeItem'  => 'removeUsuario',
+        ]);
+    }
+
+    protected function editItem($Id){
+
+        $User = User::find($Id);
+        $user = Auth::user();
+
+        return view('layouts.User.generales._user_edit',[
+            "item"     => $User,
+            "User"     => $user,
+            "titulo"   => "Editando el registro: ".$Id,
+            'Route'    => 'updateUsuario',
+            'Method'   => 'POST',
+            'msg'      => $this->msg,
+            'IsUpload' => false,
+            'IsNew'    => false,
+        ]);
+
+    }
+
+    protected function updateItem(UserRequest $request) {
+        $User = $request->manageUser();
+        if (!isset($User)) {
+            abort(404);
+        }
+        $user = Auth::user();
+
+        return view('layouts.User.generales._user_edit',[
+            "item"     => $User,
+            "User"     => $user,
+            "titulo"   => "Editando el registro: ".$User->id,
+            'Route'    => 'updateUsuario',
+            'Method'   => 'POST',
+            'msg'      => $this->msg,
+            'IsUpload' => false,
+            'IsNew'    => false,
+        ]);
+
+    }
+
+
+    // ***************** ELIMINA AL USUARIO VIA AJAX ++++++++++++++++++++ //
+    protected function removeItem($Id = 0, $dato1 = null, $dato2 = null){
+        $code = 'OK';
+        $msg = "Registro Eliminado con éxito!";
+        //dd($Id);
+        $user = User::withTrashed()->findOrFail($Id);
+        $user->forceDelete();
+
+        return Response::json(['mensaje' => $msg, 'data' => $code, 'status' => '200'], 200);
+
+    }
+
+
+
+}
