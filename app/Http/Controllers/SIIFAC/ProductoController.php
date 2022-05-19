@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\BarcodeGeneratorPlusPNG;
 use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaProducto;
@@ -103,8 +104,8 @@ class ProductoController extends Controller
         $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $FamProds    = FamiliaProducto::all()->sortBy('descripcion')->pluck('descripcion', 'id');
         $Medidas     = Medida::all()->sortBy('desc1')->pluck('desc1', 'id');
-        $generator = new BarcodeGeneratorPNG();
         try {
+            $generator = new BarcodeGeneratorPlusPNG();
             $img = base64_encode($generator->getBarcode($items->codigo, $generator::TYPE_EAN_13,5.4,150,array(164,92,92)));
         } catch (BarcodeException $e) {
             $img = '';
