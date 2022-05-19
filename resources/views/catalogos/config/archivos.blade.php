@@ -2,7 +2,7 @@
 
 @section('main-content')
 
-    @panel
+    @component
     @slot('titulo','Archivos de configuración')
     @slot('barra_menu')
     @endslot
@@ -45,7 +45,7 @@
 
         </div>
     @endslot
-@endpanel
+    @endcomponent
 @endsection
 
 @include('catalogos.scripts.dataTable')

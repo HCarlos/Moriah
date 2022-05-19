@@ -1,4 +1,4 @@
-@panel
+@component
 @slot('titulo',"Propiedades de la Venta")
 @slot('barra_menu')
 @endslot
@@ -89,4 +89,4 @@
         </div>
     </div>
 @endslot
-@endpanel
+@endcomponent

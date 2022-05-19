@@ -2,7 +2,7 @@
 
 @section('main-content')
 
-    @panel
+    @component('components.panel')
     @slot('titulo','Parámetros de la Consulta')
     @slot('barra_menu')
     @endslot
@@ -124,7 +124,7 @@
 
         </div>
     @endslot
-    @endpanel
+    @endcomponent
 @endsection
 
 @include('catalogos.scripts.dataTable')

@@ -1,4 +1,4 @@
-@panel
+@component('components.panel')
 @slot('titulo','Busqueda individual')
 @slot('barra_menu')
 @endslot
@@ -33,4 +33,4 @@
         </form>
     </div>
 @endslot
-@endpanel
+@endcomponent
