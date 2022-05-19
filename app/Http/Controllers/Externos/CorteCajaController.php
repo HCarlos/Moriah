@@ -144,7 +144,8 @@ class CorteCajaController extends Controller{
         $pdf  = new PDF_Diag('P','mm','Letter');
         $pdf->addFont('AndaleMono');
         $pdf->addFont('arialn');        
-        $pdf->addFont('AndaleMonoMTStdBold');
+//        $pdf->addFont('AndaleMonoMTStdBold');
+        $pdf->addFont('AndaleMonoMTStdBold','B','AndaleMono.php');
 
         $data = $request->all();
         $tipo_reporte = $data['tipo_reporte'];

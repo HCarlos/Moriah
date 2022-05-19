@@ -84,7 +84,7 @@ class TarjetaMovtosController extends Controller
         $pdf->AliasNbPages();
         $pdf->SetFillColor(192,192,192);
         $pdf->SetFont('Arial','',6);
-        $pdf->addFont('AndaleMono');
+        $pdf->addFont('AndaleMono','','AndaleMono.php');
         $pdf->addFont('arialn');
 
         $this->header($pdf);

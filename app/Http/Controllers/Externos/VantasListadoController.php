@@ -72,7 +72,8 @@ class VantasListadoController extends Controller{
         $pdf  = new PDF_Diag('L','mm','Letter');
         $pdf->addFont('AndaleMono');
         $pdf->addFont('arialn');        
-        $pdf->addFont('AndaleMonoMTStdBold');
+//        $pdf->addFont('AndaleMonoMTStdBold');
+        $pdf->addFont('AndaleMonoMTStdBold','B','AndaleMono.php');
 
         $pdf->AliasNbPages();
         $this->header($pdf);

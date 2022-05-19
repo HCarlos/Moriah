@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Classes\\BarcodeGeneratorPlusPNG' => $baseDir . '/app/Classes/BarcodeGeneratorPlusPNG.php',
     'App\\Classes\\GeneralFunctions' => $baseDir . '/app/Classes/GeneralFunctions.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\Event' => $baseDir . '/app/Events/Event.php',

@@ -557,6 +557,7 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
     );
 
     public static $classMap = array (
+        'App\\Classes\\BarcodeGeneratorPlusPNG' => __DIR__ . '/../..' . '/app/Classes/BarcodeGeneratorPlusPNG.php',
         'App\\Classes\\GeneralFunctions' => __DIR__ . '/../..' . '/app/Classes/GeneralFunctions.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
