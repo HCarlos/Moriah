@@ -2,10 +2,205 @@
 
 namespace App\Classes;
 
-use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\BarcodeGenerator;
+use Picqer\Barcode\Exceptions\BarcodeException;
 use Picqer\Barcode\Exceptions\InvalidCharacterException;
+use Picqer\Barcode\Exceptions\UnknownTypeException;
 
-class BarcodeGeneratorPlusPNG extends BarcodeGeneratorPNG{
+class BarcodeGeneratorPlusPNG extends BarcodeGenerator{
+
+    public function getBarcode($code, $type, $widthFactor = 2, $totalHeight = 30, $color = array(0, 0, 0))
+    {
+        $barcodeData = $this->getBarcodeData($code, $type);
+
+        // calculate image size
+        $width = ($barcodeData['maxWidth'] * $widthFactor);
+        $height = $totalHeight;
+
+        if (function_exists('imagecreate')) {
+            // GD library
+            $imagick = false;
+            $png = imagecreate($width, $height);
+            $colorBackground = imagecolorallocate($png, 255, 255, 255);
+            imagecolortransparent($png, $colorBackground);
+            $colorForeground = imagecolorallocate($png, $color[0], $color[1], $color[2]);
+        } elseif (extension_loaded('imagick')) {
+            $imagick = true;
+            $colorForeground = new \imagickpixel('rgb(' . $color[0] . ',' . $color[1] . ',' . $color[2] . ')');
+            $png = new \Imagick();
+            $png->newImage($width, $height, 'none', 'png');
+            $imageMagickObject = new \imagickdraw();
+            $imageMagickObject->setFillColor($colorForeground);
+        } else {
+            throw new BarcodeException('Neither gd-lib or imagick are installed!');
+        }
+
+        // print bars
+        $positionHorizontal = 0;
+        foreach ($barcodeData['bars'] as $bar) {
+            $bw = round(($bar['width'] * $widthFactor), 3);
+            $bh = round(($bar['height'] * $totalHeight / $barcodeData['maxHeight']), 3);
+            if ($bar['drawBar']) {
+                $y = round(($bar['positionVertical'] * $totalHeight / $barcodeData['maxHeight']), 3);
+                // draw a vertical bar
+                if ($imagick && isset($imageMagickObject)) {
+                    $imageMagickObject->rectangle($positionHorizontal, $y, ($positionHorizontal + $bw), ($y + $bh));
+                } else {
+                    imagefilledrectangle($png, $positionHorizontal, $y, ($positionHorizontal + $bw) - 1, ($y + $bh),
+                        $colorForeground);
+                }
+            }
+            $positionHorizontal += $bw;
+        }
+        ob_start();
+        if ($imagick && isset($imageMagickObject)) {
+            $png->drawImage($imageMagickObject);
+            echo $png;
+        } else {
+            imagepng($png);
+            imagedestroy($png);
+        }
+        $image = ob_get_clean();
+
+        return $image;
+    }
+
+    protected function getBarcodeData($code, $type): array
+    {
+        switch (strtoupper($type)) {
+            case self::TYPE_CODE_39: { // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
+                $arrcode = $this->barcode_code39($code, false, false);
+                break;
+            }
+            case self::TYPE_CODE_39_CHECKSUM: { // CODE 39 with checksum
+                $arrcode = $this->barcode_code39($code, false, true);
+                break;
+            }
+            case self::TYPE_CODE_39E: { // CODE 39 EXTENDED
+                $arrcode = $this->barcode_code39($code, true, false);
+                break;
+            }
+            case self::TYPE_CODE_39E_CHECKSUM: { // CODE 39 EXTENDED + CHECKSUM
+                $arrcode = $this->barcode_code39($code, true, true);
+                break;
+            }
+            case self::TYPE_CODE_93: { // CODE 93 - USS-93
+                $arrcode = $this->barcode_code93($code);
+                break;
+            }
+            case self::TYPE_STANDARD_2_5: { // Standard 2 of 5
+                $arrcode = $this->barcode_s25($code, false);
+                break;
+            }
+            case self::TYPE_STANDARD_2_5_CHECKSUM: { // Standard 2 of 5 + CHECKSUM
+                $arrcode = $this->barcode_s25($code, true);
+                break;
+            }
+            case self::TYPE_INTERLEAVED_2_5: { // Interleaved 2 of 5
+                $arrcode = $this->barcode_i25($code, false);
+                break;
+            }
+            case self::TYPE_INTERLEAVED_2_5_CHECKSUM: { // Interleaved 2 of 5 + CHECKSUM
+                $arrcode = $this->barcode_i25($code, true);
+                break;
+            }
+            case self::TYPE_CODE_128: { // CODE 128
+                $arrcode = $this->barcode_c128($code, '');
+                break;
+            }
+            case self::TYPE_CODE_128_A: { // CODE 128 A
+                $arrcode = $this->barcode_c128($code, 'A');
+                break;
+            }
+            case self::TYPE_CODE_128_B: { // CODE 128 B
+                $arrcode = $this->barcode_c128($code, 'B');
+                break;
+            }
+            case self::TYPE_CODE_128_C: { // CODE 128 C
+                $arrcode = $this->barcode_c128($code, 'C');
+                break;
+            }
+            case self::TYPE_EAN_2: { // 2-Digits UPC-Based Extention
+                $arrcode = $this->barcode_eanext($code, 2);
+                break;
+            }
+            case self::TYPE_EAN_5: { // 5-Digits UPC-Based Extention
+                $arrcode = $this->barcode_eanext($code, 5);
+                break;
+            }
+            case self::TYPE_EAN_8: { // EAN 8
+                $arrcode = $this->barcode_eanupc($code, 8);
+                break;
+            }
+            case self::TYPE_EAN_13: { // EAN 13
+                $arrcode = $this->barcode_eanupc($code, 13);
+                break;
+            }
+            case self::TYPE_UPC_A: { // UPC-A
+                $arrcode = $this->barcode_eanupc($code, 12);
+                break;
+            }
+            case self::TYPE_UPC_E: { // UPC-E
+                $arrcode = $this->barcode_eanupc($code, 6);
+                break;
+            }
+            case self::TYPE_MSI: { // MSI (Variation of Plessey code)
+                $arrcode = $this->barcode_msi($code, false);
+                break;
+            }
+            case self::TYPE_MSI_CHECKSUM: { // MSI + CHECKSUM (modulo 11)
+                $arrcode = $this->barcode_msi($code, true);
+                break;
+            }
+            case self::TYPE_POSTNET: { // POSTNET
+                $arrcode = $this->barcode_postnet($code, false);
+                break;
+            }
+            case self::TYPE_PLANET: { // PLANET
+                $arrcode = $this->barcode_postnet($code, true);
+                break;
+            }
+            case self::TYPE_RMS4CC: { // RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)
+                $arrcode = $this->barcode_rms4cc($code, false);
+                break;
+            }
+            case self::TYPE_KIX: { // KIX (Klant index - Customer index)
+                $arrcode = $this->barcode_rms4cc($code, true);
+                break;
+            }
+            case self::TYPE_IMB: { // IMB - Intelligent Mail Barcode - Onecode - USPS-B-3200
+                $arrcode = $this->barcode_imb($code);
+                break;
+            }
+            case self::TYPE_CODABAR: { // CODABAR
+                $arrcode = $this->barcode_codabar($code);
+                break;
+            }
+            case self::TYPE_CODE_11: { // CODE 11
+                $arrcode = $this->barcode_code11($code);
+                break;
+            }
+            case self::TYPE_PHARMA_CODE: { // PHARMACODE
+                $arrcode = $this->barcode_pharmacode($code);
+                break;
+            }
+            case self::TYPE_PHARMA_CODE_TWO_TRACKS: { // PHARMACODE TWO-TRACKS
+                $arrcode = $this->barcode_pharmacode2t($code);
+                break;
+            }
+            default: {
+                throw new UnknownTypeException();
+                break;
+            }
+        }
+
+        if ( ! isset($arrcode['maxWidth'])) {
+            $arrcode = $this->convertBarcodeArrayToNewStyle($arrcode);
+        }
+
+        return $arrcode;
+    }
+
 
     protected function barcode_code39($code, $extended = false, $checksum = false): array
     {
