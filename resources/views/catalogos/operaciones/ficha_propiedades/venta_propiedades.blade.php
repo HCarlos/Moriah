@@ -1,4 +1,4 @@
-@component
+@component('components.panel')
 @slot('titulo',"Propiedades de la Venta")
 @slot('barra_menu')
 @endslot

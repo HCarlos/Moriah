@@ -1,4 +1,4 @@
-@component
+@component('components.panel')
 @slot('titulo','Busqueda individual')
 @slot('barra_menu')
 @endslot

@@ -2,7 +2,7 @@
 
 @section('main-content')
 
-    @component
+    @component('components.panel')
     @slot('titulo','Archivos de configuración')
     @slot('barra_menu')
     @endslot
