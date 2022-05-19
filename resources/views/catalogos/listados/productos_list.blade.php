@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main-content')
-    @panel
+    @component('components.panel')
     @slot('titulo','Catálogos ')
     @slot('barra_menu')
         <span id="titulo_catalogo"></span> |
@@ -94,7 +94,7 @@
             @endif
         </div>
     @endslot
-    @endpanel
+    @endcomponent
 
 @endsection
 

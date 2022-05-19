@@ -61,18 +61,21 @@
         "post-update-cmd": [
             "@php artisan config:cache",
             "@php artisan cache:clear",
-            "@php artisan config:clear"
+            "@php artisan config:clear",
+            "@php artisan view:clear"
         ],
         "post-install-cmd": [
             "@php artisan config:cache",
             "@php artisan cache:clear",
-            "@php artisan config:clear"
+            "@php artisan config:clear",
+            "@php artisan view:clear"
         ]
     },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "platform-check": false
     },
     "minimum-stability": "dev",
     "prefer-stable": true
