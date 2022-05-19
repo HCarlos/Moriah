@@ -976,7 +976,7 @@ class BarcodeGeneratorPlusPNG {
         $k = 0;
         for ($i = 0; $i < $len; ++$i) {
             $w += 1;
-            if (($i == ($len - 1)) OR (($i < ($len - 1)) AND ($seq[$i] != $seq{($i + 1)}))) {
+            if (($i == ($len - 1)) OR (($i < ($len - 1)) AND ($seq[$i] != $seq[($i + 1)]))) {
                 if ($seq[$i] == '1') {
                     $t = true; // bar
                 } else {
