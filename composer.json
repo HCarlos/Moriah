@@ -25,7 +25,8 @@
         "spatie/laravel-permission": "^3.18.0",
         "styde/html": "^1.9.1",
         "yajra/laravel-datatables-oracle": "^9.18.1",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "ext-bcmath": "*"
     },
     "require-dev": {
         "nunomaduro/collision": "^4.3",
