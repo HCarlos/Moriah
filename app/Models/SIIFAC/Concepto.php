@@ -2,8 +2,10 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 
 class Concepto extends Model
 {
@@ -29,13 +31,15 @@ class Concepto extends Model
 
     public static function findOrCreateConcepto($isiva, $factor, $descripcion, $importe, $empresa_id){
         $obj = static::all()->where('descripcion', $descripcion)->first();
-        if (!$obj) {
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
             return static::create([
                 'isiva'=>$isiva,
                 'descripcion'=>$descripcion,
                 'factor'=>$factor,
                 'importe'=>$importe,
-                'empresa_id'=>$empresa_id,
+                'empresa_id'=>$Empresa_Id,
             ]);
         }
         return $obj;

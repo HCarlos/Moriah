@@ -2,11 +2,13 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\Session;
+//use Illuminate\Support\Facades\Storage;
 
 class Paquete extends Model
 {
@@ -60,15 +62,17 @@ class Paquete extends Model
 
     public static function findOrCreatePaquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
         $obj = static::all()->where('clave', $codigo)->first();
-        if (!$obj) {
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
             $user = User::find($user_id);
-            $emp = Empresa::find($empresa_id);
+            $emp = Empresa::find($Empresa_Id);
             $paq =  static::create([
                 'user_id'=>$user_id,
                 'codigo'=>$codigo,
                 'descripcion_paquete'=>$descripcion_paquete,
                 'importe'=>$importe,
-                'empresa_id'=>$empresa_id,
+                'empresa_id'=>$Empresa_Id,
                 'root' => 'paquete/',
             ]);
             $paq->users()->attach($user);
@@ -109,7 +113,6 @@ class Paquete extends Model
             $p->save();
             $importe += ($p->cant * $p->pv);
         }
-        // $pq = static::where('id',$paqid)->first();
         $pq = static::find($paqid);
         if (!is_null($pq)){
             $pq->update(['importe'=>$importe]);

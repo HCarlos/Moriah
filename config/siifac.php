@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'Empresa_Id' => 0,
     'table_names' => [
         'users' => 'users',
         'almacenes' => 'almacenes',

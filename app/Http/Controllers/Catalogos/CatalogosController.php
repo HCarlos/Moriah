@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Catalogos;
 
 use App\Http\Controllers\Controller;
-use App\Models\Medida;
-use App\Models\Editorial;
-use App\Models\Almacen;
-use App\Models\Fichafile;
-use App\Models\Config;
+//use App\Models\Medida;
+//use App\Models\Editorial;
+//use App\Models\Almacen;
+//use App\Models\Fichafile;
+//use App\Models\Config;
+use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\Empresa;
+use App\Models\SIIFAC\Medida;
+use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Producto;
 use App\Models\SIIFAC\Proveedor;
 use App\User;
@@ -166,7 +169,7 @@ class CatalogosController extends Controller
     {
         $items = Almacen::findOrFail($idItem);
         $user = Auth::User();
-        $filename = Fichafile::all()->where('isbn',$items->isbn)->sortBy('id');
+//        $filename = Fichafile::all()->where('isbn',$items->isbn)->sortBy('id');
 
         return view ('imagenes.catalogos_subir_imagen_ficha',
             [
@@ -177,7 +180,7 @@ class CatalogosController extends Controller
                 'items' => $items,
                 'user' => $user,
                 'otrosDatos' => '',
-                'archivo' => $filename,
+                'archivo' => null,
             ]
         );
 

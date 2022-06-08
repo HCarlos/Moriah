@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Producto;
 use App\Models\SIIFAC\Proveedor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 
@@ -15,17 +17,29 @@ class ProveedorController extends Controller
 {
     protected $tableName = '';
     protected $itemPorPagina = 50;
+    protected $Empresa_Id = 0;
     protected $redirectTo = '/home';
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
     public function index()
     {
 
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+
         $this->tableName = 'proveedores';
         $items = Proveedor::select(['id','clave_proveedor', 'nombre_proveedor', 'contacto_proveedor','domicilio_fiscal_proveedor'])
+            ->where('empresa_id', $this->Empresa_Id)
             ->orderBy('id')
             ->paginate(250);
 
@@ -80,8 +94,12 @@ class ProveedorController extends Controller
         );
 
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -107,14 +125,18 @@ class ProveedorController extends Controller
         $data['contacto_proveedor'] = $ncomer;
         $data['domicilio_fiscal_proveedor'] = $df;
         $data['clave_proveedor'] = $rfc;
-        $data['empresa_id'] = 1;
+        $data['empresa_id'] = $this->Empresa_Id;
         $emp = Proveedor::create($data);
 
         return redirect('/new_proveedor/'.$idItem);
     }
 
-    public function update(Request $request, Proveedor $emp)
-    {
+    public function update(Request $request, Proveedor $emp){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -147,7 +169,16 @@ class ProveedorController extends Controller
     }
 
     public function destroy($id=0){
-        $alma = Producto::all()->where('proveedor_id',$id)->first();
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $alma = Producto::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->where('proveedor_id',$id)
+            ->first();
 
         if ( !$alma ){
             $emp = Proveedor::findOrFail($id);

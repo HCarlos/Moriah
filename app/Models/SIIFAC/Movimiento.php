@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Classes\GeneralFunctions;
+use Illuminate\Support\Facades\Session;
 use Request;
 
 class Movimiento extends Model{
@@ -195,9 +196,9 @@ class Movimiento extends Model{
 
     public static function quitarDesdeNotaCreditoDetalle($NCd)
     {
-        $Venta = Venta::findOrFail($NCd->venta_id);
-        $Vd = VentaDetalle::find($NCd->venta_detalle_id);
-        $Prod = Producto::findOrFail($Vd->producto_id);
+        $Venta      = Venta::findOrFail($NCd->venta_id);
+        $Vd         = VentaDetalle::find($NCd->venta_detalle_id);
+        $Prod       = Producto::findOrFail($Vd->producto_id);
         $cu         = $Prod->cu;
         $cantidad   = $NCd->cant;
         $Existencia = $Prod->exist - $NCd->cant;
@@ -207,63 +208,71 @@ class Movimiento extends Model{
 
         $user = Auth::User();
 
-        $Mov  =  static::create([
-            'user_id'          => $Venta->vendedor_id,
-            'cliente_id'       => $NCd->user_id,
-            'venta_id'         => $Vd->venta_id,
-            'venta_detalle_id' => $Vd->id,
-            'producto_id'      => $Prod->id,
-            'paquete_id'       => $Vd->paquete_id,
-            'pedido_id'        => $Vd->pedido_id,
-            'empresa_id'       => $Vd->empresa_id,
-            'proveedor_id'     => $Prod->proveedor_id,
-            'almacen_id'       => $Prod->almacen_id,
-            'medida_id'        => $Prod->medida_id,
-            'folio'            => $Vd->folio,
-            'clave'            => $Vd->clave_producto,
-            'codigo'           => $Vd->codigo,
-            'ejercicio'        => $Fecha->year,
-            'periodo'          => $Fecha->month,
-            'fecha'            => $Fecha,
-            'salida'           => $NCd->cant,
-            'existencia'       => $Existencia,
-            'cu'               => $Prod->cu,
-            'pu'               => $NCd->pv,
-            'haber'            => $NCd->importe,
-            'descto'           =>  $Vd->descto,
-            'importe'          =>  $Vd->subtotal,
-            'iva'              =>  $Vd->iva,
-            'saldo'            =>  $Vd->total,
-            'status'           => 12,
-            'idemp'            => 1,
-            'ip'               => Request::ip(),
-            'host'             => Request::getHttpHost(),
-        ]);
-        $Prod->exist = $Existencia;
-        $Prod->saldo = $saldo;
-        $Prod->save();
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
 
-        $Mov->users()->attach($Venta->vendedor_id);
-        $Mov->clientes()->attach($Vd->user_id);
-        $Mov->empresas()->attach($Vd->empresa_id);
-//        $Mov->ventas()->attach($Vd->venta_id);
-        $Mov->productos()->attach($Prod->id);
-        $Mov->proveedores()->attach($Prod->proveedor_id);
-        $Mov->almacenes()->attach($Vd->almacen_id);
-        $Mov->medidas()->attach($Prod->medida_id);
+        if ( $Empresa_Id > 0 ){
 
-        return $Mov;
+            $Mov  =  static::create([
+                'user_id'          => $Venta->vendedor_id,
+                'cliente_id'       => $NCd->user_id,
+                'venta_id'         => $Vd->venta_id,
+                'venta_detalle_id' => $Vd->id,
+                'producto_id'      => $Prod->id,
+                'paquete_id'       => $Vd->paquete_id,
+                'pedido_id'        => $Vd->pedido_id,
+                'empresa_id'       => $Empresa_Id,
+                'proveedor_id'     => $Prod->proveedor_id,
+                'almacen_id'       => $Prod->almacen_id,
+                'medida_id'        => $Prod->medida_id,
+                'folio'            => $Vd->folio,
+                'clave'            => $Vd->clave_producto,
+                'codigo'           => $Vd->codigo,
+                'ejercicio'        => $Fecha->year,
+                'periodo'          => $Fecha->month,
+                'fecha'            => $Fecha,
+                'salida'           => $NCd->cant,
+                'existencia'       => $Existencia,
+                'cu'               => $Prod->cu,
+                'pu'               => $NCd->pv,
+                'haber'            => $NCd->importe,
+                'descto'           =>  $Vd->descto,
+                'importe'          =>  $Vd->subtotal,
+                'iva'              =>  $Vd->iva,
+                'saldo'            =>  $Vd->total,
+                'status'           => 12,
+                'idemp'            => $Empresa_Id,
+                'ip'               => Request::ip(),
+                'host'             => Request::getHttpHost(),
+            ]);
+            $Prod->exist = $Existencia;
+            $Prod->saldo = $saldo;
+            $Prod->save();
+
+            $Mov->users()->attach($Venta->vendedor_id);
+            $Mov->clientes()->attach($Vd->user_id);
+            $Mov->empresas()->attach($Empresa_Id);
+            $Mov->productos()->attach($Prod->id);
+            $Mov->proveedores()->attach($Prod->proveedor_id);
+            $Mov->almacenes()->attach($Vd->almacen_id);
+            $Mov->medidas()->attach($Prod->medida_id);
+
+            return $Mov;
+
+        } else {
+            return null;
+        }
+
 
     }
     
 
-    public static function agregarDesdeVentaDetalle($Vd)
-    {
-        $Prod = Producto::findOrFail($Vd->producto_id);
-        $Venta = Venta::findOrFail($Vd->venta_id);
+    public static function agregarDesdeVentaDetalle($Vd){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        $Prod       = Producto::findOrFail($Vd->producto_id);
+        $Venta      = Venta::findOrFail($Vd->venta_id);
         $Existencia = $Prod->exist - $Vd->cantidad;
-        $Fecha = Carbon::now();
-        $user = Auth::User();
+        $Fecha      = Carbon::now();
+        $user       = Auth::User();
         $Mov  =  static::create([
             'user_id'          => $Venta->vendedor_id,
             'cliente_id'       => $Vd->user_id,
@@ -272,7 +281,7 @@ class Movimiento extends Model{
             'producto_id'      => $Prod->id,
             'paquete_id'       => $Vd->paquete_id,
             'pedido_id'        => $Vd->pedido_id,
-            'empresa_id'       => $Vd->empresa_id,
+            'empresa_id'       => $Empresa_Id,
             'proveedor_id'     => $Prod->proveedor_id,
             'almacen_id'       => $Prod->almacen_id,
             'medida_id'        => $Prod->medida_id,
@@ -292,7 +301,7 @@ class Movimiento extends Model{
             'iva'              =>  $Vd->iva,
             'saldo'            =>  $Vd->total,
             'status'           => 2,
-            'idemp'            => 1,
+            'idemp'            => $Empresa_Id,
             'ip'               => Request::ip(),
             'host'             => Request::getHttpHost(),
         ]);
@@ -302,7 +311,6 @@ class Movimiento extends Model{
         $Mov->users()->attach($Venta->vendedor_id);
         $Mov->clientes()->attach($Vd->user_id);
         $Mov->empresas()->attach($Vd->empresa_id);
-//        $Mov->ventas()->attach($Vd->venta_id);
         $Mov->productos()->attach($Prod->id);
         $Mov->proveedores()->attach($Prod->proveedor_id);
         $Mov->almacenes()->attach($Vd->almacen_id);
@@ -313,15 +321,14 @@ class Movimiento extends Model{
     }
 
 
-    public static function agregarDesdeNotaCreditoDetalle($NCd)
-    {
+    public static function agregarDesdeNotaCreditoDetalle($NCd){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        $Venta      = Venta::findOrFail($NCd->venta_id);
+        $Vd         = VentaDetalle::findOrFail($NCd->venta_detalle_id);
+        $Prod       = Producto::findOrFail($NCd->producto_id);
+        $Fecha      = Carbon::now();
+        $user       = Auth::User();
 
-        $Venta = Venta::findOrFail($NCd->venta_id);
-        $Vd    = VentaDetalle::findOrFail($NCd->venta_detalle_id);
-        $Prod = Producto::findOrFail($NCd->producto_id);
-        $Fecha = Carbon::now();
-        $user = Auth::User();
-//        dd("Entro");
         $cu         = $Prod->cu;
         $cantidad   = $NCd->cant;
         $existencia = $Prod->exist + $NCd->cant;
@@ -362,7 +369,7 @@ class Movimiento extends Model{
             'iva'              => $iva,
             'saldo'            => $total,
             'status'           => 11,
-            'idemp'            => 1,
+            'idemp'            => $Empresa_Id,
             'ip'               => Request::ip(),
             'host'             => Request::getHttpHost(),
         ]);
@@ -383,8 +390,8 @@ class Movimiento extends Model{
 
 
 
-    public static function agregarDesdeCompraDetalle($Comp, $Prod, $data)
-    {
+    public static function agregarDesdeCompraDetalle($Comp, $Prod, $data){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         $Fecha      = Carbon::now();
         $user       = Auth::user();
         $cu         = $data['cu'];
@@ -422,7 +429,7 @@ class Movimiento extends Model{
             'iva'              => $iva,
             'saldo'            => $total,
             'status'           => 1,
-            'idemp'            => 1,
+            'idemp'            => $Empresa_Id,
             'ip'               => Request::ip(),
             'host'             => Request::getHttpHost(),
         ]);
@@ -442,8 +449,8 @@ class Movimiento extends Model{
 
     }
 
-    public static function inventarioInicialDesdeProducto($Prod)
-    {
+    public static function inventarioInicialDesdeProducto($Prod){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         $Fecha      = Carbon::now();
         $user       = Auth::user();
         $cu         = $Prod->cu;
@@ -482,7 +489,7 @@ class Movimiento extends Model{
             'iva'              => $iva,
             'saldo'            => $total,
             'status'           => 0,
-            'idemp'            => 1,
+            'idemp'            => $Empresa_Id,
             'ip'               => Request::ip(),
             'host'             => Request::getHttpHost(),
         ]);

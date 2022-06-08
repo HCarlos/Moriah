@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Storage;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Paquete;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -16,14 +16,23 @@ use League\Flysystem\Exception;
 class StoragePaqueteController extends Controller
 {
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
     protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $this->F = new FuncionesController();
     }
 
-    public function subirArchivoPaquete(Request $request, Paquete $oPaquete)
-    {
+    public function subirArchivoPaquete(Request $request, Paquete $oPaquete){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data    = $request->all();
         $idItem  = $data['idItem'];
@@ -42,7 +51,7 @@ class StoragePaqueteController extends Controller
 
         try {
             $file = $request->file('file');
-            $prod = Paquete::all()->where('id',$idItem)->first();
+            $prod = Paquete::all()->where('empresa_id', $this->Empresa_Id)->where('id',$idItem)->first();
 
             $ext = $file->extension();
             $fileName = $idItem.'.'.$ext;

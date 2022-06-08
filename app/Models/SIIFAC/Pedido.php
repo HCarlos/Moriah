@@ -2,11 +2,13 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 use Request;
 
 class Pedido extends Model
@@ -81,7 +83,6 @@ class Pedido extends Model
     {
         $f = new FuncionesController();
         $user = User::find($user_id);
-        $emp = Empresa::find($empresa_id);
         $paq = Paquete::find($paquete_id);
         $date = Carbon::now();
         $daysToAdd = 3;
@@ -89,26 +90,33 @@ class Pedido extends Model
         $daysToAdd = 3;
         $date = $date->addDays($daysToAdd);
 
-        $ped = static::create([
-            'user_id' => $user_id,
-            'paquete_id' => $paquete_id,
-            'descripcion_pedido' => $paq->descripcion_paquete,
-            'codigo' => $paq->codigo,
-            'filename' => $paq->root,
-            'filename' => $paq->filename,
-            'importe' => $paq->importe,
-            'fecha' => NOW(),
-            'referencia' => $referencia,
-            'observaciones' => $observaciones,
-            'empresa_id' => $empresa_id,
-            'fecha_vencimiento' => $date,
-            'idemp' => $paq->idemp,
-            'ip' => $f->getIHE(1),
-            'host' => $f->getIHE(1),
-        ]);
-        $ped->users()->attach($user);
-        $ped->empresas()->attach($emp);
-        PedidoDetalle::asignProductoAPedidoDetalle($ped->id,$user_id,$paquete_id,$empresa_id);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($Empresa_Id > 0) {
+
+            $emp = Empresa::find($Empresa_Id);
+            $ped = static::create([
+                'user_id' => $user_id,
+                'paquete_id' => $paquete_id,
+                'descripcion_pedido' => $paq->descripcion_paquete,
+                'codigo' => $paq->codigo,
+                'filename' => $paq->root,
+                'filename' => $paq->filename,
+                'importe' => $paq->importe,
+                'fecha' => NOW(),
+                'referencia' => $referencia,
+                'observaciones' => $observaciones,
+                'empresa_id' => $Empresa_Id,
+                'fecha_vencimiento' => $date,
+                'idemp' => $Empresa_Id,
+                'ip' => $f->getIHE(1),
+                'host' => $f->getIHE(1),
+            ]);
+            $ped->users()->attach($user);
+            $ped->empresas()->attach($emp);
+            PedidoDetalle::asignProductoAPedidoDetalle($ped->id, $user_id, $paquete_id, $empresa_id);
+        }else{
+            return null;
+        }
         return $ped;
 
     }
@@ -133,80 +141,63 @@ class Pedido extends Model
     public static function createPedidoFromPlatsourceTutor($User_id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp,$Referencia,$Observaciones,$TotalInternet,$CadenaUsuario)
     {
         $f = new FuncionesController();
-        $user = User::find($User_id);
-        $emp = Empresa::find($IdEmpresa);
-        $paq = Paquete::find($IdPaquete);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ( $Empresa_Id > 0 ) {
 
-        $date = Carbon::now();
-        $daysToAdd = 3;
-        $date = $date->addDays($daysToAdd);
+            $user = User::find($User_id);
+            $emp = Empresa::find($Empresa_Id);
+            $paq = Paquete::find($IdPaquete);
 
-        /*
-        CadenaUsuario =
-            item . data + '|' +0
-            item.idgrupo+'|'+1
-            item.idfamilia+'|'+2
-            item.idalumno+'|'+3
-            item.ap_paterno_tutor+'|'+4
-            item.ap_materno_tutor+'|'+5
-            item.nombre__tutor+'|'+6
-            item.cel1_tutor+'|'+7
-            item.tel1_tutor+'|'+8
-            item.email_tutor1+'|'+9
-            item.username_tutor+'|'+10
-            item.idcliclo+'|'+11
-            item.ciclo+'|'+12
-            item.grupo+'|'+13
-            item.nombre+'|'+14
-            item.ap_paterno+'|'+15
-            item.ap_materno+'|'+16
-            item.grado+'|'+17
-            item.idciclo+'|'+18
-            item.familia+'|'+19
-*/
-        $Alu = explode('|',$CadenaUsuario);
+            $date = Carbon::now();
+            $daysToAdd = 3;
+            $date = $date->addDays($daysToAdd);
 
 
-        $ped = static::create([
-            'user_id'           => $User_id,
-            'paquete_id'        => $IdPaquete,
-            'descripcion_pedido' => $paq->descripcion_paquete,
-            'codigo'            => $paq->codigo,
-            'filename'          => $paq->root,
-            'filename'          => $paq->filename,
-            'importe'           => $paq->importe,
-            'fecha'             => NOW(),
-            'empresa_id'        => $IdEmpresa,
-            'idemp'             => $paq->idemp,
-            'fecha_vencimiento' => $date,
-            'referencia'        => $Referencia,
-            'observaciones'     => $Observaciones,
-            'total_internet'    => $TotalInternet,
+            $Alu = explode('|', $CadenaUsuario);
 
-            'idciclo_ps'        => $Alu[11],
-            'ciclo'             => $Alu[12],
-            'idgrado_ps'        => 0,
-            'grado'             => $Alu[17],
-            'idgrupo_ps'        => $Alu[1],
-            'grupo'             => $Alu[13],
-            'idalumno_ps'       => $Alu[3],
-            'alumno'            => $Alu[16],
-            'idtutor_ps'        => $Alu[18],
-            'turor'             => $Alu[10],
-            'idfamilia_ps'      => $Alu[2],
-            'familia'           => $Alu[19],
-            'alu_ap_paterno'    => $Alu[14],
-            'alu_ap_materno'    => $Alu[15],
-            'alu_nombre'        => $Alu[16],
-            'username_alu'      => $Alu[20],
+            $ped = static::create([
+                'user_id' => $User_id,
+                'paquete_id' => $IdPaquete,
+                'descripcion_pedido' => $paq->descripcion_paquete,
+                'codigo' => $paq->codigo,
+                'filename' => $paq->root,
+                'filename' => $paq->filename,
+                'importe' => $paq->importe,
+                'fecha' => NOW(),
+                'empresa_id' => $Empresa_Id,
+                'idemp' => $paq->idemp,
+                'fecha_vencimiento' => $date,
+                'referencia' => $Referencia,
+                'observaciones' => $Observaciones,
+                'total_internet' => $TotalInternet,
 
-            'ip'                => $f->getIHE(1),
-            'host'              => $f->getIHE(1),
-        ]);
-        $ped->users()->attach($user);
-        $ped->empresas()->attach($emp);
-        PedidoDetalle::asignProductoAPedidoDetalleFromPlatsource($ped->id,$User_id,$IdPaquete,$IdEmpresa,$arrIds,$arrPrd,$arrCnt,$arrImp);
-        return $ped;
+                'idciclo_ps' => $Alu[11],
+                'ciclo' => $Alu[12],
+                'idgrado_ps' => 0,
+                'grado' => $Alu[17],
+                'idgrupo_ps' => $Alu[1],
+                'grupo' => $Alu[13],
+                'idalumno_ps' => $Alu[3],
+                'alumno' => $Alu[16],
+                'idtutor_ps' => $Alu[18],
+                'turor' => $Alu[10],
+                'idfamilia_ps' => $Alu[2],
+                'familia' => $Alu[19],
+                'alu_ap_paterno' => $Alu[14],
+                'alu_ap_materno' => $Alu[15],
+                'alu_nombre' => $Alu[16],
+                'username_alu' => $Alu[20],
+
+                'ip' => $f->getIHE(1),
+                'host' => $f->getIHE(1),
+            ]);
+            $ped->users()->attach($user);
+            $ped->empresas()->attach($emp);
+            PedidoDetalle::asignProductoAPedidoDetalleFromPlatsource($ped->id, $User_id, $IdPaquete, $IdEmpresa, $arrIds, $arrPrd, $arrCnt, $arrImp);
+            return $ped;
+        } else {
+            return null;
+        }
 
     }
 

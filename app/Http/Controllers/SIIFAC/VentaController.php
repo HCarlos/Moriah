@@ -28,10 +28,15 @@ class VentaController extends Controller
     protected $redirectTo = '/home';
     protected $FechaInicial = '';
     protected $FechaFinal = '';
+    protected $Empresa_Id = 0;
 
    protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $this->F = (new FuncionesController);
 
     }
@@ -41,6 +46,12 @@ class VentaController extends Controller
         if (is_null($fecha)){
             abort(500);
         }
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         Log::alert($fecha);
         $user = Auth::User();
         $F = (new FuncionesController);
@@ -53,6 +64,7 @@ class VentaController extends Controller
         $arr = array(1,$user->id);
 
         $items = Venta::all()
+            ->where('empresa_id', $this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->sortBy('id');
@@ -74,20 +86,19 @@ class VentaController extends Controller
 
         return view ('catalogos.operaciones.ventas',
             [
-                'tableName' => 'ventas',
-                'ventas' => $items,
-                'items' => $items,
-                'user' => $user,
-                'totalVentas' => number_format($totalVenta,2,'.',',') ,
-                'fecha' => $F->fechaEspanol($f),
-                'FechaInicial' => $this->FechaInicial,
-                'FechaFinal' => $this->FechaFinal,
+                'tableName'     => 'ventas',
+                'ventas'        => $items,
+                'items'         => $items,
+                'user'          => $user,
+                'totalVentas'   => number_format($totalVenta,2,'.',',') ,
+                'fecha'         => $F->fechaEspanol($f),
+                'FechaInicial'  => $this->FechaInicial,
+                'FechaFinal'    => $this->FechaFinal,
             ]
         );
     }
 
-    public function index_post(Request $request)
-    {
+    public function index_post(Request $request){
         $data = $request->all();
         $fecha = $data['fecha'];
         $fecha = $this->F->setDateTo6Digit($fecha);
@@ -99,8 +110,14 @@ class VentaController extends Controller
     {
         $views  = 'venta_nueva_paquete_ajax';
         $user = Auth::User();
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $oView = 'catalogos.operaciones.';
-        $Paquetes = Paquete::all()->sortBy('FullDescription')->pluck('FullDescription', 'id');
+        $Paquetes = Paquete::all()
+            ->where('empresa_id', $this->Empresa_Id)
+            ->sortBy('FullDescription')->pluck('FullDescription', 'id');
         $clientes = User::whereHas('roles', function($q){
             $q->where('name', 'usuario_libros');
         })->get();
@@ -120,8 +137,15 @@ class VentaController extends Controller
     {
         $views  = 'venta_nueva_pedido_ajax';
         $user = Auth::User();
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $oView = 'catalogos.operaciones.';
         $Pedidos = Pedido::all()
+                    ->where('empresa_id', $this->Empresa_Id)
                     ->where('isactivo',true)
                     ->sortByDesc('id')
                     ->pluck('FullDescriptionPedidoUser', 'id');
@@ -139,13 +163,21 @@ class VentaController extends Controller
     {
         $views  = 'venta_nueva_normal_ajax';
         $user = Auth::User();
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $oView = 'catalogos.operaciones.';
         $clientes = User::whereHas('roles', function($q){
             $q->where('name', 'usuario_libros');
         })->get();
         $clientes->each(function ($model) { $model->setAppends(['FullName']); });
         $User_Id = $clientes->sortBy('FullName')->pluck('FullName','id');
-        $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');
+        $Productos   = Producto::all()
+            ->where('empresa_id', $this->Empresa_Id)
+            ->sortBy('descripcion')->pluck('descripcion', 'codigo');
         $Productos->prepend('Seleccione un producto', '0');
         return view ($oView.$views,
             [
@@ -157,13 +189,18 @@ class VentaController extends Controller
         );
     }
 
-    public function store_paquete_ajax(Request $request)
-    {
+    public function store_paquete_ajax(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $data = $request->all();
         $paquete_id = $data['paquete_id'];
         $tipoventa  = $data['tipoventa'];
         $user_id    = $data['user_id'];
-        $cantidad    = $data['cantidad'];
+        $cantidad   = $data['cantidad'];
         $user = Auth::user();
         try {
             $mensaje = "OK";
@@ -194,16 +231,22 @@ class VentaController extends Controller
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
 
-    public function store_normal_ajax(Request $request)
-    {
+    public function store_normal_ajax(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $data = $request->all();
-//        $data['tipoventa']       = isset($data['tipoventa']) ? 1 : 0;
         $tipoventa = $data['tipoventa'];
         $user_id   = $data['user_id'];
         $cantidad  = $data['cantidad'];
 
         $codigo    = $data['codigo'];
-        $Prod      = Producto::all()->where('codigo',$codigo)->first();
+        $Prod      = Producto::all()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->where('codigo',$codigo)->first();
         $user      = Auth::user();
         if ($Prod !== null){
             try {
@@ -220,8 +263,7 @@ class VentaController extends Controller
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
 
-    public function edit($venta_id)
-    {
+    public function edit($venta_id){
         $venta = Venta::findOrFail($venta_id);
         if ($venta !== null) {
             $items = VentaDetalle::all()->where('venta_id', $venta_id);
@@ -314,8 +356,7 @@ class VentaController extends Controller
         );
     }
 
-    public function busquedaIndividual(Request $request)
-    {
+    public function busquedaIndividual(Request $request){
         $data = $request->all();
         $dato = $data['dato'];
 
@@ -383,10 +424,14 @@ class VentaController extends Controller
         );
     }
 
-    public function ventas_rango_fechas(Request $request)
-    {
-        $F = (new FuncionesController);
+    public function ventas_rango_fechas(Request $request){
 
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $F = (new FuncionesController);
         $data = $request->all();
         $f1 = $F->fechaDateTimeFormat($data['fecha1']);
         $f2 = $F->fechaDateTimeFormat($data['fecha2'],true);
@@ -395,6 +440,7 @@ class VentaController extends Controller
         $user = Auth::User();
         $user = User::find($user->id);
         $items = Venta::select()
+                    ->where('empresa_id', $this->Empresa_Id)
                     ->where('fecha','>=',$f1)
                     ->where('fecha','<=',$f2)
                     ->where(function ($q) use($user) {
@@ -419,14 +465,14 @@ class VentaController extends Controller
 
         return view ('catalogos.operaciones.ventas',
             [
-                'tableName' => 'ventas',
-                'ventas' => $items,
-                'items' => $items,
-                'user' => $user,
-                'totalVentas' => $totalVenta,
-                'fecha' => $dato,
-                'FechaInicial' => $f1,
-                'FechaFinal' => $f2,
+                'tableName'     => 'ventas',
+                'ventas'        => $items,
+                'items'         => $items,
+                'user'          => $user,
+                'totalVentas'   => $totalVenta,
+                'fecha'         => $dato,
+                'FechaInicial'  => $f1,
+                'FechaFinal'    => $f2,
             ]
         );
     }
@@ -438,7 +484,7 @@ class VentaController extends Controller
         $oView  = 'catalogos.operaciones.ficha_propiedades.';
         $views  = 'venta_propiedades';
         $venta  = Venta::findOrFail($venta_id);
-        $user  = Auth::User();
+        $user   = Auth::User();
 
         return view ($oView.$views,
             [
@@ -514,8 +560,7 @@ class VentaController extends Controller
         );
     }
 
-    public function anular_venta_ajax(Request $request)
-    {
+    public function anular_venta_ajax(Request $request){
         $data              = $request->all();
         $total_pagado      = $data['total_pagado'];
         $total_a_pagar     = $data['total_a_pagar'];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\PedidoDetalle;
 use App\User;
@@ -22,17 +23,32 @@ class PedidoController extends Controller
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
     protected $UrlBase = 'https://moriah.mx/print_pedido/';
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
     }
 
-    public function index()
-    {
+    public function index(){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $this->tableName = 'pedidos';
         $items = Pedido::query()
+            ->where('empresa_id',$this->Empresa_Id)
             ->where('isactivo',true)
             ->orderByDesc('id')
             ->paginate(250);
@@ -54,13 +70,18 @@ class PedidoController extends Controller
 
     }
 
-    public function new($idItem=0)
-    {
+    public function new($idItem=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views    = 'pedido_new';
         $user     = Auth::User();
         $oView    = 'catalogos.';
-        $Empresas = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
-        $Paquetes = Paquete::all()->sortBy('FullDescription')->pluck('FullDescription', 'id');
+        $Empresas = Empresa::all()->where('empresa_id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
+        $Paquetes = Paquete::all()->where('empresa_id',$this->Empresa_Id)->sortBy('FullDescription')->pluck('FullDescription', 'id');
         $Usuarios = User::all()->sortBy('FullName' )->pluck('FullName', 'id');
 
         $timex    = Carbon::now()->format('ymdHisu');
@@ -82,15 +103,19 @@ class PedidoController extends Controller
 
     public function store(Request $request)
     {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
-        $data = $request->all();
-        $idItem     = $data['idItem'];
+        $data          = $request->all();
+        $idItem        = $data['idItem'];
 
-        $paquete_id = $data['paquete_id'];
-        $user_id    = $data['user_id'];
-        $empresa_id    = $data['empresa_id'];
+        $paquete_id    = $data['paquete_id'];
+        $user_id       = $data['user_id'];
+        $empresa_id    = $this->Empresa_Id;
         $referencia    = $data['referencia'];
-        $observaciones    = $data['observaciones'];
+        $observaciones = $data['observaciones'];
 
         Pedido::findOrCreatePedido($user_id,$paquete_id,$empresa_id,$referencia,$observaciones);
 
@@ -111,6 +136,12 @@ class PedidoController extends Controller
 
 
     public function destroy($id=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $mov = Movimiento::all()->where('pedido_id',$id)->first();
 
         if ( !$mov ){

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
+use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\Compra;
 use App\Models\SIIFAC\Empresa;
@@ -15,20 +17,34 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Session;
 
 class CompraDetalleController extends Controller
 {
+    protected $Empresa_Id = 0;
 
-    public function index($compra_id)
-    {
-//        dd($compra_id);
+    public function __construct(){
+        $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+        $this->F = (new FuncionesController);
+    }
+
+    public function index($compra_id){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $compra = Compra::find($compra_id);
 
         if ($compra) {
             $items = Movimiento::all()->where('compra_id', $compra_id);
             $total = $compra->total;
 
-            //dd($items);
             $user = Auth::User();
 
             return view('catalogos.operaciones.compras.compra_detalles',
@@ -49,9 +65,14 @@ class CompraDetalleController extends Controller
 
     public function new_compra_detalle_ajax($compra_id)
     {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views       = 'agregar_producto_a_compra_ajax';
         $user        = Auth::User();
-        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
+        $Empresas    = Empresa::all()->where('id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
         $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
         $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');

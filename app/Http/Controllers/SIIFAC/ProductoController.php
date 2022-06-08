@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SIIFAC;
 
 use App\Classes\BarcodeGeneratorPlusPNG;
+use App\Classes\GeneralFunctions;
 use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaProducto;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Request  as Req;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
@@ -32,19 +34,30 @@ class ProductoController extends Controller
     protected $itemPorPagina = 500;
     protected $otrosDatos;
     protected $Predeterminado = false;
+    protected $Empresa_Id = 0;
     protected $redirectTo = '/home';
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
-    public function index($npage = 1, $tpaginas = 0)
-    {
+    public function index($npage = 1, $tpaginas = 0){
+
         $page = Req::only('p');
-        if ( $page ) $npage = $page; 
+        if ( $page ) $npage = $page;
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $this->tableName = 'productos';
         $items = Producto::select('id','clave','codigo','descripcion','pv','exist','empresa_id','almacen_id','familia_producto_id','medida_id','root','filename')
+            ->where('empresa_id', $this->Empresa_Id)
             ->orderBy('id','desc')
             ->forPage($npage,$this->itemPorPagina)
             ->get();
@@ -55,55 +68,65 @@ class ProductoController extends Controller
         $tpaginator->withPath("/index_producto/$npage/$tpaginas");
         return view ('catalogos.listados.productos_list',
             [
-                'items' => $items,
+                'items'           => $items,
                 'titulo_catalogo' => "Catálogo de ".ucwords($this->tableName),
-                'user' => $user,
-                'tableName'=>$this->tableName,
-                'npage'=> $npage,
-                'tpaginas' => $tpaginas,
+                'user'            => $user,
+                'tableName'       => $this->tableName,
+                'npage'           => $npage,
+                'tpaginas'        => $tpaginas,
             ]
         )->with("paginator" , $tpaginator);
 
     }
 
-    public function new($idItem=0)
-    {
+    public function new($idItem=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views       = 'producto_new';
         $user        = Auth::User();
         $oView       = 'catalogos.';
         $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $FamProds    = FamiliaProducto::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Medidas     = Medida::all()->sortBy('desc1')->pluck('desc1', 'id');
+        $Almacenes   = Almacen::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->where('empresa_id', $this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $FamProds    = FamiliaProducto::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Medidas     = Medida::all()->where('empresa_id', $this->Empresa_Id)->sortBy('desc1')->pluck('desc1', 'id');
         $timex       = Carbon::now()->format('ymdHisu');
 
         return view ($oView.$views,
             [
-                'idItem' => $idItem,
-                'titulo' => 'productos',
-                'user' => $user,
-                'Empresas' => $Empresas,
-                'Almacenes' => $Almacenes,
+                'idItem'      => $idItem,
+                'titulo'      => 'productos',
+                'user'        => $user,
+                'Empresas'    => $Empresas,
+                'Almacenes'   => $Almacenes,
                 'Proveedores' => $Proveedores,
-                'FamProds' => $FamProds,
-                'Medidas' => $Medidas,
+                'FamProds'    => $FamProds,
+                'Medidas'     => $Medidas,
             ]
         );
 
     }
 
-    public function edit($idItem=0)
-    {
+    public function edit($idItem=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views       = 'producto_edit';
         $items       = Producto::findOrFail($idItem);
         $user        = Auth::User();
         $oView       = 'catalogos.';
         $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $FamProds    = FamiliaProducto::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Medidas     = Medida::all()->sortBy('desc1')->pluck('desc1', 'id');
+        $Almacenes   = Almacen::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->where('empresa_id', $this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $FamProds    = FamiliaProducto::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Medidas     = Medida::all()->where('empresa_id', $this->Empresa_Id)->sortBy('desc1')->pluck('desc1', 'id');
         try {
             $generator = new BarcodeGeneratorPlusPNG();
             $img = base64_encode($generator->getBarcode($items->codigo, $generator::TYPE_EAN_13,5.4,150,array(164,92,92)));
@@ -114,22 +137,26 @@ class ProductoController extends Controller
 
         return view ($oView.$views,
             [
-                'idItem' => $idItem,
-                'titulo' => 'productos',
-                'items' => $items,
-                'user' => $user,
-                'Empresas' => $Empresas,
-                'Almacenes' => $Almacenes,
+                'idItem'      => $idItem,
+                'titulo'      => 'productos',
+                'items'       => $items,
+                'user'        => $user,
+                'Empresas'    => $Empresas,
+                'Almacenes'   => $Almacenes,
                 'Proveedores' => $Proveedores,
-                'FamProds' => $FamProds,
-                'Medidas' => $Medidas,
-                'img' => $img,
+                'FamProds'    => $FamProds,
+                'Medidas'     => $Medidas,
+                'img'         => $img,
             ]
         );
 
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -156,10 +183,10 @@ class ProductoController extends Controller
         $data['descripcion'] = $descripcion;
         $data['shortdesc']   = $shortdesc;
         $data['descripcion'] = $descripcion;
-        $data['isiva']       = isset($data['isiva']) ? true : false;
+        $data['isiva']       = isset($data['isiva']);
         $data['saldo']       = $data['cu'] * $data['exist'];
-        $data['empresa_id']  = $data['almacen_id'];
-        $data["idemp"]       = $F->getIHE(0);
+        $data['empresa_id']  = $this->Empresa_Id;
+        $data["idemp"]       = $this->Empresa_Id;
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
 
@@ -167,7 +194,7 @@ class ProductoController extends Controller
         $prov = Proveedor::find($data['proveedor_id']);
         $fp   = FamiliaProducto::find($data['familia_producto_id']);
         $med  = Medida::find($data['medida_id']);
-        $emp  = Empresa::find($data['empresa_id']);
+        $emp  = Empresa::find(Session::get('Empresa_Id'));
 
         $prod = Producto::create($data);
 
@@ -183,8 +210,12 @@ class ProductoController extends Controller
         return redirect('/new_producto/'.$idItem);
     }
 
-    public function update(Request $request, Producto $prod)
-    {
+    public function update(Request $request, Producto $prod){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -210,10 +241,10 @@ class ProductoController extends Controller
         $data['descripcion'] = $descripcion;
         $data['shortdesc'] = $shortdesc;
         //dd($data['isiva']);
-        $data['isiva']       = isset($data['isiva']) ? true : false;
+        $data['isiva']       = isset($data['isiva']);
         $data['saldo']       = $data['cu'] * $data['exist'];
         $data['empresa_id']  = $data['almacen_id'];
-        $data["idemp"]       = $F->getIHE(0);
+        $data["idemp"]       = $this->Empresa_Id;
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
 
@@ -221,7 +252,7 @@ class ProductoController extends Controller
         $prov = Proveedor::find($data['proveedor_id']);
         $fp   = FamiliaProducto::find($data['familia_producto_id']);
         $med  = Medida::find($data['medida_id']);
-        $emp  = Empresa::find($data['empresa_id']);
+        $emp  = Empresa::find(Session::get('Empresa_Id'));
 
 
         $prod->update($data);
@@ -238,9 +269,7 @@ class ProductoController extends Controller
         $prod->empresas()->sync($emp);
         $prod->proveedores()->sync($prov);
 
-        //$prod::ActualizaPaqueteDetalles($prod->id);
         PaqueteDetalle::updatePaqueteDetalleFromProducto($prod);
-//        PedidoDetalle::updatePedidoDetalleFromProducto($prod);
 
         return redirect('/edit_producto/'.$idItem);
 
@@ -252,10 +281,10 @@ class ProductoController extends Controller
 
         return view ('archivos.producto_imagen',
             [
-                'idItem' => $idItem,
-                'titulo' => 'Subir imagen a ficha: ',
-                'item' => $oProd,
-                'user' => $user,
+                'idItem'     => $idItem,
+                'titulo'     => 'Subir imagen a ficha: ',
+                'item'       => $oProd,
+                'user'       => $user,
                 'otrosDatos' => '',
             ]
         );

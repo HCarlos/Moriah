@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Producto;
 use App\Models\SIIFAC\Proveedor;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Almacen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
@@ -21,17 +23,28 @@ class AlmacenController extends Controller
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
     }
 
     public function index()
     {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $this->tableName = 'almacenes';
         $items = Almacen::with('empresa')
             ->select('id','clave_almacen','descripcion','responsable','tipoinv','prefijo','empresa_id')
+            ->where('empresa_id',  $this->Empresa_Id)
             ->orderBy('id','desc')
             ->paginate(250);
 
@@ -52,19 +65,19 @@ class AlmacenController extends Controller
 
     public function new($idItem=0)
     {
-        $views  = 'almacen_new';
-        $user = Auth::User();
-        $oView = 'catalogos.' ;
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $views          = 'almacen_new';
+        $user           = Auth::User();
+        $oView          = 'catalogos.' ;
+        $Empresas       = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+        $Proveedores    = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
 
         return view ($oView.$views,
             [
-                'idItem' => $idItem,
-                'titulo' => 'almacenes',
-                'user' => $user,
+                'idItem'      => $idItem,
+                'titulo'      => 'almacenes',
+                'user'        => $user,
                 'Proveedores' => $Proveedores,
-                'Empresas' => $Empresas,
+                'Empresas'    => $Empresas,
             ]
         );
 
@@ -72,12 +85,12 @@ class AlmacenController extends Controller
 
     public function edit($idItem=0)
     {
-        $views  = 'almacen_edit';
-        $items = Almacen::findOrFail($idItem);
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+        $views       = 'almacen_edit';
+        $items       = Almacen::findOrFail($idItem);
+        $Empresas    = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
         $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $user = Auth::User();
-        $oView = 'catalogos.' ;
+        $user        = Auth::User();
+        $oView       = 'catalogos.' ;
 
         return view ($oView.$views,
             [
@@ -110,6 +123,7 @@ class AlmacenController extends Controller
                 ->withInput();
         }
 
+
         $F = (new FuncionesController);
 
         $descripcion = $F->toMayus($data['descripcion']);
@@ -117,8 +131,10 @@ class AlmacenController extends Controller
 
         $data['descripcion'] = $descripcion;
         $data['responsable'] = $responsable;
+        $data['idemp']       = $this->Empresa_Id;
+        $data['empresa_id']  = $this->Empresa_Id;
 
-        $emp = Empresa::find($data['empresa_id']);
+        $emp = Empresa::find( $this->Empresa_Id );
         $alma = Almacen::create($data);
         $alma->empresas()->attach($emp);
 
@@ -127,6 +143,10 @@ class AlmacenController extends Controller
 
     public function update(Request $request, Almacen $alma)
     {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -150,10 +170,11 @@ class AlmacenController extends Controller
 
         $data['descripcion'] = $descripcion;
         $data['responsable'] = $responsable;
+        $data['idemp']       = $this->Empresa_Id;
 
-        $emp = Empresa::find($data['empresa_id']);
+        $emp = Empresa::find( $this->Empresa_Id );
         $alma->update($data);
-        $alma->empresas()->detach();
+        $alma->empresas()->detach($emp);
         $alma->empresas()->attach($emp);
 
         return redirect('/edit_almacen/'.$idItem);
@@ -161,11 +182,19 @@ class AlmacenController extends Controller
     }
 
     public function destroy($id=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $prod = Producto::all()->where('almacen_id',$id)->first();
 
         if ( !$prod ){
             $alma = Almacen::findOrFail($id);
-            $alma->delete();
+            $emp = Empresa::find( $alma->empresa_id );
+            $alma->empresas()->detach($emp);
+            $alma->forceDelete();
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
         }else{
             return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$prod->id.']', 'data' => 'Error', 'status' => '200'], 200);

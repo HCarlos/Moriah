@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -52,12 +53,14 @@ class Medida extends Model
 
     public static function findOrCreateMedida($desc1, $desc2, $clave, $empresa_id){
         $obj = static::all()->where('desc1', $desc1)->first();
-        if (!$obj) {
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
             return static::create([
                 'desc1'=>$desc1,
                 'desc2'=>$desc2,
                 'clave'=>$clave,
-                'empresa_id'=>$empresa_id,
+                'empresa_id'=>$Empresa_Id,
             ]);
         }
         return $obj;

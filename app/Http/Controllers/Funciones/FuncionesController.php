@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Funciones;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class FuncionesController extends Controller
 {
+    protected $Empresa_Id = 0;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -46,9 +49,12 @@ class FuncionesController extends Controller
     }
     // get IP, Host or IdEmp
     public function getIHE($type=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
         switch ($type){
             case 0:
-                return 1;
+                return $this->Empresa_Id;
                 beark;
             case 1:
                 return $_SERVER['REMOTE_ADDR'];

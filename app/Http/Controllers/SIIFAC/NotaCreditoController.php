@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Http\Requests\NotaCreditoRequest;
 use App\Models\SIIFAC\NotaCredito;
@@ -17,10 +18,14 @@ class NotaCreditoController extends Controller
 {
     protected $tableName = 'notas_credito';
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
     protected $F;
     public function __construct(){
         $this->middleware('auth');
-        $this->F = (new FuncionesController);
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
     public function index($fecha)
@@ -31,10 +36,16 @@ class NotaCreditoController extends Controller
         $user = Auth::User();
         $F = (new FuncionesController);
 
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $f = $F->getFechaFromNumeric($fecha);
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString();
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString();
         $items = NotaCredito::all()
+            ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->sortByDesc('id');
@@ -121,8 +132,6 @@ class NotaCreditoController extends Controller
         $msg = $request->manage();
         if ($msg == "OK"){
             $fecha = Carbon::now()->format('ymd');
-            //$fecha = $this->F->setDateTo6Digit($fecha);
-            //dd($fecha);
             return redirect('index_notacredito/'. $fecha);
         }else{
             $data = $request->all();

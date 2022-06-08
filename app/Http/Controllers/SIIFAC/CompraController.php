@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Almacen;
 use App\Models\SIIFAC\Compra;
@@ -14,21 +15,34 @@ use App\Models\SIIFAC\Producto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Session;
 
 class CompraController extends Controller
 {
     protected $tableName = 'compras';
     protected $redirectTo = '/home';
     protected $F;
+    protected $Empresa_Id = 0;
     public function __construct(){
         $this->middleware('auth');
         $this->F = (new FuncionesController);
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
     public function index()
     {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $user = Auth::User();
-        $items = Compra::all()->sortByDesc('id');
+        $items = Compra::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->sortByDesc('id');
 
         return view ('catalogos.operaciones.compras.compras',
             [
@@ -59,12 +73,18 @@ class CompraController extends Controller
 
     public function store_compra_nueva_ajax(Request $request)
     {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $data = $request->all();
         $data["folio_factura"]      = $data["folio_factura"]      ==  null ? '' : $data["folio_factura"];
         $data["nota_id"]            = $data["nota_id"]            ==  null ? '' : $data["nota_id"];
         $data["descripcion_compra"] = $data["descripcion_compra"] ==  null ? '' : $data["descripcion_compra"];
 
-//        dd($data);
+        $data['idemp']      = $this->Empresa_Id;
+        $data['empresa_id'] = $this->Empresa_Id;
 
         $data['fecha'] = now();
         try {
@@ -101,10 +121,16 @@ class CompraController extends Controller
     {
         $data = $request->all();
 
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         try {
+
             $mensaje                  = "OK";
             $Comp                     = Compra::findOrFail($data['compra_id']);
-            $Comp->empresa_id         = $data['empresa_id'];
+            $Comp->empresa_id         = $this->Empresa_Id;
             $Comp->proveedor_id       = $data['proveedor_id'];
             $Comp->almacen_id         = $data['almacen_id'];
             $Comp->folio_factura      = $data['folio_factura'];

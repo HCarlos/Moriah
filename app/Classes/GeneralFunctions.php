@@ -4,6 +4,8 @@
 namespace App\Classes;
 
 
+use Illuminate\Support\Facades\Session;
+
 class GeneralFunctions
 {
     private static $instance;
@@ -104,6 +106,10 @@ class GeneralFunctions
                 break;
         }
         return $mp;
+    }
+
+    public static function Get_Empresa_Id(){
+        return intval(Session::get('Empresa_Id'));
     }
 
 

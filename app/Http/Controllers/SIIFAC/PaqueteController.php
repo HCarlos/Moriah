@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Movimiento;
@@ -23,16 +24,26 @@ class PaqueteController extends Controller
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
-    public function index()
-    {
+    public function index(){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $this->tableName = 'paquetes';
         $items = Paquete::select('id','codigo','descripcion_paquete','importe','empresa_id','filename','root','grupos_platsource')
+            ->where('empresa_id',$this->Empresa_Id)
             ->orderBy('id','desc')
             ->paginate(250);
         $user = Auth::User();
@@ -40,10 +51,10 @@ class PaqueteController extends Controller
         $items->links();
         return view ('catalogos.listados.paquetes_list',
             [
-                'items' => $items,
-                'titulo_catalogo' => "Catálogo de ".ucwords($this->tableName),
-                'user' => $user,
-                'tableName'=>$this->tableName,
+                'items'             => $items,
+                'titulo_catalogo'   => "Catálogo de ".ucwords($this->tableName),
+                'user'              => $user,
+                'tableName'         => $this->tableName,
             ]
         );
 
@@ -51,30 +62,44 @@ class PaqueteController extends Controller
 
     public function new($idItem=0)
     {
-        $views  = 'paquete_new';
-        $user = Auth::User();
-        $oView = 'catalogos.';
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
-        $timex  = Carbon::now()->format('ymdHisu');
+        $views      = 'paquete_new';
+        $user       = Auth::User();
+        $oView      = 'catalogos.';
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $Empresas   = Empresa::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->sortBy('rs')->sortBy('rs')
+            ->pluck('rs', 'id');
+        $timex      = Carbon::now()->format('ymdHisu');
 
         return view ($oView.$views,
             [
-                'idItem' => $idItem,
-                'titulo' => 'paquetes',
-                'user' => $user,
-                'Empresas' => $Empresas,
+                'idItem'    => $idItem,
+                'titulo'    => 'paquetes',
+                'user'      => $user,
+                'Empresas'  => $Empresas,
             ]
         );
 
     }
 
-    public function edit($idItem=0)
-    {
-        $views  = 'paquete_edit';
-        $items = Paquete::findOrFail($idItem);
-        $Empresas = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
-        $user = Auth::User();
-        $oView = 'catalogos.' ;
+    public function edit($idItem=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $views      = 'paquete_edit';
+        $items      = Paquete::findOrFail($idItem);
+        $Empresas   = Empresa::all()->where('empresa_id',$this->Empresa_Id)->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+        $user       = Auth::User();
+        $oView      = 'catalogos.' ;
 
         return view ($oView.$views,
             [
@@ -87,8 +112,12 @@ class PaqueteController extends Controller
         );
 
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -108,20 +137,20 @@ class PaqueteController extends Controller
 
         $descripcion_paquete         = $F->toMayus($data['descripcion_paquete']);
         $data['descripcion_paquete'] = $descripcion_paquete;
-        $data['empresa_id']          = $data['empresa_id'];
-        $data['codigo']              = $data['codigo'];
+        $data['empresa_id']          = $this->Empresa_Id;
+//        $data['codigo']              = $data['codigo'];
 
-        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
-        $data['isvisibleinternet']   = $data['isvisibleinternet'];
-        $data['total_internet']      = $data['total_internet'];
+//        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
+//        $data['isvisibleinternet']   = $data['isvisibleinternet'];
+//        $data['total_internet']      = $data['total_internet'];
 
         $data['user_id']             = Auth::user()->id;
-        $data["idemp"]               = $F->getIHE(0);
+        $data["idemp"]               = $this->Empresa_Id;
         $data["ip"]                  = $F->getIHE(1);
         $data["host"]                = $F->getIHE(2);
 
         $user = User::find($data['user_id']);
-        $emp  = Empresa::find($data['empresa_id']);
+        $emp  = Empresa::find($this->Empresa_Id);
 
         $paq = Paquete::create($data);
 
@@ -131,8 +160,12 @@ class PaqueteController extends Controller
         return redirect('/new_paquete/'.$idItem);
     }
 
-    public function update(Request $request, Paquete $paq)
-    {
+    public function update(Request $request, Paquete $paq){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -151,20 +184,20 @@ class PaqueteController extends Controller
 
         $descripcion_paquete         = $F->toMayus($data['descripcion_paquete']);
         $data['descripcion_paquete'] = $descripcion_paquete;
-        $data['empresa_id']          = $data['empresa_id'];
-        $data['codigo']              = $data['codigo'];
+        $data['empresa_id']          = $this->Empresa_Id;
+//        $data['codigo']              = $data['codigo'];
 
-        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
-        $data['isvisibleinternet']   = $data['isvisibleinternet'];
-        $data['total_internet']      = $data['total_internet'];
+//        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
+//        $data['isvisibleinternet']   = $data['isvisibleinternet'];
+//        $data['total_internet']      = $data['total_internet'];
 
 
-        $data["idemp"]               = $F->getIHE(0);
+        $data["idemp"]               = $this->Empresa_Id;
         $data["ip"]                  = $F->getIHE(1);
         $data["host"]                = $F->getIHE(2);
 
         $user = Auth::User();
-        $emp  = Empresa::find($data['empresa_id']);
+        $emp  = Empresa::find($this->Empresa_Id);
         
         // dd($data);
 
@@ -185,17 +218,26 @@ class PaqueteController extends Controller
 
         return view ('archivos.paquete_imagen',
             [
-                'idItem' => $idItem,
-                'titulo' => 'Subir imagen a ficha: ',
-                'item' => $oPaq,
-                'user' => $user,
-                'otrosDatos' => '',
+                'idItem'        => $idItem,
+                'titulo'        => 'Subir imagen a ficha: ',
+                'item'          => $oPaq,
+                'user'          => $user,
+                'otrosDatos'    => '',
             ]
         );
     }
 
     public function destroy($id=0){
-        $mov = Movimiento::all()->where('paquete_id',$id)->first();
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $mov = Movimiento::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->where('paquete_id',$id)
+            ->first();
 
         if ( !$mov ){
             $paq = Paquete::findOrFail($id);
@@ -219,12 +261,20 @@ class PaqueteController extends Controller
 
     public function getLibrosPS($grupo_ps){
 
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $grupos = explode(',',$grupo_ps);
-        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')->whereIn('grupos_platsource',$grupos)
+        $paqs = Paquete::select('id','codigo','descripcion_paquete','importe','filename','root','isvisibleinternet','total_internet')
+            ->where('empresa_id',$this->Empresa_Id)
+            ->whereIn('grupos_platsource',$grupos)
                ->get();
 
         foreach($paqs as $paq){
             $pd = PaqueteDetalle::select('codigo','descripcion','cant','pv')
+                ->where('empresa_id',$this->Empresa_Id)
                   ->where('paquete_id',$paq->id)
                   ->get();
             $paq->libros = $pd;

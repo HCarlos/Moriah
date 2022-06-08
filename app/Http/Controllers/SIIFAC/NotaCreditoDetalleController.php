@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Movimiento;
@@ -11,6 +12,7 @@ use App\Models\SIIFAC\VentaDetalle;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 
 class NotaCreditoDetalleController extends Controller
@@ -18,9 +20,14 @@ class NotaCreditoDetalleController extends Controller
 
     protected $tableName = 'nota_credito_detalle';
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
     protected $F;
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $this->F = (new FuncionesController);
     }
 
@@ -29,8 +36,15 @@ class NotaCreditoDetalleController extends Controller
         if (is_null($nota_credito_id)){
             abort(500);
         }
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $user = Auth::User();
         $items = NotaCreditoDetalle::all()
+            ->where('empresa_id',$this->Empresa_Id)
             ->where('nota_credito_id', $nota_credito_id)
             ->sortBy('id');
         $totalVenta = 0;
@@ -40,12 +54,12 @@ class NotaCreditoDetalleController extends Controller
         // dd($nota_credito_id);
         return view ('catalogos.operaciones.notasdecredito_detalles_edit',
             [
-                'tableName' => 'Nota_de_Credito',
-                'notasCredito' => $items,
-                'user' => $user,
+                'tableName'       => 'Nota_de_Credito',
+                'notasCredito'    => $items,
+                'user'            => $user,
                 'nota_credito_id' => $nota_credito_id,
-                'totalVentas' => number_format($totalVenta,2,'.',',') ,
-                'message' => null,
+                'totalVentas'     => number_format($totalVenta,2,'.',',') ,
+                'message'         => null,
             ]
         );
     }
@@ -53,9 +67,15 @@ class NotaCreditoDetalleController extends Controller
     public function destroy($id=0){
         $OK = "OK";
         try {
+
+            $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+            if ($this->Empresa_Id <= 0){
+                return redirect('openEmpresa');
+            }
+
             $ncd = NotaCreditoDetalle::findOrFail($id);
             $notacredito_id = $ncd->nota_credito_id;
-            $Ing = Ingreso::all()->where('nota_credito_id',$notacredito_id);
+            $Ing = Ingreso::all()->where('empresa_id',$this->Empresa_Id)->where('nota_credito_id',$notacredito_id);
             if ( count($Ing) <= 0 ){
                 $venta_detalle_id = $ncd->venta_detalle_id;
                 $vd = VentaDetalle::find($venta_detalle_id);

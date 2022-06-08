@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class Ingreso extends Model
 {
@@ -88,37 +89,43 @@ class Ingreso extends Model
 
     }
 
-    public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id)
-    {
+    public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id){
         $user = Auth::user();
         $user_id = $user->id;
 
         $Ven = Venta::findOrFail($venta_id);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
 
-        $Ing   =  static::create([
-            'fecha'           => now(),
-            'venta_id'        => $venta_id,
-            'user_id'         => $user_id,
-            'cliente_id'      => $Ven->user_id,
-            'vendedor_id'     => $Ven->vendedor_id,
-            'nota_credito_id' => $nota_credito_id,
-            'empresa_id'      => $Ven->empresa_id,
-            'f_pagado'        => now(),
-            'metodo_pago'     => $metodo_pago,
-            'referencia'      => $referencia,
-            'subtotal'        => $Ven->subtotal,
-            'iva'             => $Ven->iva,
-            'total'           => $total_pagado,
-            'tipoventa'       => $Ven->TipoDeVenta,
-        ]);
+        if ( $Empresa_Id > 0){
 
-        $Ing->ventas()->attach($venta_id);
-        $Ing->users()->attach($user_id);
-        $Ing->vendedores()->attach($Ven->vendedor_id);
-        $Ing->clientes()->attach($Ven->user_id);
-        $Ing->empresas()->attach($Ven->empresa_id);
+            $Ing   =  static::create([
+                'fecha'           => now(),
+                'venta_id'        => $venta_id,
+                'user_id'         => $user_id,
+                'cliente_id'      => $Ven->user_id,
+                'vendedor_id'     => $Ven->vendedor_id,
+                'nota_credito_id' => $nota_credito_id,
+                'empresa_id'      => $Empresa_Id,
+                'f_pagado'        => now(),
+                'metodo_pago'     => $metodo_pago,
+                'referencia'      => $referencia,
+                'subtotal'        => $Ven->subtotal,
+                'iva'             => $Ven->iva,
+                'total'           => $total_pagado,
+                'tipoventa'       => $Ven->TipoDeVenta,
+            ]);
 
-        return $Ing;
+            $Ing->ventas()->attach($venta_id);
+            $Ing->users()->attach($user_id);
+            $Ing->vendedores()->attach($Ven->vendedor_id);
+            $Ing->clientes()->attach($Ven->user_id);
+            $Ing->empresas()->attach($Empresa_Id);
+
+            return $Ing;
+
+        } else {
+            return null;
+        }
 
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\PedidoDetalle;
 use App\Models\SIIFAC\Producto;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use LogicException;
 
 class PedidoDetalleController extends Controller
@@ -18,18 +20,28 @@ class PedidoDetalleController extends Controller
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
-    public function index($id = 0)
-    {
+    public function index($id = 0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $this->tableName = 'pedidos';
         $paq = Pedido::find($id);
 
         $items = PedidoDetalle::select('id','pedido_id','user_id','producto_id','medida_id','codigo','descripcion_producto','cant','pv','comp1','empresa_id')
+            ->where('empresa_id', $this->Empresa_Id)
             ->where('pedido_id',$id)
             ->orderBy('id','desc')
             ->paginate();
@@ -51,12 +63,20 @@ class PedidoDetalleController extends Controller
 
     }
 
-    public function new_ajax($pedido_id=0)
-    {
+    public function new_ajax($pedido_id=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views  = 'pedido_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::all()->sortBy('descripcion')->pluck('FullDescription','id');
+        $Productos = Producto::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->sortBy('descripcion')
+            ->pluck('FullDescription','id');
         return view ($oView.$views,
             [
                 'pedido_id' => $pedido_id,
@@ -68,8 +88,13 @@ class PedidoDetalleController extends Controller
         );
     }
 
-    public function store_ajax(Request $request)
-    {
+    public function store_ajax(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $data        = $request->all();
         $pedido_id  = $data['pedido_id'];
         $producto_id = $data['producto_id'];
@@ -81,7 +106,9 @@ class PedidoDetalleController extends Controller
         try {
             $mensaje = "OK";
             PedidoDetalle::findOrCreatePedidoDetalle($pedido_id,0, $ped->user_id,$ped->empresa_id, $producto_id,$cantidad);
-            $dets = PedidoDetalle::all()->where('pedido_id',$pedido_id);
+            $dets = PedidoDetalle::all()
+                ->where('empresa_id', $this->Empresa_Id)
+                ->where('pedido_id', $pedido_id);
             Pedido::UpdateImporteFromPedidoDetalle($dets);
         }
         catch(LogicException $e){

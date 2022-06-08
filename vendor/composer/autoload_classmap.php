@@ -58,7 +58,6 @@ return array(
     'App\\Http\\Controllers\\Externos\\VentasListadoExcelController' => $baseDir . '/app/Http/Controllers/Externos/VentasListadoExcelController.php',
     'App\\Http\\Controllers\\Funciones\\FuncionesController' => $baseDir . '/app/Http/Controllers/Funciones/FuncionesController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
-    'App\\Http\\Controllers\\Multimedia\\BusquedaMultimediaController' => $baseDir . '/app/Http/Controllers/Multimedia/BusquedaMultimediaController.php',
     'App\\Http\\Controllers\\SIIFAC\\AlmacenController' => $baseDir . '/app/Http/Controllers/SIIFAC/AlmacenController.php',
     'App\\Http\\Controllers\\SIIFAC\\CompraController' => $baseDir . '/app/Http/Controllers/SIIFAC/CompraController.php',
     'App\\Http\\Controllers\\SIIFAC\\CompraDetalleController' => $baseDir . '/app/Http/Controllers/SIIFAC/CompraDetalleController.php',

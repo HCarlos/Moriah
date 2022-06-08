@@ -23,11 +23,16 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home_alumno', 'HomeController@index_alumno')->name('home_alumno');
 Route::get('/imagenes/{root}/{archivo}', 'Funciones\FuncionesController@showFile')->name('callFile/');
+
+Route::get('/openEmpresa', 'HomeController@openViewEmpresa')->name('openEmpresa');
+Route::post('setEmpresa', 'HomeController@setEmpresa')->name('setEmpresa');
+
+//Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+//Route::post('login', 'Auth\LoginController@login');
+//Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
 /*
 // Authentication Routes...
-$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
-$this->post('login', 'Auth\LoginController@login');
-$this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
 // Registration Routes...
 $this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\Producto;
 use Illuminate\Database\QueryException;
@@ -21,17 +22,27 @@ class PaqueteDetalleController extends Controller
     protected $otrosDatos;
     protected $Predeterminado = false;
     protected $redirectTo = '/home';
+    protected $Empresa_Id = 0;
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
     }
 
-    public function index($id = 0)
-    {
+    public function index($id = 0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $this->tableName = 'paquetes';
         $paq = Paquete::find($id);
         $items = PaqueteDetalle::select('id','paquete_id', 'producto_id', 'medida_id', 'codigo', 'descripcion', 'cant','pv','comp1','empresa_id')
+            ->where('empresa_id',$this->Empresa_Id)
             ->where('paquete_id',$id)
             ->orderBy('id','desc')
             ->paginate();
@@ -50,12 +61,20 @@ class PaqueteDetalleController extends Controller
 
     }
 
-    public function new_ajax($paquete_id=0)
-    {
+    public function new_ajax($paquete_id=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views  = 'paquete_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::all()->sortBy('descripcion')->pluck('FullDescription','id');
+        $Productos = Producto::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->sortBy('descripcion')
+            ->pluck('FullDescription','id');
         return view ($oView.$views,
             [
                 'paquete_id' => $paquete_id,
@@ -67,13 +86,21 @@ class PaqueteDetalleController extends Controller
         );
     }
 
-    public function edit_ajax($paquete_id=0,$paquete_detalle_id=0)
-    {
+    public function edit_ajax($paquete_id=0,$paquete_detalle_id=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views  = 'paquete_detalle_edit_ajax';
         $user = Auth::User();
         $oView = 'catalogos.' ;
         $items = PaqueteDetalle::find($paquete_detalle_id);
-        $Productos = Producto::all()->sortBy('descripcion')->pluck('FullDescription','id');
+        $Productos = Producto::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->sortBy('descripcion')
+            ->pluck('FullDescription','id');
 
         return view ($oView.$views,
             [   'items' => $items,
@@ -87,8 +114,13 @@ class PaqueteDetalleController extends Controller
     }
 
 
-    public function store_ajax(Request $request)
-    {
+    public function store_ajax(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $data        = $request->all();
         $paquete_id  = $data['paquete_id'];
         $producto_id = $data['producto_id'];
@@ -99,7 +131,9 @@ class PaqueteDetalleController extends Controller
         try {
             $mensaje = "OK";
             PaqueteDetalle::findOrCreatePaqueteDetalle($paquete_id,$producto_id,$cantidad);
-            $dets = PaqueteDetalle::all()->where('paquete_id',$paquete_id);
+            $dets = PaqueteDetalle::all()
+                ->where('empresa_id',$this->Empresa_Id)
+                ->where('paquete_id',$paquete_id);
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
         }
         catch(LogicException $e){
@@ -109,9 +143,14 @@ class PaqueteDetalleController extends Controller
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
 
-    public function update_ajax(Request $request)
-    {
-        $data = $request->all();
+    public function update_ajax(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $data               = $request->all();
         $paquete_detalle_id = $data['paquete_detalle_id'];
         $paquete_id         = $data['paquete_id'];
         $producto_id        = $data['producto_id'];
@@ -122,7 +161,9 @@ class PaqueteDetalleController extends Controller
         try {
             $mensaje = "OK";
             $pd->updatePaqueteDetalle($paquete_id, $paquete_detalle_id, $producto_id, $producto_id_old,$cantidad);
-            $dets = PaqueteDetalle::all()->where('paquete_id',$paquete_id);
+            $dets = PaqueteDetalle::all()
+                ->where('empresa_id',$this->Empresa_Id)
+                ->where('paquete_id',$paquete_id);
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
 
         }
@@ -137,12 +178,19 @@ class PaqueteDetalleController extends Controller
     public function destroy($id=0){
         try{
 
+            $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+            if ($this->Empresa_Id <= 0){
+                return redirect('openEmpresa');
+            }
+
             $pd = PaqueteDetalle::findOrFail($id);
             $pd->forceDelete();
 
             $prod = Producto::find($pd->producto_id);
             $paq = Paquete::find($pd->paquete_id);
-            $dets = PaqueteDetalle::all()->where('paquete_id',$pd->paquete_id);
+            $dets = PaqueteDetalle::all()
+                ->where('empresa_id',$this->Empresa_Id)
+                ->where('paquete_id',$pd->paquete_id);
             $paq::UpdateImporteFromPaqueteDetalle($dets);
 
             $pd->productos()->detach($prod);

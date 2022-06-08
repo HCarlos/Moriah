@@ -8,7 +8,7 @@
         <!-- /section:basics/sidebar.mobile.toggle -->
         <div class="navbar-header pull-left ">
             {{--<img src="{{ asset('assets/img/logo_moriah_160x24.png') }}" width="106" height="45" alt=""/>--}}
-            <h4 class="white font-effect-3d-float font_Kaushan_Script_700">Moriah</h4>
+            <h4 class="white font-effect-3d-float font_Kaushan_Script_700">Moriah :: <small class="white font_Roboto_400">{{ Session::get('RS') }}</small></h4>
         </div>
 
         <!-- #section:basics/navbar.dropdown -->

@@ -2,9 +2,11 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 use Request;
 
 class PaqueteDetalle extends Model
@@ -37,9 +39,13 @@ class PaqueteDetalle extends Model
 
     public static function findOrCreatePaqueteDetalle($paquete_id, $producto_id,$cantidad){
         $obj = static::all()->where('paquete_id', $paquete_id)->where('producto_id', $producto_id)->first();
-        if (!$obj) {
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
+
             $paq = Paquete::find($paquete_id);
             $prod = Producto::find($producto_id);
+
             $det = static::create([
                 'paquete_id'=>$paquete_id,
                 'producto_id'=>$producto_id,
@@ -49,8 +55,8 @@ class PaqueteDetalle extends Model
                 'cant' => $cantidad,
                 'pv' => $prod->pv,
                 'comp1' => $prod->comp1,
-                'empresa_id' => $prod->empresa_id,
-                'idemp' => 1,
+                'empresa_id' => $Empresa_Id,
+                'idemp' => $Empresa_Id,
                 'ip' => Request::ip(),
                 'host' => Request::getHttpHost(),
             ]);
@@ -72,6 +78,7 @@ class PaqueteDetalle extends Model
 
 
     public static function updatePaqueteDetalle($paquete_id,$paquete_detalle_id,$producto_id,$producto_id_old,$cantidad){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         $det = static::find($paquete_detalle_id);
         if ($det) {
             $paq = Paquete::find($paquete_id);
@@ -86,7 +93,7 @@ class PaqueteDetalle extends Model
                 'pv' => $prod->pv,
                 'comp1' => $prod->comp1,
                 'empresa_id' => $prod->empresa_id,
-                'idemp' => 1,
+                'idemp' => $Empresa_Id,
                 'ip' => Request::ip(),
                 'host' => Request::getHttpHost(),
             ]);
@@ -106,6 +113,7 @@ class PaqueteDetalle extends Model
 
 
     public static function updatePaqueteDetalleFromProducto(Producto $prod){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         $f = new FuncionesController();
         $dets = static::all()->where('producto_id',$prod->id);
 
@@ -121,8 +129,8 @@ class PaqueteDetalle extends Model
                 'cant' => $prod->cant,
                 'pv' => $prod->pv,
                 'comp1' => $prod->comp1,
-                'empresa_id' => $prod->empresa_id,
-                'idemp' => $prod->idemp,
+                'empresa_id' => $Empresa_Id,
+                'idemp' => $Empresa_Id,
                 'ip' => $f->getIHE(1),
                 'host' => $f->getIHE(2),
             ]);

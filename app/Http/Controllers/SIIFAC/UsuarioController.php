@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaCliente;
 use App\Models\SIIFAC\Movimiento;
@@ -100,8 +101,12 @@ class UsuarioController extends Controller
 
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -131,7 +136,7 @@ class UsuarioController extends Controller
         $data['telefono'] = is_null($data['telefono']) ? ' ' : $data['telefono'];
         $data['iduser_ps'] = is_null($data['iduser_ps']) ? ' ' : $data['iduser_ps'];
 
-        $data["idemp"]       = $F->getIHE(0);
+        $data["idemp"]       = $this->Empresa_Id;
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
 
@@ -151,11 +156,14 @@ class UsuarioController extends Controller
         return redirect('/new_usuario/'.$idItem);
     }
 
-    public function update(Request $request, User $user)
-    {
+    public function update(Request $request, User $user){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
-//        dd($data);
         $idItem     = $data['idItem'];
 
         $validator = Validator::make($data, [
@@ -175,10 +183,10 @@ class UsuarioController extends Controller
         $ap_materno = $F->toMayus($data['ap_materno']);
         $nombre     = $F->toMayus($data['nombre']);
 
-        $data['ap_paterno'] = $ap_paterno;
-        $data['ap_materno']   = $ap_materno;
-        $data['nombre'] = $nombre;
-        $data["idemp"]       = $F->getIHE(0);
+        $data['ap_paterno']  = $ap_paterno;
+        $data['ap_materno']  = $ap_materno;
+        $data['nombre']      = $nombre;
+        $data["idemp"]       = $this->Empresa_Id;
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
 

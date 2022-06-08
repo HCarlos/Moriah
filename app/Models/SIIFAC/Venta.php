@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class Venta extends Model
 {
@@ -179,28 +180,35 @@ class Venta extends Model
         $paq   = Paquete::find($paquete_id);
         $timex = Carbon::now()->format('ymdHisu');
         $timex = substr($timex,0,16);
-        $Ven  =  static::create([
-            'fecha'       => now(),
-            'clave'       => $paq->clave,
-            'tipoventa'   => $tipoventa,
-            'cuenta'      => $timex,
-            'cantidad'    => $cantidad,
-            'total'       => $paq->importe,
-            'empresa_id'  => $paq->empresa_id,
-            'paquete_id'  => $paquete_id,
-            'pedido_id'   => 0,
-            'user_id'     => $user_id,
-            'vendedor_id' => $vendedor_id,
-        ]);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($Empresa_Id > 0) {
 
-        $Ven->empresas()->attach($paq->empresa_id);
-        $Ven->paquetes()->attach($paquete_id);
-        $Ven->users()->attach($user_id);
-        $Ven->vendedores()->attach($vendedor_id);
+            $Ven = static::create([
+                'fecha' => now(),
+                'clave' => $paq->clave,
+                'tipoventa' => $tipoventa,
+                'cuenta' => $timex,
+                'cantidad' => $cantidad,
+                'total' => $paq->importe,
+                'empresa_id' => $Empresa_Id,
+                'paquete_id' => $paquete_id,
+                'pedido_id' => 0,
+                'user_id' => $user_id,
+                'vendedor_id' => $vendedor_id,
+                'idemp' => $Empresa_Id,
+            ]);
 
-        $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id,$cantidad);
+            $Ven->empresas()->attach($Empresa_Id);
+            $Ven->paquetes()->attach($paquete_id);
+            $Ven->users()->attach($user_id);
+            $Ven->vendedores()->attach($vendedor_id);
 
-        return $pd;
+            $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id, $cantidad);
+
+            return $pd;
+        } else {
+            return null;
+        }
 
     }
 
@@ -208,82 +216,93 @@ class Venta extends Model
         $Ped   = Pedido::find($pedido_id);
         $timex = Carbon::now()->format('ymdHisu');
         $timex = substr($timex,0,16);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($Empresa_Id > 0) {
 
-        $Ven  =  static::create([
-            'fecha'       => now(),
-            'clave'       => $Ped->clave,
-            'tipoventa'   => $tipoventa,
-            'cuenta'      => $timex,
-            'cantidad'    => $cantidad,
-            'total'       => $Ped->importe,
-            'empresa_id'  => $Ped->empresa_id,
-            'paquete_id'  => 0,
-            'pedido_id'   => $pedido_id,
-            'user_id'     => $user_id,
-            'vendedor_id' => $vendedor_id,
+            $Ven = static::create([
+                'fecha' => now(),
+                'clave' => $Ped->clave,
+                'tipoventa' => $tipoventa,
+                'cuenta' => $timex,
+                'cantidad' => $cantidad,
+                'total' => $Ped->importe,
+                'empresa_id' => $Empresa_Id,
+                'paquete_id' => 0,
+                'pedido_id' => $pedido_id,
+                'user_id' => $user_id,
+                'vendedor_id' => $vendedor_id,
 
-            'idciclo_ps'     => $Ped->idciclo_ps,
-            'ciclo'          => $Ped->ciclo,
-            'idgrado_ps'     => $Ped->idgrado_ps,
-            'grado'          => $Ped->grado,
-            'idgrupo_ps'     => $Ped->idgrupo_ps,
-            'grupo'          => $Ped->grupo,
-            'idalumno_ps'    => $Ped->idalumno_ps,
-            'alumno'         => $Ped->alumno,
-            'idtutor_ps'     => $Ped->idtutor_ps,
-            'turor'          => $Ped->turor,
-            'idfamilia_ps'   => $Ped->idfamilia_ps,
-            'familia'        => $Ped->familia,
-            'alu_ap_paterno' => $Ped->alu_ap_paterno,
-            'alu_ap_materno' => $Ped->alu_ap_materno,
-            'alu_nombre'     => $Ped->alu_nombre,
-            'username_alu'   => $Ped->username_alu,
+                'idciclo_ps' => $Ped->idciclo_ps,
+                'ciclo' => $Ped->ciclo,
+                'idgrado_ps' => $Ped->idgrado_ps,
+                'grado' => $Ped->grado,
+                'idgrupo_ps' => $Ped->idgrupo_ps,
+                'grupo' => $Ped->grupo,
+                'idalumno_ps' => $Ped->idalumno_ps,
+                'alumno' => $Ped->alumno,
+                'idtutor_ps' => $Ped->idtutor_ps,
+                'turor' => $Ped->turor,
+                'idfamilia_ps' => $Ped->idfamilia_ps,
+                'familia' => $Ped->familia,
+                'alu_ap_paterno' => $Ped->alu_ap_paterno,
+                'alu_ap_materno' => $Ped->alu_ap_materno,
+                'alu_nombre' => $Ped->alu_nombre,
+                'username_alu' => $Ped->username_alu,
+                'idemp' => $Empresa_Id,
 
 
-        ]);
+            ]);
 
-        $Ven->empresas()->attach($Ped->empresa_id);
-        $Ven->pedidos()->attach($pedido_id);
-        $Ven->users()->attach($user_id);
-        $Ven->vendedores()->attach($vendedor_id);
+            $Ven->empresas()->attach($Empresa_Id);
+            $Ven->pedidos()->attach($pedido_id);
+            $Ven->users()->attach($user_id);
+            $Ven->vendedores()->attach($vendedor_id);
 
-        $pd = VentaDetalle::venderPedidoDetalles($Ven->id, $pedido_id,$cantidad);
+            $pd = VentaDetalle::venderPedidoDetalles($Ven->id, $pedido_id, $cantidad);
 
-        return $pd;
+            return $pd;
 
+        } else {
+           return null;
+        }
     }
 
     public static function venderNormal($vendedor_id, $producto_id, $tipoventa, $user_id, $cantidad){
         $Prod  = Producto::find($producto_id);
         $timex = Carbon::now()->format('ymdHisu');
         $timex = substr($timex,0,16);
-        $Ven   =  static::create([
-            'fecha'       => now(),
-            'clave'       => $Prod->clave,
-            'tipoventa'   => $tipoventa,
-            'cuenta'      => $timex,
-            'cantidad'    => $cantidad,
-            'total'       => $Prod->pv,
-            'empresa_id'  => $Prod->empresa_id,
-            'paquete_id'  => 0,
-            'pedido_id'   => 0,
-            'user_id'     => $user_id,
-            'vendedor_id' => $vendedor_id,
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($Empresa_Id > 0) {
+            $Ven = static::create([
+                'fecha' => now(),
+                'clave' => $Prod->clave,
+                'tipoventa' => $tipoventa,
+                'cuenta' => $timex,
+                'cantidad' => $cantidad,
+                'total' => $Prod->pv,
+                'empresa_id' => $Empresa_Id,
+                'paquete_id' => 0,
+                'pedido_id' => 0,
+                'user_id' => $user_id,
+                'vendedor_id' => $vendedor_id,
+                'idemp' => $Empresa_Id,
 
-        ]);
+            ]);
 
-        $Ven->empresas()->attach($Prod->empresa_id);
-        $Ven->users()->attach($user_id);
-        $Ven->vendedores()->attach($vendedor_id);
+            $Ven->empresas()->attach($Empresa_Id);
+            $Ven->users()->attach($user_id);
+            $Ven->vendedores()->attach($vendedor_id);
 
-        $pd = VentaDetalle::venderNormalDetalles($Ven, $producto_id,$cantidad);
+            $pd = VentaDetalle::venderNormalDetalles($Ven, $producto_id, $cantidad);
 
-        return $pd;
+            return $pd;
+        } else {
+            return null;
+        }
 
     }
 
-    public static function pagarVenta($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia)
-    {
+    public static function pagarVenta($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia){
         $Ven = static::findOrFail($venta_id);
         $Ven->total_pagado = $total_pagado;
         $Ven->metodo_pago = $metodo_pago;
@@ -308,11 +327,8 @@ class Venta extends Model
 
     }
 
-    public static function anularVenta($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia)
-    {
+    public static function anularVenta($venta_id, $total_a_pagar, $total_pagado, $metodo_pago, $referencia){
         $Ven = static::findOrFail($venta_id);
-//        $Ven->total_pagado = $total_pagado;
-//        $Ven->total = $total_a_pagar;
         $Ven->total_pagado = 0;
         $Ven->total = 0;
         $Ven->metodo_pago = $metodo_pago;

@@ -2,10 +2,12 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 use Request;
 
 class PedidoDetalle extends Model
@@ -71,9 +73,10 @@ class PedidoDetalle extends Model
         $_Prd = $arrPrd;
         $_Cnt = $arrCnt;
         $_Imp = $arrImp;
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         foreach($_Ids as $i => $valor){
             $p = Producto::find( intval($_Prd[$i]) );
-            if ( $p ){
+            if ( $p && $Empresa_Id > 0 ){
                 $pd = PedidoDetalle::create([
                     'pedido_id' => $pedido_id,
                     'user_id' => $user_id,
@@ -84,8 +87,8 @@ class PedidoDetalle extends Model
                     'cant' => intval($_Cnt[$i]),
                     'pv' => $p->pv,
                     'comp1' => $p->comp1,
-                    'empresa_id' => $empresa_id,
-                    'idemp' => $p->idemp,
+                    'empresa_id' => $Empresa_Id,
+                    'idemp' => $Empresa_Id,
                     'ip' => $f->getIHE(1),
                     'host' => $f->getIHE(1),
                 ]);
@@ -117,34 +120,39 @@ class PedidoDetalle extends Model
             $p = Producto::find($producto_id);
             $producto_id = $p->id;
         }
-        $pd = PedidoDetalle::create([
-            'pedido_id' => $pedido_id,
-            'user_id' => $user_id,
-            'producto_id' => $producto_id,
-            'medida_id' => $p->medida_id,
-            'codigo' => $p->codigo,
-            'descripcion_producto' => $p->descripcion,
-            'cant' => $cantidad,
-            'pv' => $p->pv,
-            'comp1' => $p->comp1,
-            'empresa_id' => $empresa_id,
-            'idemp' => 1,
-            'ip' => Request::ip(),
-            'host' => Request::getHttpHost(),
-        ]);
-        $ped = Pedido::find($pedido_id);
-        $prod = Producto::find($producto_id);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ( $Empresa_Id > 0) {
+            $pd = PedidoDetalle::create([
+                'pedido_id' => $pedido_id,
+                'user_id' => $user_id,
+                'producto_id' => $producto_id,
+                'medida_id' => $p->medida_id,
+                'codigo' => $p->codigo,
+                'descripcion_producto' => $p->descripcion,
+                'cant' => $cantidad,
+                'pv' => $p->pv,
+                'comp1' => $p->comp1,
+                'empresa_id' => $Empresa_Id,
+                'idemp' => $Empresa_Id,
+                'ip' => Request::ip(),
+                'host' => Request::getHttpHost(),
+            ]);
+            $ped = Pedido::find($pedido_id);
+            $prod = Producto::find($producto_id);
 
-        $pd->productos()->detach($prod);
-        $ped->detalles()->detach($pd);
-        $ped->productos()->detach($prod);
+            $pd->productos()->detach($prod);
+            $ped->detalles()->detach($pd);
+            $ped->productos()->detach($prod);
 
-        $pd->productos()->attach($prod);
-        $ped->detalles()->attach($pd);
-        $ped->productos()->attach($prod);
+            $pd->productos()->attach($prod);
+            $ped->detalles()->attach($pd);
+            $ped->productos()->attach($prod);
 
 
-        return $pd;
+            return $pd;
+        }else{
+            return null;
+        }
 
     }
 
@@ -154,7 +162,7 @@ class PedidoDetalle extends Model
         $dets = static::all()->where('producto_id',$prod->id);
 
         foreach ($dets as $det){
-            
+
             $pd = PedidoDetalle::create([
                 'producto_id' => $prod->id,
                 'medida_id' => $prod->medida_id,
@@ -167,7 +175,7 @@ class PedidoDetalle extends Model
                 'ip' => $f->getIHE(1),
                 'host' => $f->getIHE(2),
             ]);
-    
+
             Paquete::UpdateImporteFromPaqueteDetalle($dets);
 
             return $pd;

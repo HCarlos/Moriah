@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Storage;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use http\Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -14,18 +16,28 @@ use Illuminate\Support\Facades\Validator;
 class StorageProfileController extends Controller
 {
     protected $redirectTo = 'showEditProfilePhoto/';
+    protected $Empresa_Id = 0;
     protected $F;
+
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $this->F = new FuncionesController();
     }
 
-    public function subirArchivoProfile(Request $request)
-    {
-        $ip     = $_SERVER['REMOTE_ADDR'];
-        $host   = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        $idemp  = 1;
-        $data    = $request->all();
+    public function subirArchivoProfile(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $ip   = $_SERVER['REMOTE_ADDR'];
+        $host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $data = $request->all();
         $user = Auth::User();
 
         try {
@@ -46,23 +58,25 @@ class StorageProfileController extends Controller
             $user->filename = $fileName;
             $user->ip = $ip;
             $user->host = $host;
-            $user->idemp = $idemp;
+            $user->idemp = $this->Empresa_Id;
             $user->save();
             return redirect($this->redirectTo);
 
         }catch (Exception $e){
             dd($e);
         }
-        if ($user->hasRole('user') || $user->hasRole('administrator') || $user->hasRole('alumno') ) {
+
+        if ( $user->hasRole('user') || $user->hasRole('administrator') || $user->hasRole('alumno') ) {
             return redirect($this->redirectTo);
-        }else{
-           //dd( $user->hasRole('administrator') );
         }
+
+//    }else{
+//dd( $user->hasRole('administrator') );
+
 
     }
 
-    public function quitarArchivoProfile(Request $request)
-    {
+    public function quitarArchivoProfile(Request $request){
         $user = Auth::user();
         Storage::disk('profile')->delete($user->filename);
         $this->F->deleteImages($user,'profile');

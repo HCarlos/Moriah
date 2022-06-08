@@ -60,18 +60,18 @@
                 <div class="form-group row">
                     <label for = "prefijo" class="col-md-2 col-form-label text-md-right">Prefijo</label>
                     <div class="col-md-1">
-                        <input type="text" name="prefijo" id="prefijo" value="{{ old('prefijo') }}" />
+                        <input type="text" name="prefijo" id="prefijo" value="{{ old('prefijo') }}" maxlength="3" />
                     </div>
                     <div class="col-md-9">
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for = "empresa_id" class="col-md-2 col-form-label text-md-right">Empresa</label>
-                    <div class="col-md-10">
-                        {{ Form::select('empresa_id', $Empresas) }}
-                    </div>
-                </div>
+{{--                <div class="form-group row">--}}
+{{--                    <label for = "empresa_id" class="col-md-2 col-form-label text-md-right">Empresa</label>--}}
+{{--                    <div class="col-md-10">--}}
+{{--                        {{ Form::select('empresa_id', $Empresas) }}--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <div class="form-group row">
                     <label for = "status_almacen" class="col-md-2 col-form-label text-md-right">Status</label>

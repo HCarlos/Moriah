@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -28,10 +29,12 @@ class FamiliaCliente extends Model
 
     public static function findOrCreateFamiliaCliente($descripcion, $empresa_id){
         $obj = static::all()->where('descripcion', $descripcion)->first();
-        if (!$obj) {
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
             return static::create([
                 'descripcion'=>$descripcion,
-                'empresa_id'=>$empresa_id,
+                'empresa_id'=>$Empresa_Id,
             ]);
         }
         return $obj;

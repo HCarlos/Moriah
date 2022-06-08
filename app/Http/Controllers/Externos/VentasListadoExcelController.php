@@ -92,16 +92,6 @@ class VentasListadoExcelController extends Controller{
 
     }
 
-    // public function archivos_config()
-    // {
-    //     return view('catalogos.config.archivos',[
-    //         "tableName" => "",
-    //         "archivos" => Storage::disk('externo')->allFiles(),
-    //     ]);
-    // }
-
-
-
 
 
     

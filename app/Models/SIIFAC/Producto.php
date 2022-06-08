@@ -2,8 +2,10 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Funciones\FuncionesController;
 
@@ -100,11 +102,14 @@ class Producto extends Model
             ->where('codigo', $codigo)
             ->where('descripcion', $descripcion)
             ->first();
-        if (!$obj) {
+
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
             $alma = Almacen::find($almacen_id);
             $fp   = FamiliaProducto::find($familia_producto_id);
             $med  = Medida::find($medida_id);
-            $emp = Empresa::find($empresa_id);
+            $emp = Empresa::find($Empresa_Id);
             if ( $proveedor_id == 0 ) {
                 $proveedor_id = 1;
             }else{
@@ -135,7 +140,8 @@ class Producto extends Model
                 'exist'=>$exist,
                 'cu'=>$cu,
                 'saldo'=>$saldo,
-                'empresa_id'=>$empresa_id,
+                'empresa_id' => $Empresa_Id,
+                'idemp' => $Empresa_Id,
                 'root' => 'producto/',
             ]);
 
@@ -167,11 +173,11 @@ class Producto extends Model
     }
 
     public static function ActualizaDatosDesdeCompras($id,$data){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
 
         $Prod         = static::find($id);
         $almacen_id   = $data['almacen_id'];
         $proveedor_id = $data['proveedor_id'];
-        $empresa_id   = $data['empresa_id'];
         $compra_id    = $data['compra_id'];
         $pv           = $data['pv'];
         $cu           = $data['cu'];
@@ -181,7 +187,8 @@ class Producto extends Model
 
         $Prod->almacen_id   = $almacen_id;
         $Prod->proveedor_id = $proveedor_id;
-        $Prod->empresa_id   = $empresa_id;
+        $Prod->empresa_id   = $Empresa_Id;
+        $Prod->idemp        = $Empresa_Id;
         $Prod->pv           = $pv;
         $Prod->cu           = $cu;
         $Prod->exist        = $existencia;

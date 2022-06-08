@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -52,16 +53,25 @@ class LoginController extends Controller
             'usuario_venta_uniformes','usuario_admin_venta_uniformess',
             'usuario_venta_cuadernos','usuario_admin_venta_cuadernos'
         ]) ){
-            $this->redirectTo = '/home';
-            return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
-//        }elseif( $user->hasRole('alumno') ){
+
+            //            $this->redirectTo = '/home';
+//            $returnRedirect = property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
+
+            //        }elseif( $user->hasRole('alumno') ){
 //            $this->redirectTo = '/home_alumno';
 //            return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home_alumno';
 //        }elseif( $user->hasRole('administrator') ){
 //            $this->redirectTo = '/home';
 //            return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
-        }
 
+//            if ( intval(Session::get('Empresa_Id') ) == 0 ){
+                return intval(Session::get('Empresa_Id') ) == 0 ? '/openEmpresa' :  $this->redirectTo;
+//            }
+
+//            return $returnRedirect;
+
+        }
+        return 'login';
 
     }
 

@@ -2,15 +2,17 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 
-class Almacen extends Model
-{
+class Almacen extends Model{
     use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'almacenes';
+    protected $Empresa_Id = 0;
 
     protected $fillable = [
         'clave_almacen', 'descripcion', 'responsable','tipoinv','prefijo','empresa_id',
@@ -41,15 +43,17 @@ class Almacen extends Model
 
     public static function findOrCreateAlmacen($clave_almacen, $descripcion, $responsable, $tipoinv, $prefijo, $empresa_id){
         $obj = static::all()->where('clave_almacen', $clave_almacen)->where('descripcion', $descripcion)->first();
-        if (!$obj) {
-            $emp = Empresa::find($empresa_id);
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        if (!$obj && $Empresa_Id > 0) {
+            $emp = Empresa::find($Empresa_Id);
             $alma =  static::create([
                 'clave_almacen'=>$clave_almacen,
                 'descripcion'=>$descripcion,
                 'responsable'=>$responsable,
                 'tipoinv'=>$tipoinv,
                 'prefijo'=>$prefijo,
-                'empresa_id'=>$empresa_id,
+                'empresa_id'=>$Empresa_Id,
             ]);
             $alma->empresas()->attach($emp);
             return $alma;
