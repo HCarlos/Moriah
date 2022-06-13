@@ -11,11 +11,9 @@ use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Proveedor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\SIIFAC\Producto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Session;
 
 class CompraController extends Controller
 {
@@ -54,25 +52,32 @@ class CompraController extends Controller
     }
 
     public function nueva_compra_ajax(){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views       = 'compra_nueva_ajax';
         $user        = Auth::User();
         $oView       = 'catalogos.operaciones.compras.';
-        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Empresas    = Empresa::all()->where('id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
+        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         return view ($oView.$views,
             [
                 'Empresas'    => $Empresas,
                 'Almacenes'   => $Almacenes,
                 'Proveedores' => $Proveedores,
                 'user'        => $user,
+                'empresa_id'  => $this->Empresa_Id,
                 'Url'         => '/store_compra_nueva_ajax',
             ]
         );
     }
 
-    public function store_compra_nueva_ajax(Request $request)
-    {
+    public function store_compra_nueva_ajax(Request $request){
+
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($this->Empresa_Id <= 0){
             return redirect('openEmpresa');
@@ -98,13 +103,18 @@ class CompraController extends Controller
     }
 
     public function editar_compra_ajax($compra_id){
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views       = 'compra_editar_ajax';
         $user        = Auth::User();
         $oView       = 'catalogos.operaciones.compras.';
         $Compra      = Compra::find($compra_id);
-        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Empresas    = Empresa::all()->where('id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
+        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         return view ($oView.$views,
             [
                 'Empresas'    => $Empresas,
@@ -112,6 +122,7 @@ class CompraController extends Controller
                 'Proveedores' => $Proveedores,
                 'compra'      => $Compra,
                 'user'        => $user,
+                'empresa_id'  => $this->Empresa_Id,
                 'Url'         => '/store_compra_editada_ajax',
             ]
         );

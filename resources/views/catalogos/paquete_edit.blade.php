@@ -26,14 +26,6 @@
                 @endif
 
                 <div class="form-group row">
-                    <label for = "empresa_id" class="col-md-1 col-form-label text-md-left">Empresa</label>
-                    <div class="col-md-2">
-                        {{ Form::select('empresa_id', $Empresas, $items->empresa_id, ['id' => 'empresa_id']) }}
-                    </div>
-                    <div class="col-md-9"></div>
-                </div>
-
-                <div class="form-group row">
                     <label for = "codigo" class="col-md-1 col-form-label text-md-left">Código</label>
                     <div class="col-md-2">
                         <input type="text" name="codigo" id="codigo" value="{{ old('codigo',$items->codigo) }}" min="1" max="999999" class="form-control" />
@@ -76,7 +68,7 @@
                 <input type="hidden" id = "idItem"name="idItem" value="{{$idItem}}" />
                 <input type="hidden" id = "isvisibleinternet" name="isvisibleinternet" value="1" />
                 <input type="hidden" id = "total_internet" name="total_internet" value="0.00" />
-
+                <input type="hidden" name="empresa_id"   id="empresa_id"      value="{{ $empresa_id }}" />
             </form>
         </div>
     </div>

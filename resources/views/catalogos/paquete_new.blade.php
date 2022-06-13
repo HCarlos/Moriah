@@ -25,14 +25,6 @@
                 @endif
 
                 <div class="form-group row">
-                    <label for = "empresa_id" class="col-md-1 col-form-label text-md-left">Empresa</label>
-                    <div class="col-md-2">
-                        {{ Form::select('empresa_id', $Empresas, 1, ['id' => 'empresa_id']) }}
-                    </div>
-                    <div class="col-md-9"></div>
-                </div>
-
-                <div class="form-group row">
                     <label for = "codigo" class="col-md-1 col-form-label text-md-left">Código</label>
                     <div class="col-md-2">
                         <input type="text" name="codigo" id="codigo" value="{{ old('codigo') }}" min="1" max="999999" class="form-control" />
@@ -48,17 +40,15 @@
                 </div>
 
                 <div class="form-group row">
-
+                    <label for = "importe" class="col-md-1 col-form-label text-md-left">Importe</label>
                     <div class="col-md-2">
-                        <label for = "importe" class="col-md-1 col-form-label text-md-left">Importe</label>
                         <input type="number" name="importe" id="importe" value="{{ old('importe') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" readonly/>
                     </div>
+                    <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupos PS</label>
                     <div class="col-md-2">
-                        <label for = "grupos_platsource" class="col-md-1 col-form-label text-md-left">Grupos PS</label>
-                        <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control" />
+                        <input type="text" name="grupos_platsource" id="grupos_platsource" value="{{ old('grupos_platsource') }}" class="form-control col-md-3" />
                     </div>
-                    <div class="col-md-5"></div>
-
+                    <div class="col-md-6"></div>
                 </div>
 
                 <div>
@@ -76,7 +66,7 @@
                 <input type="hidden" name="idItem" value="{{$idItem}}" />
                 <input type="hidden" id = "isvisibleinternet" name="isvisibleinternet" value="1" />
                 <input type="hidden" id = "total_internet" name="total_internet" value="0.00" />
-
+                <input type="hidden" name="empresa_id"   id="empresa_id"      value="{{ $empresa_id }}" />
             </form>
         </div>
     </div>

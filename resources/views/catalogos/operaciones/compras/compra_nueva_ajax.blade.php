@@ -19,16 +19,12 @@
 
             <div class="form-group row">
                 <label for = "almacen_id" class="col-md-2 col-form-label text-md-left">Almacen</label>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {{ Form::select('almacen_id', $Almacenes, 1, ['id' => 'almacen_id','class' => 'form-control']) }}
                 </div>
                 <label for = "proveedor_id" class="col-md-2 col-form-label text-md-left">Proveedor</label>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {{ Form::select('proveedor_id', $Proveedores, null, ['id' => 'proveedor_id','class' => 'form-control']) }}
-                </div>
-                <label for = "empresa_id" class="col-md-2 col-form-label text-md-left">Empresa</label>
-                <div class="col-md-2">
-                    {{ Form::select('empresa_id', $Empresas, null, ['id' => 'empresa_id','class' => 'form-control']) }}
                 </div>
             </div>
 
@@ -60,6 +56,7 @@
                 </div>
             </div>
             {{--<input type="hidden" name="compra_id"    id="compra_id"       value="{{$compra_id}}" />--}}
+            <input type="hidden" name="empresa_id"   id="empresa_id"      value="{{ $empresa_id }}" />
         </form>
     </div>
 </div>

@@ -29,8 +29,8 @@ class VentaController extends Controller
     protected $FechaInicial = '';
     protected $FechaFinal = '';
     protected $Empresa_Id = 0;
+    protected $F = null;
 
-   protected $F;
     public function __construct(){
         $this->middleware('auth');
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
@@ -101,6 +101,8 @@ class VentaController extends Controller
     public function index_post(Request $request){
         $data = $request->all();
         $fecha = $data['fecha'];
+        //dd($fecha);
+        $this->F = (new FuncionesController);
         $fecha = $this->F->setDateTo6Digit($fecha);
         return $this->index($fecha);
     }

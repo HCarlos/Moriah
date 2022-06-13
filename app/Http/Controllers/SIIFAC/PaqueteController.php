@@ -83,6 +83,7 @@ class PaqueteController extends Controller
                 'titulo'    => 'paquetes',
                 'user'      => $user,
                 'Empresas'  => $Empresas,
+                'empresa_id'  => $this->Empresa_Id,
             ]
         );
 
@@ -94,6 +95,7 @@ class PaqueteController extends Controller
         if ($this->Empresa_Id <= 0){
             return redirect('openEmpresa');
         }
+
 
         $views      = 'paquete_edit';
         $items      = Paquete::findOrFail($idItem);
@@ -108,6 +110,7 @@ class PaqueteController extends Controller
                 'items' => $items,
                 'user' => $user,
                 'Empresas' => $Empresas,
+                'empresa_id'  => $this->Empresa_Id,
             ]
         );
 
@@ -138,11 +141,8 @@ class PaqueteController extends Controller
         $descripcion_paquete         = $F->toMayus($data['descripcion_paquete']);
         $data['descripcion_paquete'] = $descripcion_paquete;
         $data['empresa_id']          = $this->Empresa_Id;
-//        $data['codigo']              = $data['codigo'];
 
-//        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
-//        $data['isvisibleinternet']   = $data['isvisibleinternet'];
-//        $data['total_internet']      = $data['total_internet'];
+        $data['importe']   = "0.00";
 
         $data['user_id']             = Auth::user()->id;
         $data["idemp"]               = $this->Empresa_Id;
@@ -151,13 +151,13 @@ class PaqueteController extends Controller
 
         $user = User::find($data['user_id']);
         $emp  = Empresa::find($this->Empresa_Id);
-
+//        dd($data);
         $paq = Paquete::create($data);
 
         $paq->users()->attach($user);
         $paq->empresas()->attach($emp);
 
-        return redirect('/new_paquete/'.$idItem);
+        return redirect('/edit_paquete/'.$paq->id);
     }
 
     public function update(Request $request, Paquete $paq){
@@ -187,7 +187,7 @@ class PaqueteController extends Controller
         $data['empresa_id']          = $this->Empresa_Id;
 //        $data['codigo']              = $data['codigo'];
 
-//        $data['grupos_platsource']   = $data['grupos_platsource'] ?? '';
+        $data['importe']   = floatval($data['importe']);
 //        $data['isvisibleinternet']   = $data['isvisibleinternet'];
 //        $data['total_internet']      = $data['total_internet'];
 
@@ -241,7 +241,8 @@ class PaqueteController extends Controller
 
         if ( !$mov ){
             $paq = Paquete::findOrFail($id);
-            $paq->delete();
+            $paq->forceDelete();
+//            $paq->delete();
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
         }else{
             return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$mov->id.']', 'data' => 'Error', 'status' => '200'], 200);
