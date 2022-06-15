@@ -89,7 +89,6 @@ class ProductoController extends Controller
         $views       = 'producto_new';
         $user        = Auth::User();
         $oView       = 'catalogos.';
-        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
         $Almacenes   = Almacen::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
         $Proveedores = Proveedor::all()->where('empresa_id', $this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $FamProds    = FamiliaProducto::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
@@ -101,11 +100,11 @@ class ProductoController extends Controller
                 'idItem'      => $idItem,
                 'titulo'      => 'productos',
                 'user'        => $user,
-                'Empresas'    => $Empresas,
                 'Almacenes'   => $Almacenes,
                 'Proveedores' => $Proveedores,
                 'FamProds'    => $FamProds,
                 'Medidas'     => $Medidas,
+                'Empresa_Id'  => $this->Empresa_Id,
             ]
         );
 
@@ -122,7 +121,6 @@ class ProductoController extends Controller
         $items       = Producto::findOrFail($idItem);
         $user        = Auth::User();
         $oView       = 'catalogos.';
-        $Empresas    = Empresa::all()->sortBy('rs')->pluck('rs', 'id');
         $Almacenes   = Almacen::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
         $Proveedores = Proveedor::all()->where('empresa_id', $this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $FamProds    = FamiliaProducto::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
@@ -141,11 +139,11 @@ class ProductoController extends Controller
                 'titulo'      => 'productos',
                 'items'       => $items,
                 'user'        => $user,
-                'Empresas'    => $Empresas,
                 'Almacenes'   => $Almacenes,
                 'Proveedores' => $Proveedores,
                 'FamProds'    => $FamProds,
                 'Medidas'     => $Medidas,
+                'Empresa_Id'  => $this->Empresa_Id,
                 'img'         => $img,
             ]
         );
@@ -194,7 +192,7 @@ class ProductoController extends Controller
         $prov = Proveedor::find($data['proveedor_id']);
         $fp   = FamiliaProducto::find($data['familia_producto_id']);
         $med  = Medida::find($data['medida_id']);
-        $emp  = Empresa::find(Session::get('Empresa_Id'));
+        $emp  = Empresa::find($this->Empresa_Id);
 
         $prod = Producto::create($data);
 
@@ -243,7 +241,7 @@ class ProductoController extends Controller
         //dd($data['isiva']);
         $data['isiva']       = isset($data['isiva']);
         $data['saldo']       = $data['cu'] * $data['exist'];
-        $data['empresa_id']  = $data['almacen_id'];
+        $data['empresa_id']  = $this->Empresa_Id;
         $data["idemp"]       = $this->Empresa_Id;
         $data["ip"]          = $F->getIHE(1);
         $data["host"]        = $F->getIHE(2);
@@ -252,7 +250,7 @@ class ProductoController extends Controller
         $prov = Proveedor::find($data['proveedor_id']);
         $fp   = FamiliaProducto::find($data['familia_producto_id']);
         $med  = Medida::find($data['medida_id']);
-        $emp  = Empresa::find(Session::get('Empresa_Id'));
+        $emp  = Empresa::find($this->Empresa_Id);
 
 
         $prod->update($data);

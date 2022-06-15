@@ -72,7 +72,6 @@ class CompraDetalleController extends Controller
 
         $views       = 'agregar_producto_a_compra_ajax';
         $user        = Auth::User();
-        $Empresas    = Empresa::all()->where('id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
         $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
         $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');
@@ -80,11 +79,11 @@ class CompraDetalleController extends Controller
         return view ($oView.$views,
             [
                 'user'        => $user,
-                'Empresas'    => $Empresas,
                 'Almacenes'   => $Almacenes,
                 'Proveedores' => $Proveedores,
                 'Productos'   => $Productos,
                 'compra_id'   => $compra_id,
+                'empresa_id'  => $this->Empresa_Id,
                 'Url'         => '/store_compra_detalle_ajax',
             ]
         );
@@ -117,6 +116,8 @@ class CompraDetalleController extends Controller
         $Prod = Producto::find($mv->producto_id);
         $mv->forceDelete();
         Movimiento::actualizaExistenciasYSaldo($Prod);
+        $Comp = Compra::find($mv->compra_id);
+        Movimiento::ActualizarCompraDesdeDetalles($Comp);
 
         return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
 

@@ -150,6 +150,7 @@
                     </div>
 
                     <input type="hidden" name="idItem" value="{{$idItem}}" />
+                    <input type="hidden" name="idItem" value="{{$idItem}}" />
 
                 </form>
             </div>

@@ -449,6 +449,30 @@ class Movimiento extends Model{
 
     }
 
+    public static function ActualizarCompraDesdeDetalles($Comp){
+//        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+//        $Fecha      = Carbon::now();
+//        $user       = Auth::user();
+//        $Movs        = Movimiento::all()->where('compra_id',$Comp->id);
+//        foreach ($Movs as $Mov){
+//            $Prod       = Producto::find($Mov->producto_id);
+//            $cu         = $Mov->cu;
+//            $cantidad   = $Mov->cantidad;
+//            $existencia = $Prod->exist;
+//            $saldo      = $cu * $cantidad;
+//            $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
+//            $total = $saldo + $iva;
+//        }
+//        dd("Hola");
+        $Suma = static::where('compra_id',$Comp->id)->sum('saldo');
+//        dd($Suma);
+        if ($Suma > 0){
+            $Comp->total = $Suma;
+            $Comp->save();
+        }
+
+    }
+
     public static function inventarioInicialDesdeProducto($Prod){
         $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         $Fecha      = Carbon::now();
