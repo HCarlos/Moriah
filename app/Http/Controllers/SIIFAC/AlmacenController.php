@@ -34,8 +34,7 @@ class AlmacenController extends Controller
 
     }
 
-    public function index()
-    {
+    public function index(){
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($this->Empresa_Id <= 0){
             return redirect('openEmpresa');
@@ -63,12 +62,17 @@ class AlmacenController extends Controller
 
     }
 
-    public function new($idItem=0)
-    {
+    public function new($idItem=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views          = 'almacen_new';
         $user           = Auth::User();
         $oView          = 'catalogos.' ;
-        $Empresas       = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+//        $Empresas       = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
         $Proveedores    = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
 
         return view ($oView.$views,
@@ -77,35 +81,43 @@ class AlmacenController extends Controller
                 'titulo'      => 'almacenes',
                 'user'        => $user,
                 'Proveedores' => $Proveedores,
-                'Empresas'    => $Empresas,
+                'empresa_id'  => $this->Empresa_Id,
             ]
         );
 
     }
 
-    public function edit($idItem=0)
-    {
+    public function edit($idItem=0){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $views       = 'almacen_edit';
         $items       = Almacen::findOrFail($idItem);
-        $Empresas    = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
         $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
         $user        = Auth::User();
         $oView       = 'catalogos.' ;
 
         return view ($oView.$views,
             [
-                'idItem' => $idItem,
-                'titulo' => 'almacenes',
-                'items' => $items,
-                'user' => $user,
+                'idItem'      => $idItem,
+                'titulo'      => 'almacenes',
+                'items'       => $items,
+                'user'        => $user,
                 'Proveedores' => $Proveedores,
-                'Empresas' => $Empresas,
+                'empresa_id'  => $this->Empresa_Id,
             ]
         );
 
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
 
         $data = $request->all();
         $idItem     = $data['idItem'];
@@ -133,6 +145,7 @@ class AlmacenController extends Controller
         $data['responsable'] = $responsable;
         $data['idemp']       = $this->Empresa_Id;
         $data['empresa_id']  = $this->Empresa_Id;
+
 
         $emp = Empresa::find( $this->Empresa_Id );
         $alma = Almacen::create($data);

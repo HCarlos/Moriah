@@ -96,6 +96,7 @@
                         </div>
 
                         <input type="hidden" name="idItem" value="{{$idItem}}" />
+                        <input type="hidden" name="empresa_id" value="{{ $empresa_id }}" />
 
                     </form>
     </div>
