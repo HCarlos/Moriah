@@ -88,7 +88,14 @@ class CorteCajaController extends Controller{
         $this->header($pdf);
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
+
+        $pdf->SetFont('Arial','',6);
+        $pdf->addFont('AndaleMono','','AndaleMono.php');
+        $pdf->addFont('AndaleMonoMTStdBold','','AndaleMonoMTStdBold.php');
+        $pdf->addFont('arialn');
+
         $totalPagado = $totalContado = $totalCredito = 0;
+
         foreach ($Movs as $Mov){
             //dd($Mov);
             $totalPagado += $Mov->total;
@@ -142,10 +149,14 @@ class CorteCajaController extends Controller{
 
     protected function create_corte_caja_1(PanelControlOneRequest $request){
         $pdf  = new PDF_Diag('P','mm','Letter');
+        $pdf->SetFont('Arial','',6);
+        $pdf->addFont('AndaleMono','','AndaleMono.php');
+        $pdf->addFont('arialn');
         $pdf->addFont('AndaleMono');
         $pdf->addFont('arialn');        
 //        $pdf->addFont('AndaleMonoMTStdBold');
-        $pdf->addFont('AndaleMonoMTStdBold','B','AndaleMono.php');
+        $pdf->addFont('AndaleMonoMTStdBold','','AndaleMonoMTStdBold.php');
+//        $pdf->addFont('AndaleMonoMTStdBold','','AndaleMonoMTStdBold.php');
 
         $data = $request->all();
         $tipo_reporte = $data['tipo_reporte'];

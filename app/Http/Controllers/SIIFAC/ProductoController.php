@@ -302,11 +302,19 @@ class ProductoController extends Controller
     }
 
     public function actualizar_inventario(){
-            $Prods = Producto::all();
-            foreach ($Prods as $Prod){
-                Movimiento::actualizaExistenciasYSaldo($Prod);
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+        $Mod = "Null";
+        $Prods = Producto::all()->where('empresa_id',$this->Empresa_Id);
+        foreach ($Prods as $Prod){
+            $Mod = Movimiento::actualizaExistenciasYSaldo($Prod);
+            if ($Mod !== "OK"){
+                return Response::json(['mensaje' => 'Ocurrió un error '.$Mod, 'data' => 'OK', 'status' => '200'], 200);
             }
-            return Response::json(['mensaje' => 'Inventario actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
+        }
+        return Response::json(['mensaje' => 'Inventario actualizado con éxito', 'data' => $Mod, 'status' => '200'], 200);
     }
 
     public function actualizar_producto($producto_id){

@@ -18,6 +18,7 @@ class Movimiento extends Model{
     use SoftDeletes;
 
     protected $guard_name = 'web'; // or whatever guard you want to use
+    protected $Empresa_Id = 0;
     protected $table = 'movimientos';
 
     protected $fillable = [
@@ -474,7 +475,7 @@ class Movimiento extends Model{
     }
 
     public static function inventarioInicialDesdeProducto($Prod){
-        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
         $Fecha      = Carbon::now();
         $user       = Auth::user();
         $cu         = $Prod->cu;
@@ -513,7 +514,7 @@ class Movimiento extends Model{
             'iva'              => $iva,
             'saldo'            => $total,
             'status'           => 0,
-            'idemp'            => $Empresa_Id,
+            'idemp'            => $Prod->empresa_id,
             'ip'               => Request::ip(),
             'host'             => Request::getHttpHost(),
         ]);
@@ -532,8 +533,9 @@ class Movimiento extends Model{
     public static function actualizaExistenciasYSaldo($Prod){
         $MovInit = static::query()
         ->where('producto_id',$Prod->id)
-        ->where('status',0)
         ->first();
+//        ->where('status',0)
+//        dd($MovInit);
         try{
             if (!is_null($MovInit)){
                 $Movs = static::query()
@@ -555,11 +557,13 @@ class Movimiento extends Model{
                 $Prod->exist = $exist;
                 $Prod->saldo = $saldo;
                 $Prod->save();
+                return "OK";
+            }else{
+                return $MovInit;
             }
-
         }catch(Exception $e){
             Log::alert($MovInit.' => '.$e->getMessage());
-            return null;
+            return $e->getMessage();
         }
     }
 }
