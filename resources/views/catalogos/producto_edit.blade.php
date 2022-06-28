@@ -96,7 +96,11 @@
                             {{ Form::checkbox('isiva', null, trim($items->isiva), ['id' => 'isiva','class' => 'ace ace-switch']) }}
                             <span class="lbl"></span>
                         </div>
-                        <div class="col-md-3"></div>
+                        <label for = "status_producto" class="col-md-1 col-form-label text-md-left">Estatus</label>
+                        <div class="col-md-2">
+                            {{ Form::checkbox('status_producto', null, trim($items->status_producto), ['id' => 'status_producto','class' => 'ace ace-switch']) }}
+                            <span class="lbl"></span>
+                        </div>
                     </div>
 
                     <div class="form-group row">

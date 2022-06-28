@@ -234,17 +234,18 @@ class ProductoController extends Controller
         }
         $F = (new FuncionesController);
 
-        $descripcion = $F->toMayus($data['descripcion']);
-        $shortdesc = $F->toMayus($data['shortdesc']);
-        $data['descripcion'] = $descripcion;
-        $data['shortdesc'] = $shortdesc;
+        $descripcion             = $F->toMayus($data['descripcion']);
+        $shortdesc               = $F->toMayus($data['shortdesc']);
+        $data['descripcion']     = $descripcion;
+        $data['shortdesc']       = $shortdesc;
         //dd($data['isiva']);
-        $data['isiva']       = isset($data['isiva']);
-        $data['saldo']       = $data['cu'] * $data['exist'];
-        $data['empresa_id']  = $this->Empresa_Id;
-        $data["idemp"]       = $this->Empresa_Id;
-        $data["ip"]          = $F->getIHE(1);
-        $data["host"]        = $F->getIHE(2);
+        $data['isiva']           = isset($data['isiva']);
+        $data['status_producto'] = isset($data['status_producto']) ? 1 : 0;
+        $data['saldo']           = $data['cu'] * $data['exist'];
+        $data['empresa_id']      = $this->Empresa_Id;
+        $data["idemp"]           = $this->Empresa_Id;
+        $data["ip"]              = $F->getIHE(1);
+        $data["host"]            = $F->getIHE(2);
 
         $alma = Almacen::find($data['almacen_id']);
         $prov = Proveedor::find($data['proveedor_id']);

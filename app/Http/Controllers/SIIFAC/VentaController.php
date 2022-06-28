@@ -119,7 +119,7 @@ class VentaController extends Controller
         $oView = 'catalogos.operaciones.';
         $Paquetes = Paquete::all()
             ->where('empresa_id', $this->Empresa_Id)
-            ->sortBy('FullDescription')->pluck('FullDescription', 'id');
+            ->sortBy('descripcion_paquete')->pluck('FullDescription', 'id');
         $clientes = User::whereHas('roles', function($q){
             $q->where('name', 'usuario_libros');
         })->get();

@@ -1,6 +1,6 @@
     <div class="panel panel-moriah" id="frmEdit0">
     <div class="panel-heading">
-        <span><strong>{{ ucwords($titulo) }}</strong> | Editando registro {{$paquete_id}}</span>
+        <span><strong>{{ ucwords($titulo) }}</strong> | Editando registro {{$items->id}}</span>
     </div>
 
     <div class="panel-body">

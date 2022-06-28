@@ -10,13 +10,22 @@
         $(document).ready(function() {
 
             $("#preloaderLocal").hide();
-            $('#{{ $tableName}}').removeClass('hide');
+            var nombreTabla = "{{ $tableName }}";
+            $('#{{ $tableName }}').removeClass('hide');
 
-            var nCols = $('#{{ $tableName}}').find("tbody > tr:first td").length;
+            var nCols = $('#{{ $tableName }}').find("tbody > tr:first td").length;
             var aCol = [];
 
             for (i = 0; i < nCols - 1; i++) {aCol[i] = {};}
             aCol[nCols - 1] = {"sorting": false};
+
+            var arrColGroup1 = [10, 25, 50, -1];
+            var arrColGroup2 = [10, 25, 50, "Todos"];
+
+            if (nombreTabla == "paquete_detalles"){
+                arrColGroup1 = [-1, 10, 25, 50];
+                arrColGroup2 = ["Todos", 10, 25, 50];
+            }
 
             oTable = $('#{{ $tableName}}').dataTable({
                 "oLanguage": {
@@ -35,7 +44,7 @@
                 },
                 "aaSorting": [[ 0, "desc" ]],
                 "aoColumns": aCol,
-                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                "aLengthMenu": [arrColGroup1, arrColGroup2],
                 "bRetrieve": true,
                 "bDestroy": false
             });
@@ -48,6 +57,7 @@
                 // alert( event.currentTarget.id);
                 var aID = event.currentTarget.id.split('-');
                 var Url = aID[0] + aID[1] + "/" + aID[2];
+                // alert(Url);
                 $(function () {
                     $.ajax({
                         method: "get",

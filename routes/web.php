@@ -173,7 +173,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/print_venta_detalle/{venta_id}', 'Externos\TicketController@print_tiket')->name('printTicket/');
     Route::get('/print_historial_pagos/{venta_id}', 'Externos\TicketController@print_history_pay')->name('printHistoryPay/');
 
-
     // Compras
     Route::get('/index_compra/','SIIFAC\CompraController@index')->name('compraIndex');
     Route::get('/form_compra_nueva_ajax/','SIIFAC\CompraController@nueva_compra_ajax')->name('formCompraNuevaAjax');

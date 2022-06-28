@@ -25,10 +25,6 @@
                 @endif
 
                 <div class="form-group row">
-                    <label for = "empresa_id" class="col-md-1 col-form-label text-md-left">Empresa</label>
-                    <div class="col-md-3">
-                        {{ Form::select('empresa_id', $Empresas, null, ['id' => 'empresa_id','class' => 'form-control']) }}
-                    </div>
                     <label for = "paquete_id" class="col-md-1 col-form-label text-md-left">Pedido</label>
                     <div class="col-md-3">
                         {{ Form::select('paquete_id', $Paquetes, null, ['id' => 'paquete_id','class' => 'form-control']) }}
@@ -37,6 +33,7 @@
                     <div class="col-md-3">
                         {{ Form::select('user_id', $Usuarios, null, ['id' => 'user_id','class' => 'form-control']) }}
                     </div>
+                    <div class="col-md-4"></div>
                 </div>
 
                 <div class="form-group row">
@@ -90,6 +87,7 @@
                 </div>
 
                 <input type="hidden" name="idItem" value="{{$idItem}}" />
+                <input type="hidden" id="empresa_id" name="empresa_id" value="{{$Empresa_Id}}" />
 
             </form>
         </div>

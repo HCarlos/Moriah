@@ -39,7 +39,7 @@ class PaqueteDetalleController extends Controller
             return redirect('openEmpresa');
         }
 
-        $this->tableName = 'paquetes';
+        $this->tableName = 'paquete_detalles';
         $paq = Paquete::find($id);
         $items = PaqueteDetalle::select('id','paquete_id', 'producto_id', 'medida_id', 'codigo', 'descripcion', 'cant','pv','comp1','empresa_id')
             ->where('empresa_id',$this->Empresa_Id)

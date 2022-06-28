@@ -23,7 +23,7 @@ class Producto extends Model
         'moneycli','exist','cu','saldo', 'propiedades_producto', 'filename', 'root','empresa_id',
         'status_producto','idemp','ip','host',
     ];
-    protected $casts = ['isiva'=>'boolean',];
+    protected $casts = ['isiva'=>'boolean','status_producto'];
 
     public function isIVA(){
         return $this->isiva;

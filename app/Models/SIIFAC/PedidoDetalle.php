@@ -113,9 +113,11 @@ class PedidoDetalle extends Model
 
     
     public static function findOrCreatePedidoDetalle($pedido_id,$paquete_detalle_id,$user_id,$empresa_id,$producto_id,$cantidad){
+        $comp = 0;
         if ($paquete_detalle_id > 0) {
             $p = PaqueteDetalle::find($paquete_detalle_id);
             $producto_id = $p->producto_id;
+            $comp = $p->comp1;
         }else{
             $p = Producto::find($producto_id);
             $producto_id = $p->id;
@@ -131,12 +133,13 @@ class PedidoDetalle extends Model
                 'descripcion_producto' => $p->descripcion,
                 'cant' => $cantidad,
                 'pv' => $p->pv,
-                'comp1' => $p->comp1,
+                'comp1' => $comp,
                 'empresa_id' => $Empresa_Id,
                 'idemp' => $Empresa_Id,
                 'ip' => Request::ip(),
                 'host' => Request::getHttpHost(),
             ]);
+//            dd($pd);
             $ped = Pedido::find($pedido_id);
             $prod = Producto::find($producto_id);
 
@@ -144,12 +147,13 @@ class PedidoDetalle extends Model
             $ped->detalles()->detach($pd);
             $ped->productos()->detach($prod);
 
+
             $pd->productos()->attach($prod);
             $ped->detalles()->attach($pd);
             $ped->productos()->attach($prod);
 
-
             return $pd;
+
         }else{
             return null;
         }

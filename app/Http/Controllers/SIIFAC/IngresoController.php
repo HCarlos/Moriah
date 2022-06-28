@@ -78,6 +78,7 @@ class IngresoController extends Controller
     {
         $data = $request->all();
         $fecha = $data['fecha'];
+        $this->F = (new FuncionesController);
         $fecha = $this->F->setDateTo6Digit($fecha);
 
         return redirect('/index_ingreso/' . $fecha );

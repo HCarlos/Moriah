@@ -42,13 +42,6 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-{{--                <li>--}}
-{{--                    <a href="{{ route('empresaIndex') }}">--}}
-{{--                        <i class="menu-icon fa fa-book green"></i>--}}
-{{--                        Empresas--}}
-{{--                    </a>--}}
-{{--                    <b class="arrow"></b>--}}
-{{--                </li>--}}
                 <li>
                     <a href="{{ route('almacenIndex') }}">
                         <i class="menu-icon fa fa-book orange"></i>
@@ -154,8 +147,8 @@
     </ul><!-- /.nav-list -->
 
     <!-- #section:basics/sidebar.layout.minimize -->
-    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
-    </div>
+{{--    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">--}}
+{{--        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>--}}
+{{--    </div>--}}
 </div>
 

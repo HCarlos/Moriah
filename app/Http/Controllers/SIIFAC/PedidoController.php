@@ -80,7 +80,6 @@ class PedidoController extends Controller
         $views    = 'pedido_new';
         $user     = Auth::User();
         $oView    = 'catalogos.';
-        $Empresas = Empresa::all()->where('empresa_id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
         $Paquetes = Paquete::all()->where('empresa_id',$this->Empresa_Id)->sortBy('FullDescription')->pluck('FullDescription', 'id');
         $Usuarios = User::all()->sortBy('FullName' )->pluck('FullName', 'id');
 
@@ -89,13 +88,13 @@ class PedidoController extends Controller
 
         return view ($oView.$views,
             [
-                'idItem'   => $idItem,
-                'titulo'   => 'pedidos',
-                'user'     => $user,
-                'Empresas' => $Empresas,
-                'Paquetes' => $Paquetes,
-                'Usuarios' => $Usuarios,
-                'codigo'   => $timex,
+                'idItem'     => $idItem,
+                'titulo'     => 'pedidos',
+                'user'       => $user,
+                'Empresa_Id' => $this->Empresa_Id,
+                'Paquetes'   => $Paquetes,
+                'Usuarios'   => $Usuarios,
+                'codigo'     => $timex,
             ]
         );
 

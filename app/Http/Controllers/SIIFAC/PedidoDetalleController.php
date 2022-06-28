@@ -96,6 +96,7 @@ class PedidoDetalleController extends Controller
         }
 
         $data        = $request->all();
+//        dd($data);
         $pedido_id  = $data['pedido_id'];
         $producto_id = $data['producto_id'];
         $cantidad    = $data['cantidad'];
@@ -103,13 +104,15 @@ class PedidoDetalleController extends Controller
 //        dd($pedido_id.', '.$producto_id);
 
         $ped = Pedido::find($pedido_id);
+//        dd($ped);
         try {
             $mensaje = "OK";
             PedidoDetalle::findOrCreatePedidoDetalle($pedido_id,0, $ped->user_id,$ped->empresa_id, $producto_id,$cantidad);
             $dets = PedidoDetalle::all()
                 ->where('empresa_id', $this->Empresa_Id)
                 ->where('pedido_id', $pedido_id);
-            Pedido::UpdateImporteFromPedidoDetalle($dets);
+            $pq = Pedido::UpdateImporteFromPedidoDetalle($pedido_id);
+//            dd($pq);
         }
         catch(LogicException $e){
             $mensaje = "Error: ".$e->getMessage();
