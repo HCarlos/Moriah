@@ -72,10 +72,11 @@ class CompraDetalleController extends Controller
 
         $views       = 'agregar_producto_a_compra_ajax';
         $user        = Auth::User();
-        $Almacenes   = Almacen::all()->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $Productos   = Producto::all()->sortBy('descripcion')->pluck('descripcion', 'codigo');
+        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Productos   = Producto::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'codigo');
         $oView = 'catalogos.operaciones.compras.';
+//        dd($oView.$views);
         return view ($oView.$views,
             [
                 'user'        => $user,

@@ -3,8 +3,8 @@
 @section('main-content')
     <div class="panel panel-warning" id="catalogosList0">
         <div class="panel-heading ">
-            <span id="titulo_catalogo">COMPRA {{$compra_id}} </span>
-            <a id="/form_compra_detalle_nueva_ajax/{{$compra_id}}" class="btn btn-purple btn-minier icon-only marginLeft2em btnCompraDetalle" title="Agregar Producto" data-toggle="modal" data-target=".bs-example-modal-lg">
+            <span id="titulo_catalogo">COMPRA: {{$compra_id}} </span>
+            <a href="#" class="btn btn-purple btn-minier icon-only marginLeft2em btnCompraDetalle" title="Actualizar precios de paquetes" id="/form_compra_detalle_nueva_ajax/{{$compra_id}}" data-toggle="modal" data-target="#myModal">
                 <i class="fa fa-plus bigger-150"></i>
             </a>
             <a  class="btn btn-info btn-minier icon-only pull-right btnCloseCompraDetalle" title="Cerrar Comprana">
@@ -18,7 +18,7 @@
             </div>
             <div class="dataTables_wrapper" role="grid">
                 @if ($compra)
-                    <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
+                    <table id="{{ $tableName}}" class="table table-striped table-bordered table-hover dataTable" >
                         <thead>
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
