@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Controller;
 
 use App\Models\SIIFAC\Empresa;
@@ -58,13 +59,20 @@ class ExistenciasController extends Controller
         $pdf->setX(10);
     }
 
-    public function imprimir_existencias()
-    {
-        $Prod              = Producto::all()->sortBy('descripcion');
+    public function imprimir_existencias(){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $Prod              = Producto::all()
+                                ->where('empresa_id',$this->Empresa_Id)
+                                ->where('status_producto','>',0)->sortBy('descripcion');
         // dd($Prod);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $P                 = $Prod->first();
-        $Emp               = Empresa::find($P->empresa_id);
+        $Emp               = Empresa::find($this->Empresa_Id);
         $this->empresa     = $Emp->rs;
 
         $pdf               = new FPDF('P','mm','Letter');

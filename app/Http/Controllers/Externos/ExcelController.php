@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Externos;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Excel\ImportFileController;
 use App\Models\SIIFAC\Producto;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,18 @@ class ExcelController extends Controller
 
     public function show()
     {
-        $Prod  = Producto::select(['id','descripcion','exist'])->orderBy('descripcion')->get();
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $Prod = Producto::select(['id','descripcion','exist'])
+            ->where('empresa_id', $this->Empresa_Id)
+            ->where('status_producto', '>' ,0)
+            ->orderBy('descripcion')
+            ->get();
+
+//        $Prod  = Producto::select(['id','descripcion','exist'])->orderBy('descripcion')->get();
 
         $C0 = 6;
         $C = $C0;
