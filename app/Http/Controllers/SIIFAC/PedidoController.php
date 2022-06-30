@@ -141,17 +141,16 @@ class PedidoController extends Controller
             return redirect('openEmpresa');
         }
 
-        $mov = Movimiento::all()->where('pedido_id',$id)->first();
-
-        if ( !$mov ){
+//        $mov = Movimiento::all()->where('pedido_id',$id)->first();
+//        if ( !$mov ){
             $paq = Pedido::findOrFail($id);
             $paq->forceDelete();
             $pd = PedidoDetalle::where('pedido_id',$id);
             $pd->forceDelete();
             return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
-        }else{
-            return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$mov->id.']', 'data' => 'Error', 'status' => '200'], 200);
-        }
+//        }else{
+//            return Response::json(['mensaje' => 'No se puede eliminar el registro ['.$mov->id.']', 'data' => 'Error', 'status' => '200'], 200);
+//        }
 
     }
 
