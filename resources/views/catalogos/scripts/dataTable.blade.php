@@ -62,7 +62,7 @@
 
                 var aID = event.currentTarget.id.split('-');
                 var Url = aID[0] + aID[1] + "/" + aID[2];
-                alert(Url);
+                // alert(Url);
                 $(function () {
                     $.ajax({
                         method: "get",

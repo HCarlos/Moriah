@@ -67,8 +67,8 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.mensaje == "OK"){
-                        alert('Cambio realizado con éxito');
-                        $("#myModal").modal( 'hide' );
+                        alert('Cambio realizado con éxito..');
+                        $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
                     }else{
                         alert(data.mensaje);
                     }
