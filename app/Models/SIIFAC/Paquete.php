@@ -60,6 +60,10 @@ class Paquete extends Model
         return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_paquete']. ' - ' . $this->attributes['importe'];
     }
 
+    public function getFullDescriptionWithoutPriceAttribute(){
+        return $this->attributes['id'] . ' - ' . $this->attributes['descripcion_paquete'];
+    }
+
     public static function findOrCreatePaquete($user_id, $codigo, $descripcion_paquete, $importe, $empresa_id){
         $obj = static::all()->where('clave', $codigo)->first();
         $Empresa_Id = GeneralFunctions::Get_Empresa_Id();

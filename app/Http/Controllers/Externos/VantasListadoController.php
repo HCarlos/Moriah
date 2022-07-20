@@ -90,7 +90,7 @@ class VantasListadoController extends Controller{
             $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
             $Ped = Pedido::find($Mov->pedido_id);
             if ($Mov->paquete_id > 0)
-                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->paquete->FullDescription)), "LTB", 0,"L");
+                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->paquete->FullDescriptionWithoutPrice)), "LTB", 0,"L");
             else if ( !is_null($Ped) )
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Ped->FullDescription)), "LTB", 0,"L");
             else 
