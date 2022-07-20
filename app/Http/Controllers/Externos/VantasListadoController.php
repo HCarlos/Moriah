@@ -55,7 +55,8 @@ class VantasListadoController extends Controller{
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
         $pdf->Cell(55, $this->alto, 'CLIENTE', "LTB", 0,"L");
         $pdf->Cell(55, $this->alto, 'PAQUETE', "LTB", 0,"L");
-        $pdf->Cell(140, $this->alto, 'OBSERVACIONES', "LRTB", 1,"C");
+        $pdf->Cell(40, $this->alto, 'PRECIO VENTA', "LTB", 0,"R");
+        $pdf->Cell(100, $this->alto, 'OBSERVACIONES', "LRTB", 1,"C");
         $pdf->setX(10);
     }
 
@@ -70,10 +71,12 @@ class VantasListadoController extends Controller{
         $this->empresa = $Emp->empresa->rs;
         $this->timex = Carbon::now()->format('d-m-Y h:m:s a');
         $pdf  = new PDF_Diag('L','mm','Letter');
-        $pdf->addFont('AndaleMono');
-        $pdf->addFont('arialn');        
+//        $pdf->addFont('AndaleMono');
+        $pdf->addFont('AndaleMono','','AndaleMono.php');
+        $pdf->SetFont('AndaleMono','',7);
+        $pdf->addFont('arialn');
 //        $pdf->addFont('AndaleMonoMTStdBold');
-        $pdf->addFont('AndaleMonoMTStdBold','B','AndaleMono.php');
+//        $pdf->addFont('AndaleMono','B','AndaleMono.php');
 
         $pdf->AliasNbPages();
         $this->header($pdf);
@@ -93,20 +96,23 @@ class VantasListadoController extends Controller{
             else 
                 $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->TipoVenta)), "LTB", 0,"L");
 
+            $pdf->SetFont('AndaleMono','',7);
+            $pdf->Cell(40, $this->alto, number_format($Mov->total,2), "LTB", 0,"R");
+
             $pdf->SetFont('Arialn','',7);
             if ( !is_null($Ped) )
-                $pdf->Cell(140, $this->alto, utf8_decode(trim($Ped->observaciones)), "LRTB", 1,"L");
+                $pdf->Cell(100, $this->alto, utf8_decode(trim($Ped->observaciones)), "LRTB", 1,"L");
             else    
-                $pdf->Cell(140, $this->alto, '', "LRTB", 1,"L");
+                $pdf->Cell(100, $this->alto, '', "LRTB", 1,"L");
   
             $total += $Mov->total;
         }
         $pdf->setX(10);
         if ($items->count() > 0){
             $pdf->SetFont('Arial','B',7);
-            $pdf->Cell(103, $this->alto, 'TOTAL $ ', "LB", 0,"R");
-            $pdf->SetFont('AndaleMonoMTStdBold','',7);
-            $pdf->Cell(17, $this->alto, number_format($total,2), "LRB", 1,"R");
+            $pdf->Cell(120, $this->alto, 'TOTAL $ ', "LB", 0,"R");
+            $pdf->SetFont('AndaleMono','',8);
+            $pdf->Cell(40, $this->alto, number_format($total,2), "LRB", 1,"R");
         }else{
             $pdf->SetFont('Arial','BI',10);
             $pdf->Cell(260, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
