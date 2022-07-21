@@ -348,13 +348,11 @@ class Venta extends Model
         return $Ven;
     }
 
-    public function getTotalAbonosAttribute($id=0)
-    {
+    public function getTotalAbonosAttribute($id=0){
         return static::getTotalAbonosIngresos($this->id);
     }
 
-    public static function getTotalAbonosIngresos($id=0)
-    {
+    public static function getTotalAbonosIngresos($id=0){
         return Ingreso::where('venta_id', $id)->sum('total');
     }
 

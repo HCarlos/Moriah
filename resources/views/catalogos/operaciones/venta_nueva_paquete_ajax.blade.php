@@ -34,7 +34,8 @@
             <div class="form-group row">
                 <label for = "cantidad" class="col-md-2 col-form-label text-md-left">Cant.</label>
                 <div class="col-md-4">
-                    <input type="number" min="1" max="1000" value="1" required name="cantidad" id="cantidad"/>
+{{--                    <input type="number" min="1" max="1000" value="1" required name="cantidad" id="cantidad"/>--}}
+                    <input type="text" pattern="[0-9]{1,8}([.][0-9]{0,2})?" name="cantidad" id="cantidad" class="form-control" required/>
                 </div>
                 <label for = "tipoventa" class="col-md-2 col-form-label text-md-left">Tipo</label>
                 <div class="col-md-4">

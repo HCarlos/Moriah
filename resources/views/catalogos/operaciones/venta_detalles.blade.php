@@ -44,7 +44,8 @@
                             </div>
                             <div class="input-group col-xs-3">
                                 <div class="input-group-addon font_Roboto_500">Cant</div>
-                                <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="9999999" class="form-control " required/>
+{{--                                <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="9999999" class="form-control " required/>--}}
+                                <input type="text" pattern="[0-9]{1,8}([.][0-9]{0,2})?" name="cantidad" id="cantidad" class="form-control" title="Formato Decimal" required/>
                             </div>
                             <div class="input-group col-xs-1">
                                 <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
