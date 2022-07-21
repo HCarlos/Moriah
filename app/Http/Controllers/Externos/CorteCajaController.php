@@ -23,9 +23,14 @@ class CorteCajaController extends Controller{
     protected $vendedor = "";
     protected $empresa  = "";
     protected $F;
+    protected $Empresa_Id = 0;
 
     public function __construct(){
         $this->middleware('auth');
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $this->F = (new FuncionesController);
     }
 
@@ -127,7 +132,13 @@ class CorteCajaController extends Controller{
     }
 
     protected function show_panel_consulta_1(){
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $Cajeros = Venta::select(['vendedor_id'])
+            ->where('empresa_id',$this->Empresa_Id)
             ->distinct()
             ->get();
         $Cajeros->each(function ($v) { $v->FullName = trim($v->vendedor->username).' - '.trim($v->vendedor->FullName); });
@@ -135,13 +146,11 @@ class CorteCajaController extends Controller{
 //        $metodo_pagos = Venta::$metodos_pago;
         $metodo_pagos =  GeneralFunctions::$metodos_pagos_complete;
 
-        $empresas     = Empresa::all()->sortBy('id')->pluck('ncomer','id');
 
         return view('catalogos.reportes.panel_reporte_1',[
             "tableName"    => "",
             "cajeros"      => $Cajeros,
             'metodo_pagos' => $metodo_pagos,
-            "empresas"     => $empresas,
             'msg'          => '',
         ]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Externos\CorteCajaController;
 use App\Http\Controllers\Externos\VentaRealizadaController;
 use App\Http\Controllers\Funciones\FuncionesController;
@@ -18,6 +19,7 @@ class PanelControlOneRequest extends FormRequest
      */
 
     protected $redirectTo = "show_panel_consulta_1";
+    protected $Empresa_Id = 0;
 
     public function authorize()
     {
@@ -61,8 +63,13 @@ class PanelControlOneRequest extends FormRequest
         ];
     }
 
-    public function createReportPDF01($pdf)
-    {
+    public function createReportPDF01($pdf){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $F = (new FuncionesController);
 
         $f1          = $F->fechaDateTimeFormat($this->fecha1);
@@ -73,6 +80,7 @@ class PanelControlOneRequest extends FormRequest
         $empresa_id  = $this->empresa_id;
 
         $Movs = Ingreso::query()
+            ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->where(function ($q) use($tipo_venta) {
@@ -105,8 +113,13 @@ class PanelControlOneRequest extends FormRequest
 
     }
 
-    public function ventaRealizada($pdf)
-    {
+    public function ventaRealizada($pdf){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $F = (new FuncionesController);
 
         $f1          = $F->fechaDateTimeFormat($this->fecha1);
@@ -120,6 +133,7 @@ class PanelControlOneRequest extends FormRequest
         $empresa_id  = $this->empresa_id;
 
         $Movs = Venta::query()
+            ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->where(function ($q) use($tipo_venta) {

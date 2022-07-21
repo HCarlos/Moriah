@@ -14,15 +14,6 @@
 
                     <form method="post" action="{{ route('corteCaja1') }}" target="_blank" >
                         {{ csrf_field() }}
-                        {{--@if ($errors->any())--}}
-                            {{--<div class="alert alert-danger">--}}
-                                {{--<ul>--}}
-                                    {{--@foreach ($errors->all() as $error)--}}
-                                        {{--<li>{{ $error }}</li>--}}
-                                    {{--@endforeach--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
-                        {{--@endif--}}
 
                         <div class="form-group row">
                             <label for="tipo_venta" class="col-md-1 control-label">Tipo:</label>
@@ -33,13 +24,7 @@
                                     <option value="1">Credito</option>
                                 </select>
                             </div>
-                            <label for="empresa_id" class="col-md-1 control-label">Almacén:</label>
-                            <div class="col-md-2">
-                                <select name="empresa_id" id="empresa_id" class="form-control" size="1">
-                                    @foreach ($empresas as $key => $value)
-                                        <option value="{{ $key }}"@if ($key == 1) selected @endif>{{ $value }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-3">
                             </div>
                         </div>
                         <br/>
