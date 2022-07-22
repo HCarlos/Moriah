@@ -73,12 +73,13 @@
                                 <select name="tipo_reporte" id="tipo_reporte" class="form-control" size="1">
                                     <option value="0"selected>Reporte de Ingresos</option>
                                     <option value="1">Reporte de Ventas</option>
+                                    <option value="2">Informe de Venta Consolidada por Producto</option>
                                 </select>
                             </div>
                         </div>
                         <hr>
 
-                        <div class="form-group row">
+                        <div class="form-group row" style="padding-left: 1em;">
                             <button type="submit" class="btn btn-mini btn-primary">
                                 <i class="fa fa-search"></i>
                                 Consultar

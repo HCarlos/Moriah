@@ -605,6 +605,7 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         'App\\Http\\Controllers\\Externos\\TicketController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/TicketController.php',
         'App\\Http\\Controllers\\Externos\\TwilioSMSController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/TwilioSMSController.php',
         'App\\Http\\Controllers\\Externos\\VantasListadoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/VantasListadoController.php',
+        'App\\Http\\Controllers\\Externos\\VentaConsolidadaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/VentaConsolidadaController.php',
         'App\\Http\\Controllers\\Externos\\VentaRealizadaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/VentaRealizadaController.php',
         'App\\Http\\Controllers\\Externos\\VentasListadoExcelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Externos/VentasListadoExcelController.php',
         'App\\Http\\Controllers\\Funciones\\FuncionesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Funciones/FuncionesController.php',

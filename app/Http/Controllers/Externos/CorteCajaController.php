@@ -169,12 +169,23 @@ class CorteCajaController extends Controller{
 
         $data = $request->all();
         $tipo_reporte = $data['tipo_reporte'];
-        if ($tipo_reporte==0){
-            $request->createReportPDF01($pdf);
-        }else{
-            $request->ventaRealizada($pdf);
+//        if ($tipo_reporte==0){
+//            $request->createReportPDF01($pdf);
+//        }else{
+//            $request->ventaRealizada($pdf);
+//        }
+        switch ($tipo_reporte){
+            case 0:
+                $request->createReportPDF01($pdf);
+                return redirect()->route('show_panel_consulta_1');
+                break;
+            case 1:
+                $request->ventaRealizada($pdf);
+                break;
+            case 2:
+                $request->ventaConsolidadaPorProducto($pdf);
+                break;
         }
-        return redirect()->route('show_panel_consulta_1');
     }
 
 

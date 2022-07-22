@@ -54,6 +54,7 @@ return array(
     'App\\Http\\Controllers\\Externos\\TicketController' => $baseDir . '/app/Http/Controllers/Externos/TicketController.php',
     'App\\Http\\Controllers\\Externos\\TwilioSMSController' => $baseDir . '/app/Http/Controllers/Externos/TwilioSMSController.php',
     'App\\Http\\Controllers\\Externos\\VantasListadoController' => $baseDir . '/app/Http/Controllers/Externos/VantasListadoController.php',
+    'App\\Http\\Controllers\\Externos\\VentaConsolidadaController' => $baseDir . '/app/Http/Controllers/Externos/VentaConsolidadaController.php',
     'App\\Http\\Controllers\\Externos\\VentaRealizadaController' => $baseDir . '/app/Http/Controllers/Externos/VentaRealizadaController.php',
     'App\\Http\\Controllers\\Externos\\VentasListadoExcelController' => $baseDir . '/app/Http/Controllers/Externos/VentasListadoExcelController.php',
     'App\\Http\\Controllers\\Funciones\\FuncionesController' => $baseDir . '/app/Http/Controllers/Funciones/FuncionesController.php',
