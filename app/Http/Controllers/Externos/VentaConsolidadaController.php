@@ -96,18 +96,16 @@ class VentaConsolidadaController extends Controller{
         $pdf->SetFont('Arial','',6);
         $total = 0;
         foreach ($Movs as $Mov){
-//            dd($Mov->producto_id);
-            $Prod = Producto::find($Mov->producto_id);
 
             $pdf->setX(10);
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(20, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
-            $pdf->Cell(20, $this->alto, $Prod->codigo, "LTB", 0,"R");
+            $pdf->Cell(20, $this->alto, $Mov->codigo, "LTB", 0,"R");
             $pdf->SetFont('Arial','',6);
-            $pdf->Cell(100, $this->alto, utf8_decode(trim($Prod->descripcion)).' - '.$pdf->getY(), "LTB", 0,"L");
+            $pdf->Cell(100, $this->alto, utf8_decode(trim($Mov->descripcion)), "LTB", 0,"L");
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(15, $this->alto, number_format($Mov->cantidad,2), "LRB", 0,"R");
-            $pdf->Cell(25, $this->alto, number_format($Prod->pv,2), "LRB", 0,"R");
+            $pdf->Cell(25, $this->alto, number_format($Mov->pv,2), "LRB", 0,"R");
             $pdf->Cell(20, $this->alto, number_format($Mov->totalimporte,2), "LRB", 1,"R");
             $total += $Mov->totalimporte;
             if ($pdf->getY() > 230 ){

@@ -196,12 +196,12 @@ class PanelControlOneRequest extends FormRequest
 //            ->get();
 
 
-        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('count(producto_id) as cantidad, sum(total) as totalimporte, DATE(fecha) as fecha, pv'))
+        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('count(producto_id) as cantidad, sum(total) as totalimporte, DATE(fecha) as fecha, descripcion, pv, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->groupByRaw('producto_id, DATE(fecha), pv')
-            ->orderByRaw('fecha, producto_id, pv' )
+            ->groupByRaw('producto_id, DATE(fecha), descripcion, pv, codigo')
+            ->orderByRaw('descripcion, fecha' )
             ->get();
 
 
