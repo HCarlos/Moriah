@@ -23,7 +23,7 @@ class ExcelController extends Controller
             return redirect('openEmpresa');
         }
 
-        $Prod = Producto::select(['id','descripcion','exist'])
+        $Prod = Producto::select(['id','codigo','descripcion','exist','cu','pv'])
             ->where('empresa_id', $this->Empresa_Id)
             ->where('status_producto', '>' ,0)
             ->orderBy('descripcion')
@@ -47,8 +47,9 @@ class ExcelController extends Controller
             foreach ($Prod as $v){
                     $sh
                     ->setCellValue('A'.$C, $v->id)
-                    ->setCellValue('B'.$C, $v->descripcion)
-                    ->setCellValue('C'.$C, $v->exist);
+                    ->setCellValue('B'.$C, $v->codigo)
+                    ->setCellValue('C'.$C, $v->descripcion)
+                    ->setCellValue('D'.$C, $v->exist);
                 $C++;
             }
 //            $spreadsheet->getActiveSheet()->getCell('B7')->getDataValidation();
