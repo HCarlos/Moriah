@@ -214,8 +214,7 @@ class VentaController extends Controller
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
 
-    public function store_pedido_ajax(Request $request)
-    {
+    public function store_pedido_ajax(Request $request){
         $data      = $request->all();
         $pedido_id = $data['pedido_id'];
         $Ped       = Pedido::find($pedido_id);
@@ -581,16 +580,17 @@ class VentaController extends Controller
 
 
     public function destroy($id=0){
-        $venta = Venta::findOrFail($id);
-        $venta->forceDelete();
-//        $venta->detach($id);
-        $ventaDetalle = VentaDetalle::where('venta_id',$id);
-        $ventaDetalle->forceDelete();
-        $Mov = Movimiento::where('venta_id',$id);
-        $Mov->forceDelete();
-
-        //        $ventaDetalle->detach();
-        return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
+        if (Venta::getTotalAbonosIngresos($id) <= 0){
+            $venta = Venta::findOrFail($id);
+            $venta->forceDelete();
+            $ventaDetalle = VentaDetalle::where('venta_id',$id);
+            $ventaDetalle->forceDelete();
+            $Mov = Movimiento::where('venta_id',$id);
+            $Mov->forceDelete();
+            return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
+        }else{
+            return Response::json(['mensaje' => 'No se puede eliminar esta venta, porque tiene abonos.', 'data' => 'Error', 'status' => '200'], 200);
+        }
     }
 
 }
