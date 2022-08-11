@@ -29,6 +29,10 @@ class Producto extends Model
         return $this->isiva;
     }
 
+    public function tieneIVA(){
+        return !$this->isiva ? 0 : 1;
+    }
+
     public function almacenes(){
         return $this->belongsToMany(Almacen::class);
     }

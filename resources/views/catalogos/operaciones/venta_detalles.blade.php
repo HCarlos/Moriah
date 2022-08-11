@@ -77,7 +77,7 @@
                             <th aria-label="cantidad" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Cant</th>
                             <th aria-label="pv" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PV</th>
                             <th aria-label="importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Importe</th>
-                            <th aria-label="iva" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="6" role="columnheader" class="sorting">IVA</th>
+                            <th aria-label="iva" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">IVA</th>
                             <th aria-label="total" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Total</th>
                             <th aria-label="" style="width: 10px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
@@ -90,7 +90,7 @@
                                 <td>{{ $vd->descripcion }}</td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->cantidad}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->pv}} </td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $vd->importe}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $vd->total - $vd->iva}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->iva}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->total}} </td>
                                 <td >

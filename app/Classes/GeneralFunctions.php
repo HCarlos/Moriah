@@ -112,5 +112,14 @@ class GeneralFunctions
         return intval(Session::get('Empresa_Id'));
     }
 
+    public static function getImporteIVA($tieneIVA, $ImporteAplicar){
+        switch ($tieneIVA){
+            case 0:
+                $IVA = 0;
+            case 1:
+                $IVA = $ImporteAplicar / 1.16;
+        }
+        return $ImporteAplicar - $IVA;
+    }
 
 }

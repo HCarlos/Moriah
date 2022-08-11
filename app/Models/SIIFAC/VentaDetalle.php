@@ -114,8 +114,10 @@ class VentaDetalle extends Model
         $importe  = $prod->pv * $cantidad;
         $descto   = $prod->descto;
         $subtotal = $importe - $descto;
-        $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
-        $total    = $subtotal + $iva;
+//        $iva      = $prod->isIVA() ? $subtotal * 0.160000 : 0;
+        $iva   = GeneralFunctions::getImporteIVA($prod->tieneIVA(),$subtotal);
+//        $total    = $subtotal + $iva;
+        $total    = $subtotal;
         $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($Empresa_Id > 0) {
             $vd = static::create([

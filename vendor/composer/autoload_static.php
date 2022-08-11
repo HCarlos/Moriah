@@ -5105,7 +5105,7 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         'Spatie\\Permission\\Traits\\HasRoles' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/HasRoles.php',
         'Spatie\\Permission\\Traits\\RefreshesPermissionCache' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/RefreshesPermissionCache.php',
         'Spatie\\Permission\\WildcardPermission' => __DIR__ . '/..' . '/spatie/laravel-permission/src/WildcardPermission.php',
-        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
         'Styde\\Html\\Access\\AccessHandler' => __DIR__ . '/..' . '/styde/html/src/Access/AccessHandler.php',
         'Styde\\Html\\Access\\BasicAccessHandler' => __DIR__ . '/..' . '/styde/html/src/Access/BasicAccessHandler.php',
         'Styde\\Html\\Access\\MissingGateException' => __DIR__ . '/..' . '/styde/html/src/Access/MissingGateException.php',

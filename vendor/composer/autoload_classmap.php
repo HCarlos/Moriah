@@ -4554,7 +4554,7 @@ return array(
     'Spatie\\Permission\\Traits\\HasRoles' => $vendorDir . '/spatie/laravel-permission/src/Traits/HasRoles.php',
     'Spatie\\Permission\\Traits\\RefreshesPermissionCache' => $vendorDir . '/spatie/laravel-permission/src/Traits/RefreshesPermissionCache.php',
     'Spatie\\Permission\\WildcardPermission' => $vendorDir . '/spatie/laravel-permission/src/WildcardPermission.php',
-    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+    'Stringable' => $vendorDir . '/myclabs/php-enum/stubs/Stringable.php',
     'Styde\\Html\\Access\\AccessHandler' => $vendorDir . '/styde/html/src/Access/AccessHandler.php',
     'Styde\\Html\\Access\\BasicAccessHandler' => $vendorDir . '/styde/html/src/Access/BasicAccessHandler.php',
     'Styde\\Html\\Access\\MissingGateException' => $vendorDir . '/styde/html/src/Access/MissingGateException.php',

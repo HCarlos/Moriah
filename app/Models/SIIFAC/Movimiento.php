@@ -335,8 +335,9 @@ class Movimiento extends Model{
         $existencia = $Prod->exist + $NCd->cant;
         $saldo      = $cu * $cantidad;
 
-        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
-//        $total = $saldo + $iva;
+//        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
+        $iva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$saldo);
+
         $total = $saldo;
 
         $Mov  =  static::create([
@@ -400,8 +401,9 @@ class Movimiento extends Model{
         $existencia = $Prod->exist;
         $saldo      = $cu * $cantidad;
 
-        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
-        $total = $saldo + $iva;
+//        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
+        $iva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$saldo);
+        $total = $saldo;
 
         $Mov  =  static::create([
             'user_id'          => $user->id,
@@ -483,8 +485,9 @@ class Movimiento extends Model{
         $existencia = $Prod->exist;
         $saldo      = $cu * $cantidad;
 
-        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
-        $total = $saldo + $iva;
+//        $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
+        $iva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$saldo);
+        $total = $saldo;
 
         $Mov  =  static::create([
             'user_id'          => 1,

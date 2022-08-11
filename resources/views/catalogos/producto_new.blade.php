@@ -75,19 +75,14 @@
                 <div class="col-md-2">
                     <input type="number" name="minimo" id="minimo" value="{{ old('minimo') }}" min="1" max="9999999999" class="form-control" />
                 </div>
-                <label for = "isiva" class="col-md-1 col-form-label text-md-left">Agr. IVA</label>
+                <label for = "cu" class="col-md-1 col-form-label text-md-left">P. Costo</label>
                 <div class="col-md-2">
-                    {{ Form::checkbox('isiva', null, true , ['id' => 'isiva','class' => 'ace ace-switch']) }}
-                    <span class="lbl"></span>
+                    <input type="number" name="cu" id="cu" value="{{ old('cu') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
                 </div>
                 <div class="col-md-3"></div>
             </div>
 
             <div class="form-group row">
-                <label for = "cu" class="col-md-1 col-form-label text-md-left">P. Costo</label>
-                <div class="col-md-2">
-                    <input type="number" name="cu" id="cu" value="{{ old('cu') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
-                </div>
 
                 <label for = "exist" class="col-md-1 col-form-label text-md-left">Exist.</label>
                 <div class="col-md-2">
@@ -102,6 +97,11 @@
                 <label for = "pv" class="col-md-1 col-form-label text-md-left">P. Venta</label>
                 <div class="col-md-2">
                     <input type="number" name="pv" id="pv" value="{{ old('pv') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
+                </div>
+                <label for = "isiva" class="col-md-1 col-form-label text-md-left">Tiene IVA</label>
+                <div class="col-md-2">
+                    {{ Form::checkbox('isiva', null, true , ['id' => 'isiva','class' => 'ace ace-switch']) }}
+                    <span class="lbl"></span>
                 </div>
 
             </div>
