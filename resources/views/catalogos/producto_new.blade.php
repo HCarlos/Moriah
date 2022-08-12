@@ -69,15 +69,15 @@
             <div class="form-group row">
                 <label for = "maximo" class="col-md-1 col-form-label text-md-left">Máximo</label>
                 <div class="col-md-2">
-                    <input type="number" name="maximo" id="maximo" value="{{ old('maximo') }}" min="1" max="9999999999" class="form-control" />
+                    <input type="text" name="maximo" id="maximo" value="{{ old('maximo') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" />
                 </div>
                 <label for = "minimo" class="col-md-1 col-form-label text-md-left">Mínimo</label>
                 <div class="col-md-2">
-                    <input type="number" name="minimo" id="minimo" value="{{ old('minimo') }}" min="1" max="9999999999" class="form-control" />
+                    <input type="text" name="minimo" id="minimo" value="{{ old('minimo') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" />
                 </div>
                 <label for = "cu" class="col-md-1 col-form-label text-md-left">P. Costo</label>
                 <div class="col-md-2">
-                    <input type="number" name="cu" id="cu" value="{{ old('cu') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
+                    <input type="text" name="cu" id="cu" value="{{ old('cu') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
                 </div>
                 <div class="col-md-3"></div>
             </div>
@@ -86,17 +86,17 @@
 
                 <label for = "exist" class="col-md-1 col-form-label text-md-left">Exist.</label>
                 <div class="col-md-2">
-                    <input type="number" name="exist" id="exist" value="{{ old('exist') }}" min="0" step="1" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
+                    <input type="text" name="exist" id="exist" value="{{ old('exist') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
                 </div>
 
                 <label for = "saldo" class="col-md-1 col-form-label text-md-left">Saldo.</label>
                 <div class="col-md-2">
-                    <input type="number" name="saldo" id="saldo" value="{{ old('saldo') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" readonly/>
+                    <input type="text" name="saldo" id="saldo" value="{{ old('saldo') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" placeholder="99,999.99" readonly/>
                 </div>
 
                 <label for = "pv" class="col-md-1 col-form-label text-md-left">P. Venta</label>
                 <div class="col-md-2">
-                    <input type="number" name="pv" id="pv" value="{{ old('pv') }}" min="0" step="0.01" class="form-control" pattern="\d{0,2}(\.\d{1,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
+                    <input type="text" name="pv" id="pv" value="{{ old('pv') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
                 </div>
                 <label for = "isiva" class="col-md-1 col-form-label text-md-left">Tiene IVA</label>
                 <div class="col-md-2">
