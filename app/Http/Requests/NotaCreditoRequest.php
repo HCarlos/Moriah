@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\NotaCredito;
@@ -67,8 +68,11 @@ class NotaCreditoRequest extends FormRequest
 //                        dd($arrVal[0]);
                         $Prod = Producto::find($arrVal[2]);
                         $vd = VentaDetalle::find($arrVal[0]);
-                        $pIva = floatval($vd->iva) > 0 ? 0.160000 : 0;
                         $Importe = $value * $vd->pv;
+
+//                        $pIva = floatval($vd->iva) > 0 ? 0.160000 : 0;
+                        $pIva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$Importe);
+
                         $Iva = $Importe * $pIva;
                         $Subtotal = $Importe + $Iva;
                         $Item = [

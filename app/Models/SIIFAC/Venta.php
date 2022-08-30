@@ -322,7 +322,6 @@ class Venta extends Model
         $Ven->save();
         $IdNC = intval($metodo_pago) == 5 ? intval($referencia) : 0;
         Ingreso::pagar($venta_id,$total_pagado,$metodo_pago,$referencia,$IdNC);
-
         return $Ven;
 
     }

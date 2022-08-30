@@ -14,8 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Database\Eloquent\Collection;
 
-class NotaCreditoController extends Controller
-{
+class NotaCreditoController extends Controller{
     protected $tableName = 'notas_credito';
     protected $redirectTo = '/home';
     protected $Empresa_Id = 0;
@@ -69,6 +68,7 @@ class NotaCreditoController extends Controller
     {
         $data = $request->all();
         $fecha = $data['fecha'];
+        $this->F = (new FuncionesController);
         $fecha = $this->F->setDateTo6Digit($fecha);
         return redirect('/index_notacredito/' . $fecha);
 
