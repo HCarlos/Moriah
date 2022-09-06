@@ -73,8 +73,10 @@ class NotaCreditoRequest extends FormRequest
 //                        $pIva = floatval($vd->iva) > 0 ? 0.160000 : 0;
                         $pIva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$Importe);
 
-                        $Iva = $Importe * $pIva;
-                        $Subtotal = $Importe + $Iva;
+//                        $Subtotal = $Importe + $Iva;
+
+                        $Subtotal = $Importe;
+
                         $Item = [
                             'user_id'          => $Ven->user_id,
                             'nota_credito_id'  => $NC->id,
