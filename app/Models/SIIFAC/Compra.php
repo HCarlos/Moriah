@@ -12,7 +12,7 @@ class Compra extends Model
     protected $guard_name = 'web'; // or whatever guard you want to use
     protected $table = 'compras';
 
-    protected $fillable = [
+    protected $fillable = ['id',
         'almacen_id', 'proveedor_id', 'folio_factura','nota_id',
         'descripcion_compra',
         'fecha','importe','descuento','subtotal','iva',
@@ -49,5 +49,10 @@ class Compra extends Model
         $Comp = static::find($compra_id);
         return Movimiento::agregarDesdeCompraDetalle($Comp,$producto_id,$cantidad);
     }
+
+    public function getTotalCompraAttribute(){
+        return Movimiento::where('compra_id', $this->attributes['id'])->sum('importe');
+    }
+
 
 }

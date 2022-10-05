@@ -41,7 +41,7 @@
                                 <td>{{ $compra->proveedor->nombre_proveedor }}</td>
                                 <td>{{ $compra->almacen->descripcion }}</td>
                                 <td>{{ $compra->empresa->rs }}</td>
-                                <td class="text-right">{{ $compra->total}} </td>
+                                <td class="text-right">{{ $compra->TotalCompra }} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
