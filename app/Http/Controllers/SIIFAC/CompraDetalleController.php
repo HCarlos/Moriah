@@ -43,7 +43,11 @@ class CompraDetalleController extends Controller
 
         if ($compra) {
             $items = Movimiento::all()->where('compra_id', $compra_id);
-            $total = $compra->total;
+            $total = 0;
+            foreach ($items as $item){
+                $total += $item->importe;
+            }
+//            $total = $compra->total;
 
             $user = Auth::User();
 

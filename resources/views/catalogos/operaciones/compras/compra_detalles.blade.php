@@ -18,18 +18,16 @@
             </div>
             <div class="dataTables_wrapper" role="grid">
                 @if ($compra)
-                    <table id="{{ $tableName}}" class="table table-striped table-bordered table-hover dataTable" >
+                    <table id="{{ $tableName}}" class="table table-striped table-bordered table-hover dataTable" style="width: 100% !important" >
                         <thead>
-                        <tr role="row">
-                            <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
-                            <th aria-label="codigo" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Código</th>
-                            <th aria-label="descripcion" style="width: 120px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
-                            <th aria-label="cantidad" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Cant</th>
-                            <th aria-label="pc" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PC</th>
-                            <th aria-label="importe" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Importe</th>
-                            <th aria-label="iva" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="6" role="columnheader" class="sorting">IVA</th>
-                            <th aria-label="total" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Total</th>
-                            <th aria-label="" style="width: 10px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
+                        <tr role="row" style="width: 100% !important">
+                            <th aria-label="id" style="width: 10% !important;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
+                            <th aria-label="codigo" style="width: 10% !important;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Código</th>
+                            <th aria-label="descripcion" style="width: 40% !important;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Descripción</th>
+                            <th aria-label="cantidad" style="width: 10% !important;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">Cant</th>
+                            <th aria-label="pc" style="width: 10% !important;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="4" role="columnheader" class="sorting text-right">PC</th>
+                            <th aria-label="importe" style="width: 10% !important;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="5" role="columnheader" class="sorting">Importe</th>
+                            <th aria-label="" style="width: 10% !important;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
                         <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -41,8 +39,6 @@
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->entrada}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->cu}} </td>
                                 <td class="text-right font_Roboto_Mono_400">{{ $vd->importe}} </td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $vd->iva}} </td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $vd->saldo}} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
@@ -57,7 +53,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7" class="text-right">
+                                <td colspan="5" class="text-right">
                                     <h3 class="smaller green font_Roboto_Mono_400">
                                         Total $
                                     </h3>
