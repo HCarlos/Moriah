@@ -18,7 +18,7 @@ class Producto extends Model
 
     protected $fillable = ['id',
         'almacen_id','proveedor_id','familia_producto_id','medida_id','clave', 'codigo', 'descripcion',
-        'shortdesc',
+        'shortdesc','saldo_costeo',
         'maximo','minimo','isiva','fecha', 'tipo', 'pv', 'porcdescto','inicia_descuento','termina_descuento',
         'moneycli','exist','cu','saldo', 'propiedades_producto', 'filename', 'root','empresa_id',
         'status_producto','idemp','ip','host',

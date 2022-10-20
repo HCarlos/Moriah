@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\QueryException;
+use LogicException;
 
 class CompraController extends Controller
 {
@@ -144,7 +145,7 @@ class CompraController extends Controller
             $Comp->empresa_id         = $this->Empresa_Id;
             $Comp->proveedor_id       = $data['proveedor_id'];
             $Comp->almacen_id         = $data['almacen_id'];
-            $Comp->folio_factura      = $data['folio_factura'];
+            $Comp->folio_factura      = isset($data['folio_factura']) ? $data['folio_factura'] : 0;
             $Comp->nota_id            = $data['nota_id'];
             $Comp->descripcion_compra = $data['descripcion_compra'];
             $Comp->save();

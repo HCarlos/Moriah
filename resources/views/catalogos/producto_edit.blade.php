@@ -15,12 +15,12 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
                 <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-                    <i class="fa fa-home"></i>  Propiedades
+                    <i class="fa fa-home"></i>Propiedades
                 </a>
             </li>
             <li role="presentation">
                 <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-                    <i class="fa fa-barcode"></i>  Imagen
+                    <i class="fa fa-barcode"></i>Código de Barras
                 </a>
             </li>
         </ul>
@@ -140,7 +140,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 text-center" >
-                            <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$items->id])  }}" class="btn btn-cafe " title="Imprimir tarjeta de movimientos" target="_blank">
+                            <a href="{{ route('imprimir_tarjeta_movtos_costeo/',['producto_id'=>$items->id])  }}" class="btn btn-cafe " title="Imprimir tarjeta de movimientos" target="_blank">
                                 <i class="fa fa-list bigger-110 white"></i>
                                 Ver Tarjeta de Almacen
                             </a>
@@ -159,14 +159,11 @@
             </div>
             <div role="tabpanel" class="tab-pane fade" id="profile">
                 <div class="row">
-                    <div class="span6">
-                        <img class="col-md-6" src="{{ asset('storage/'.$items->root.$items->filename)  }}" alt="Imagen del Producto" />
+                    <div  class="span2">
+                        <img src="data:image/png;base64, {{$img}} " class="width-20" >
+                        <p class="character_justify font_PT_Sans_Narrow" >{{$items->codigo}}</p>
                     </div>
-                    <div  class="span6">
-                        <img src="data:image/png;base64, {{$img}} ">
-                        <p class="col-md-6 text-center text-inverse character_justify font_PT_Sans_Narrow" >{{$items->codigo}}</p>
-                    </div>
-                </div>0
+                </div>
             </div>
         </div>
     </div>

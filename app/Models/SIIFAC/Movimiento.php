@@ -26,6 +26,7 @@ class Movimiento extends Model{
         'user_id', 'cliente_id', 'venta_id', 'venta_detalle_id', 'compra_id', 'producto_id','paquete_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
         'folio', 'clave', 'codigo', 'ejercicio', 'periodo', 'fecha', 'foliofac', 'nota', 'entrada',
         'salida', 'exlocal', 'existencia', 'pu', 'cu', 'debe', 'haber', 'descto', 'importe', 'iva', 'sllocal', 'saldo',
+        'debe_costeo','haber_costeo','saldo_costeo',
         'tipo', 'status', 'tipoinv','empresa_id',
         'status_movimiento', 'idemp', 'ip', 'host',
     ];
@@ -551,17 +552,29 @@ class Movimiento extends Model{
 //                $saldo = floatval($MovInit->saldo);
                 $exist = 0;
                 $saldo = 0;
+                $lcsllocal = 0;
                 foreach ($Movs as $mov){
+                    $lcDebe = $mov->entrada * $mov->cu;
+                    $lcHaber = $mov->salida * $mov->cu;
+                    $lcsllocal0 = $lcDebe - $lcHaber;
+//                    $lcsllocal = $lcsllocal + $lcsllocal0;
+
                     $exist0 = $mov->entrada - $mov->salida;
                     $saldo0 = $mov->debe - $mov->haber;
-                    $mov->existencia  = $exist + $exist0;
-                    $mov->saldo       = $saldo + $saldo0;
+                    $mov->existencia = $exist + $exist0;
+                    $mov->saldo      = $saldo + $saldo0;
+                    $mov->sllocal    = $lcsllocal + $lcsllocal0;
+                    $mov->debe_costeo  = $lcDebe;
+                    $mov->haber_costeo = $lcHaber;
+                    $mov->saldo_costeo = $lcsllocal + $lcsllocal0;
                     $mov->save();
                     $exist           += $exist0;
                     $saldo           += $saldo0;
+                    $lcsllocal       += $lcsllocal0;
                 }
                 $Prod->exist = $exist;
                 $Prod->saldo = $saldo;
+                $Prod->saldo_costeo = $lcsllocal;
                 $Prod->save();
                 return "OK";
             }else{
