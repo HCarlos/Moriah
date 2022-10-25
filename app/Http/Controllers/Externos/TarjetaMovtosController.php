@@ -172,7 +172,8 @@ class TarjetaMovtosController extends Controller
             $debe_costeo       = $mv->debe_costeo==0?'':number_format($mv->debe_costeo,0,'.',',');
             $haber_costeo      = $mv->haber_costeo==0?'':number_format($mv->haber_costeo,0,'.',',');
             $saldo_costeo      = $mv->saldo_costeo==0?'':number_format($mv->saldo_costeo,0,'.',',');
-            $status     = $mv->Status;
+//            $status     = $mv->venta->metodo_pago;
+            $status     = utf8_decode($mv->Status);
             $pdf->Cell(10,$this->alto,$mv->id,1,0,"C");
             $pdf->Cell(20,$this->alto,$fecha->format('d-m-Y'),1,0,"L");
             $pdf->Cell(20,$this->alto,$entrada,1,0,"R");

@@ -46,11 +46,11 @@ class GeneralFunctions
             100 => "-",
             5 => "Nota de Crédito",
             101 => "-",
-            200 => "Salida por Faltante",
+            200 => "Faltante",
             300 => "Salida por Merma",
-            400 => "Devolución Sobre Compra",
+            400 => "Dev. S/Compra",
             102 => "-",
-            600 => "Descuento vía Nómina",
+            600 => "Desc. vía Nómina",
             103 => "-",
             9 => "Otros"
         ];

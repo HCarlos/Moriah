@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Externos;
 
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Ingreso;
+use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
 use App\Http\Controllers\Controller;
@@ -176,7 +177,13 @@ class TicketController extends Controller
     public function print_history_pay($venta_id)
     {
         $Ven               = Venta::find($venta_id);
-        $VD                = Ingreso::all()->where('venta_id',$venta_id);
+        $IsCompra = str_contains($Ven->MetodoPago,'Compra');
+        if ($IsCompra){
+            $VD            = Movimiento::all()->where('venta_id',$venta_id);
+        }else{
+            $VD            = Ingreso::all()->where('venta_id',$venta_id);
+        }
+
         $this->timex       = Carbon::now()->format('d-m-Y h:i:s a');
         $this->folio       = $venta_id;
         $this->cliente_id  = $Ven->user_id;
@@ -197,22 +204,33 @@ class TicketController extends Controller
         $this->alto  = 10;
         $pdf->SetFont('Arial','',8);
         //dd($Ven);
+        $Total = 0;
         foreach ($VD as $vd){
             $pdf->Cell(40,$this->alto,Carbon::parse($vd->fecha)->format('d-m-Y H:i:ss a'),1,0,"C");
-            $pdf->Cell(60,$this->alto,utf8_decode($vd->MetodoPago),1,0,"L");
-            $pdf->Cell(65,$this->alto,utf8_decode($vd->referencia),1,0,"L");
-            $pdf->Cell(30,$this->alto,number_format($vd->total,2),1,1,"R");
+            if ($IsCompra){
+                $total = $vd->salida * $vd->cu;
+                $Total += $total;
+                $pdf->Cell(60,$this->alto,utf8_decode($vd->Status),1,0,"L");
+                $pdf->Cell(65,$this->alto,"---",1,0,"L");
+            }else{
+                $total = $vd->total;
+                $Total += $total;
+                $pdf->Cell(60,$this->alto,utf8_decode($vd->MetodoPago),1,0,"L");
+                $pdf->Cell(65,$this->alto,utf8_decode($vd->referencia),1,0,"L");
+            }
+            $pdf->Cell(30,$this->alto,number_format($total,2),1,1,"R");
             $pdf->setX(10);
-
         }
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(165,$this->alto,"TOTAL PAGADO $ ",1,0,"R",true);
-        $pdf->Cell(30,$this->alto,number_format($Ven->Abonos,2),1,1,"R",true);
+        $pdf->Cell(30,$this->alto,number_format($Total,2),1,1,"R",true);
         $pdf->setX(10);
 
         $pdf->Ln();
         $pdf->Output();
+
         exit;
+
     }
 
 }
