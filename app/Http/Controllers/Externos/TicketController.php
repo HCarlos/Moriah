@@ -97,7 +97,13 @@ class TicketController extends Controller
     public function print_tiket($venta_id)
     {
         $Ven               = Venta::find($venta_id);
-        $VD                = VentaDetalle::all()->where('venta_id',$venta_id);
+        $IsCompra = str_contains($Ven->MetodoPago,'Compra');
+        if ($IsCompra){
+            $VD            = Movimiento::all()->where('venta_id',$venta_id);
+        }else{
+            $VD            = VentaDetalle::all()->where('venta_id',$venta_id);
+        }
+
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $this->folio       = $venta_id;
         $this->cliente_id  = $Ven->user_id;
@@ -120,14 +126,27 @@ class TicketController extends Controller
         $this->alto  = 10;
         $pdf->SetFont('Arial','',8);
         foreach ($VD as $vd){
+
+            $Total = 0;
+            if ($IsCompra){
+                $total = $vd->salida * $vd->cu;
+                $Total += $total;
+                $pdf->Cell(25,$this->alto,number_format($vd->salida,0),1,0,"C");
+                $pdf->Cell(145,$this->alto,utf8_decode($vd->producto->descripcion).' :: '.$vd->cu.' c/u',1,0,"L");
+                $pdf->Cell(25,$this->alto,number_format($total,2),1,1,"R");
+            }else{
+                $total = $vd->total;
+                $Total += $total;
             $pdf->Cell(25,$this->alto,number_format($vd->cantidad,0),1,0,"C");
             $pdf->Cell(145,$this->alto,utf8_decode($vd->descripcion),1,0,"L");
             $pdf->Cell(25,$this->alto,number_format($vd->total,2),1,1,"R");
+            }
+//            $pdf->Cell(30,$this->alto,number_format($total,2),1,1,"R");
             $pdf->setX(10);
         }
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(170,$this->alto,"TOTAL A PAGAR $ ",1,0,"R",true);
-        $pdf->Cell(25,$this->alto,number_format($Ven->total,2),1,1,"R",true);
+        $pdf->Cell(25,$this->alto,number_format($Total,2),1,1,"R",true);
         $pdf->setX(10);
 
         $pdf->Ln();

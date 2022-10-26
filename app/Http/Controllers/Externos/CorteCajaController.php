@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Ingreso;
+use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Venta;
+use App\Models\SIIFAC\VentaDetalle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\PanelControlOneRequest;
@@ -73,10 +75,11 @@ class CorteCajaController extends Controller{
         $pdf->Cell(10, $this->alto, 'VENTA', "LTB", 0,"R");
         $pdf->Cell(15, $this->alto, 'TIPO', "LTB", 0,"L");
         $pdf->Cell(58, $this->alto, 'CLIENTE', "LTB", 0,"L");
-        $pdf->Cell(19, $this->alto, 'VENDEDOR', "LTB", 0,"L");
+//        $pdf->Cell(19, $this->alto, 'VENDEDOR', "LTB", 0,"L");
         $pdf->Cell(15, $this->alto, 'FECHA', "LTB", 0,"R");
-        $pdf->Cell(22, $this->alto, utf8_decode('MÉTODO PAGO'), "LTB", 0,"L");
-        $pdf->Cell(30, $this->alto, 'REFERENCIA', "LTB", 0,"L");
+        $pdf->Cell(25, $this->alto, utf8_decode('MÉTODO PAGO'), "LTB", 0,"L");
+//        $pdf->Cell(30, $this->alto, 'REFERENCIA', "LTB", 0,"L");
+        $pdf->Cell(46, $this->alto, 'REFERENCIA', "LTB", 0,"L");
         $pdf->Cell(17, $this->alto, 'IMPORTE', "LTRB", 1,"R");
         $pdf->setX(10);
     }
@@ -103,20 +106,30 @@ class CorteCajaController extends Controller{
 
         foreach ($Movs as $Mov){
             //dd($Mov);
-            $totalPagado += $Mov->total;
+
+            $IsCompra = str_contains($Mov->venta->MetodoPago,'Compra');
+            if ($IsCompra){
+                $VD     = Movimiento::where('venta_id',$Mov->venta_id)->first();
+                $total = $VD->salida * $VD->cu;
+                $referencia = $VD->salida.' a '.$VD->cu.' c/u';
+            }else{
+                $total = $Mov->total;
+                $referencia = $Mov->referencia;
+            }
+            $totalPagado += $total;
             $pdf->setX(10);
             $pdf->SetFont('arialn','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, $Mov->venta_id, "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
             $pdf->Cell(58, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
-            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
+//            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
-            $pdf->Cell(22, $this->alto, substr(utf8_decode($Mov->metodo_pago),0,20), "LTB", 0,"L");
-            $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
-            $totalContado += $Mov->total;
+            $pdf->Cell(25, $this->alto, substr(utf8_decode($Mov->metodo_pago),0,20), "LTB", 0,"L");
+//            $pdf->Cell(30, $this->alto, utf8_decode(trim($referencia)), "LTB", 0,"L");
+            $pdf->Cell(46, $this->alto, utf8_decode(trim($referencia)), "LTB", 0,"L");
             $pdf->SetFont('AndaleMono','',7);
-            $pdf->Cell(17, $this->alto, number_format($Mov->total,2), "LTRB", 1,"R");
+            $pdf->Cell(17, $this->alto, number_format($total,2), "LTRB", 1,"R");
         }
         $pdf->setX(10);
         if ($Movs->count() > 0){
