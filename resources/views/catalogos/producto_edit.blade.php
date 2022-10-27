@@ -125,27 +125,30 @@
 
                     </div>
                     <div class="form-group row">
-{{--                        <label class="col-md-2 col-form-label text-md-right"></label>--}}
-                        <div class="col-md-3 text-center" >
+                        <div class="col-md-1 text-center" >
                             <button type="submit" class="btn btn-primary">
                                 Guardar
                             </button>
                         </div>
                         <div class="col-md-3 text-center" >
-{{--                            <a href="{{ route('actualizarExistProd/',['producto_id'=>$items->id])  }}" class="btn btn-danger " title="Imprimir tarjeta de movimientos" target="_blank">--}}
-{{--                                <i class="fa fa-list bigger-110 white"></i>--}}
                             <a class="btn btn-danger btnActualizarExistProd" title="Actualizar Producto" id="/actualizar_producto/{{$items->id}}" data-toggle="modal" data-target="#myModal">
                                 <i class="ace-icon fa fa-adjust bigger-150 "></i>
                                 Actualizar Existencias
                             </a>
                         </div>
                         <div class="col-md-3 text-center" >
-                            <a href="{{ route('imprimir_tarjeta_movtos_costeo/',['producto_id'=>$items->id])  }}" class="btn btn-cafe " title="Imprimir tarjeta de movimientos" target="_blank">
+                            <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$items->id,'opt'=>0])  }}" class="btn btn-cafe " title="Imprimir tarjeta de movimientos" target="_blank">
                                 <i class="fa fa-list bigger-110 white"></i>
                                 Ver Tarjeta de Almacen
                             </a>
                         </div>
                         <div class="col-md-3 text-center" >
+                            <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$items->id,'opt'=>1])  }}" class="btn btn-cafe " title="Imprimir tarjeta de movimientos" target="_blank">
+                                <i class="fa fa-list bigger-110 white"></i>
+                                Ver Tarjeta de Almacen Costeo
+                            </a>
+                        </div>
+                        <div class="col-md-1 text-center" >
                         <a class="btn btn-info " href="#" onclick="window.close();">
                             Cerrar
                         </a>

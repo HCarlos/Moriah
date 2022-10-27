@@ -19,7 +19,7 @@ class TarjetaMovtosController extends Controller
     protected $producto_name = "";
     protected $empresa       = "";
 
-    public function header($pdf,$Opt=0){
+    public function header($pdf,$Opt){
         $pdf->AddPage();
         $pdf->setY(10);
         $pdf->setX(10);
@@ -39,7 +39,11 @@ class TarjetaMovtosController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,utf8_decode("M O V I M I E N T O S"),"",0,"L");
+        if ($Opt == 0){
+            $pdf->Cell(145,$this->alto,utf8_decode("TARJETA DE ALMACÉN"),"",0,"L");
+        }else{
+            $pdf->Cell(145,$this->alto,utf8_decode("TARJETA DE ALMACÉN COSTEO"),"",0,"L");
+        }
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(0,212,212);
         $pdf->Cell(28, $this->alto, utf8_decode("Página " . $pdf->PageNo() . " de {nb}"), "", 1,"R");
@@ -70,7 +74,7 @@ class TarjetaMovtosController extends Controller
         $pdf->setX(10);
     }
 
-    public function imprimir_tarjeta_movtos($producto_id)
+    public function imprimir_tarjeta_movtos($producto_id,$opt)
     {
         $Prod                = Producto::find($producto_id);
         $Movs                = Movimiento::all()->where('producto_id',$producto_id)->sortBy('id');
@@ -87,7 +91,7 @@ class TarjetaMovtosController extends Controller
         $pdf->addFont('AndaleMono','','AndaleMono.php');
         $pdf->addFont('arialn');
 
-        $this->header($pdf,0);
+        $this->header($pdf,$opt);
         $this->alto  = 8;
         $pdf->SetFont('Arial','',8);
         $i = 1;
@@ -96,10 +100,17 @@ class TarjetaMovtosController extends Controller
             $entrada    = $mv->entrada==0?'':number_format($mv->entrada,0,'.',',');
             $salida     = $mv->salida==0?'':number_format($mv->salida,0,'.',',');
             $existencia = $mv->existencia==0?'':number_format($mv->existencia,0,'.',',');
-            $pu         = $mv->pu==0?'':number_format($mv->pu,0,'.',',');
-            $debe       = $mv->debe==0?'':number_format($mv->debe,0,'.',',');
-            $haber      = $mv->haber==0?'':number_format($mv->haber,0,'.',',');
-            $saldo      = $mv->saldo==0?'':number_format($mv->saldo,0,'.',',');
+            if ($opt==0){
+                $pu         = $mv->pu==0?'':number_format($mv->pu,0,'.',',');
+                $debe       = $mv->debe==0?'':number_format($mv->debe,0,'.',',');
+                $haber      = $mv->haber==0?'':number_format($mv->haber,0,'.',',');
+                $saldo      = $mv->saldo==0?'':number_format($mv->saldo,0,'.',',');
+            }else{
+                $pu         = $mv->cu==0?'':number_format($mv->cu,0,'.',',');
+                $debe       = $mv->debe_costeo==0?'':number_format($mv->debe_costeo,0,'.',',');
+                $haber      = $mv->haber_costeo==0?'':number_format($mv->haber_costeo,0,'.',',');
+                $saldo      = $mv->saldo_costeo==0?'':number_format($mv->saldo_costeo,0,'.',',');
+            }
             $status     = $mv->Status;
             $pdf->Cell(10,$this->alto,$mv->id,1,0,"C");
             $pdf->Cell(20,$this->alto,$fecha->format('d-m-Y'),1,0,"L");
@@ -118,10 +129,10 @@ class TarjetaMovtosController extends Controller
             }
             $pdf->Cell(20,$this->alto,$saldo,1,0,"R");
             $pdf->SetFont('Arial','',8);
-            $pdf->Cell(25,$this->alto,$status,1,1,"R");
+            $pdf->Cell(25,$this->alto,utf8_decode($status),1,1,"R");
             $pdf->setX(10);
             if ($pdf->getY() >= 248 && $i < $Movs->count() ){
-                $this->header($pdf);
+                $this->header($pdf,$opt);
                 $this->alto  = 8;
                 $pdf->SetFont('Arial','',8);
             }
@@ -143,7 +154,7 @@ class TarjetaMovtosController extends Controller
     }
 
 
-    public function imprimir_tarjeta_movtos_costeo($producto_id){
+    public function imprimir_tarjeta_movtos_costeo($producto_id,$opt){
         $Prod                = Producto::find($producto_id);
         $Movs                = Movimiento::all()->where('producto_id',$producto_id)->sortBy('id');
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
@@ -159,7 +170,7 @@ class TarjetaMovtosController extends Controller
         $pdf->addFont('AndaleMono','','AndaleMono.php');
         $pdf->addFont('arialn');
 
-        $this->header($pdf,1);
+        $this->header($pdf,$opt);
         $this->alto  = 8;
         $pdf->SetFont('Arial','',8);
         $i = 1;
@@ -194,7 +205,7 @@ class TarjetaMovtosController extends Controller
             $pdf->Cell(25,$this->alto,$status,1,1,"R");
             $pdf->setX(10);
             if ($pdf->getY() >= 248 && $i < $Movs->count() ){
-                $this->header($pdf,1);
+                $this->header($pdf,$opt);
                 $this->alto  = 8;
                 $pdf->SetFont('Arial','',8);
             }
