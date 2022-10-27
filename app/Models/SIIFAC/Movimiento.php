@@ -574,7 +574,7 @@ class Movimiento extends Model{
                     $mov->sllocal      = $lcsllocal0;
                     $mov->debe_costeo  = $lcDebe;
                     $mov->haber_costeo = $lcHaber;
-                    $mov->saldo_costeo = $lcsllocal0;
+                    $mov->saldo_costeo = $lcSaldoCosteo + $lcsllocal0;
 //                    $mov->saldo_costeo = $lcDebe > 0 ? $lcDebe : $lcHaber;
 //                    $mov->saldo_costeo = $lcsllocal0;
 //                    $mov->saldo_costeo = $lcsllocal + $lcsllocal0;
