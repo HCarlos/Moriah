@@ -73,7 +73,7 @@
                                     </a>
                                 @endif
                                 @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                    <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$item->id])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir tarjeta de movimientos" target="_blank">
+                                    <a href="{{ route('imprimirTarjetasMovto/',['producto_id'=>$item->id,'opt'=>1])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir tarjeta de movimientos" target="_blank">
                                         <i class="fa fa-list bigger-110 cafe"></i>
                                     </a>
                                 @endif

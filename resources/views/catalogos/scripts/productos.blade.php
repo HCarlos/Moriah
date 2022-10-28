@@ -18,7 +18,7 @@
                             url: Url
                         })
                             .done(function (response) {
-                                $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-check-circle-o text-success"></i><span class="marginLeft1em">Inventario actualizado con éxito.</span></div>');
+                                $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-check-circle-o text-success"></i><span class="marginLeft1em">'+response.mensaje+'</span></div>');
                             });
                     });
 
@@ -38,7 +38,7 @@
                             url: Url
                         })
                             .done(function (response) {
-                                $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-check-circle-o text-success"></i><span class="marginLeft1em">Producto actualizado con éxito.</span></div>');
+                                $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-check-circle-o text-success"></i><span class="marginLeft1em">'+response.mensaje+'</span></div>');
                             });
                     });
 

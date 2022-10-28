@@ -547,7 +547,6 @@ class Movimiento extends Model{
         ->where('producto_id',$Prod->id)
         ->first();
 //        ->where('status',0)
-//        dd($MovInit);
         try{
             if (!is_null($MovInit)){
                 $Movs = static::query()
@@ -589,11 +588,13 @@ class Movimiento extends Model{
                 $Prod->save();
                 return "OK";
             }else{
-                return $MovInit;
+                $errorMovInit = "Es nulo el Product_ID : ".$Prod->id;
+                Log::alert($errorMovInit);
+                return $Prod->id;
             }
         }catch(Exception $e){
             Log::alert($MovInit.' => '.$e->getMessage());
-            return $e->getMessage();
+            return " horror" . $e->getMessage();
         }
     }
 }
