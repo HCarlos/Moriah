@@ -125,9 +125,9 @@ class TicketController extends Controller
         $this->header($pdf);
         $this->alto  = 10;
         $pdf->SetFont('Arial','',8);
+        $Total = 0;
         foreach ($VD as $vd){
 
-            $Total = 0;
             if ($IsCompra){
                 $total = $vd->salida * $vd->cu;
                 $Total += $total;
