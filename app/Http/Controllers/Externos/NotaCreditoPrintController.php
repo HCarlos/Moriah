@@ -108,7 +108,7 @@ class NotaCreditoPrintController extends Controller
         $this->alto  = 10;
         $pdf->SetFont('Arial','',8);
         foreach ($VD as $vd){
-            $pdf->Cell(25,$this->alto,number_format($vd->cant,0),1,0,"C");
+            $pdf->Cell(25,$this->alto,number_format($vd->cant,2),1,0,"C");
             $pdf->Cell(145,$this->alto,utf8_decode($vd->descripcion_producto),1,0,"L");
             $pdf->Cell(25,$this->alto,number_format($vd->importe,2),1,1,"R");
             $pdf->setX(10);

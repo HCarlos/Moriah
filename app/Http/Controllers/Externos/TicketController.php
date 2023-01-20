@@ -131,13 +131,13 @@ class TicketController extends Controller
             if ($IsCompra){
                 $total = $vd->salida * $vd->cu;
                 $Total += $total;
-                $pdf->Cell(25,$this->alto,number_format($vd->salida,0),1,0,"C");
+                $pdf->Cell(25,$this->alto,number_format($vd->salida,2),1,0,"C");
                 $pdf->Cell(145,$this->alto,utf8_decode($vd->producto->descripcion).' :: '.$vd->cu.' c/u',1,0,"L");
                 $pdf->Cell(25,$this->alto,number_format($total,2),1,1,"R");
             }else{
                 $total = $vd->total;
                 $Total += $total;
-            $pdf->Cell(25,$this->alto,number_format($vd->cantidad,0),1,0,"C");
+            $pdf->Cell(25,$this->alto,number_format($vd->cantidad,2),1,0,"C");
             $pdf->Cell(145,$this->alto,utf8_decode($vd->descripcion),1,0,"L");
             $pdf->Cell(25,$this->alto,number_format($vd->total,2),1,1,"R");
             }

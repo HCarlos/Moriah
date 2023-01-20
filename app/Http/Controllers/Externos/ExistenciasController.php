@@ -86,7 +86,7 @@ class ExistenciasController extends Controller
         foreach ($Prod as $prd){
             $pdf->Cell(10,$this->alto,number_format($prd->id,0),1,0,"C");
             $pdf->Cell(125,$this->alto,utf8_decode($prd->descripcion),1,0,"L");
-            $pdf->Cell(20,$this->alto,number_format($prd->exist,0,'.',','),1,0,"C");
+            $pdf->Cell(20,$this->alto,number_format($prd->exist,2,'.',','),1,0,"C");
             $pdf->Cell(20,$this->alto,'',1,0,"C");
             $pdf->Cell(20,$this->alto,'',1,1,"C");
             $pdf->setX(10);

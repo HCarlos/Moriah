@@ -97,19 +97,19 @@ class TarjetaMovtosController extends Controller
         $i = 1;
         foreach ($Movs as $mv){
             $fecha      = new Carbon($mv->fecha);
-            $entrada    = $mv->entrada==0?'':number_format($mv->entrada,0,'.',',');
-            $salida     = $mv->salida==0?'':number_format($mv->salida,0,'.',',');
-            $existencia = $mv->existencia==0?'':number_format($mv->existencia,0,'.',',');
+            $entrada    = $mv->entrada==0?'':number_format($mv->entrada,2,'.',',');
+            $salida     = $mv->salida==0?'':number_format($mv->salida,2,'.',',');
+            $existencia = $mv->existencia==0?'':number_format($mv->existencia,2,'.',',');
             if ($opt==0){
-                $pu         = $mv->pu==0?'':number_format($mv->pu,0,'.',',');
-                $debe       = $mv->debe==0?'':number_format($mv->debe,0,'.',',');
-                $haber      = $mv->haber==0?'':number_format($mv->haber,0,'.',',');
-                $saldo      = $mv->saldo==0?'':number_format($mv->saldo,0,'.',',');
+                $pu         = $mv->pu==0?'':number_format($mv->pu,2,'.',',');
+                $debe       = $mv->debe==0?'':number_format($mv->debe,2,'.',',');
+                $haber      = $mv->haber==0?'':number_format($mv->haber,2,'.',',');
+                $saldo      = $mv->saldo==0?'':number_format($mv->saldo,2,'.',',');
             }else{
-                $pu         = $mv->cu==0?'':number_format($mv->cu,0,'.',',');
-                $debe       = $mv->debe_costeo==0?'':number_format($mv->debe_costeo,0,'.',',');
-                $haber      = $mv->haber_costeo==0?'':number_format($mv->haber_costeo,0,'.',',');
-                $saldo      = $mv->saldo_costeo==0?'':number_format($mv->saldo_costeo,0,'.',',');
+                $pu         = $mv->cu==0?'':number_format($mv->cu,2,'.',',');
+                $debe       = $mv->debe_costeo==0?'':number_format($mv->debe_costeo,2,'.',',');
+                $haber      = $mv->haber_costeo==0?'':number_format($mv->haber_costeo,2,'.',',');
+                $saldo      = $mv->saldo_costeo==0?'':number_format($mv->saldo_costeo,2,'.',',');
             }
             $status     = $mv->Status;
             $pdf->Cell(10,$this->alto,$mv->id,1,0,"C");
