@@ -12,6 +12,7 @@ use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\PedidoDetalle;
+use App\Models\SIIFAC\Rfc;
 use App\Models\SIIFAC\Venta;
 use Carbon\Carbon;
 use DateTime;
@@ -109,6 +110,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Venta::class);
     }
 
+    public function rfcs(){
+        return $this->belongsToMany(Rfc::class, 'rfc_user','user_id','rfc_id');
+    }
+    public function emails(){
+        return $this->hasMany( 'email_user','user_id','id');
+    }
     public function isAdmin(){
         return $this->admin;
     }

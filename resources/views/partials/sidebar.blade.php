@@ -77,6 +77,14 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li>
+                    <a href="{{ route('rfcsIndex') }}">
+{{--                    <a href="#">--}}
+                        <i class="menu-icon fa fa-credit-card bluw"></i>
+                        Registros Fiscales
+                    </a>
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 

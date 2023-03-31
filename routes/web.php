@@ -229,6 +229,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/update_usuario/{user}','SIIFAC\UsuarioController@update')->name('usuarioUpdate/');
     Route::get('/destroy_usuario/{id}', 'SIIFAC\UsuarioController@destroy')->name('usuarioDestroy/');
 
+    Route::get('/show_add_rfc_usuario/{user_id}','SIIFAC\UsuarioController@show_add_rfc_usuario')->name('show_add_rfc_usuario/');
+    Route::get('/show_remove_rfc_usuario/{user_id}','SIIFAC\UsuarioController@show_remove_rfc_usuario')->name('show_remove_rfc_usuario/');
+    Route::post('/add_rfc_usuario','SIIFAC\UsuarioController@add_rfc_usuario')->name('add_rfc_usuario/');
+    Route::post('/remove_rfc_usuario','SIIFAC\UsuarioController@remove_rfc_usuario')->name('remove_rfc_usuario/');
+
     // Roles
     Route::post('/create_role','Catalogos\RoleController@create')->name('roleCreate/');
     Route::put('/update_role/{rol}','Catalogos\RoleController@update')->name('roleUpdate/');
@@ -257,6 +262,18 @@ Route::group(['middleware' => 'auth'], function () {
 //    Route::get('storage/excel/{filename}',function () {
 //        return view('/home');
 //    });
+
+    // Registros Fiscales
+    Route::get('/index_rfcs/','SIIFAC\RegistrosFiscalesController@index')->name('rfcsIndex');
+    Route::get('/form_rfc_nuevo_ajax/','SIIFAC\RegistrosFiscalesController@nuevo_rfc_ajax')->name('formRFCNuevoAjax');
+    Route::post('/store_rfc_nuevo_ajax','SIIFAC\RegistrosFiscalesController@store_rfc_nuevo_ajax')->name('RFCNuevoAjax/');
+    Route::get('/form_rfc_editar_ajax/{id}','SIIFAC\RegistrosFiscalesController@editar_rfc_ajax')->name('formRFCEditarAjax');
+    Route::put('/store_rfc_editado_ajax','SIIFAC\RegistrosFiscalesController@store_rfc_editado_ajax')->name('RFCEditadoAjax/');
+    Route::get('/destroy_rfc/{id}', 'SIIFAC\RegistrosFiscalesController@destroy')->name('rfcDestroy/');
+
+
+
+
 
     // R E P O R T E S
     Route::get('show_panel_consulta_1','Externos\CorteCajaController@show_panel_consulta_1')->name('panelConsulta1');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Externos;
 
 use App\Models\SIIFAC\Empresa;
+use App\Models\SIIFAC\EmpresaVenta;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Venta;
@@ -105,9 +106,7 @@ class TicketController extends Controller
         }
 
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
-        $this->folio       = $venta_id;
-        $this->cliente_id  = $Ven->user_id;
-        $this->vendedor_id = $Ven->vendedor_id;
+        $this->folio       = Venta::getFolio($Ven->empresa_id, $venta_id);
         $this->cliente     = $Ven->user->FullName;
         $this->vendedor    = $Ven->vendedor->FullName;
         $this->status      = $Ven->isPagado() ? "PAGADO" : "NO PAGADO";

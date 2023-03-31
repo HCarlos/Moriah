@@ -83,6 +83,9 @@ return [
         'producto_proveedor' => 'producto_proveedor',
         'empresa_ingreso' => 'empresa_ingreso',
         'ingreso_empresa' => 'ingreso_empresa',
+        'rfcs' => 'rfcs',
+        'rfc_user' => 'rfc_user',
+        'email_user' => 'email_user',
     ],
 
     ];

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Ramsey\Uuid\Type\Integer;
 
 class Venta extends Model
 {
@@ -198,7 +199,8 @@ class Venta extends Model
                 'idemp' => $Empresa_Id,
             ]);
 
-            $Ven->empresas()->attach($Empresa_Id);
+            $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1]);
             $Ven->paquetes()->attach($paquete_id);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
@@ -253,7 +255,8 @@ class Venta extends Model
 
             ]);
 
-            $Ven->empresas()->attach($Empresa_Id);
+            $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1]);
             $Ven->pedidos()->attach($pedido_id);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
@@ -288,8 +291,8 @@ class Venta extends Model
                 'idemp' => $Empresa_Id,
 
             ]);
-
-            $Ven->empresas()->attach($Empresa_Id);
+            $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1]);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
 
@@ -367,7 +370,10 @@ class Venta extends Model
         return $Ings->count() > 0;
     }
 
-
+    public static function getFolio($empresa_id):int{
+        $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->last();
+        return (int)$emp->folio;
+    }
 
 
 }

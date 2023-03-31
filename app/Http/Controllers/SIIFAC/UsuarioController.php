@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\SIIFAC;
 
 use App\Classes\GeneralFunctions;
+use App\Http\Requests\Users\UserAddRFCRequest;
+use App\Http\Requests\Users\UserRemoveRFCRequest;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaCliente;
 use App\Models\SIIFAC\Movimiento;
+use App\Models\SIIFAC\Rfc;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -209,10 +212,55 @@ class UsuarioController extends Controller
 
     }
 
+    public function show_rfc_usuario($user_id){
+        $user = Auth::user();
+        $usuario = User::findOrFail($user_id);
+        $rfcs= Rfc::query()->orderBy('rfc')->get();
+        $rfcs_asignados = User::query()->whereHas('rfcs',function ($q) use ($user_id){
+            return $q->where('user_id',$user_id);
+        })->get();
+
+        return view ('asignaciones.add_rfc_ajax',
+            [
+                'user_id' => $user_id,
+                'usuario' => $usuario,
+                'rfcs' => $rfcs,
+
+                'rfcs_asignados' => $rfcs_asignados,
+                'titulo_catalogo' => "Registros Fiscales de ".ucwords($user->FullName()),
+                'user' => $user,
+                'tableName'=>$this->tableName,
+            ]
+        );
+    }
 
 
+    public function add_rfc_usuario(UserAddRFCRequest $request){
+        $msg = $request->manage();
+        return Response::json(['mensaje' => $msg, 'data' => 'OK', 'status' => '200'], 200);
+    }
 
-    
+
+    public function show_remove_rfc_usuario($user_id){
+        $user = Auth::user();
+
+        return view ('catalogos.listados.usuarios_list',
+            [
+                'user_id' => $user_id,
+                'rfcs' => $rfcs,
+                'titulo_catalogo' => "Agregar Registros Fiscales de ".ucwords($user->FullName()),
+                'user' => $user,
+                'tableName'=>$this->tableName,
+            ]
+        );
+    }
+
+    public function remove_rfc_usuario(UserRemoveRFCRequest $request){
+        $msg = $request->manage();
+        return Response::json(['mensaje' => $msg, 'data' => 'OK', 'status' => '200'], 200);
+    }
+
+
 
 
 
