@@ -10,11 +10,13 @@ use App\Models\SIIFAC\Compra;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Proveedor;
+use App\Models\SIIFAC\RegimenesFiscales;
 use App\Models\SIIFAC\Rfc;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use LogicException;
 
 class RegistrosFiscalesController extends Controller{
 
@@ -27,7 +29,7 @@ class RegistrosFiscalesController extends Controller{
         $this->F = (new FuncionesController);
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($this->Empresa_Id <= 0){
-            return redirect('openEmpresa');
+            redirect('openEmpresa');
         }
     }
 
@@ -61,12 +63,14 @@ class RegistrosFiscalesController extends Controller{
 
         $views       = 'rfc_nuevo_ajax';
         $user        = Auth::User();
+        $regimenfis  = RegimenesFiscales::query()->get()->sortBy('clave_regimen_fiscal');
         $oView       = 'catalogos.operaciones.registros_fiscales.';
         return view ($oView.$views,
             [
-                'user'        => $user,
-                'empresa_id'  => $this->Empresa_Id,
-                'Url'         => '/store_rfc_nuevo_ajax',
+                'user'               => $user,
+                'regimenes_fiscales' => $regimenfis,
+                'empresa_id'         => $this->Empresa_Id,
+                'Url'                => '/store_rfc_nuevo_ajax',
             ]
         );
     }
@@ -91,6 +95,8 @@ class RegistrosFiscalesController extends Controller{
         $data["estado"]               = $data["estado"]               ===  null ? '' : trim(strtoupper($data["estado"]));
         $data["pais"]                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
         $data["cp"]                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
+        $data["emails"]               = $data["emails"]               ===  null ? '' : trim(strtoupper($data["emails"]));
+        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"]    ===  null ? '' : trim(strtoupper($data["regimen_fiscal_id"]));
         $data['observaciones']        = "";
 
         $data['idemp']      = $this->Empresa_Id;
@@ -114,14 +120,16 @@ class RegistrosFiscalesController extends Controller{
 
         $views       = 'rfc_editar_ajax';
         $user        = Auth::User();
+        $regimenfis  = RegimenesFiscales::query()->get()->sortBy('clave_regimen_fiscal');
         $oView       = 'catalogos.operaciones.registros_fiscales.';
         $rfc      = Rfc::find($id);
         return view ($oView.$views,
             [
-                'rfc'         => $rfc,
-                'user'        => $user,
-                'empresa_id'  => $this->Empresa_Id,
-                'Url'         => '/store_rfc_editado_ajax',
+                'rfc'                => $rfc,
+                'user'               => $user,
+                'regimenes_fiscales' => $regimenfis,
+                'empresa_id'         => $this->Empresa_Id,
+                'Url'                => '/store_rfc_editado_ajax',
             ]
         );
     }
@@ -152,6 +160,8 @@ class RegistrosFiscalesController extends Controller{
             $rfc->estado               = $data["estado"]               ===  null ? '' : trim(strtoupper($data["estado"]));
             $rfc->pais                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
             $rfc->cp                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
+            $rfc->emails               = $data["emails"]               ===  null ? '' : trim(strtoupper($data["emails"]));
+            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"]    ===  null ? '' : (int) $data["regimen_fiscal_id"];
 
             $rfc->save();
 

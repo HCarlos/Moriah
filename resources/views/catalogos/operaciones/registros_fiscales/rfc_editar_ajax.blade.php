@@ -79,6 +79,21 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for = "emails" class="col-form-label text-md-left">Emails</label>
+                    <input type="text" name="emails" id="emails" value="{{ old('emails', $rfc->emails) }}" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label for = "regimen_fiscal_id" class=" col-form-label text-md-left">Régimen Fiscal</label>
+                    <select id="regimen_fiscal_id" name="regimen_fiscal_id" size="1" class="form-control">
+                        @foreach($regimenes_fiscales as $rf)
+                            <option value="{{$rf->id}}" @if($rf->id === $rfc->regimen_fiscal_id) selected @endif>{{$rf->clave_regimen_fiscal.' - '.$rf->regimen_fiscal}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             <hr>
 
             <div class="form-group row">

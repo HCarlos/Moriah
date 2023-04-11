@@ -86,6 +86,7 @@ return [
         'rfcs' => 'rfcs',
         'rfc_user' => 'rfc_user',
         'email_user' => 'email_user',
+        'regimenes_fiscales' => 'regimenes_fiscales',
     ],
 
     ];

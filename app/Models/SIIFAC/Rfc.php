@@ -16,6 +16,7 @@ class Rfc extends Model{
     protected $fillable = ['id',
         'rfc', 'razon_social', 'razon_social_cfdi_40',
         'calle', 'num_ext', 'num_int','colonia','localidad','municipio','estado','pais','cp',
+        'emails', 'registro_fiscal_id',
         'observaciones','empresa_id',
         'idemp','ip','host',
     ];

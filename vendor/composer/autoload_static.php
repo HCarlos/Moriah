@@ -345,8 +345,8 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -647,6 +647,7 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         'App\\Models\\SIIFAC\\PedidoDetalle' => __DIR__ . '/../..' . '/app/Models/SIIFAC/PedidoDetalle.php',
         'App\\Models\\SIIFAC\\Producto' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Producto.php',
         'App\\Models\\SIIFAC\\Proveedor' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Proveedor.php',
+        'App\\Models\\SIIFAC\\RegimenesFiscales' => __DIR__ . '/../..' . '/app/Models/SIIFAC/RegimenesFiscales.php',
         'App\\Models\\SIIFAC\\Rfc' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Rfc.php',
         'App\\Models\\SIIFAC\\Vendedor' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Vendedor.php',
         'App\\Models\\SIIFAC\\Venta' => __DIR__ . '/../..' . '/app/Models/SIIFAC/Venta.php',
@@ -4883,6 +4884,7 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'RegimenesFiscalesSeeder' => __DIR__ . '/../..' . '/database/seeds/RegimenesFiscalesSeeder.php',
         'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
         'RolesAndPermissionsSeeder' => __DIR__ . '/../..' . '/database/seeds/RolesAndPermissionsSeeder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
