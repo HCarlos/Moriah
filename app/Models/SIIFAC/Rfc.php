@@ -31,5 +31,9 @@ class Rfc extends Model{
         return $this->belongsToMany(User::class);
     }
 
+    public function Regimen_Fiscal(){
+        return $this->hasOne(RegimenesFiscales::class,'id','regimen_fiscal_id');
+    }
+
 
 }

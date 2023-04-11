@@ -25,6 +25,7 @@
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
                             <th aria-label="rfc" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">RFC</th>
                             <th aria-label="razon_social" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Razón Social 4.0</th>
+                            <th aria-label="razon_social" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Régimen Fiscal</th>
                             <th aria-label="" style="width: 100px;" colspan="1" rowspan="1" role="columnheader" class="sorting_disabled"></th>
                         </tr>
                         </thead>
@@ -34,6 +35,7 @@
                                 <td>{{ $rfc->id }}</td>
                                 <td>{{ $rfc->rfc }}</td>
                                 <td>{{ $rfc->razon_social_cfdi_40 }}</td>
+                                <td>{{ $rfc->Regimen_Fiscal->regimen_fiscal }}</td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
