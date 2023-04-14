@@ -32,8 +32,8 @@ class AsignacionListController extends Controller
         switch ($ida) {
             case 0:
                 $view = 'roles_usuario';
-                $listEle     = Role::all()->sortByDesc('name')->pluck('name','name');
-                $listTarget  = User::all()->sortByDesc('fullNameCFDI40')->pluck('fullNameCFDI40','id');
+                $listEle     = Role::all()->sortBy('name')->pluck('name','name');
+                $listTarget  = User::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
                 //dd($listTarget);
                 if ($iduser == 0){
                     $iduser = 1;
@@ -43,8 +43,8 @@ class AsignacionListController extends Controller
                 break;
             case 1:
                 $view = 'permisos_role';
-                $listEle     = Permission::all()->sortByDesc('name')->pluck('name','name');
-                $listTarget  = Role::all()->sortByDesc('fullNameCFDI40')->pluck('fullNameCFDI40','id');
+                $listEle     = Permission::all()->sortBy('name')->pluck('name','name');
+                $listTarget  = Role::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
                 if ($iduser == 0){
                     $iduser = 1;
                 }
@@ -53,7 +53,7 @@ class AsignacionListController extends Controller
                 break;
             case 2:
                 $view = 'add_rfc_ajax';
-                $listEle     = Rfc::all()->sortByDesc('rfc')->pluck('rfc','id');
+                $listEle     = Rfc::all()->sortBy('rfc')->pluck('rfc','id');
                 $listTarget  = User::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
                 if ($iduser == 0){
                     $iduser = 1;
