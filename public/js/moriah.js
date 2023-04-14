@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
 
-    var pathAssign   = ['/asign_role_user/','/asign_permission_role/'];
-    var pathUnAssign = ['/unasign_role_user/','/unasign_permission_role/'];
+    var pathAssign   = ['/asign_role_user/','/asign_permission_role/','/asign_rfc_user/'];
+    var pathUnAssign = ['/unasign_role_user/','/unasign_permission_role/','/unasign_rfc_user/'];
 
     $("#preloaderGlobal").hide();
     if ( $(".btnAction2") ){
@@ -46,6 +46,7 @@ $(document).ready(function() {
     if ( $(".btnAsign0") ){
         $(".btnAsign0").on('click', function(event) {
             event.preventDefault();
+            // alert(this.id)
             var IdArr  = this.id.split('-');
             var Cat_Id = IdArr[1];
             var IdUser = IdArr[2];
@@ -66,7 +67,7 @@ $(document).ready(function() {
                 return false;
             }
             var Url = pathAssign[Cat_Id]+y+'/'+x+'/'+Cat_Id;
-
+            // alert(Url);
 
             $(function() {
                 $.ajax({
@@ -84,6 +85,7 @@ $(document).ready(function() {
     if ( $(".btnUnasign0") ){
         $(".btnUnasign0").on('click', function(event) {
             event.preventDefault();
+            // alert(this.id)
             var IdArr  = this.id.split('-');
             var Cat_Id = IdArr[1];
             var z = $('.lstAsigns option:selected').val();

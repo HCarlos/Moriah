@@ -18,8 +18,8 @@
 @yield('scripts_compras')
 @yield('scripts_productos')
 
-<script src="{{ asset('js/base.js') }}"></script>
-<script src="{{ asset('js/moriah.js') }}"></script>
+<script src="{{ asset('js/base.js?timestamp()') }}"></script>
+<script src="{{ asset('js/moriah.js?timestamp()') }}"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {

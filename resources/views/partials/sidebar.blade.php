@@ -77,14 +77,6 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li>
-                    <a href="{{ route('rfcsIndex') }}">
-{{--                    <a href="#">--}}
-                        <i class="menu-icon fa fa-credit-card bluw"></i>
-                        Registros Fiscales
-                    </a>
-                    <b class="arrow"></b>
-                </li>
             </ul>
         </li>
 
@@ -111,7 +103,7 @@
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 0,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>
-                            Asignar Roles a Usuarios
+                            Roles
                         </a>
 
                         <b class="arrow"></b>
@@ -119,7 +111,14 @@
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 1,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>
-                            Asignar Permisos a Roles
+                            Permisos
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li>
+                        <a href="{{ route('asignItem/', ['ida' => 2,'iduser' => 0]) }}">
+                            <i class="menu-icon fa fa-cog"></i>
+                            Regímenes Fiscales
                         </a>
                         <b class="arrow"></b>
                     </li>

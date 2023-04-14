@@ -148,6 +148,10 @@ class User extends Authenticatable
         return "{$this->ap_paterno} {$this->ap_materno} {$this->nombre}";
     }
 
+    public function getFullNameCFDI40Attribute() {
+        return "{$this->nombre} {$this->ap_paterno} {$this->ap_materno}";
+    }
+
     public function sendPasswordResetNotification($token){
         $this->notify(new MyResetPassword($token));
     }

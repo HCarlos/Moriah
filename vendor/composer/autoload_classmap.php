@@ -27,6 +27,7 @@ return array(
     'App\\Http\\Controllers\\Asignaciones\\AsignacionListController' => $baseDir . '/app/Http/Controllers/Asignaciones/AsignacionListController.php',
     'App\\Http\\Controllers\\Asignaciones\\PermisoRoleController' => $baseDir . '/app/Http/Controllers/Asignaciones/PermisoRoleController.php',
     'App\\Http\\Controllers\\Asignaciones\\RoleUsuarioController' => $baseDir . '/app/Http/Controllers/Asignaciones/RoleUsuarioController.php',
+    'App\\Http\\Controllers\\Asignaciones\\UserRegimenesController' => $baseDir . '/app/Http/Controllers/Asignaciones/UserRegimenesController.php',
     'App\\Http\\Controllers\\Auth\\EditUserDataController' => $baseDir . '/app/Http/Controllers/Auth/EditUserDataController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',

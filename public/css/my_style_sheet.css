@@ -148,8 +148,8 @@ ul.role-list-hrz li a {
 }
 
 .panel-fill {
-	max-height: 96% !important;
 	height: 100% !important;
+	max-height: 96% !important;
 }
 
 .panel-fill-86 {

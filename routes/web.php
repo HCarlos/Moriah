@@ -253,6 +253,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asign_permission_role/{idRole}/{namePermissions}/{cat_id}','Asignaciones\PermisoRoleController@asignar')->name('assignPermissionToRole/');
     Route::get('/unasign_permission_role/{idRole}/{namePermissions}/{cat_id}','Asignaciones\PermisoRoleController@desasignar')->name('unAssignPermissionToRole/');
 
+    // Asignaciones RFC's -> Usuarios
+    Route::get('/asign_rfc_user/{idUser}/{rfcs}/{cat_id}','Asignaciones\UserRegimenesController@asignar')->name('assignRfcToUser/');
+    Route::get('/unasign_rfc_user/{idUser}/{rfcs}/{cat_id}','Asignaciones\UserRegimenesController@desasignar')->name('unAssignRfcToUser/');
+
+
 //    Route::resource('excel','Externos\ExcelController');
 
     Route::get('producto/existencias-excel','Externos\ExcelController@show')->name('productoExistenciaList');
@@ -270,9 +275,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/form_rfc_editar_ajax/{id}','SIIFAC\RegistrosFiscalesController@editar_rfc_ajax')->name('formRFCEditarAjax');
     Route::put('/store_rfc_editado_ajax','SIIFAC\RegistrosFiscalesController@store_rfc_editado_ajax')->name('RFCEditadoAjax/');
     Route::get('/destroy_rfc/{id}', 'SIIFAC\RegistrosFiscalesController@destroy')->name('rfcDestroy/');
-
-
-
 
 
     // R E P O R T E S

@@ -345,8 +345,8 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -558,6 +558,7 @@ class ComposerStaticInitbf17defd73503bdb687a5c7bcd547079
         'App\\Http\\Controllers\\Asignaciones\\AsignacionListController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/AsignacionListController.php',
         'App\\Http\\Controllers\\Asignaciones\\PermisoRoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/PermisoRoleController.php',
         'App\\Http\\Controllers\\Asignaciones\\RoleUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/RoleUsuarioController.php',
+        'App\\Http\\Controllers\\Asignaciones\\UserRegimenesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Asignaciones/UserRegimenesController.php',
         'App\\Http\\Controllers\\Auth\\EditUserDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EditUserDataController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',

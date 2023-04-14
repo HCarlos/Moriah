@@ -55,6 +55,9 @@
                                             <i class="fa fa-pencil bigger-150 blue"></i>
                                         </a>
                                     @endif
+{{--                                    <a href="{{ route('formRFCAddRegimenAjax', array('id' => $item->id)) }}" class="btn btn-link btn-xs pull-right btnRFCAddRegimen" target="_blank" title="Asignar RFC's">--}}
+{{--                                        <i class="fa fa-book bigger-110 purple"></i>--}}
+{{--                                    </a>--}}
                                     </div>
                                 </td>
                             </tr>
@@ -72,3 +75,4 @@
 @endsection
 
 @include('catalogos.scripts.dataTable')
+{{--@include('catalogos.scripts.rfcs')--}}

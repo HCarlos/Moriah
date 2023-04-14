@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main-content')
-<div class="panel panel-moriah  panel-fill" id="frmEdit0">
+<div class="panel panel-moriah  " id="frmEdit0" style="height: 600px; ">
     <div class="panel-heading">
             <span>{{ $titulo }}</span>
     </div>

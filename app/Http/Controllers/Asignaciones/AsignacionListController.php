@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Asignaciones;
 
 use App\Http\Controllers\Controller;
+use App\Models\SIIFAC\Rfc;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -26,35 +27,39 @@ class AsignacionListController extends Controller
 
     public function index($ida = 0,$iduser = 0)
     {
-        $tables = ['Roles a Usuario','Permissions to Role'];
-        $titlePanels = ['Roles Usuarios','Permissions Roles'];
+        $tables = ['Roles a Usuario','Permissions to Role','Registros Fiscales a Usuario'];
+        $titlePanels = ['Roles Usuarios','Permissions Roles','Registros_Fiscales Usuarios'];
         switch ($ida) {
             case 0:
                 $view = 'roles_usuario';
                 $listEle     = Role::all()->sortByDesc('name')->pluck('name','name');
-                $listTarget  = User::all()->sortByDesc('username')->pluck('username','id');
+                $listTarget  = User::all()->sortByDesc('fullNameCFDI40')->pluck('fullNameCFDI40','id');
                 //dd($listTarget);
                 if ($iduser == 0){
                     $iduser = 1;
                 }
                 $users = User::findOrFail($iduser);
                 $this->lstAsigns = $users->roles->pluck('name','name');
-//                foreach ($users->roles as $role) {
-//                    $this->lstAsigns .= $role->name . ', ';
-//                }
                 break;
             case 1:
                 $view = 'permisos_role';
                 $listEle     = Permission::all()->sortByDesc('name')->pluck('name','name');
-                $listTarget  = Role::all()->sortByDesc('name')->pluck('name','id');
+                $listTarget  = Role::all()->sortByDesc('fullNameCFDI40')->pluck('fullNameCFDI40','id');
                 if ($iduser == 0){
                     $iduser = 1;
                 }
                 $roles = Role::findOrFail($iduser);
                 $this->lstAsigns = $roles->permissions->pluck('name','name');
-//                foreach ($roles->permissions as $permision) {
-//                    $this->lstAsigns .= $permision->name . ', ';
-//                }
+                break;
+            case 2:
+                $view = 'add_rfc_ajax';
+                $listEle     = Rfc::all()->sortByDesc('rfc')->pluck('rfc','id');
+                $listTarget  = User::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
+                if ($iduser == 0){
+                    $iduser = 1;
+                }
+                $users = User::findOrFail($iduser);
+                $this->lstAsigns = $users->rfcs->pluck('rfc','id');
                 break;
             default:
                 throw new NotFoundHttpException();

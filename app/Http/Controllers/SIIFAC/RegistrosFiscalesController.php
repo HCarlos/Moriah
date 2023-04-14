@@ -12,6 +12,7 @@ use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Proveedor;
 use App\Models\SIIFAC\RegimenesFiscales;
 use App\Models\SIIFAC\Rfc;
+use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -95,8 +96,8 @@ class RegistrosFiscalesController extends Controller{
         $data["estado"]               = $data["estado"]               ===  null ? '' : trim(strtoupper($data["estado"]));
         $data["pais"]                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
         $data["cp"]                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
-        $data["emails"]               = $data["emails"]               ===  null ? '' : trim(strtoupper($data["emails"]));
-        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"]    ===  null ? '' : trim(strtoupper($data["regimen_fiscal_id"]));
+        $data["emails"]               = $data["emails"]               ===  null ? '' : trim($data["emails"]);
+        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"]    ===  null ? 1 : (int) $data["regimen_fiscal_id"];
         $data['observaciones']        = "";
 
         $data['idemp']      = $this->Empresa_Id;
@@ -160,8 +161,8 @@ class RegistrosFiscalesController extends Controller{
             $rfc->estado               = $data["estado"]               ===  null ? '' : trim(strtoupper($data["estado"]));
             $rfc->pais                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
             $rfc->cp                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
-            $rfc->emails               = $data["emails"]               ===  null ? '' : trim(strtoupper($data["emails"]));
-            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"]    ===  null ? '' : (int) $data["regimen_fiscal_id"];
+            $rfc->emails               = $data["emails"]               ===  null ? '' : trim($data["emails"]);
+            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"]    ===  null ? 1 : (int) $data["regimen_fiscal_id"];
 
             $rfc->save();
 
@@ -182,9 +183,6 @@ class RegistrosFiscalesController extends Controller{
         return Response::json(['mensaje' => 'Registro eliminado con éxito', 'data' => 'OK', 'status' => '200'], 200);
 
     }
-
-
-
 
 
 }

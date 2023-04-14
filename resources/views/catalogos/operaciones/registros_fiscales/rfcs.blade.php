@@ -35,7 +35,7 @@
                                 <td>{{ $rfc->id }}</td>
                                 <td>{{ $rfc->rfc }}</td>
                                 <td>{{ $rfc->razon_social_cfdi_40 }}</td>
-                                <td>{{ $rfc->Regimen_Fiscal->regimen_fiscal }}</td>
+                                <td>{{ $rfc->Regimen_Fiscal->regimen_fiscal ?? 'Null' }}</td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
