@@ -77,6 +77,13 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
+                <li>
+                    <a href="{{ route('rfcsIndex') }}">
+                        <i class="menu-icon fa fa-code green"></i>
+                        Registros Fiscales
+                    </a>
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 
@@ -118,7 +125,7 @@
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 2,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>
-                            Regímenes Fiscales
+                            RFC's
                         </a>
                         <b class="arrow"></b>
                     </li>
