@@ -106,7 +106,7 @@ class TicketController extends Controller
         }
 
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
-        $this->folio       = Venta::getFolio($Ven->empresa_id, $venta_id);
+        $this->folio       = Venta::getFolioImpreso($Ven->empresa_id, $venta_id);
         $this->cliente     = $Ven->user->FullName;
         $this->vendedor    = $Ven->vendedor->FullName;
         $this->status      = $Ven->isPagado() ? "PAGADO" : "NO PAGADO";
