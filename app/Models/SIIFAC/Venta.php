@@ -200,7 +200,7 @@ class Venta extends Model
             ]);
 
             $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
-            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa ]);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1 ]);
             $Ven->paquetes()->attach($paquete_id);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
@@ -253,7 +253,7 @@ class Venta extends Model
             ]);
 
             $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
-            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa ]);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1 ]);
             $Ven->pedidos()->attach($pedido_id);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
@@ -287,7 +287,7 @@ class Venta extends Model
 
             ]);
             $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
-            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa ]);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1 ]);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
 
@@ -364,8 +364,8 @@ class Venta extends Model
     }
 
     public static function getFolio($empresa_id) {
-        $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->last();
-        return (int) $emp->folio + 1;
+        $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->sortByDesc('id')->first();
+        return (int) $emp->folio;
     }
 
 
