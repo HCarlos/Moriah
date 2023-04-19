@@ -181,22 +181,12 @@ class PanelControlOneRequest extends FormRequest
         $f1          = $F->fechaDateTimeFormat($this->fecha1);
         $f2          = $F->fechaDateTimeFormat($this->fecha2,true);
 
-        // dd($f1.' => '.$f2);
-
         $vendedor_id = $this->vendedor_id;
         $metodo_pago = $this->metodo_pago;
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
-
-//        $Movs = VentaDetalle::query()
-//            ->where('empresa_id',$this->Empresa_Id)
-//            ->where('fecha','>=', $f1)
-//            ->where('fecha','<=', $f2)
-//            ->orderByRaw('id' )
-//            ->get();
-
-
-        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('count(producto_id) as cantidad, sum(total) as totalimporte, DATE(fecha) as fecha, descripcion, pv, codigo'))
+//        dd($this->Empresa_Id);
+        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(total) as totalimporte, DATE(fecha) as fecha, descripcion, pv, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
@@ -204,6 +194,7 @@ class PanelControlOneRequest extends FormRequest
             ->orderByRaw('descripcion, fecha' )
             ->get();
 
+//        dd($Movs);
 
 
         $m = $Movs->first();

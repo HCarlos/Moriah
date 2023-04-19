@@ -200,14 +200,13 @@ class Venta extends Model
             ]);
 
             $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
-            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1]);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa ]);
             $Ven->paquetes()->attach($paquete_id);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
 
-            $pd = VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id, $cantidad);
+            return VentaDetalle::venderPaqueteDetalles($Ven->id, $paquete_id, $cantidad);
 
-            return $pd;
         } else {
             return null;
         }
@@ -251,19 +250,15 @@ class Venta extends Model
                 'alu_nombre' => $Ped->alu_nombre,
                 'username_alu' => $Ped->username_alu,
                 'idemp' => $Empresa_Id,
-
-
             ]);
 
             $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
-            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1]);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa ]);
             $Ven->pedidos()->attach($pedido_id);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
 
-            $pd = VentaDetalle::venderPedidoDetalles($Ven->id, $pedido_id, $cantidad);
-
-            return $pd;
+            return VentaDetalle::venderPedidoDetalles($Ven->id, $pedido_id, $cantidad);
 
         } else {
            return null;
@@ -292,13 +287,11 @@ class Venta extends Model
 
             ]);
             $FolioEmpresa = static::getFolio($Empresa_Id, $Ven->id);
-            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa + 1]);
+            $Ven->empresas()->attach($Empresa_Id,['folio'=>$FolioEmpresa ]);
             $Ven->users()->attach($user_id);
             $Ven->vendedores()->attach($vendedor_id);
 
-            $pd = VentaDetalle::venderNormalDetalles($Ven, $producto_id, $cantidad);
-
-            return $pd;
+            return VentaDetalle::venderNormalDetalles($Ven, $producto_id, $cantidad);
         } else {
             return null;
         }
@@ -372,7 +365,7 @@ class Venta extends Model
 
     public static function getFolio($empresa_id):int{
         $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->last();
-        return (int)$emp->folio;
+        return (int) $emp->folio + 1;
     }
 
 

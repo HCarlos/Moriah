@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Externos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Models\SIIFAC\Venta;
 use Carbon\Carbon;
 
 class VentaRealizadaController extends Controller
@@ -58,8 +59,9 @@ class VentaRealizadaController extends Controller
         $pdf->Ln(5);
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
+        $pdf->Cell(10, $this->alto, 'FOLIO', "LTB", 0,"R");
         $pdf->Cell(15, $this->alto, 'TIPO', "LTB", 0,"L");
-        $pdf->Cell(75, $this->alto, 'CLIENTE', "LTB", 0,"L");
+        $pdf->Cell(65, $this->alto, 'CLIENTE', "LTB", 0,"L");
         $pdf->Cell(30, $this->alto, 'VENDEDOR', "LTB", 0,"L");
         $pdf->Cell(15, $this->alto, 'FECHA', "LTB", 0,"R");
         $pdf->Cell(17, $this->alto, 'IMPORTE', "LTB", 0,"R");
@@ -85,8 +87,9 @@ class VentaRealizadaController extends Controller
             $pdf->setX(10);
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
+            $pdf->Cell(10, $this->alto, utf8_decode(trim($Mov::getFolio($Mov->empresa_id, $Mov->id))), "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
-            $pdf->Cell(75, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
+            $pdf->Cell(65, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
             $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
             $total += $Mov->total;

@@ -73,13 +73,14 @@ class CorteCajaController extends Controller{
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
         $pdf->Cell(10, $this->alto, 'VENTA', "LTB", 0,"R");
+        $pdf->Cell(10, $this->alto, 'FOLIO', "LTB", 0,"R");
         $pdf->Cell(15, $this->alto, 'TIPO', "LTB", 0,"L");
         $pdf->Cell(50, $this->alto, 'CLIENTE', "LTB", 0,"L");
 //        $pdf->Cell(19, $this->alto, 'VENDEDOR', "LTB", 0,"L");
         $pdf->Cell(15, $this->alto, 'FECHA', "LTB", 0,"R");
         $pdf->Cell(25, $this->alto, utf8_decode('MÉTODO PAGO'), "LTB", 0,"L");
 //        $pdf->Cell(30, $this->alto, 'REFERENCIA', "LTB", 0,"L");
-        $pdf->Cell(40, $this->alto, 'REFERENCIA', "LTB", 0,"L");
+        $pdf->Cell(30, $this->alto, 'REFERENCIA', "LTB", 0,"L");
         $pdf->Cell(15, $this->alto, 'COSTEO', "LTB", 0,"R");
         $pdf->Cell(15, $this->alto, 'IMPORTE', "LTRB", 1,"R");
         $pdf->setX(10);
@@ -106,26 +107,11 @@ class CorteCajaController extends Controller{
         $totalPagado1 = $totalPagado2 = $totalContado = $totalCredito = 0;
 
         foreach ($Movs as $Mov){
-            //dd($Mov);
-
-//            $IsCompra = str_contains($Mov->venta->MetodoPago,'Compra');
-//            if ($IsCompra){
-//                $VD     = Movimiento::where('venta_id',$Mov->venta_id)->first();
-//                $total = $VD->salida * $VD->cu;
-//                $referencia = $VD->salida.' a '.$VD->cu.' c/u';
-//            }else{
-//                $total = $Mov->total;
-//                $referencia = $Mov->referencia;
-//            }
-
-//                $VD     = Movimiento::where('venta_id',$Mov->venta_id)->first();
-//                $total = $VD->salida * $VD->cu;
-//                $referencia = $VD->salida.' a '.$VD->cu.' c/u';
 
             $VD     = Movimiento::where('venta_id',$Mov->venta_id)->first();
             $total1 = $VD->salida * $VD->cu;
-//            $total1 = $VD->saldo_costeo;
             $total2 = $Mov->total;
+            $Ven = Venta::find($Mov->venta_id);
 
             $totalPagado1 += $total1;
             $totalPagado2 += $total2;
@@ -134,13 +120,14 @@ class CorteCajaController extends Controller{
             $pdf->SetFont('arialn','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, $Mov->venta_id, "LTB", 0,"R");
+            $pdf->Cell(10, $this->alto, utf8_decode(trim($Ven::getFolio($Mov->empresa_id, $Mov->venta_id))), "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
             $pdf->Cell(50, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
 //            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
             $pdf->Cell(15, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
             $pdf->Cell(25, $this->alto, substr(utf8_decode($Mov->metodo_pago),0,20), "LTB", 0,"L");
 //            $pdf->Cell(30, $this->alto, utf8_decode(trim($referencia)), "LTB", 0,"L");
-            $pdf->Cell(40, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
+            $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->referencia)), "LTB", 0,"L");
             $pdf->SetFont('AndaleMono','',7);
             $pdf->Cell(15, $this->alto, number_format($total1,2), "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, number_format($total2,2), "LTRB", 1,"R");

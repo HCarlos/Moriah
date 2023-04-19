@@ -92,6 +92,7 @@ class VentaDetalle extends Model
         foreach ($paq as $pq){
             static::agregarProductoAVenta($ven,$pq->producto_id,$pq->cant,0);
         }
+        return $paq;
     }
 
     public static function venderPedidoDetalles($venta_id, $pedido_id, $cantidad){
@@ -102,10 +103,11 @@ class VentaDetalle extends Model
             $pv = $pd->pv;
             static::agregarProductoAVenta($ven,$pd->producto_id,$cantidad,$pv);
         }
+        return $ped;
     }
 
     public static function venderNormalDetalles($ven, $producto_id, $cantidad){
-            static::agregarProductoAVenta($ven,$producto_id,$cantidad,0);
+           return static::agregarProductoAVenta($ven,$producto_id,$cantidad,0);
     }
 
     public static function agregarProductoAVenta($ven,$producto_id,$cantidad,$pv){
