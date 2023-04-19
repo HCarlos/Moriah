@@ -368,5 +368,11 @@ class Venta extends Model
         return (int) $emp->folio;
     }
 
+    public static function getFolioImpreso($empresa_id,$venta_id) {
+        $emp = EmpresaVenta::all()
+            ->where('empresa_id',$empresa_id)
+            ->where('venta_id',$venta_id)->first();
+        return (int) $emp->folio;
+    }
 
 }

@@ -120,7 +120,7 @@ class CorteCajaController extends Controller{
             $pdf->SetFont('arialn','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, $Mov->venta_id, "LTB", 0,"R");
-            $pdf->Cell(10, $this->alto, utf8_decode(trim($Ven::getFolio($Ven->empresa_id, $Ven->id))), "LTB", 0,"R");
+            $pdf->Cell(10, $this->alto, utf8_decode(trim($Ven::getFolioImpreso($Ven->empresa_id, $Ven->id))), "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
             $pdf->Cell(50, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
 //            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");

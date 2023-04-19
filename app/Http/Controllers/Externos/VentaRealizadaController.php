@@ -84,12 +84,13 @@ class VentaRealizadaController extends Controller
         $pdf->SetFont('Arial','',6);
         $total = $abono = $tresta = 0;
         foreach ($Movs as $Mov){
-//            $Ven = Venta::find($VD->venta_id);
-
-            $pdf->setX(10);
+//            $Ven = Venta::find($Mov->venta_id);
+//            dd($Mov);
+//            $pdf->setX(10);
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
-            $pdf->Cell(10, $this->alto, utf8_decode(trim($Mov::getFolio($Mov->empresa_id, $Mov->venta_id))), "LTB", 0,"R");
+            $pdf->Cell(10, $this->alto, utf8_decode(trim($Mov::getFolioImpreso($Mov->empresa_id, $Mov->id))), "LTB", 0,"R");
+//            $pdf->Cell(10, $this->alto, "", "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
             $pdf->Cell(65, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
             $pdf->Cell(30, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
