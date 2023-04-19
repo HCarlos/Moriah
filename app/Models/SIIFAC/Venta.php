@@ -363,7 +363,7 @@ class Venta extends Model
         return $Ings->count() > 0;
     }
 
-    public static function getFolio($empresa_id):int{
+    public static function getFolio($empresa_id) {
         $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->last();
         return (int) $emp->folio + 1;
     }

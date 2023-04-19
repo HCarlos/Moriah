@@ -111,7 +111,7 @@ class CorteCajaController extends Controller{
             $VD     = Movimiento::where('venta_id',$Mov->venta_id)->first();
             $total1 = $VD->salida * $VD->cu;
             $total2 = $Mov->total;
-            $Ven = Venta::find($Mov->venta_id);
+            $Ven = Venta::find($VD->venta_id);
 
             $totalPagado1 += $total1;
             $totalPagado2 += $total2;
@@ -120,7 +120,7 @@ class CorteCajaController extends Controller{
             $pdf->SetFont('arialn','',8);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
             $pdf->Cell(10, $this->alto, $Mov->venta_id, "LTB", 0,"R");
-            $pdf->Cell(10, $this->alto, utf8_decode(trim($Ven::getFolio($Mov->empresa_id, $Mov->venta_id))), "LTB", 0,"R");
+            $pdf->Cell(10, $this->alto, utf8_decode(trim($Ven::getFolio($Ven->empresa_id, $Ven->id))), "LTB", 0,"R");
             $pdf->Cell(15, $this->alto, utf8_decode(trim($Mov->tipoventa)), "LTB", 0,"L");
             $pdf->Cell(50, $this->alto, utf8_decode(trim($Mov->cliente->FullName)), "LTB", 0,"L");
 //            $pdf->Cell(19, $this->alto, utf8_decode(trim($Mov->vendedor->username)), "LTB", 0,"L");
