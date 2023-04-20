@@ -20,12 +20,13 @@ class UserRegimenesController extends Controller{
         $user = User::findOrFail($idUser);
         //dd($user->name);
         $RFCS = explode('|',$rfcs);
+//        dd($RFCS);
         foreach($RFCS AS $i=>$valor) {
             if ($RFCS[$i] !== ""){
                 $r = (int) $RFCS[$i];
                 $rfc = Rfc::find($r);
-                $rl = User::query()->whereHas('rfcs', function($q) use ($r) {
-                    return $q->where('rfc_id',$r);
+                $rl = User::query()->whereHas('rfcs', function($q) use ($r, $idUser) {
+                    return $q->where('rfc_id',$r)->where('user_id',$idUser);
                 })->get();
                 if ($rl->count() <= 0) {
                     $user->rfcs()->attach($r);

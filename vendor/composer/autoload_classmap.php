@@ -2317,6 +2317,7 @@ return array(
     'League\\MimeTypeDetection\\GeneratedExtensionToMimeTypeMap' => $vendorDir . '/league/mime-type-detection/src/GeneratedExtensionToMimeTypeMap.php',
     'League\\MimeTypeDetection\\MimeTypeDetector' => $vendorDir . '/league/mime-type-detection/src/MimeTypeDetector.php',
     'League\\MimeTypeDetection\\OverridingExtensionToMimeTypeMap' => $vendorDir . '/league/mime-type-detection/src/OverridingExtensionToMimeTypeMap.php',
+    'LlenarPrecioCostoSeeder' => $baseDir . '/database/seeds/LlenarPrecioCostoSeeder.php',
     'Matrix\\Builder' => $vendorDir . '/markbaker/matrix/classes/src/Builder.php',
     'Matrix\\Decomposition\\Decomposition' => $vendorDir . '/markbaker/matrix/classes/src/Decomposition/Decomposition.php',
     'Matrix\\Decomposition\\LU' => $vendorDir . '/markbaker/matrix/classes/src/Decomposition/LU.php',

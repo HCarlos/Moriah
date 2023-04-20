@@ -66,7 +66,7 @@ class VentaDetalleController extends Controller
             $ven         = Venta::findOrFail($venta_id);
             try {
                 $mensaje = "OK";
-                VentaDetalle::agregarProductoAVenta($ven,$producto_id,$cantidad,$Prod->pv);
+                VentaDetalle::agregarProductoAVenta($ven,$producto_id,$cantidad,$Prod->pv,$Prod->cu);
             }
             catch(LogicException $e){
                 $mensaje = "Error: ".$e->getMessage();

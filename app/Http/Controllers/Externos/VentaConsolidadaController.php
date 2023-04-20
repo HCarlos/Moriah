@@ -64,7 +64,7 @@ class VentaConsolidadaController extends Controller{
         $pdf->Cell(20, $this->alto, 'CODIGO', "LTB", 0,"R", true);
         $pdf->Cell(100, $this->alto, 'PRODUCTO / SERVICIO', "LTB", 0,"L", true);
         $pdf->Cell(15, $this->alto, 'CANTIDAD', "LTB", 0,"R", true);
-        $pdf->Cell(25, $this->alto, 'PRECIO VENTA', "LTB", 0,"R", true);
+        $pdf->Cell(25, $this->alto, 'PRECIO COSTO', "LTB", 0,"R", true);
         $pdf->Cell(20, $this->alto, 'TOTAL', "LTRB", 1,"R", true);
         $pdf->SetFillColor(255,255,255);
         $pdf->setX(10);
@@ -105,7 +105,7 @@ class VentaConsolidadaController extends Controller{
             $pdf->Cell(100, $this->alto, utf8_decode(trim($Mov->descripcion)), "LTB", 0,"L");
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(15, $this->alto, number_format($Mov->cantidad,2), "LRB", 0,"R");
-            $pdf->Cell(25, $this->alto, number_format($Mov->pv,2), "LRB", 0,"R");
+            $pdf->Cell(25, $this->alto, number_format($Mov->pc,2), "LRB", 0,"R");
             $pdf->Cell(20, $this->alto, number_format($Mov->totalimporte,2), "LRB", 1,"R");
             $total += $Mov->totalimporte;
             if ($pdf->getY() > 230 ){

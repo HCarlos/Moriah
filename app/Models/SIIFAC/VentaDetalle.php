@@ -22,7 +22,7 @@ class VentaDetalle extends Model
         'fecha', 'folio', 'cuenta','clave_producto','codigo',
         'descripcion', 'foliofac', 'porcdescto','cantidad','pv',
         'importe', 'descto', 'subtotal','iva','total',
-        'ispagado', 'f_pagado', 'cantidad_devuelta','cantidad','pv',
+        'ispagado', 'f_pagado', 'cantidad_devuelta', 'cantidad', 'pv', 'pc',
         'status_venta_detalles','idemp','ip','host',
     ];
 
@@ -90,7 +90,7 @@ class VentaDetalle extends Model
         $ven = Venta::find($venta_id);
         $paq  = PaqueteDetalle::where('paquete_id',$paquete_id)->get();
         foreach ($paq as $pq){
-            static::agregarProductoAVenta($ven,$pq->producto_id,$pq->cant,0);
+            static::agregarProductoAVenta($ven,$pq->producto_id,$pq->cant,0, 0);
         }
         return $paq;
     }
@@ -101,18 +101,19 @@ class VentaDetalle extends Model
         foreach ($ped as $pd){
             $cantidad = $pd->cant;
             $pv = $pd->pv;
-            static::agregarProductoAVenta($ven,$pd->producto_id,$cantidad,$pv);
+            static::agregarProductoAVenta($ven,$pd->producto_id,$cantidad,$pv,0);
         }
         return $ped;
     }
 
     public static function venderNormalDetalles($ven, $producto_id, $cantidad){
-           return static::agregarProductoAVenta($ven,$producto_id,$cantidad,0);
+           return static::agregarProductoAVenta($ven,$producto_id,$cantidad,0,0);
     }
 
-    public static function agregarProductoAVenta($ven,$producto_id,$cantidad,$pv){
+    public static function agregarProductoAVenta($ven,$producto_id,$cantidad,$pv,$pc){
         $prod = Producto::find($producto_id);
         $pv = $pv == 0 ? $prod->pv : $pv;
+        $pc = $pc == 0 ? $prod->cu : $pc;
         $importe  = $prod->pv * $cantidad;
         $descto   = $prod->descto;
         $subtotal = $importe - $descto;
@@ -138,6 +139,7 @@ class VentaDetalle extends Model
                 'porcdescto' => $prod->porcdescto,
                 'cantidad' => $cantidad,
                 'pv' => $prod->pv,
+                'pc' => $prod->cu,
                 'importe' => $importe,
                 'subtotal' => $subtotal,
                 'iva' => $iva,

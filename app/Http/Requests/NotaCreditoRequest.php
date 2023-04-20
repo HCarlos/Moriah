@@ -66,15 +66,11 @@ class NotaCreditoRequest extends FormRequest
                 foreach ($this->vd_id as $key => $value){
                     if ($value > 0) {
                         $arrVal = explode('_',$key);
-//                        dd($arrVal[0]);
                         $Prod = Producto::find($arrVal[2]);
                         $vd = VentaDetalle::find($arrVal[0]);
                         $Importe = $value * $vd->pv;
 
-//                        $pIva = floatval($vd->iva) > 0 ? 0.160000 : 0;
                         $pIva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$Importe);
-
-//                        $Subtotal = $Importe + $Iva;
 
                         $Subtotal = $Importe;
 
@@ -89,6 +85,7 @@ class NotaCreditoRequest extends FormRequest
                             'codigo'           => $Prod->codigo,
                             'descripcion_producto' => $Prod->descripcion,
                             'pv'               => $vd->pv,
+                            'pc'               => $vd->pc,
                             'cant'             => $value,
                             'importe'          => $Subtotal,
                             'empresa_id'       => $Ven->empresa_id

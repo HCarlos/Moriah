@@ -87,10 +87,7 @@ class NotaCredito extends Model
     }
 
     public static function totalNotaCreditoPorPrecio($nota_credito_id,$tipo_reporte,$tipo_campo){
-        $vd = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id)->first();
-        $items = Movimiento::all()
-            ->where('venta_detalle_id',$vd->venta_detalle_id)
-            ->where('Estatus',11);
+        $items = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id);
 
         $subtotal_pv = 0;
         $iva_pv = 0;
@@ -100,14 +97,14 @@ class NotaCredito extends Model
         $iva_pc = 0;
         $total_pc = 0;
 
-        foreach ($items as $mov){
-            $total_pv += $mov->entrada * $mov->pu; // $mov->importe - $mov->iva;
-            $iva_pv   += $mov->iva;
-            $subtotal_pv += $total_pv - $iva_pv;
+        foreach ($items as $ncd){
+            $total_pv += $ncd->importe;
+            $iva_pv += GeneralFunctions::getImporteIVA(1,$total_pv);
+            $subtotal_pv   += $total_pv - $iva_pv;
 
-            $total__pc = $mov->entrada * $mov->cu;
-            $subtotal__pc = GeneralFunctions::getImporteIVA(1,$total__pc);
-            $iva__pc = $total__pc - $subtotal__pc;
+            $total__pc = $ncd->cant * $ncd->pc;
+            $iva__pc = GeneralFunctions::getImporteIVA(1,$total__pc);
+            $subtotal__pc = $total__pc - $iva__pc;
 
             $subtotal_pc += $subtotal__pc;
             $iva_pc      += $iva__pc;

@@ -189,16 +189,13 @@ class PanelControlOneRequest extends FormRequest
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
 //        dd($this->Empresa_Id);
-        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(total) as totalimporte, DATE(fecha) as fecha, descripcion, pv, codigo'))
+        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, DATE(fecha) as fecha, descripcion, pc, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->groupByRaw('producto_id, DATE(fecha), descripcion, pv, codigo')
+            ->groupByRaw('producto_id, DATE(fecha), descripcion, pc, codigo')
             ->orderByRaw('descripcion, fecha' )
             ->get();
-
-//        dd($Movs);
-
 
         $m = $Movs->first();
         $f1 = $F->fechaEspanol($this->fecha1);
