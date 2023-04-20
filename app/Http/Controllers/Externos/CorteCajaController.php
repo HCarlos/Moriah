@@ -200,6 +200,10 @@ class CorteCajaController extends Controller{
             case 2:
                 $request->ventaConsolidadaPorProducto($pdf);
                 break;
+            case 3:
+            case 4:
+                $request->notasDeCreditoList($tipo_reporte);
+                break;
         }
     }
 

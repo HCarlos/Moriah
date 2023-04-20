@@ -30,6 +30,7 @@ class NotaCreditoPrintController extends Controller
     protected $tipo_venta  = "";
     protected $title       = "";
     protected $empresa     = "";
+    protected $subtitulo   = "";
 
 
     public function header($pdf){
@@ -155,6 +156,117 @@ class NotaCreditoPrintController extends Controller
 
         exit;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function header_list_01($pdf){
+        $pdf->AddPage();
+        $pdf->setY(10);
+        $pdf->setX(10);
+        $pdf->SetTextColor(0,0,0);
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode($this->empresa),"",0,"L");
+        $pdf->SetFont('Arial','',7);
+        $pdf->SetFillColor(212,212,212);
+        $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode("Av. México Núm. 2, Col. Del Bosque, Villahermosa, Tabasco. CP 86160"),"",1,"L");
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"L",true);
+        $pdf->ln(5);
+        $pdf->setX(10);
+        $this->alto  = 10;
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(25,$this->alto,"ID",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"FECHA",1,0,"C",true);
+        $pdf->Cell(25,$this->alto,"SUBTOTAL",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"IVA",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"IMPORTE",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"SALDO",1,1,"R",true);
+        $this->alto  = 6;
+        $pdf->setX(10);
+    }
+
+    public function listadoNotaDeCredito($f1,$f2,$Movs,$empresa,$tipo_reporte)
+    {
+        $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
+
+        $Emp               = $empresa;
+        $this->empresa     = trim($empresa->rs);
+
+        $this->status      = "";
+        $this->folio       = "";
+        $suf               = $tipo_reporte == 3 ? "PV" : "PC";
+        $this->subtitulo   = "(" . $suf . ")";
+        $this->title       = "LISTADO DE NOTAS DE CRÉDITO " . $this->subtitulo;
+        $pdf               = new FPDF('P','mm','Letter');
+        $pdf->AliasNbPages();
+        $pdf->SetFillColor(192,192,192);
+        $this->header_list_01($pdf);
+        $this->alto  = 10;
+        $total = 0;
+        $pdf->SetFont('Arial','',8);
+        foreach ($Movs as $nc){
+//            dd($nc);
+            if ($nc->Saldo>0){
+                $lSaldo = number_format($nc->Saldo,2);
+            }else{
+                $lSaldo = "";
+            }
+            $_total = $nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,2);
+            $total  += $_total;
+            $pdf->Cell(25,$this->alto,$nc->id,1,0,"R");
+            $pdf->Cell(25,$this->alto,Carbon::parse($nc->fecha)->format('d-m-Y'),1,0,"C");
+            $pdf->Cell(25,$this->alto,number_format($nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,0),2),1,0,"R");
+            $pdf->Cell(25,$this->alto,number_format($nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,1),2),1,0,"R");
+            $pdf->Cell(25,$this->alto,number_format($_total,2),1,0,"R");
+            $pdf->Cell(25,$this->alto,$lSaldo,1,1,"R");
+            $pdf->setX(10);
+        }
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(100,$this->alto,"TOTAL",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,number_format($total,2),1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"",1,1,"R",true);
+
+        $pdf->Ln();
+        $pdf->Output();
+
+        exit;
+    }
+
 
 
 

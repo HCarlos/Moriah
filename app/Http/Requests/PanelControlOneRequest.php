@@ -4,11 +4,14 @@ namespace App\Http\Requests;
 
 use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Externos\CorteCajaController;
+use App\Http\Controllers\Externos\NotaCreditoPrintController;
 use App\Http\Controllers\Externos\VentaConsolidadaController;
 use App\Http\Controllers\Externos\VentaRealizadaController;
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Http\Controllers\SIIFAC\NotaCreditoController;
 use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\Ingreso;
+use App\Models\SIIFAC\NotaCredito;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
 use Illuminate\Foundation\Http\FormRequest;
@@ -212,6 +215,47 @@ class PanelControlOneRequest extends FormRequest
         $x->imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$empresa);
 
     }
+
+    public function notasDeCreditoList($tipo_reporte){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $F = (new FuncionesController);
+
+        $f1          = $F->fechaDateTimeFormat($this->fecha1);
+        $f2          = $F->fechaDateTimeFormat($this->fecha2,true);
+
+        $vendedor_id = $this->vendedor_id;
+        $metodo_pago = $this->metodo_pago;
+        $tipo_venta  = $this->tipo_venta;
+        $empresa_id  = $this->empresa_id;
+//        dd($this->Empresa_Id);
+        $Movs = NotaCredito::all()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->where('fecha','>=', $f1)
+            ->where('fecha','<=', $f2)
+            ->sortByDesc('id');
+
+//        dd($Movs);
+
+
+        $m = $Movs->first();
+        $f1 = $F->fechaEspanol($this->fecha1);
+        $f2 = $F->fechaEspanol($this->fecha2);
+        $vendedor = 'none';
+        $empresa = 'none';
+        $Emp = Empresa::find($this->Empresa_Id);
+
+        $x = new NotaCreditoPrintController();
+        $x->listadoNotaDeCredito($f1,$f2,$Movs,$Emp,$tipo_reporte);
+
+    }
+
+
+
 
 
 }

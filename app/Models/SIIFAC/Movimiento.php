@@ -203,7 +203,9 @@ class Movimiento extends Model{
 
     }
 
-
+    public function getEstatusAttribute(){
+        return $this->attributes['status'];
+    }
     public static function quitarDesdeNotaCreditoDetalle($NCd)
     {
         $Venta      = Venta::findOrFail($NCd->venta_id);

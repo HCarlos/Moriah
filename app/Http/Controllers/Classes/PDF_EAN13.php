@@ -114,7 +114,8 @@ class PDF_EAN13 extends FPDF
         $this->Cell($w2,8, $titulo,0,0,'C');
         $this->setXY($x,$y+21);
         $this->SetFont('times','b',10);
-        $this->Cell($w2,8,trim($precio),0,0,'C');
+        $this->Cell($w2,8,"",0,0,'C');
+//        $this->Cell($w2,8,trim($precio),0,0,'C');
 
     }
 

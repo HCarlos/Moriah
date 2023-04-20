@@ -2,6 +2,7 @@
 
 namespace App\Models\SIIFAC;
 
+use App\Classes\GeneralFunctions;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,7 @@ class NotaCredito extends Model
     protected $fillable = [
         'user_id', 'clave', 'cuenta','venta_id','fecha',
         'importe', 'isprint', 'status','tipo','empresa_id',
+        'consecutivo',
         'status_nota_credito','idemp','ip','host',
     ];
 
@@ -36,6 +38,10 @@ class NotaCredito extends Model
 
     public function Venta(){
         return $this->belongsTo(Venta::class,'venta_id');
+    }
+
+    public function ventas(){
+        return $this->hasMany(Venta::class,'ventas_id');
     }
 
     public function Ingresos(){
@@ -79,6 +85,66 @@ class NotaCredito extends Model
     public function getSaldoUtilizadoAttribute(){
         return static::getTotalNotaCreditoFromIngresos($this->id);
     }
+
+    public static function totalNotaCreditoPorPrecio($nota_credito_id,$tipo_reporte,$tipo_campo){
+        $vd = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id)->first();
+        $items = Movimiento::all()
+            ->where('venta_detalle_id',$vd->venta_detalle_id)
+            ->where('Estatus',11);
+
+        $subtotal_pv = 0;
+        $iva_pv = 0;
+        $total_pv = 0;
+
+        $subtotal_pc = 0;
+        $iva_pc = 0;
+        $total_pc = 0;
+
+        foreach ($items as $mov){
+            $total_pv += $mov->entrada * $mov->pu; // $mov->importe - $mov->iva;
+            $iva_pv   += $mov->iva;
+            $subtotal_pv += $total_pv - $iva_pv;
+
+            $total__pc = $mov->entrada * $mov->cu;
+            $subtotal__pc = GeneralFunctions::getImporteIVA(1,$total__pc);
+            $iva__pc = $total__pc - $subtotal__pc;
+
+            $subtotal_pc += $subtotal__pc;
+            $iva_pc      += $iva__pc;
+            $total_pc    += $total__pc;
+        }
+
+        if ( $tipo_reporte == 3 ){
+            switch ($tipo_campo){
+                case 0:
+                    return $subtotal_pv;
+                    break;
+                case 1:
+                    return $iva_pv;
+                    break;
+                case 2:
+                    return $total_pv;
+                    break;
+            }
+        }else{
+            switch ($tipo_campo){
+                case 0:
+                    return $subtotal_pc;
+                    break;
+                case 1:
+                    return $iva_pc;
+                    break;
+                case 2:
+                    return $total_pc;
+                    break;
+            }
+        }
+
+        return 0;
+
+    }
+
+
 
 
 
