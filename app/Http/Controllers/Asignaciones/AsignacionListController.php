@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Asignaciones;
 use App\Http\Controllers\Controller;
 use App\Models\SIIFAC\Rfc;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\User;
@@ -53,13 +54,16 @@ class AsignacionListController extends Controller
                 break;
             case 2:
                 $view = 'add_rfc_ajax';
-                $listEle     = Rfc::all()->sortBy('rfc')->pluck('rfc','id');
-                $listTarget  = User::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
+                $listEle     = Rfc::select(DB::raw("CONCAT(id,' - ',rfc) AS rfcs"),'id')->orderBy('rfc')->pluck('rfcs', 'id');
+                $listTarget  = User::all()->sortBy('NombreCompletoCFDI40')->pluck('NombreCompletoCFDI40','id');
+//                $listTarget  = User::select(DB::raw("CONCAT(id,' - ',nombre,' ',ap_paterno,' ',ap_materno) AS nombres"),'id')->orderBy('nombres')->pluck('nombres', 'id');
                 if ($iduser == 0){
                     $iduser = 1;
                 }
                 $users = User::findOrFail($iduser);
                 $this->lstAsigns = $users->rfcs->pluck('rfc','id');
+//                $this->lstAsigns = $users->rfcs->pluck(DB::raw("CONCAT(id,' - ',rfc) AS name"),'id');
+
                 break;
             default:
                 throw new NotFoundHttpException();

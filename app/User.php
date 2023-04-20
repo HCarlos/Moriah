@@ -148,7 +148,11 @@ class User extends Authenticatable
         return "{$this->ap_paterno} {$this->ap_materno} {$this->nombre}";
     }
 
-    public function getFullNameCFDI40Attribute() {
+//    public function getFullNameCFDI40Attribute() {
+//        return "{$this->nombre} {$this->ap_paterno} {$this->ap_materno}";
+//    }
+
+    public function getNombreCompletoCFDI40Attribute() {
         return "{$this->nombre} {$this->ap_paterno} {$this->ap_materno}";
     }
 
