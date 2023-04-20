@@ -58,6 +58,7 @@ class NotaCreditoRequest extends FormRequest
                     'venta_id'         => $this->venta_id,
                     'empresa_id'       => $Ven->empresa_id,
                     'fecha'            => now(),
+                    'consecutivo'      => NotaCredito::getFolio($Ven->empresa_id) + 1,
                     ];
                 //dd($Item);
                 $NC = NotaCredito::create($Item);

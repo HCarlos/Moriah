@@ -90,7 +90,7 @@ class NotaCreditoPrintController extends Controller
         $Ven               = NotaCredito::find($nota_credito_id);
         $VD                = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
-        $this->folio       = $nota_credito_id;
+        $this->folio       = $Ven->consecutivo <= 0 ? $nota_credito_id : $Ven->consecutivo;
 
         $this->cliente_id  = $Ven->user_id;
         $this->cliente     = $Ven->user->FullName;
@@ -207,14 +207,15 @@ class NotaCreditoPrintController extends Controller
         $pdf->ln(5);
         $pdf->setX(10);
         $this->alto  = 10;
-        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFont('Arial','B',8);
         $pdf->SetFillColor(192,192,192);
-        $pdf->Cell(25,$this->alto,"ID",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"ID/FOLIO",1,0,"R",true);
         $pdf->Cell(25,$this->alto,"FECHA",1,0,"C",true);
         $pdf->Cell(25,$this->alto,"SUBTOTAL",1,0,"R",true);
         $pdf->Cell(25,$this->alto,"IVA",1,0,"R",true);
         $pdf->Cell(25,$this->alto,"IMPORTE",1,0,"R",true);
-        $pdf->Cell(25,$this->alto,"SALDO",1,1,"R",true);
+        $pdf->Cell(25,$this->alto,"UTILIZADO",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"PENDIENTE",1,1,"R",true);
         $this->alto  = 6;
         $pdf->setX(10);
     }
@@ -245,20 +246,24 @@ class NotaCreditoPrintController extends Controller
             }else{
                 $lSaldo = "";
             }
+            $lSaldoUtitlizado = number_format($nc->SaldoUtilizado,2);
             $_total = $nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,2);
             $total  += $_total;
-            $pdf->Cell(25,$this->alto,$nc->id,1,0,"R");
+            $folio = $nc->consecutivo <= 0 ? $nc->id : $nc->consecutivo;
+            $pdf->Cell(25,$this->alto,$folio,1,0,"R");
             $pdf->Cell(25,$this->alto,Carbon::parse($nc->fecha)->format('d-m-Y'),1,0,"C");
             $pdf->Cell(25,$this->alto,number_format($nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,0),2),1,0,"R");
             $pdf->Cell(25,$this->alto,number_format($nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,1),2),1,0,"R");
             $pdf->Cell(25,$this->alto,number_format($_total,2),1,0,"R");
+            $pdf->Cell(25,$this->alto,$lSaldoUtitlizado,1,0,"R");
             $pdf->Cell(25,$this->alto,$lSaldo,1,1,"R");
             $pdf->setX(10);
         }
-        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFont('Arial','B',8);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(100,$this->alto,"TOTAL",1,0,"R",true);
         $pdf->Cell(25,$this->alto,number_format($total,2),1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"",1,0,"R",true);
         $pdf->Cell(25,$this->alto,"",1,1,"R",true);
 
         $pdf->Ln();
