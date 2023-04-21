@@ -35,7 +35,9 @@ class Venta extends Model
     ];
 
     protected $casts = ['isimp'=>'boolean','ispagado'=>'boolean','iscredito'=>'boolean','iscontado'=>'boolean',];
-
+    public function getFechaImpresaAttribute() {
+        return  (new Carbon($this->attributes['fecha']))->format('d-m-Y H-i-s');
+    }
     public static $metodos_pago =
         [
             0 => "Efectivo", 1 => "Cheque Nominativo", 2 => "Transferencia Electrónica de Fondos",

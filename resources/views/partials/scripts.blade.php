@@ -4,6 +4,7 @@
 <script type="text/javascript">
     if('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('/js/jquery.mobile.custom.js') }}'>"+"<"+"/script>");
 </script>
+
 <script src="{{ asset('/js/bootstrap.js') }}"></script>
 <script src="{{ asset('/js/ace/ace.js') }}"></script>
 <script src="{{ asset('/js/ace/ace.ajax-content.js') }}"></script>
@@ -11,6 +12,7 @@
 <script src="{{ asset('/js/ace/ace.sidebar.js') }}"></script>
 <script src="{{ asset('/js/ace/ace.sidebar-scroll-1.js') }}"></script>
 <script src="{{ asset('/js/ace/ace.submenu-hover.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"> </script>
 <script src="{{ asset('js/vue.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('scripts')

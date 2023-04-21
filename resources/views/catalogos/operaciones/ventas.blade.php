@@ -114,7 +114,7 @@
                         @foreach ($ventas as $venta)
                             <tr class="{{$venta->isPagado() ? 'dark' : 'red'}}">
                                 <td>{{ $venta->id }}</td>
-                                <td>{{ $venta->fecha }}</td>
+                                <td>{{ $venta->FechaImpresa }}</td>
                                 <td>{{ $venta->user->FullName }}</td>
                                 @if($venta->paquete_id > 0)
                                     <td>{{ $venta->paquete->FullDescription }}</td>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('/css/ace.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
     <link rel="stylesheet" href="{{ asset('/css/ace-ie.css') }}" />
     {{--<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">--}}
+    <link href="{{ asset('assets/css/jquery.dataTables.css') }}" rel="stylesheet">
     @yield('styles')
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/tecnointel.css') }}" />

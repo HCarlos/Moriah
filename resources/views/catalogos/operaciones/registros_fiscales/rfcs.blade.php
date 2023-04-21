@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main-content')
-    <div class="panel panel-moriah" id="catalogosList0">
+    <div class="panel panel-moriah" id="catalogosList100">
         <div class="panel-heading">
                         <span id="titulo_catalogo">
                             <i class="fa fa-user default"></i>
@@ -19,7 +19,7 @@
             </div>
             <div class="dataTables_wrapper" role="grid">
                 @if ($rfcs)
-                    <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable hide" >
+                    <table id="{{ $tableName}}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable " >
                         <thead>
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
@@ -37,13 +37,13 @@
                                 <td>{{ $rfc->razon_social_cfdi_40 }}</td>
                                 <td>{{ $rfc->Regimen_Fiscal->regimen_fiscal ?? 'Null' }}</td>
                                 <td >
-                                    <div class="visible-desktop action-buttons">
+                                    <div class="">
 
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
                                             <a href="#" class="btn btn-link pull-right btnAction2" id ="RFC-{{$rfc->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-110 red" ></i>
                                             </a>
-                                            <a  id="/form_rfc_editar_ajax/{{$rfc->id}}"  class="btn btn-link pull-right btnRFCEditar" title="Editar" data-toggle="modal" data-target="#myModal">
+                                            <a href="#" id="/form_rfc_editar_ajax/{{$rfc->id}}"  class="btn btn-link pull-right btnRFCEditar" title="Editar" data-toggle="modal" data-target="#myModal">
                                                 <i class="fa fa-pencil bigger-110 success"></i>
                                             </a>
                                         @endif
@@ -64,6 +64,7 @@
 
 @endsection
 
+@include('catalogos.scripts.rfcs')
+
 @include('catalogos.scripts.dataTable')
 
-@include('catalogos.scripts.rfcs')

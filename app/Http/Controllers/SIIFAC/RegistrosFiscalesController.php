@@ -48,7 +48,7 @@ class RegistrosFiscalesController extends Controller{
 
         return view ('catalogos.operaciones.registros_fiscales.rfcs',
             [
-                'tableName' => 'compras',
+                'tableName' => 'registrosFiscalesTable',
                 'rfcs' => $items,
                 'user' => $user,
             ]

@@ -25,7 +25,7 @@
             var arrColGroup1 = [10, 25, 50, -1];
             var arrColGroup2 = [10, 25, 50, "Todos"];
 
-            if (nombreTabla === "paquete_detalles"){
+            if (nombreTabla == "paquete_detalles" || nombreTabla == "registrosFiscalesTable"){
                 arrColGroup1 = [-1, 10, 25, 50];
                 arrColGroup2 = ["Todos", 10, 25, 50];
             }
