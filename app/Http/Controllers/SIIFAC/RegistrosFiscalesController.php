@@ -97,7 +97,7 @@ class RegistrosFiscalesController extends Controller{
         $data["pais"]                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
         $data["cp"]                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
         $data["emails"]               = $data["emails"]               ===  null ? '' : trim($data["emails"]);
-        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"]    ===  null ? 1 : (int) $data["regimen_fiscal_id"];
+        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"]    ==  null ? 1 : $data["regimen_fiscal_id"];
         $data['observaciones']        = "";
 
         $data['idemp']      = $this->Empresa_Id;
@@ -162,7 +162,7 @@ class RegistrosFiscalesController extends Controller{
             $rfc->pais                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
             $rfc->cp                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
             $rfc->emails               = $data["emails"]               ===  null ? '' : trim($data["emails"]);
-            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"]    ===  null ? 1 : (int) $data["regimen_fiscal_id"];
+            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"]    ==  null ? 1 : $data["regimen_fiscal_id"];
 
             $rfc->save();
 
