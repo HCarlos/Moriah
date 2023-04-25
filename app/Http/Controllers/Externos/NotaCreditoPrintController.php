@@ -17,6 +17,7 @@ class NotaCreditoPrintController extends Controller
 {
 
     protected $alto        = 6;
+    protected $IdNC        = 6;
     protected $aFT         = 205;
     protected $timex       = "";
     protected $foli0       = "";
@@ -57,7 +58,12 @@ class NotaCreditoPrintController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"C",true);
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",0,"C",true);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(15,$this->alto,"ID: ","",0,"R");
+        $pdf->SetFont('Arial','',8);
+        $pdf->SetFillColor(240,240,240);
+        $pdf->Cell(10,$this->alto,$this->IdNC,"",1,"R");
         $pdf->Ln(5);
         $pdf->Line(32,11,32,29);
         $pdf->Line(32.5,11,32.5,29);
@@ -91,7 +97,7 @@ class NotaCreditoPrintController extends Controller
         $VD                = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $this->folio       = $Ven->consecutivo <= 0 ? $nota_credito_id : $Ven->consecutivo;
-
+        $this->IdNC        = $Ven->id;
         $this->cliente_id  = $Ven->user_id;
         $this->cliente     = $Ven->user->FullName;
         $Emp               = Empresa::find($Ven->empresa_id);

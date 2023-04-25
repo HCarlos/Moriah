@@ -189,6 +189,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/form_compra_detalle_nueva_ajax/{compra_id}', 'SIIFAC\CompraDetalleController@new_compra_detalle_ajax')->name('selectCompraDetalleNewAjax/');
     Route::post('/store_compra_detalle_ajax','SIIFAC\CompraDetalleController@store_compra_detalle_ajax')->name('compraDetalleAjax/');
     Route::get('/destroy_compra_detalle/{id}', 'SIIFAC\CompraDetalleController@destroy')->name('compraDetalleDestroy/');
+    Route::get('/form_compra_detalle_edit_ajax/{movimiento_id}', 'SIIFAC\CompraDetalleController@edit_compra_detalle_ajax')->name('selectCompraDetalleEditAjax/');
+    Route::post('/editar_compra_detalle_ajax','SIIFAC\CompraDetalleController@update_compra_detalle_ajax')->name('compraEditDetalleAjax/');
 
     // Notas de Crédito
     Route::get('/index_notacredito/{fecha}','SIIFAC\NotaCreditoController@index')->name('notacreditosIndex');

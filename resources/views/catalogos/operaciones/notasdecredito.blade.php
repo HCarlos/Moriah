@@ -101,7 +101,7 @@
                                     {{$totalVentas}}
                                 </h3>
                             </td>
-                            <td></td>
+                            <td colspan="3" class="text-right"></td>
                         </tr>
                         </tfoot>
 

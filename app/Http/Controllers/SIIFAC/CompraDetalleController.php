@@ -67,6 +67,8 @@ class CompraDetalleController extends Controller
         }
     }
 
+
+
     public function new_compra_detalle_ajax($compra_id)
     {
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
@@ -114,6 +116,84 @@ class CompraDetalleController extends Controller
         }
         return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
     }
+
+
+
+
+
+
+    public function edit_compra_detalle_ajax($movimiento_id)
+    {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $views       = 'editar_producto_a_compra_ajax';
+        $user        = Auth::User();
+        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Productos   = Producto::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'codigo');
+        $oView = 'catalogos.operaciones.compras.';
+        $item = Movimiento::find($movimiento_id);
+//        dd($item);
+        return view ($oView.$views,
+            [
+                'user'                   => $user,
+                'Almacenes'              => $Almacenes,
+                'Proveedores'            => $Proveedores,
+                'Productos'              => $Productos,
+                'item'                   => $item,
+                'empresa_id'             => $this->Empresa_Id,
+                'Url'                    => '/editar_compra_detalle_ajax',
+            ]
+        );
+    }
+
+    public function update_compra_detalle_ajax(Request $request){
+        $data = $request->all();
+
+        $movimiento_id = $data['movimiento_id'];
+        $codigo        = $data['codigo'];
+        $pu            = $data['pu'];
+        $cu            = $data['cu'];
+        $entrada       = $data['entrada'];
+        $producto_id   = $data['producto_id'];
+        $proveedor_id  = $data['proveedor_id'];
+        $almacen_id    = $data['almacen_id'];
+
+        $almacen_anterior_id   = $data['almacen_anterior_id'];
+        $producto_anterior_id  = $data['producto_anterior_id'];
+        $proveedor_anterior_id = $data['proveedor_anterior_id'];
+        $medida_anterior_id    = $data['medida_anterior_id'];
+        $empresa_id            = $data['empresa_id'];
+        $compra_id             = $data['compra_id'];
+
+        $Mov  = Movimiento::find($movimiento_id);
+        $P = Producto::query()->where('codigo',$producto_id)->first();
+        $Prod = Producto::find($P->id);
+
+        $user         = Auth::user();
+        if ($Prod !== null){
+            try {
+                $mensaje = "OK";
+                $producto_id = $Prod->id;
+                Producto::ActualizaDatosDesdeComprasDetalles($Mov,$Prod,$almacen_id,$proveedor_id,$compra_id,$pu,$cu,$entrada,$almacen_anterior_id,$producto_anterior_id,$proveedor_anterior_id,$medida_anterior_id);
+            }
+            catch(QueryException $e){
+                $mensaje = "Error: ".$e->getMessage();
+            }
+        }else{
+            $mensaje = "Error: PRODUCTO NO ENCONTRADO";
+        }
+        return Response::json(['mensaje' => $mensaje, 'data' => 'OK', 'status' => '200'], 200);
+    }
+
+
+
+
+
+
 
     public function destroy($id=0){
 

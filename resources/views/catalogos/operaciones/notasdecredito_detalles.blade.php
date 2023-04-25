@@ -17,7 +17,7 @@
                         @method('PUT')
                         <div class="form-group" >
                             <div class="input-group col-xs-7">
-                                <div class="input-group-addon font_Roboto_500">Folio de Venta</div>
+                                <div class="input-group-addon font_Roboto_500">ID de Venta</div>
                                 <input type="number" name="venta_id" id="venta_id" value="{{$venta_id}}" class="form-control" required autofocus/>
                             </div>
                             <div class="input-group col-xs-1">
@@ -65,7 +65,7 @@
                                         <td class="text-right">{{$vd->total}}</td>
                                         @if($vd->cantidad>$vd->cantidad_devuelta)
                                             <td>
-                                                <input type='number' name="vd_id[{{$vd->id.'_'.$vd->venta_id.'_'.$vd->producto_id.'_'.$vd->user_id.'_'.$vd->clave.'_'.$vd->cuenta.'_'.$vd->folio.'_'.$vd->empresa_id.'_'.$vd->codigo}}]" value='0' min='0' max='{{$vd->cantidad - $vd->cantidad_devuelta}}' class='form-control col-xs-2' />
+                                                <input type='number' name="vd_id[{{$vd->id.'_'.$vd->venta_id.'_'.$vd->producto_id.'_'.$vd->user_id.'_'.$vd->clave.'_'.$vd->cuenta.'_'.$vd->folio.'_'.$vd->empresa_id.'_'.$vd->codigo}}]" value='0' min='0' max='{{$vd->cantidad - $vd->cantidad_devuelta}}' class='form-control col-xs-2' step=".01" />
                                             </td>
                                         @else
                                             <td class="text-right">{{$vd->cantidad - $vd->cantidad_devuelta}}</td>

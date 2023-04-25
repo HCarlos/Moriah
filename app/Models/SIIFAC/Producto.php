@@ -3,11 +3,14 @@
 namespace App\Models\SIIFAC;
 
 use App\Classes\GeneralFunctions;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Funciones\FuncionesController;
+use Request;
 
 class Producto extends Model
 {
@@ -167,11 +170,6 @@ class Producto extends Model
     public static function ActualizaPaqueteDetalles($id){
         $prod = static::select('pv')->where('id',$id)->first();
         $pqdts = PaqueteDetalle::all()->where('producto_id',$id);
-        // foreach ($pqdts as $pd){
-        //     $pd->pv = $prod->pv;
-        //     $pd->save();
-        //     Paquete::UpdateImporteFromPaqueteDetalle($pd->paquete_id);
-        // }
         Paquete::UpdateImporteFromPaqueteDetalle($pqdts);
 
     }
@@ -205,5 +203,75 @@ class Producto extends Model
         return $Mov;
 
     }
+
+    public static function ActualizaDatosDesdeComprasDetalles($Mov,$Prod,$almacen_id,$proveedor_id,$compra_id,$pu,$cu,$entrada,$almacen_anterior_id,$producto_anterior_id,$proveedor_anterior_id, $medida_anterior_id){
+        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        $existencia   = $Prod->exist + $entrada;
+        $saldo        = $Prod->saldo + ($cu * $entrada);
+
+        $Prod->almacen_id   = $almacen_id;
+        $Prod->proveedor_id = $proveedor_id;
+        $Prod->empresa_id   = $Empresa_Id;
+        $Prod->idemp        = $Empresa_Id;
+        $Prod->pv           = $pu;
+        $Prod->cu           = $cu;
+        $Prod->exist        = $existencia;
+        $Prod->saldo        = $saldo;
+
+        $Prod->save();
+
+        $Fecha      = Carbon::now();
+        $user       = Auth::user();
+        $cantidad   = $entrada;
+        $existencia = $Prod->exist;
+        $saldo      = $cu * $cantidad;
+
+        $iva   = GeneralFunctions::getImporteIVA($Prod->tieneIVA(),$saldo);
+        $total = $saldo;
+
+        $Mov->update([
+            'producto_id'      => $Prod->id,
+            'empresa_id'       => $Empresa_Id,
+            'proveedor_id'     => $proveedor_id,
+            'almacen_id'       => $almacen_id,
+            'ejercicio'        => $Fecha->year,
+            'periodo'          => $Fecha->month,
+            'fecha'            => $Fecha,
+            'entrada'          => $entrada,
+            'existencia'       => $existencia,
+            'cu'               => $cu,
+            'pu'               => $pu,
+            'debe'             => $saldo,
+            'descto'           => 0,
+            'importe'          => $saldo,
+            'iva'              => $iva,
+            'saldo'            => $total,
+            'status'           => 1,
+            'idemp'            => $Empresa_Id,
+            'ip'               => Request::ip(),
+            'host'             => Request::getHttpHost(),
+        ]);
+
+        $Comp = Compra::find($compra_id);
+        $Suma = $Mov->where('compra_id',$compra_id)->sum('saldo');
+        $Comp->total = $Suma;
+        $Comp->save();
+
+        $Mov->productos()->detach($producto_anterior_id);
+        $Mov->proveedores()->detach($proveedor_anterior_id);
+        $Mov->almacenes()->detach($almacen_anterior_id);
+        $Mov->medidas()->detach($medida_anterior_id);
+
+        $Mov->productos()->attach($Prod->id);
+        $Mov->proveedores()->attach($proveedor_id);
+        $Mov->almacenes()->attach($almacen_id);
+        $Mov->medidas()->attach($Prod->medida_id);
+
+        return $Mov;
+
+    }
+
+
 
 }
