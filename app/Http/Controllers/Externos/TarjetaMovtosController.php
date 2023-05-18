@@ -17,6 +17,7 @@ class TarjetaMovtosController extends Controller
     protected $aFT           = 205;
     protected $timex         = "";
     protected $producto_name = "";
+    protected $producto_id   = 0;
     protected $empresa       = "";
 
     public function header($pdf,$Opt){
@@ -50,7 +51,7 @@ class TarjetaMovtosController extends Controller
         $pdf->setX(10);
         $pdf->Ln(5);
         $pdf->SetFont('Arial','B',14);
-        $pdf->Cell(195,$this->alto,utf8_decode($this->producto_name),"",0,"C",true);
+        $pdf->Cell(195,$this->alto,'('.$this->producto_id.') '.utf8_decode($this->producto_name),"",0,"C",true);
         $pdf->Ln(5);
         $pdf->Line(32,11,32,29);
         $pdf->Line(32.5,11,32.5,29);
@@ -62,10 +63,11 @@ class TarjetaMovtosController extends Controller
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(10,$this->alto,"ID",1,0,"C",true);
         $pdf->Cell(20,$this->alto,"FECHA",1,0,"L",true);
-        $pdf->Cell(20,$this->alto,"ENTRADA",1,0,"R",true);
-        $pdf->Cell(20,$this->alto,"SALIDA",1,0,"R",true);
-        $pdf->Cell(20,$this->alto,"EXIST.",1,0,"R",true);
-        $pdf->Cell(20,$this->alto,$Opt==0 ? "PU" : "CU",1,0,"R",true);
+        $pdf->Cell(15,$this->alto,"ENTRADA",1,0,"R",true);
+        $pdf->Cell(15,$this->alto,"SALIDA",1,0,"R",true);
+        $pdf->Cell(15,$this->alto,"EXIST.",1,0,"R",true);
+        $pdf->Cell(15,$this->alto,$Opt==0 ? "P. VENTA" : "P. COSTO",1,0,"R",true);
+        $pdf->Cell(20,$this->alto,"PROM",1,0,"R",true);
         $pdf->Cell(20,$this->alto,"DEBE",1,0,"R",true);
         $pdf->Cell(20,$this->alto,"HABER",1,0,"R",true);
         $pdf->Cell(20,$this->alto,"SALDO",1,0,"R",true);
@@ -77,13 +79,15 @@ class TarjetaMovtosController extends Controller
     public function imprimir_tarjeta_movtos($producto_id,$opt)
     {
         $Prod                = Producto::find($producto_id);
-        $Movs                = Movimiento::all()->where('producto_id',$producto_id)->sortBy('id');
+        $Movs                = Movimiento::query()->where('producto_id',$producto_id)->orderBy('id')->get();
+        //dd($Movs);
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
         $Emp                 = Empresa::find($Prod->empresa_id);
         $this->empresa       = $Emp->rs;
 
         $pdf                 = new PDF_EAN13('P','mm','Letter');
         $this->producto_name = $Prod->descripcion;
+        $this->producto_id   = $Prod->id;
 
         $pdf->AliasNbPages();
         $pdf->SetFillColor(192,192,192);
@@ -101,11 +105,13 @@ class TarjetaMovtosController extends Controller
             $salida     = $mv->salida==0?'':number_format($mv->salida,2,'.',',');
             $existencia = $mv->existencia==0?'':number_format($mv->existencia,2,'.',',');
             if ($opt==0){
+                $cp         = '';
                 $pu         = $mv->pu==0?'':number_format($mv->pu,2,'.',',');
                 $debe       = $mv->debe==0?'':number_format($mv->debe,2,'.',',');
                 $haber      = $mv->haber==0?'':number_format($mv->haber,2,'.',',');
                 $saldo      = $mv->saldo==0?'':number_format($mv->saldo,2,'.',',');
             }else{
+                $cp         = $mv->costo_promedio==0?'':number_format($mv->costo_promedio,2,'.',',');
                 $pu         = $mv->cu==0?'':number_format($mv->cu,2,'.',',');
                 $debe       = $mv->debe_costeo==0?'':number_format($mv->debe_costeo,2,'.',',');
                 $haber      = $mv->haber_costeo==0?'':number_format($mv->haber_costeo,2,'.',',');
@@ -114,14 +120,15 @@ class TarjetaMovtosController extends Controller
             $status     = $mv->Status;
             $pdf->Cell(10,$this->alto,$mv->id,1,0,"C");
             $pdf->Cell(20,$this->alto,$fecha->format('d-m-Y'),1,0,"L");
-            $pdf->Cell(20,$this->alto,$entrada,1,0,"R");
-            $pdf->Cell(20,$this->alto,$salida,1,0,"R");
+            $pdf->Cell(15,$this->alto,$entrada,1,0,"R");
+            $pdf->Cell(15,$this->alto,$salida,1,0,"R");
             if ($i == $Movs->count() ) {
                 $pdf->SetFont('Arial','B',10);
             }
-            $pdf->Cell(20,$this->alto,$existencia,1,0,"R");
+            $pdf->Cell(15,$this->alto,$existencia,1,0,"R");
             $pdf->SetFont('Arial','',8);
-            $pdf->Cell(20,$this->alto,$pu,1,0,"R");
+            $pdf->Cell(15,$this->alto,$pu,1,0,"R");
+            $pdf->Cell(20,$this->alto,$cp,1,0,"R");
             $pdf->Cell(20,$this->alto,$debe,1,0,"R");
             $pdf->Cell(20,$this->alto,$haber,1,0,"R");
             if ($i == $Movs->count() ) {
@@ -145,10 +152,7 @@ class TarjetaMovtosController extends Controller
         $pdf->EAN13(10,$pdf->getY()+10,$Prod->codigo,16,.35,$Prod->shortdesc,$Prod->pv);
 
         $pdf->Ln();
-
-
-
-        $pdf->Output();
+        $pdf->Output('D','tarjeta-almacen-venta-'.$Emp->id.'-'.$producto_id.'.pdf');
         exit;
 
     }
@@ -219,9 +223,8 @@ class TarjetaMovtosController extends Controller
 
         $pdf->Ln();
 
+        $pdf->Output('D','tarjeta-almacen-costeo-'.$Emp->id.'-'.$producto_id.'.pdf');
 
-
-        $pdf->Output();
         exit;
 
     }

@@ -75,7 +75,7 @@
                 <div class="col-md-2">
                     <input type="text" name="minimo" id="minimo" value="{{ old('minimo') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" />
                 </div>
-                <label for = "cu" class="col-md-1 col-form-label text-md-left">P. Costo</label>
+                <label for = "cu" class="col-md-1 col-form-label text-md-left">Costo Promedio</label>
                 <div class="col-md-2">
                     <input type="text" name="cu" id="cu" value="{{ old('cu') }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
                 </div>

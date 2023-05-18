@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Auth;
 class VentaConsolidadaController extends Controller{
 
     protected $alto     = 6;
-    protected $aFT      = 205;
-    protected $timex    = "";
-    protected $f1       = "";
-    protected $f2       = "";
-    protected $empresa  = "";
+    protected $aFT        = 205;
+    protected $timex      = "";
+    protected $f1         = "";
+    protected $f2         = "";
+    protected $empresa    = "";
+    protected $empresa_id = 0;
     protected $F;
 
     public function __construct(){
@@ -83,12 +84,13 @@ class VentaConsolidadaController extends Controller{
         $pdf->setX(10);
     }
 
-    public function imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$empresa)
+    public function imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$Emp)
     {
         $this->f1 = $f1;
         $this->f2 = $f2;
-        $this->empresa = $empresa;
-        $this->timex = Carbon::now()->format('d-m-Y h:m:s a');
+        $this->empresa = $Emp->empresa;
+        $this->empresa_id = $Emp->id;
+        $this->timex = Carbon::now()->format('d-m-Y::h:m:s::a');
 
         $pdf->AliasNbPages();
         $this->header($pdf);
@@ -119,7 +121,8 @@ class VentaConsolidadaController extends Controller{
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(180, $this->alto, "VENTA TOTAL $", "LRB", 0,"R");
         $pdf->Cell(20, $this->alto, number_format($total,2), "LRB", 1,"R");
-        $pdf->Output();
+//        $pdf->Output();
+        $pdf->Output('D','venta-consolidada-producto-'.$this->empresa_id.'-'.$this->timex.'.pdf');
     }
 
 

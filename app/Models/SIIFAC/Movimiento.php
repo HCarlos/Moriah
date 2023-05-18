@@ -26,7 +26,7 @@ class Movimiento extends Model{
         'user_id', 'cliente_id', 'venta_id', 'venta_detalle_id', 'compra_id', 'producto_id','paquete_id', 'pedido_id', 'proveedor_id', 'almacen_id', 'medida_id',
         'folio', 'clave', 'codigo', 'ejercicio', 'periodo', 'fecha', 'foliofac', 'nota', 'entrada',
         'salida', 'exlocal', 'existencia', 'pu', 'cu', 'debe', 'haber', 'descto', 'importe', 'iva', 'sllocal', 'saldo',
-        'debe_costeo','haber_costeo','f',
+        'debe_costeo','haber_costeo','saldo_costeo','costo_promedio',
         'tipo', 'status', 'tipoinv','empresa_id',
         'status_movimiento', 'idemp', 'ip', 'host',
     ];
@@ -555,19 +555,33 @@ class Movimiento extends Model{
                 ->where('producto_id',$Prod->id)
                 ->orderBy('id','asc')
                 ->get();
-//                ->where('status','>',0)
-
-                //                $exist = floatval($MovInit->existencia);
-//                $saldo = floatval($MovInit->saldo);
                 $exist = 0;
                 $saldo = 0;
                 $lcSaldoCosteo = 0;
+                $costo_promedio = 0;
+                $costo_anterior = 0;
                 foreach ($Movs as $mov){
-                    $lcDebe = $mov->entrada * $mov->cu;
-                    $lcHaber = $mov->salida * $mov->cu;
-                    $lcsllocal0 = $lcDebe - $lcHaber;
-//                    $lcsllocal = $lcsllocal + $lcsllocal0;
+                    if ($costo_promedio == 0) {
+                        $costo_promedio = $mov->cu;
+                        $costo_anterior = $mov->cu;
+                    }else{
+                        if ($mov->entrada > 0){
+                            if ($costo_anterior != $mov->cu){
+                                $costo_promedio = ($costo_promedio + $mov->cu) / 2;
+                                $costo_anterior = $mov->cu;
+                            }
+                        }
+//                        $costo_anterior = $mov->cu;
+                    }
 
+                    $mov->costo_promedio = $costo_promedio;
+                    $lcDebe = $mov->entrada * $costo_promedio;
+                    $lcHaber = $mov->salida * $costo_promedio;
+                    $lcsllocal0 = $lcDebe - $lcHaber;
+
+
+                    $mov->debe = $mov->pu * $mov->entrada;
+                    $mov->haber = $mov->pu * $mov->salida;
                     $exist0 = $mov->entrada - $mov->salida;
                     $saldo0 = $mov->debe - $mov->haber;
                     $mov->existencia   = $exist + $exist0;
@@ -576,14 +590,12 @@ class Movimiento extends Model{
                     $mov->debe_costeo  = $lcDebe;
                     $mov->haber_costeo = $lcHaber;
                     $mov->saldo_costeo = $lcSaldoCosteo + $lcsllocal0;
-//                    $mov->saldo_costeo = $lcDebe > 0 ? $lcDebe : $lcHaber;
-//                    $mov->saldo_costeo = $lcsllocal0;
-//                    $mov->saldo_costeo = $lcsllocal + $lcsllocal0;
                     $mov->save();
                     $exist           += $exist0;
                     $saldo           += $saldo0;
                     $lcSaldoCosteo   += $lcsllocal0;
                 }
+                $Prod->cu = $costo_promedio;
                 $Prod->exist = $exist;
                 $Prod->saldo = $saldo;
                 $Prod->saldo_costeo = $lcSaldoCosteo;

@@ -91,9 +91,9 @@
                         <div class="col-md-2">
                             <input type="text" name="minimo" id="minimo" value="{{ old('minimo',$items->minimo) }}" pattern="[0-9]{1,8}([.][0-9]{0,2})?" class="form-control" />
                         </div>
-                        <label for = "cu" class="col-md-1 col-form-label text-md-left">P. Costo</label>
+                        <label for = "cu" class="col-md-1 col-form-label text-md-left">Costo Promedio</label>
                         <div class="col-md-2">
-                            <input type="text" name="cu" id="cu" value="{{ old('cu',$items->cu) }}" class="form-control" pattern="[0-9]{1,8}([.][0-9]{0,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal"/>
+                            <input type="text" name="cu" id="cu" value="{{ old('cu',$items->cu) }}" class="form-control" pattern="[0-9]{1,8}([.][0-9]{0,2})?" placeholder="99,999.99" required onchange="setTwoNumberDecimal" readonly/>
                         </div>
                         <label for = "status_producto" class="col-md-1 col-form-label text-md-left">Estatus</label>
                         <div class="col-md-2">
@@ -105,7 +105,7 @@
                     <div class="form-group row">
                         <label for = "exist" class="col-md-1 col-form-label text-md-left">Exist.</label>
                         <div class="col-md-2">
-                            <input type="text" name="exist" id="exist" value="{{ old('exist',$items->exist) }}" class="form-control" pattern="[0-9]{1,8}([.][0-9]{0,2})?" placeholder="99,999.99" required/>
+                            <input type="text" name="exist" id="exist" value="{{ old('exist',$items->exist) }}" class="form-control" pattern="[0-9]{1,8}([.][0-9]{0,2})?" placeholder="99,999.99" required readonly/>
                         </div>
 
                         <label for = "saldo" class="col-md-1 col-form-label text-md-left">Saldo.</label>

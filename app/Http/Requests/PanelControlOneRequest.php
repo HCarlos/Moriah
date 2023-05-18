@@ -168,7 +168,7 @@ class PanelControlOneRequest extends FormRequest
         }
 
         $x = new VentaRealizadaController();
-        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa);
+        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m);
 
     }
 
@@ -209,7 +209,7 @@ class PanelControlOneRequest extends FormRequest
         }
 
         $x = new VentaConsolidadaController();
-        $x->imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$empresa);
+        $x->imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$Emp);
 
     }
 

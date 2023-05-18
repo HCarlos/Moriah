@@ -17,10 +17,10 @@ class NotaCreditoPrintController extends Controller
 {
 
     protected $alto        = 6;
-    protected $IdNC        = 6;
+    protected $IdNC        = 0;
     protected $aFT         = 205;
     protected $timex       = "";
-    protected $foli0       = "";
+    protected $folio       = "";
     protected $cliente_id  = 0;
     protected $vendedor_id = 0;
     protected $cliente     = "";
@@ -31,6 +31,7 @@ class NotaCreditoPrintController extends Controller
     protected $tipo_venta  = "";
     protected $title       = "";
     protected $empresa     = "";
+    protected $empresa_id  = 0;
     protected $subtitulo   = "";
 
 
@@ -102,6 +103,7 @@ class NotaCreditoPrintController extends Controller
         $this->cliente     = $Ven->user->FullName;
         $Emp               = Empresa::find($Ven->empresa_id);
         $this->empresa     = $Emp->rs;
+        $this->empresa_id  = $Emp->id;
 
         $this->status      = "";
         $this->metodo_pago = strtoupper($Ven->MetodoPago);
@@ -158,7 +160,8 @@ class NotaCreditoPrintController extends Controller
         $pdf->setX(10);
 
         $pdf->Ln();
-        $pdf->Output();
+//        $pdf->Output();
+        $pdf->Output('D','nota-credito-'.$this->empresa_id.'-'.$this->IdNC.'-'.$this->folio.'.pdf');
 
         exit;
     }
@@ -228,10 +231,11 @@ class NotaCreditoPrintController extends Controller
 
     public function listadoNotaDeCredito($f1,$f2,$Movs,$empresa,$tipo_reporte)
     {
-        $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
+        $this->timex       = Carbon::now()->format('d-m-Y_H:i:s');
 
         $Emp               = $empresa;
         $this->empresa     = trim($empresa->rs);
+        $this->empresa_id  = $Emp->id;
 
         $this->status      = "";
         $this->folio       = "";
@@ -273,7 +277,8 @@ class NotaCreditoPrintController extends Controller
         $pdf->Cell(25,$this->alto,"",1,1,"R",true);
 
         $pdf->Ln();
-        $pdf->Output();
+//        $pdf->Output();
+        $pdf->Output('D','listado-notas-credito-'.$this->empresa_id.'-'.$this->timex.'.pdf');
 
         exit;
     }

@@ -86,13 +86,12 @@ class CorteCajaController extends Controller{
         $pdf->setX(10);
     }
 
-    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa)
-    {
+    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa){
         $this->f1 = $f1;
         $this->f2 = $f2;
         $this->vendedor = $vendedor;
         $this->empresa = $empresa;
-        $this->timex = Carbon::now()->format('d-m-Y h:m:s a');
+        $this->timex     = Carbon::now()->format('d-m-Y_h:m:s_a');
 
         $pdf->AliasNbPages();
         $this->header($pdf);
@@ -143,7 +142,7 @@ class CorteCajaController extends Controller{
             $pdf->SetFont('Arial','BI',10);
             $pdf->Cell(196, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
         }
-        $pdf->Output();
+        $pdf->Output('D','corte-caja-'.$this->Empresa_Id.'-'.$this->timex.'.pdf');
     }
 
     protected function show_panel_consulta_1(){

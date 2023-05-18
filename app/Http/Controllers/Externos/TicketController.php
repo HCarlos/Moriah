@@ -17,7 +17,6 @@ class TicketController extends Controller
     protected $alto        = 6;
     protected $aFT         = 205;
     protected $timex       = "";
-    protected $foli0       = "";
     protected $cliente_id  = 0;
     protected $vendedor_id = 0;
     protected $cliente     = "";
@@ -28,6 +27,12 @@ class TicketController extends Controller
     protected $tipo_venta  = "";
     protected $title       = "";
     protected $empresa     = "";
+    protected $venta_id    = 0;
+    protected $empresa_id  = 0;
+    /**
+     * @var int
+     */
+    private $folio;
 
 
     public function header($pdf){
@@ -54,7 +59,13 @@ class TicketController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"C",true);
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",0,"C",true);
+        $pdf->Cell(5,$this->alto,"","",0,"C",false);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(10,$this->alto,"ID: ","",0,"R");
+        $pdf->SetFont('Arial','',8);
+        $pdf->SetFillColor(240,240,240);
+        $pdf->Cell(10,$this->alto,$this->venta_id,"",1,"R");
         $pdf->Ln(5);
         $pdf->Line(32,11,32,29);
         $pdf->Line(32.5,11,32.5,29);
@@ -104,7 +115,7 @@ class TicketController extends Controller
         }else{
             $VD            = VentaDetalle::all()->where('venta_id',$venta_id);
         }
-
+        $this->venta_id    = $venta_id;
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $this->folio       = Venta::getFolioImpreso($Ven->empresa_id, $venta_id);
         $this->cliente_id  = $Ven->user->id;
@@ -116,8 +127,9 @@ class TicketController extends Controller
         $this->referencia  = $Ven->referencia;
         $this->tipo_venta  = strtoupper($Ven->TipoVenta);
         $this->title       = "NOTA DE REMISIÓN";
-        $Emp                 = Empresa::find($Ven->empresa_id);
-        $this->empresa       = $Emp->rs;
+        $Emp               = Empresa::find($Ven->empresa_id);
+        $this->empresa     = $Emp->rs;
+        $this->empresa_id  = $Emp->id;
 
         $pdf               = new FPDF('P','mm','Letter');
 
@@ -151,7 +163,7 @@ class TicketController extends Controller
         $pdf->setX(10);
 
         $pdf->Ln();
-        $pdf->Output();
+        $pdf->Output('D','nota-remision-'.$this->empresa_id.'-'.$this->venta_id.'-'.$this->folio.'.pdf');
         exit;
     }
 
@@ -180,7 +192,13 @@ class TicketController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"C",true);
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",0,"C",true);
+        $pdf->Cell(5,$this->alto,"","",0,"C",false);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(10,$this->alto,"ID: ","",0,"R");
+        $pdf->SetFont('Arial','',8);
+        $pdf->SetFillColor(240,240,240);
+        $pdf->Cell(10,$this->alto,$this->venta_id,"",1,"R");
         $pdf->Ln(7);
         $pdf->setX(10);
         $this->alto  = 10;
@@ -204,8 +222,9 @@ class TicketController extends Controller
             $VD            = Ingreso::all()->where('venta_id',$venta_id);
         }
 
+        $this->venta_id    = $venta_id;
         $this->timex       = Carbon::now()->format('d-m-Y h:i:s a');
-        $this->folio       = $venta_id;
+        $this->folio       = Venta::getFolioImpreso($Ven->empresa_id, $venta_id);
         $this->cliente_id  = $Ven->user_id;
         $this->vendedor_id = $Ven->vendedor_id;
         $this->cliente     = $Ven->user->FullName;
@@ -215,6 +234,9 @@ class TicketController extends Controller
         $this->referencia  = $Ven->referencia;
         $this->tipo_venta  = strtoupper($Ven->TipoVenta);
         $this->title       = "HISTORIAL DE PAGOS";
+        $Emp               = Empresa::find($Ven->empresa_id);
+        $this->empresa     = $Emp->rs;
+        $this->empresa_id  = $Emp->id;
 
         $pdf               = new FPDF('P','mm','Letter');
 
@@ -247,7 +269,7 @@ class TicketController extends Controller
         $pdf->setX(10);
 
         $pdf->Ln();
-        $pdf->Output();
+        $pdf->Output('D','historial-pagos-'.$this->empresa_id.'-'.$this->venta_id.'-'.$this->folio.'.pdf');
 
         exit;
 

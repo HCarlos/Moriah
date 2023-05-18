@@ -16,6 +16,7 @@ class VentaRealizadaController extends Controller
     protected $f2       = "";
     protected $vendedor = "";
     protected $empresa  = "";
+    protected $empresa_id = 0;
     protected $F;
 
     public function __construct(){
@@ -70,13 +71,14 @@ class VentaRealizadaController extends Controller
         $pdf->setX(10);
     }
 
-    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa)
+    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m)
     {
         $this->f1 = $f1;
         $this->f2 = $f2;
         $this->vendedor = $vendedor;
         $this->empresa = $empresa;
-        $this->timex = Carbon::now()->format('d-m-Y h:m:s a');
+        $this->empresa_id = $m->empresa_id;
+        $this->timex = Carbon::now()->format('d-m-Y_h:m:s_a');
 
         $pdf->AliasNbPages();
         $this->header($pdf);
@@ -117,7 +119,7 @@ class VentaRealizadaController extends Controller
             $pdf->SetFont('Arial','BI',10);
             $pdf->Cell(196, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
         }
-        $pdf->Output();
+        $pdf->Output('D','venta-realizada-'.$this->empresa_id.'-'.$this->timex.'.pdf');
     }
 
 }
