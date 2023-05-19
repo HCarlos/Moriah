@@ -134,72 +134,14 @@ class Movimiento extends Model{
         return $this->belongsToMany(Empresa::class);
     }
 
-    // public function getStatusAttribute() {
-    //     $mp = "";
-    //     switch ($this->attributes['status']){
-    //         case 0:
-    //             $mp = "INICIO";
-    //             break;
-    //         case 1:
-    //             $mp = "COMPRA";
-    //             break;
-    //         case 2:
-    //             $mp = "VENTA";
-    //             break;
-    //         default:
-    //             $mp = "Indefinido";
-    //             break;
-    //     }
-    //     return $mp;
-    // }
-
     public function getStatusAttribute() {
         $mp = "";
-        if ( intval($this->attributes['venta_id']) > 0){
+        if ( (int)$this->attributes['venta_id'] > 0){
             $metodo = $this->venta->metodo_pago;
         }else{
             $metodo = "Compra";
         }
         return $metodo;
-
-//        dd($metodo);
-//        switch ($this->attributes['status']){
-//            case 0:
-//                $mp = "INICIO";
-//                break;
-//            case 1:
-//                $mp = "COMPRA";
-//                break;
-//            case 2:
-//                $mp = "VENTA";
-//                break;
-//            case 11:
-//                $mp = "ENTRADA NC";
-//                break;
-//            case 12:
-//                $mp = "SALIDA NC";
-//                break;
-//            case 200:
-//                $mp = "FALTANTE";
-//                break;
-//            case 300:
-//                $mp = "MERMA";
-//                break;
-//            case 400:
-//                $mp = "DEV S/COMPRA";
-//                break;
-//            case 500:
-//                $mp = "SOBRANTE";
-//                break;
-//            case 600:
-//                $mp = "DEV P/PROV";
-//                break;
-//            default:
-//                $mp = "Indefinido";
-//                break;
-//        }
-
-//        return GeneralFunctions::getTiposMovto( $this->attributes['status'] ); // $mp;
 
     }
 
@@ -565,10 +507,12 @@ class Movimiento extends Model{
                         $costo_promedio = $mov->cu;
                         $costo_anterior = $mov->cu;
                     }else{
-                        if ($mov->entrada > 0){
-                            if ($costo_anterior != $mov->cu){
-                                $costo_promedio = ($costo_promedio + $mov->cu) / 2;
-                                $costo_anterior = $mov->cu;
+                        if ($mov->Estatus == 1) {
+                            if ($mov->entrada > 0) {
+                                if ($costo_anterior != $mov->cu) {
+                                    $costo_promedio = ($costo_promedio + $mov->cu) / 2;
+                                    $costo_anterior = $mov->cu;
+                                }
                             }
                         }
 //                        $costo_anterior = $mov->cu;
