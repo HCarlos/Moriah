@@ -142,7 +142,7 @@ class CorteCajaController extends Controller{
             $pdf->SetFont('Arial','BI',10);
             $pdf->Cell(196, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
         }
-        $pdf->Output('D','corte-caja-'.$this->Empresa_Id.'-'.$this->timex.'.pdf');
+        $pdf->Output('I','corte-caja-'.$this->Empresa_Id.'-'.$this->timex.'.pdf');
     }
 
     protected function show_panel_consulta_1(){

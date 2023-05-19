@@ -160,8 +160,7 @@ class NotaCreditoPrintController extends Controller
         $pdf->setX(10);
 
         $pdf->Ln();
-//        $pdf->Output();
-        $pdf->Output('D','nota-credito-'.$this->empresa_id.'-'.$this->IdNC.'-'.$this->folio.'.pdf');
+        $pdf->Output('I','nota-credito-'.$this->empresa_id.'-'.$this->IdNC.'-'.$this->folio.'.pdf');
 
         exit;
     }
@@ -277,8 +276,7 @@ class NotaCreditoPrintController extends Controller
         $pdf->Cell(25,$this->alto,"",1,1,"R",true);
 
         $pdf->Ln();
-//        $pdf->Output();
-        $pdf->Output('D','listado-notas-credito-'.$this->empresa_id.'-'.$this->timex.'.pdf');
+        $pdf->Output('I','listado-notas-credito-'.$this->empresa_id.'-'.$this->timex.'.pdf');
 
         exit;
     }

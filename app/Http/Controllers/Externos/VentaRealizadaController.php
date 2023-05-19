@@ -119,7 +119,7 @@ class VentaRealizadaController extends Controller
             $pdf->SetFont('Arial','BI',10);
             $pdf->Cell(196, 20, 'NO SE ENCONTRARON DATOS', "LBR", 1,"C");
         }
-        $pdf->Output('D','venta-realizada-'.$this->empresa_id.'-'.$this->timex.'.pdf');
+        $pdf->Output('I','venta-realizada-'.$this->empresa_id.'-'.$this->timex.'.pdf');
     }
 
 }

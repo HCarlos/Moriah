@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Externos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Funciones\FuncionesController;
+use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -97,8 +98,23 @@ class VentaConsolidadaController extends Controller{
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
         $total = 0;
+        $F = (new FuncionesController);
         foreach ($Movs as $Mov){
-
+            $f1          = $F->fechaDateTimeFormat($Mov->fecha);
+            $f2          = $F->fechaDateTimeFormat($Mov->fecha,true);
+            $Mv = Movimiento::all()
+                ->where('fecha','>=', $f1)
+                ->where('fecha','<=', $f2)
+                ->where('producto_id',$Mov->producto_id)
+                ->where('codigo','=',$Mov->codigo)
+                ->first();
+            if ($Mv){
+                $cp = $Mv->costo_promedio;
+                $hp = $Mv->costo_promedio * $Mov->cantidad;
+            }else{
+                $cp = 0.00;
+                $hp = 0.00;
+            }
             $pdf->setX(10);
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(20, $this->alto, $this->F->fechaEspanol($Mov->fecha), "LTB", 0,"R");
@@ -107,8 +123,8 @@ class VentaConsolidadaController extends Controller{
             $pdf->Cell(100, $this->alto, utf8_decode(trim($Mov->descripcion)), "LTB", 0,"L");
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(15, $this->alto, number_format($Mov->cantidad,2), "LRB", 0,"R");
-            $pdf->Cell(25, $this->alto, number_format($Mov->pc,2), "LRB", 0,"R");
-            $pdf->Cell(20, $this->alto, number_format($Mov->totalimporte,2), "LRB", 1,"R");
+            $pdf->Cell(25, $this->alto, number_format($cp,2), "LRB", 0,"R");
+            $pdf->Cell(20, $this->alto, number_format($hp,2), "LRB", 1,"R");
             $total += $Mov->totalimporte;
             if ($pdf->getY() > 230 ){
                 $this->footer($pdf);
@@ -121,8 +137,7 @@ class VentaConsolidadaController extends Controller{
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(180, $this->alto, "VENTA TOTAL $", "LRB", 0,"R");
         $pdf->Cell(20, $this->alto, number_format($total,2), "LRB", 1,"R");
-//        $pdf->Output();
-        $pdf->Output('D','venta-consolidada-producto-'.$this->empresa_id.'-'.$this->timex.'.pdf');
+        $pdf->Output('I','venta-consolidada-producto-'.$this->empresa_id.'-'.$this->timex.'.pdf');
     }
 
 

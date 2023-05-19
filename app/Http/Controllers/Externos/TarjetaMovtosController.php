@@ -152,7 +152,7 @@ class TarjetaMovtosController extends Controller
         $pdf->EAN13(10,$pdf->getY()+10,$Prod->codigo,16,.35,$Prod->shortdesc,$Prod->pv);
 
         $pdf->Ln();
-        $pdf->Output('D','tarjeta-almacen-venta-'.$Emp->id.'-'.$producto_id.'.pdf');
+        $pdf->Output('I','tarjeta-almacen-venta-'.$Emp->id.'-'.$producto_id.'.pdf');
         exit;
 
     }
@@ -223,7 +223,7 @@ class TarjetaMovtosController extends Controller
 
         $pdf->Ln();
 
-        $pdf->Output('D','tarjeta-almacen-costeo-'.$Emp->id.'-'.$producto_id.'.pdf');
+        $pdf->Output('I','tarjeta-almacen-costeo-'.$Emp->id.'-'.$producto_id.'.pdf');
 
         exit;
 

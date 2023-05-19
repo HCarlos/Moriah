@@ -163,7 +163,7 @@ class TicketController extends Controller
         $pdf->setX(10);
 
         $pdf->Ln();
-        $pdf->Output('D','nota-remision-'.$this->empresa_id.'-'.$this->venta_id.'-'.$this->folio.'.pdf');
+        $pdf->Output('I','nota-remision-'.$this->empresa_id.'-'.$this->venta_id.'-'.$this->folio.'.pdf');
         exit;
     }
 
@@ -269,7 +269,7 @@ class TicketController extends Controller
         $pdf->setX(10);
 
         $pdf->Ln();
-        $pdf->Output('D','historial-pagos-'.$this->empresa_id.'-'.$this->venta_id.'-'.$this->folio.'.pdf');
+        $pdf->Output('I','historial-pagos-'.$this->empresa_id.'-'.$this->venta_id.'-'.$this->folio.'.pdf');
 
         exit;
 
