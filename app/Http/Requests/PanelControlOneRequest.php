@@ -111,7 +111,7 @@ class PanelControlOneRequest extends FormRequest
         $vendedor = 'none';
         $empresa = 'none';
         if ( !is_null($m) ){
-            $vendedor = trim($m->vendedor->FullName);
+            $vendedor = trim($m->vPanelControlOneRequestendedor->FullName);
             $empresa = trim($m->empresa->rs);
 
         }
@@ -158,17 +158,21 @@ class PanelControlOneRequest extends FormRequest
             // dd($Movs);
 
         $m = $Movs->first();
-        $f1 = $F->fechaEspanol($this->fecha1);
-        $f2 = $F->fechaEspanol($this->fecha2);
-        $vendedor = 'none';
-        $empresa = 'none';
-        if ( !is_null($m) ){
-            $vendedor = trim($m->vendedor->FullName);
-            $empresa = trim($m->empresa->rs);
-        }
+        if ($m){
 
-        $x = new VentaRealizadaController();
-        $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m);
+            $f1 = $F->fechaEspanol($this->fecha1);
+            $f2 = $F->fechaEspanol($this->fecha2);
+            $vendedor = 'none';
+            $empresa = 'none';
+            if ( !is_null($m) ){
+                $vendedor = trim($m->vendedor->FullName);
+                $empresa = trim($m->empresa->rs);
+            }
+
+            $x = new VentaRealizadaController();
+            $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m);
+
+        }
 
     }
 
@@ -197,15 +201,6 @@ class PanelControlOneRequest extends FormRequest
             ->orderByRaw('descripcion, fecha' )
             ->get();
 
-//        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(entrada) as cantidad, sum(costo_promedio * entrada) as totalimporte, DATE(fecha) as fecha, descripcion, costo_promedio, codigo'))
-//            ->where('empresa_id',$this->Empresa_Id)
-//            ->where('fecha','>=', $f1)
-//            ->where('fecha','<=', $f2)
-//            ->groupByRaw('producto_id, DATE(fecha), descripcion, pc, codigo')
-//            ->orderByRaw('descripcion, fecha' )
-//            ->get();
-
-
         $m = $Movs->first();
         $f1 = $F->fechaEspanol($this->fecha1);
         $f2 = $F->fechaEspanol($this->fecha2);
@@ -215,10 +210,10 @@ class PanelControlOneRequest extends FormRequest
             $vendedor = ""; //trim($m->vendedor->FullName);
             $Emp = Empresa::find($this->Empresa_Id);
             $empresa = trim($Emp->rs);
+            $x = new VentaConsolidadaController();
+            $x->imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$Emp);
         }
 
-        $x = new VentaConsolidadaController();
-        $x->imprimir_venta_consolidada_por_producto($f1,$f2,$pdf,$Movs,$Emp);
 
     }
 
