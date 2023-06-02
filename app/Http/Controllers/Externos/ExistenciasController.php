@@ -16,6 +16,7 @@ class ExistenciasController extends Controller
     protected $aFT         = 205;
     protected $timex       = "";
     protected $empresa     = "";
+    protected $Emp         = null;
 
     public function header($pdf){
         $pdf->AddPage();
@@ -37,7 +38,7 @@ class ExistenciasController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,utf8_decode("EXISTENCIAS DE ARTICULOS"),"",0,"C",true);
+        $pdf->Cell(145,$this->alto,utf8_decode("EXISTENCIAS DE ARTÍCULOS"),"",0,"C",true);
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(0,212,212);
         $pdf->Cell(28, $this->alto, utf8_decode("Página " . $pdf->PageNo() . " de {nb}"), "", 1,"R");
@@ -75,6 +76,7 @@ class ExistenciasController extends Controller
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $P                 = $Prod->first();
         $Emp               = Empresa::find($this->Empresa_Id);
+        $this->Emp         = $Emp;
         $this->empresa     = $Emp->rs;
 
         $pdf               = new FPDF('P','mm','Letter');

@@ -49,7 +49,9 @@ class ExcelController extends Controller
                     ->setCellValue('A'.$C, $v->id)
                     ->setCellValue('B'.$C, $v->codigo)
                     ->setCellValue('C'.$C, $v->descripcion)
-                    ->setCellValue('D'.$C, $v->exist);
+                    ->setCellValue('D'.$C, $v->exist)
+                    ->setCellValue('E'.$C, $v->cu)
+                    ->setCellValue('F'.$C, $v->pv);
                 $C++;
             }
 //            $spreadsheet->getActiveSheet()->getCell('B7')->getDataValidation();
