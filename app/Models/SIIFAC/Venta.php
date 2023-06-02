@@ -367,6 +367,7 @@ class Venta extends Model
 
     public static function getFolio($empresa_id) {
         $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->sortByDesc('id')->first();
+        if (is_null($emp)) return 0;
         return (int) $emp->folio;
     }
 
@@ -374,6 +375,7 @@ class Venta extends Model
         $emp = EmpresaVenta::all()
             ->where('empresa_id',$empresa_id)
             ->where('venta_id',$venta_id)->first();
+        if (is_null($emp)) return 0;
         return (int) $emp->folio;
     }
 
