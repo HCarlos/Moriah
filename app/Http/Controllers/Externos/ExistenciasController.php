@@ -51,7 +51,9 @@ class ExistenciasController extends Controller
         $pdf->SetFont('Arial','B',8);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(10,$this->alto,"ID",1,0,"C",true);
-        $pdf->Cell(125,$this->alto,utf8_decode("DESCRIPCIÓN"),1,0,"L",true);
+        $pdf->Cell(85,$this->alto,utf8_decode("DESCRIPCIÓN"),1,0,"L",true);
+        $pdf->Cell(20,$this->alto,utf8_decode("U. P. COSTO"),1,0,"R",true);
+        $pdf->Cell(20,$this->alto,utf8_decode("U. P. VENTA"),1,0,"R",true);
         $pdf->Cell(20,$this->alto,"EXISTENCIA",1,0,"R",true);
         $pdf->Cell(20,$this->alto,"FALTANTE",1,0,"R",true);
         $pdf->Cell(20,$this->alto,"SOBRANTE",1,1,"R",true);
@@ -85,8 +87,16 @@ class ExistenciasController extends Controller
         $i = 1;
         foreach ($Prod as $prd){
             $pdf->Cell(10,$this->alto,number_format($prd->id,0),1,0,"C");
-            $pdf->Cell(125,$this->alto,utf8_decode($prd->descripcion),1,0,"L");
-            $pdf->Cell(20,$this->alto,number_format($prd->exist,2,'.',','),1,0,"C");
+            $pdf->Cell(85,$this->alto,utf8_decode($prd->descripcion),1,0,"L");
+            if ($prd->exist != 0){
+                $pdf->Cell(20,$this->alto,number_format($prd->cu,2,'.',','),1,0,"R");
+                $pdf->Cell(20,$this->alto,number_format($prd->pv,2,'.',','),1,0,"R");
+                $pdf->Cell(20,$this->alto,number_format($prd->exist,2,'.',','),1,0,"R");
+            }else{
+                $pdf->Cell(20,$this->alto,"",1,0,"R");
+                $pdf->Cell(20,$this->alto,"",1,0,"R");
+                $pdf->Cell(20,$this->alto,"",1,0,"R");
+            }
             $pdf->Cell(20,$this->alto,'',1,0,"C");
             $pdf->Cell(20,$this->alto,'',1,1,"C");
             $pdf->setX(10);
