@@ -143,10 +143,12 @@ class NotaCredito extends Model
 
 
 
-
     public static function getFolio($empresa_id) {
         $NC = static::all()->where('empresa_id',$empresa_id)->sortByDesc('id')->first();
+        if (is_null($NC)) return 0;
         return (int) $NC->consecutivo;
     }
+
+
 
 }
