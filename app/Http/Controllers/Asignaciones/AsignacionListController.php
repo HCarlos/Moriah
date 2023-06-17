@@ -54,7 +54,7 @@ class AsignacionListController extends Controller
                 break;
             case 2:
                 $view = 'add_rfc_ajax';
-                $listEle     = Rfc::select(DB::raw("CONCAT(id,' - ',rfc) AS rfcs"),'id')->orderBy('rfc')->pluck('rfcs', 'id');
+                $listEle     = Rfc::select(DB::raw("CONCAT(id,' - ',rfc) AS rfcs"),'id')->orderByDesc('id')->pluck('rfcs', 'id');
                 $listTarget  = User::all()->sortBy('NombreCompletoCFDI40')->pluck('NombreCompletoCFDI40','id');
 //                $listTarget  = User::select(DB::raw("CONCAT(id,' - ',nombre,' ',ap_paterno,' ',ap_materno) AS nombres"),'id')->orderBy('nombres')->pluck('nombres', 'id');
                 if ($iduser == 0){
