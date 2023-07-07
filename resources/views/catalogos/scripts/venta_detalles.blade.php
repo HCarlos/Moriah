@@ -77,6 +77,8 @@
 
                 if ( $("#frmSearchCode") ){
                     $("#codigo").val("");
+                    $("#searchProducto").val("");
+                    $("#cantidad").val(1);
                     $("#guardandoVenta").hide();
                     $("#frmSearchCode").on("submit", function (event) {
                         event.preventDefault();
@@ -91,7 +93,8 @@
                                 data:  Data,
                                 dataType: 'json',
                                 success: function(data) {
-                                    if (data.mensaje == "OK"){
+                                    if (data.mensaje === "OK"){
+                                        $("#searchProducto").empty();
                                         location.reload();
                                     }else{
                                         alert(data.mensaje);
@@ -107,6 +110,8 @@
 
     </script>
 @endsection
+
+
 
 @section('scripts_venta_detalles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

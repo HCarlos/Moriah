@@ -36,7 +36,7 @@
                             </div>
                             <label for = "username" class="col-md-1 col-form-label text-md-left">Username</label>
                             <div class="col-md-2">
-                                <input type="text" name="username" id="username" value="{{ old('username',$items->username) }}" min="1" max="999999" class="form-control" readonly />
+                                <input type="text" name="username" id="username" value="{{ old('username',$items->username) }}" min="1" max="999999" class="form-control"  />
                             </div>
                             <label for = "email" class="col-md-1 col-form-label text-md-left">Email</label>
                             <div class="col-md-2">
