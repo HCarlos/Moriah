@@ -54,3 +54,4 @@ $(document).ready(function() {
 });
 
 </script>
+@yield('scripts_venta_detalles')

@@ -1,7 +1,5 @@
 @section('scripts_ventas')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    <script>
+    <script>
         jQuery(function($) {
             $(document).ready(function() {
 
@@ -35,7 +33,8 @@
                         $("#myModal .modal-body").empty();
                         $("#myModal .modal-body").html('<div class="fa-2x"><i class="fa fa-cog fa-spin"></i> Cargado datos...</div>');
                         $("#myModal").modal('show');
-                        var Url = event.currentTarget.id;
+                        var Url = $(this).attr('id');
+                        // alert(Url);
                         $(function () {
                             $.ajax({
                                 method: "get",
@@ -103,6 +102,19 @@
 
                     });
                 }
+            });
+        });
+
+    </script>
+@endsection
+
+@section('scripts_venta_detalles')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        jQuery(function($) {
+            $(document).ready(function() {
 
                 if ( $("#searchProducto") ) {
 
@@ -144,9 +156,6 @@
                     $("#codigo").val("");
                     // $("#ubicacion_id_span").html(0);
                 }
-
-
-
 
             });
         });
