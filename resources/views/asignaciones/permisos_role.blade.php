@@ -23,10 +23,10 @@
             <div class="col-xs-6 col-sm-4  panel-fill  vertical-center">
                 <div class="panel panel-fill  jumbotron vertical-center">
                     <div class="panel-body panel-fill ">
-                        @if ($user->hasAnyPermission(['asignar','desasignar','all']))
+                        @if ($user->hasAnyPermission(['asignar','sysop','all']))
                             <a class="btn btn-primary btn-block btnAsign0" id="{{ 'btnAsign0-'.$id.'-'.$iduser }}" href="#" role="button">Asignar <i class="glyphicon glyphicon-chevron-right"></i></a><br/><br/>
                         @endif
-                        @if ($user->hasAnyPermission(['asignar','desasignar','all']))
+                        @if ($user->hasAnyPermission(['asignar','sysop','all']))
                             <a class="btn btn-primary btn-block btnUnasign0" id="{{ 'btnUnasign0-'.$id.'-'.$iduser }}" href="#" role="button"><i class="glyphicon glyphicon-chevron-left"></i> Quitar</a>
                         @endif
                     </div>

@@ -34,8 +34,8 @@ class AsignacionListController extends Controller
             case 0:
                 $view = 'roles_usuario';
                 $listEle     = Role::all()->sortBy('name')->pluck('name','name');
-                $listTarget  = User::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
-                //dd($listTarget);
+                $listTarget  = User::all()->sortBy('NombreCompletoCFDI40')->pluck('NombreCompletoCFDI40','id');
+                // dd($listTarget);
                 if ($iduser == 0){
                     $iduser = 1;
                 }
@@ -45,7 +45,7 @@ class AsignacionListController extends Controller
             case 1:
                 $view = 'permisos_role';
                 $listEle     = Permission::all()->sortBy('name')->pluck('name','name');
-                $listTarget  = Role::all()->sortBy('fullNameCFDI40')->pluck('fullNameCFDI40','id');
+                $listTarget  = Role::all()->sortBy('name')->pluck('name','id');
                 if ($iduser == 0){
                     $iduser = 1;
                 }

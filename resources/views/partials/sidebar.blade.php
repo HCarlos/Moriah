@@ -106,7 +106,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endrole
-                @role('administrator|sysop')
+                @role('administrator')
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 0,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>
@@ -122,6 +122,8 @@
                         </a>
                         <b class="arrow"></b>
                     </li>
+                @endrole
+                @role('administrator|sysop')
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 2,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>
@@ -129,6 +131,8 @@
                         </a>
                         <b class="arrow"></b>
                     </li>
+                @endrole
+                @role('administrator')
                     <li>
                         <a href="{{ route('archivosConfig/') }}">
                             <i class="menu-icon fa fa-cog"></i>
