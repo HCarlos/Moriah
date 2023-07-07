@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/update_producto/{prod}','SIIFAC\ProductoController@update')->name('productoUpdate/');
     Route::get('/destroy_producto/{id}', 'SIIFAC\ProductoController@destroy')->name('productoDestroy/');
     Route::get('/imagen_producto/{idItem}', 'SIIFAC\ProductoController@imagen')->name('productoImagen');
+    Route::get('buscarProducto/', 'SIIFAC\ProductoController@buscarProducto')->name('buscarProducto');
+    Route::get('getProducto/{IdProducto}', 'SIIFAC\ProductoController@getProducto')->name('getProducto');
     Route::post('/subir_imagen_producto/{oProducto}','Storage\StorageProductoController@subirArchivoProducto')->name('storageProductoUpload/');
     Route::get('/quitar_imagen_producto/{idItem}','Storage\StorageProductoController@quitarArchivoProducto')->name('storageProductoRemove/');
     Route::get('/actualizar_inventario', 'SIIFAC\ProductoController@actualizar_inventario')->name('actualizarInventario');

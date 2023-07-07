@@ -138,11 +138,11 @@
                                             </a>
                                             @endif
                                             @if($venta->isPagado())
-                                            <a href="{{ route('printTicket/', array('venta_id' => $venta->id)) }}" class="btn btn-link pull-right printReg" target="_blank" title="Imprimir">
+                                            <a href="{{ route('printTicket/', array('venta_id' => $venta->id)) }}" class="btn btn-link pull-right printReg" title="Imprimir">
                                                 <i class="fa fa-print bigger-110 cafe"></i>
                                             </a>
                                             @endif
-                                            <a href="{{ route('ventaDetalleEdit', array('venta_id' => $venta->id)) }}" class="btn btn-link pull-right editarReg" target="_blank" title="Editar">
+                                            <a href="{{ route('ventaDetalleEdit', array('venta_id' => $venta->id)) }}" class="btn btn-link pull-right editarReg" title="Editar">
                                                 <i class="fa fa-cubes bigger-110 blue"></i>
                                             </a>
                                         @endif

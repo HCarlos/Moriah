@@ -323,11 +323,62 @@ class ProductoController extends Controller
 
     public function actualizar_producto($producto_id){
         //        dd($producto_id);
-                $Prod = Producto::find($producto_id);
-                Movimiento::actualizaExistenciasYSaldo($Prod);
-                return Response::json(['mensaje' => 'Producto actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
-            }
-        
+        $Prod = Producto::find($producto_id);
+        Movimiento::actualizaExistenciasYSaldo($Prod);
+        return Response::json(['mensaje' => 'Producto actualizado con éxito.', 'data' => 'OK', 'status' => '200'], 200);
+    }
+
+
+// ***************** MAUTOCOMPLETE DE UBICACIONES ++++++++++++++++++++ //
+    protected function buscarProducto(Request $request)
+    {
+        ini_set('max_execution_time', 300000);
+        $filters = $request->all(['search']);
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+
+        $search = $filters['search'];
+        $items = Producto::query()
+            ->where('empresa_id',$this->Empresa_Id)
+            ->search($search)
+            ->orderBy('id')
+            ->get();
+
+        //dd($items);
+
+        $data=array();
+
+        foreach ($items as $item) {
+            $data[]=array(
+                'codigo'=>$item->codigo,
+                'value'=>$item->descripcion,
+                'id'=>$item->id
+            );
+        }
+        if(count($data))
+            return $data;
+        else
+            return ['codigo'=>'','value'=>'No se encontraron productos','id'=>0];
+
+    }
+
+// ***************** MAUTOCOMPLETE DE UBICACIONES ++++++++++++++++++++ //
+    protected function getProducto($IdProducto=0)
+    {
+        $items = Producto::find($IdProducto);
+        return Response::json(['mensaje' => 'OK', 'data' => json_decode($items), 'status' => '200'], 200);
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }

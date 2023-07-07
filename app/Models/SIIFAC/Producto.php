@@ -24,9 +24,20 @@ class Producto extends Model
         'shortdesc','saldo_costeo',
         'maximo','minimo','isiva','fecha', 'tipo', 'pv', 'porcdescto','inicia_descuento','termina_descuento',
         'moneycli','exist','cu','saldo', 'propiedades_producto', 'filename', 'root','empresa_id',
-        'status_producto','idemp','ip','host',
+        'status_producto','idemp','ip','host','searchtext',
     ];
     protected $casts = ['isiva'=>'boolean','status_producto'];
+
+    public function scopeSearch($query, $search){
+        if (!$search || $search == "" || $search == null) return $query;
+        $search = strtoupper($search);
+        $filters  = $search;
+        $F        = new FuncionesController();
+        $tsString = $F->string_to_tsQuery( strtoupper($filters),' & ');
+        return $query->whereRaw("searchtext @@ to_tsquery('spanish', ?)", [$tsString])
+            ->orderByRaw("ts_rank(searchtext, to_tsquery('spanish', ?)) ASC", [$tsString]);
+    }
+
 
     public function isIVA(){
         return $this->isiva;

@@ -33,32 +33,44 @@
         <div class="widget-box">
             <div class="widget-body">
                 <div class="widget-main">
-                    <form method="post"  id="frmSearchCode" class="form-inline">
-                        @csrf
-                        <div class="form-group" >
-{{--                            <label class="sr-only" for="codigo">Código de barras</label>--}}
-                            <div class="input-group col-xs-5">
-                                <div class="input-group-addon font_Roboto_500">Código</div>
-                                <input type="number" name="codigo" id="codigo" value="" class="form-control" required autofocus/>
-                                <input type="hidden" name="venta_id" value="{{$venta_id}}" >
-                            </div>
+                    <div class="form-group" >
+                        <form method="post"  id="frmSearchProd" class="form-inline">
+                            @csrf
                             <div class="input-group col-xs-3">
-                                <div class="input-group-addon font_Roboto_500">Cant</div>
-{{--                                <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="9999999" class="form-control " required/>--}}
-                                <input type="text" pattern="[0-9]{1,8}([.][0-9]{0,2})?" name="cantidad" id="cantidad" class="form-control" title="Formato Decimal" required/>
+                                <div class="input-group-addon font_Roboto_500">Buscar</div>
+                                <input type="text" name="searchProducto" id="searchProducto" value="" class="form-control"/>
                             </div>
                             <div class="input-group col-xs-1">
                                 <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
                             </div>
-                        </div>
-                        <h4 class="btn btn-inverse btn-sm pull-right btnShowProperties" id="/show_prop_venta/{{$venta_id}}" data-toggle="modal" data-target="#myModal">
-                            <i class="glyphicon glyphicon-shopping-cart green3"></i>
-                            <strong class="orange2 font_PT_Sans_Narrow"> DETALLES DE LA VENTA</strong>
-                        </h4>
-                        <span id="titulo_catalogo" class="bigger-140 pull-right marginRight1em">
+
+                        </form>
+                        <div class="m-5 text-white white">-</div>
+                        <form method="post"  id="frmSearchCode" class="form-inline" >
+                            @csrf
+    {{--                            <label class="sr-only" for="codigo">Código de barras</label>--}}
+                                <div class="input-group col-xs-3">
+                                    <div class="input-group-addon font_Roboto_500">Código</div>
+                                    <input type="number" name="codigo" id="codigo" value="" class="form-control" required autofocus/>
+                                    <input type="hidden" name="venta_id" value="{{$venta_id}}" >
+                                </div>
+                                <div class="input-group col-xs-2">
+                                    <div class="input-group-addon font_Roboto_500">Cant</div>
+    {{--                                <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="9999999" class="form-control " required/>--}}
+                                    <input type="text" pattern="[0-9]{1,8}([.][0-9]{0,2})?" name="cantidad" id="cantidad" class="form-control" title="Cantidad de Producto" required/>
+                                </div>
+                                <div class="input-group col-xs-1">
+                                    <button type="submit" class="btn btn-purple btn-mini "><i class="fa fa-search-plus bigger-170 icon-only"></i></button>
+                                </div>
+                            <h4 class="btn btn-inverse btn-sm pull-right btnShowProperties" id="/show_prop_venta/{{$venta_id}}" data-toggle="modal" data-target="#myModal">
+                                <i class="glyphicon glyphicon-shopping-cart green3"></i>
+                                <strong class="orange2 font_PT_Sans_Narrow"> DETALLES DE LA VENTA</strong>
+                            </h4>
+                            <span id="titulo_catalogo" class="bigger-140 pull-right marginRight1em">
                             <strong class="orange2 font_PT_Sans_Narrow">VENTA <b class="purple font_Roboto_400" >{{$venta_id}}</b></strong>
                         </span>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

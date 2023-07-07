@@ -1,7 +1,10 @@
 @section('scripts_ventas')
-    <script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    <script>
         jQuery(function($) {
             $(document).ready(function() {
+
 
                 if ( $(".btnVentaDetalleNormal") ){
                     $(".btnVentaDetalleNormal").on("click", function (event) {
@@ -100,6 +103,50 @@
 
                     });
                 }
+
+                if ( $("#searchProducto") ) {
+
+                    src = "{{ route('buscarProducto') }}";
+                    $("#searchProducto").autocomplete({
+                        source: function (request, response) {
+                            $.ajax({
+                                url: src,
+                                dataType: "json",
+                                data: {
+                                    search: request.term
+                                },
+                                success: function (data) {
+                                    response(data);
+                                },
+                            });
+                        },
+                        minLength: 3,
+                    });
+
+                    $("#searchProducto").on("autocompleteselect", function (event, ui) {
+                        var Id = ui.item['id'];
+                        $.get("/getProducto/" + Id, function (data) {
+                            $("#codigo").val(data.data.codigo);
+                            $("#searchProducto").val(data.data.descripcion);
+                            $("#cantidad").val(1);
+                            $("#cantidad").focus();
+                        }, "json");
+                    });
+
+                    $("#searchProducto").on("keyup", function (event) {
+                        clearObjects();
+                    });
+
+                }
+
+                function clearObjects() {
+                    // $("#ubicacion_id").val(0);
+                    $("#codigo").val("");
+                    // $("#ubicacion_id_span").html(0);
+                }
+
+
+
 
             });
         });
