@@ -15,6 +15,7 @@
             </a>
             <b class="arrow"></b>
         </li>
+        @role('administrator|sysop')
         <li>
             <a href="{{ route('ingresosIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
                 <i class="menu-icon fa fa-money green"></i>
@@ -22,6 +23,7 @@
             </a>
             <b class="arrow"></b>
         </li>
+        @endrole
         <li>
             <a href="{{ route('notacreditosIndex', ['fecha' => \Carbon\Carbon::now()->format('ymd')]) }}">
                 <i class="menu-icon fa fa-clipboard green"></i>
@@ -97,7 +99,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                @role('administrator|sysop')
+                @role('administrator|sysop|punto_venta')
                 <li>
                     <a href="{{ route('usuarioIndex') }}">
                         <i class="menu-icon fa fa-book red"></i>
@@ -123,7 +125,7 @@
                         <b class="arrow"></b>
                     </li>
                 @endrole
-                @role('administrator|sysop')
+                @role('administrator|sysop|punto_venta')
                     <li>
                         <a href="{{ route('asignItem/', ['ida' => 2,'iduser' => 0]) }}">
                             <i class="menu-icon fa fa-cog"></i>

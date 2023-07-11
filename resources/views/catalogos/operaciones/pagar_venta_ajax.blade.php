@@ -42,7 +42,7 @@
                     <select name="metodo_pago" id="metodo_pago" class="form-control" size="1">
                         @foreach ($metodo_pagos as $key => $value)
                             @if ($value!=="-")
-                            <option value="{{ $key }}" @if ($key == 1) selected @endif>{{ $value }}</option>
+                            <option value="{{ $key }}" @if ($key === 0) selected @endif>{{ $value }}</option>
                             @else
                                 <option disabled>────────────────────</option>
                             @endif
@@ -55,7 +55,8 @@
                 </div>
                 <label for = "total_pagado" class="col-md-1 col-form-label text-md-left">Pago</label>
                 <div class="col-md-2">
-                    <input type="text" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" min="1" max="{{$total_a_pagar}}" required {{$venta->isPagado() ? 'disabled' : ''}} pattern="[-+]?[0-9]*[.,]?[0-9]+" />
+                    <input type="text" name="total_pagado" id="total_pagado" value="{{ old('total_a_pagar',$total_a_pagar) }}" class="form-control" min="1"  required {{$venta->isPagado() ? 'disabled' : ''}} pattern="[-+]?[0-9]*[.,]?[0-9]+" />
+                    <h5 class="help" id="micambio_leyenda">Cambio: <strong class="text-danger" id="micambio_valor"></strong></h5>
                 </div>
             </div>
 
@@ -92,6 +93,7 @@
             var referencia = $("#referencia").val();
             msg = validMetodoPago(metodo_pago, referencia, frmSerialize);
             if ( msg == "OK" ){
+                frmSerialize = $("#frmPagoVenta0").serialize();
                 realizarPago(Url, frmSerialize);
             }else{
                  if ( !isNaN(msg) )
@@ -206,15 +208,38 @@
                 case 7:
                 case 8:
                 case 9:
-                    if (total_pagado <= 0 || total_pagado > totalAPagar){
+                    // if (total_pagado <= 0 || total_pagado > totalAPagar){
+                    if ( total_pagado <= 0 ){
                         msg = "Hay un problema con el pago";
                     }
                     break;
             }
+            if (total_pagado > totalAPagar){
+                $("#total_pagado").val(totalAPagar);
+            }
             return msg;
         }
 
+        $("#total_pagado").on("keyup",function(event){
+            event.preventDefault();
+            var metodo_pago = $("#metodo_pago").val();
+            var total_a_pagar = parseFloat(totalAPagar);
+            if ( metodo_pago == 0 ){
+                var mipago = parseFloat( $(this).val() );
+                if (mipago > total_a_pagar){
+                    $("#micambio_leyenda").show();
+                    $("#micambio_valor").html(mipago - total_a_pagar);
+                }else{
+                    $("#micambio_leyenda").hide();
+                }
+            }else{
+                $("#micambio_valor").html("");
+                $("#micambio_leyenda").hide();
+            }
+        });
+
         $("#codigo").focus();
+        $("#micambio_leyenda").hide();
 
         // alert("Entro bien")
 
