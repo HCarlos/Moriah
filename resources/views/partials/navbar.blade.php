@@ -56,6 +56,15 @@
                         <li class="divider"></li>
 
                         <li>
+                            <a  class="dropdown-item" href="{{ route('openEmpresa') }}">
+                                <i class="fa fa-home "></i>
+                                Cambiar de Empresa
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
