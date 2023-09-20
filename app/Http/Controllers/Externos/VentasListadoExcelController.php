@@ -50,14 +50,18 @@ class VentasListadoExcelController extends Controller{
                     if ( !is_null($Ped) )
                         $b =  utf8_decode(trim($Ped->observaciones));                                   
                     else    
-                        $b =  '';                                   
+                        $b =  '';
+
+                    $c =  $i->total;
 
                     $sh
 
                     ->setCellValue('A'.$C, $i->id)
-                    ->setCellValue('B'.$C, $i->user->FullName)
-                    ->setCellValue('C'.$C, $a)
-                    ->setCellValue('D'.$C, $b);
+                    ->setCellValue('B'.$C, $i->getFolioImpreso($i->empresa_id,$i->id))
+                    ->setCellValue('C'.$C, $i->user->FullName)
+                    ->setCellValue('D'.$C, $a)
+                    ->setCellValue('E'.$C, $b)
+                    ->setCellValue('F'.$C, $c);
 
                 $C++;
             }
@@ -65,7 +69,7 @@ class VentasListadoExcelController extends Controller{
             $Cx = $C  - 1;
             $oVal = $sh->getCell('G1')->getValue();
             $sh->setCellValue('B'.$C, 'TOTAL DE ARTÍCULOS')
-            ->setCellValue('C'.$C, '=SUM(C1:C'.$Cx.')')
+            ->setCellValue('E'.$C, '=SUM(E1:E'.$Cx.')')
             ->setCellValue('G'.$C, $oVal);
 
             $sh->getStyle('A'.$C0.':G'.$C)->getFont()

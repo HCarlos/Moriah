@@ -53,8 +53,9 @@ class VantasListadoController extends Controller{
         $pdf->Ln(5);
         $pdf->SetFont('Arial','B',7);
         $pdf->Cell(10, $this->alto, 'ID', "LTB", 0,"R");
+        $pdf->Cell(10, $this->alto, 'FOLIO', "LTB", 0,"R");
         $pdf->Cell(55, $this->alto, 'CLIENTE', "LTB", 0,"L");
-        $pdf->Cell(55, $this->alto, 'PAQUETE', "LTB", 0,"L");
+        $pdf->Cell(45, $this->alto, 'PAQUETE', "LTB", 0,"L");
         $pdf->Cell(40, $this->alto, 'PRECIO VENTA', "LTB", 0,"R");
         $pdf->Cell(100, $this->alto, 'OBSERVACIONES', "LRTB", 1,"C");
         $pdf->setX(10);
@@ -87,14 +88,15 @@ class VantasListadoController extends Controller{
             $pdf->setX(10);
             $pdf->SetFont('Arial','',7);
             $pdf->Cell(10, $this->alto, $Mov->id, "LTB", 0,"R");
+            $pdf->Cell(10, $this->alto, $Mov->getFolioImpreso($Mov->empresa_id,$Mov->id), "LTB", 0,"R");
             $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->user->FullName)), "LTB", 0,"L");
             $Ped = Pedido::find($Mov->pedido_id);
             if ($Mov->paquete_id > 0)
-                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->paquete->FullDescriptionWithoutPrice)), "LTB", 0,"L");
+                $pdf->Cell(45, $this->alto, utf8_decode(trim($Mov->paquete->FullDescriptionWithoutPrice)), "LTB", 0,"L");
             else if ( !is_null($Ped) )
-                $pdf->Cell(55, $this->alto, utf8_decode(trim($Ped->FullDescription)), "LTB", 0,"L");
+                $pdf->Cell(45, $this->alto, utf8_decode(trim($Ped->FullDescription)), "LTB", 0,"L");
             else 
-                $pdf->Cell(55, $this->alto, utf8_decode(trim($Mov->TipoVenta)), "LTB", 0,"L");
+                $pdf->Cell(45, $this->alto, utf8_decode(trim($Mov->TipoVenta)), "LTB", 0,"L");
 
             $pdf->SetFont('AndaleMono','',7);
             $pdf->Cell(40, $this->alto, number_format($Mov->total,2), "LTB", 0,"R");

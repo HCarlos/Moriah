@@ -373,10 +373,11 @@ class VentaController extends Controller
             case 0:
                 $items = Venta::select()
                     ->where('id',$dato)
-                    ->where(function ($q) use($user) {
-                        if (!$user->hasRole('administrator|sysop'))
-                            $q->where('vendedor_id', $user->id);
-                    })
+//                    ->where(function ($q) use($user) {
+//                        if (!$user->hasRole('administrator|sysop'))
+//                            $q->where('vendedor_id', $user->id);
+//                    })
+                    ->where('empresa_id', $this->Empresa_Id)
                     ->orderBy('created_at')
                     ->get();
                 break;

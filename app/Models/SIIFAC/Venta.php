@@ -138,10 +138,11 @@ class Venta extends Model
             $this::whereHas('users', function ($q) use($dato, $user) {
                 $q->where(DB::raw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre)") , "similar to" , "%".$dato."%");
             })
-            ->where(function ($q) use($user) {
-                if (!$user->hasRole('administrator|sysop'))
-                    $q->where('vendedor_id', $user->id);
-            })
+//            ->where(function ($q) use($user) {
+//                 if (!$user->hasRole('administrator|sysop'))
+//                    $q->where('vendedor_id', $user->id);
+//            })
+            ->where('empresa_id', $this->Empresa_Id)
             ->get();
     }
 
@@ -151,10 +152,11 @@ class Venta extends Model
             $this::whereHas('ventaDetalles', function ($q) use($dato, $user) {
                 $q->where('descripcion', "similar to" , "%".$dato."%");
             })
-            ->where(function ($q) use($user) {
-                if (!$user->hasRole('administrator|sysop'))
-                    $q->where('vendedor_id', $user->id);
-            })
+//            ->where(function ($q) use($user) {
+//                 if (!$user->hasRole('administrator|sysop'))
+//                    $q->where('vendedor_id', $user->id);
+//            })
+            ->where('empresa_id', $this->Empresa_Id)
             ->distinct()
             ->get();
     }
@@ -165,10 +167,11 @@ class Venta extends Model
             $this::whereHas('ventaDetalles', function ($q) use($dato, $user) {
                 $q->where('codigo', "similar to" , "%".$dato."%");
             })
-            ->where(function ($q) use($user) {
-                if (!$user->hasRole('administrator|sysop'))
-                    $q->where('vendedor_id', $user->id);
-            })
+//            ->where(function ($q) use($user) {
+//                 if (!$user->hasRole('administrator|sysop'))
+//                    $q->where('vendedor_id', $user->id);
+//            })
+            ->where('empresa_id', $this->Empresa_Id)
             ->distinct()
             ->get();
     }
