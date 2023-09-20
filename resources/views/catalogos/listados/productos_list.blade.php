@@ -77,11 +77,11 @@
                                         <i class="fa fa-list bigger-110 cafe"></i>
                                     </a>
                                 @endif
-                                    @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                        <a href="{{ route('imprimirCodigoBarra/',['producto_id'=>$item->id])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir códigos de barra" target="_blank">
-                                            <i class="fa fa-barcode bigger-110 purple"></i>
-                                        </a>
-                                    @endif
+                                @if ($user->hasAnyPermission(['consultar','all','sysop']) )
+                                    <a href="{{ route('imprimirCodigoBarra/',['producto_id'=>$item->id])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir códigos de barra" target="_blank">
+                                        <i class="fa fa-barcode bigger-110 purple"></i>
+                                    </a>
+                                @endif
 
                                 </div>
                             </td>

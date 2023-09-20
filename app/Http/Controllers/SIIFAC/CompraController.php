@@ -27,7 +27,7 @@ class CompraController extends Controller
         $this->F = (new FuncionesController);
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($this->Empresa_Id <= 0){
-            return redirect('openEmpresa');
+//            return redirect('openEmpresa');
         }
     }
 

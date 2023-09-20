@@ -48,6 +48,9 @@
                                             <a  href="{{ route('selectCompraDetalleEditAjax/', array('movimiento_id' => $vd->id)) }}" id="selectCompraDetalleEditAjax-{{$vd->id}}"  class="btn btn-link pull-right btnCompraDetalleEditar" title="Editar" data-toggle="modal" data-target="#myModal">
                                                 <i class="fa fa-pencil bigger-110 success"></i>
                                             </a>
+                                            <a href="{{ route('imprimirCodigoBarraCantidad/',['producto_id'=>$vd->producto->id,'cantidad'=>$vd->entrada])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir códigos de barra" target="_blank">
+                                                <i class="fa fa-barcode bigger-110 purple"></i>
+                                            </a>
                                         @endif
                                     </div>
                                 </td>

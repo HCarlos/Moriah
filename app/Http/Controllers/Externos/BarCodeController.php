@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Externos;
 use App\Http\Controllers\Classes\PDF_EAN13;
 use App\Http\Controllers\Controller;
 //use App\Http\Controllers\PDF_EAN13;
+use App\Models\SIIFAC\Compra;
+use App\Models\SIIFAC\Movimiento;
 use App\Models\SIIFAC\Producto;
 
 class BarCodeController extends Controller
@@ -46,6 +48,18 @@ class BarCodeController extends Controller
         $pdf->Cell(195,$this->alto,utf8_decode($this->producto_name),"",0,"C",true);
         $this->alto  = 6;
         $pdf->Ln(5);
+        $pdf->setX(10);
+    }
+
+    protected function header2($pdf){
+        $pdf->AddPage();
+        $pdf->setY(10);
+        $pdf->setX(10);
+        $pdf->SetTextColor(0,0,0);
+        $pdf->SetFont('Arial','',7);
+        $pdf->SetFillColor(0,212,212);
+        $pdf->Cell(198, $this->alto, utf8_decode("Página " . $pdf->PageNo() . " de {nb}"), "", 1,"R");
+        $this->alto  = 6;
         $pdf->setX(10);
     }
 
@@ -130,6 +144,133 @@ class BarCodeController extends Controller
         exit;
 
     }
+
+
+    public function imprimir_codigo_barra_cantidad($producto_id, $cantidad){
+
+        $pdf  = new PDF_EAN13('P','mm','Letter');
+        $Prod = Producto::find($producto_id);
+
+        $this->producto_name = $Prod->shortdesc;
+        $this->codigo        = $Prod->codigo;
+        $this->pv            = $Prod->pv;
+
+        $pdf->AliasNbPages();
+        $this->header($pdf);
+        $pdf->SetFillColor(32,32,32);
+        $pdf->SetFont('Arial','',6);
+        $pdf->addFont('AndaleMono','','AndaleMono.php');
+        $pdf->addFont('arialn');
+
+        $c  = 0;
+        $ln = 1;
+        $x  = 17.5;
+        $y  = $pdf->getY()+9;
+        $xi = $x;
+        $yi = $y;
+
+        for ($i = 1; $i <= $cantidad; $i++){
+            $pdf->SetFillColor(212,212,212);
+            $pdf->Rect($x-7.5,$y-5,49,35,'');
+            $pdf->SetFillColor(32,32,32);
+            $pdf->EAN13($x,$y,$Prod->codigo,16,.35,$this->producto_name,$this->pv);
+            if ($c>2){
+                $x = 17.5;
+                $pdf->setX($x);
+                $pdf->setY( $y+35 );
+                $y = $pdf->getY();
+                $c=0;
+                $ln++;
+            }else{
+                $pdf->setX($x+49);
+                $x = $pdf->getX();
+                $c++;
+            }
+
+            if ($ln == 7 ){
+                $this->header2($pdf);
+                $x = $xi;
+                $y = 20;
+                $ln = 1;
+            }
+
+        }
+
+        $pdf->Ln();
+        $pdf->Output();
+        exit;
+
+    }
+
+    public function imprimir_codigo_barra_compra($compra_id){
+
+        $Compras = Movimiento::query()
+            ->where('compra_id',$compra_id)
+            ->where('status',1)
+            ->get();
+
+        $i = 1;
+        $j = $Compras->count();
+
+        $pdf  = new PDF_EAN13('P','mm','Letter');
+
+        $pdf->AliasNbPages();
+        $this->header2($pdf);
+        $pdf->SetFillColor(32,32,32);
+        $pdf->SetFont('Arial','',6);
+        $pdf->addFont('AndaleMono','','AndaleMono.php');
+        $pdf->addFont('arialn');
+
+        $c  = 0;
+        $ln = 1;
+        $x  = 17.5;
+        $y  = $pdf->getY()+9;
+        $xi = $x;
+        $yi = $y;
+        foreach ($Compras as $Com){
+            $Prod = Producto::find($Com->producto_id);
+            $this->producto_name = $Prod->shortdesc;
+            $this->codigo        = $Prod->codigo;
+            $this->pv            = $Prod->pv;
+
+            for ($i = 1; $i <= $Com->entrada; $i++){
+                $pdf->SetFillColor(212,212,212);
+                $pdf->Rect($x-7.5,$y-5,49,35,'');
+                $pdf->SetFillColor(32,32,32);
+                $pdf->EAN13($x,$y,$Prod->codigo,16,.35,$this->producto_name,$this->pv);
+                if ($c>2){
+                    $x = 17.5;
+                    $pdf->setX($x);
+                    $pdf->setY( $y+35 );
+                    $y = $pdf->getY();
+                    $c=0;
+                    $ln++;
+                }else{
+                    $pdf->setX($x+49);
+                    $x = $pdf->getX();
+                    $c++;
+                }
+
+                if ($ln == 7 ){
+                    $this->header2($pdf);
+                    $x = $xi;
+                    $y = 20;
+                    $ln = 1;
+                }
+
+            }
+
+        }
+
+        $pdf->Ln();
+        $pdf->Output();
+        exit;
+
+    }
+
+
+
+
 
 
 }

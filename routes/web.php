@@ -114,6 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/imprimir_tarjeta_movtos_costeo/{producto_id}/{opt}', 'Externos\TarjetaMovtosController@imprimir_tarjeta_movtos_costeo')->name('imprimir_tarjeta_movtos_costeo/');
     Route::get('/imprimir_codigo_barra/{producto_id}', 'Externos\BarCodeController@imprimir_codigo_barra')->name('imprimirCodigoBarra/');
     Route::get('/imprimir_codigos_de_barras/', 'Externos\BarCodeController@imprimir_todos_codigos_barras')->name('imprimirTodosCodigosBarras/');
+    Route::get('/imprimir_codigo_barra_cantidad/{producto_id}/{cantidad}', 'Externos\BarCodeController@imprimir_codigo_barra_cantidad')->name('imprimirCodigoBarraCantidad/');
+    Route::get('/imprimir_codigo_barra_compra/{compra_id}', 'Externos\BarCodeController@imprimir_codigo_barra_compra')->name('imprimirCodigoBarraCompra/');
 
     // Paquetes
     Route::get('/index_paquete','SIIFAC\PaqueteController@index')->name('paqueteIndex');
