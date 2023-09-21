@@ -55,9 +55,9 @@
                                             <a  id="/form_compra_editar_ajax/{{$compra->id}}"  class="btn btn-link pull-right btnCompraEditar" title="Editar" data-toggle="modal" data-target="#myModal">
                                                 <i class="fa fa-pencil bigger-110 success"></i>
                                             </a>
-                                            <a href="{{ route('imprimirCodigoBarraCompra/',['compra_id' => $compra->id])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir códigos de barra" target="_blank">
-                                                <i class="fa fa-barcode bigger-110 purple"></i>
-                                            </a>
+{{--                                            <a href="{{ route('imprimirCodigoBarraCompra/',['compra_id' => $compra->id])  }}" class="btn btn-link bt1n-xs pull-right" title="Imprimir códigos de barra" target="_blank">--}}
+{{--                                                <i class="fa fa-barcode bigger-110 purple"></i>--}}
+{{--                                            </a>--}}
                                         @endif
 
                                     </div>

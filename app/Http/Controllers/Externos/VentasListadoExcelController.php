@@ -60,8 +60,8 @@ class VentasListadoExcelController extends Controller{
                     ->setCellValue('B'.$C, $i->getFolioImpreso($i->empresa_id,$i->id))
                     ->setCellValue('C'.$C, $i->user->FullName)
                     ->setCellValue('D'.$C, $a)
-                    ->setCellValue('E'.$C, $b)
-                    ->setCellValue('F'.$C, $c);
+                    ->setCellValue('E'.$C, $c)
+                    ->setCellValue('F'.$C, $b);
 
                 $C++;
             }
