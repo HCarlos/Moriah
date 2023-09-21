@@ -133,47 +133,73 @@ class Venta extends Model
     }
 
     public function scopeBuscarClientePorNombreCompleto($query,$dato,$user) {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
         $dato = strtoupper($dato);
         return
             $this::whereHas('users', function ($q) use($dato, $user) {
                 $q->where(DB::raw("CONCAT(ap_paterno,' ',ap_materno,' ',nombre)") , "similar to" , "%".$dato."%");
             })
-//            ->where(function ($q) use($user) {
-//                 if (!$user->hasRole('administrator|sysop'))
-//                    $q->where('vendedor_id', $user->id);
-//            })
             ->where('empresa_id', $this->Empresa_Id)
             ->get();
     }
 
     public function scopeBuscarProductoPorNombre($query,$dato,$user) {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $dato = strtoupper($dato);
         return
             $this::whereHas('ventaDetalles', function ($q) use($dato, $user) {
                 $q->where('descripcion', "similar to" , "%".$dato."%");
             })
-//            ->where(function ($q) use($user) {
-//                 if (!$user->hasRole('administrator|sysop'))
-//                    $q->where('vendedor_id', $user->id);
-//            })
             ->where('empresa_id', $this->Empresa_Id)
             ->distinct()
             ->get();
     }
 
     public function scopeBuscarProductoPorCodigo($query,$dato,$user) {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
         $dato = strtoupper($dato);
         return
             $this::whereHas('ventaDetalles', function ($q) use($dato, $user) {
                 $q->where('codigo', "similar to" , "%".$dato."%");
             })
-//            ->where(function ($q) use($user) {
-//                 if (!$user->hasRole('administrator|sysop'))
-//                    $q->where('vendedor_id', $user->id);
-//            })
             ->where('empresa_id', $this->Empresa_Id)
             ->distinct()
             ->get();
+    }
+
+    public function scopeBuscarPorFolioVenta($query,$dato,$user) {
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        // dd($this->Empresa_Id);
+
+        $venta_id = EmpresaVenta::select(['folio','id'])
+            ->where('empresa_id',$this->Empresa_Id)
+            ->where('folio',$dato)->get();
+
+//         dd($venta_id);
+
+        if ( $venta_id !== null && isset($venta_id[0]->id)){
+            return $this::where('id', $venta_id[0]->id)
+                ->where('empresa_id', $this->Empresa_Id)
+                ->distinct()
+                ->get();
+        }else{
+            return $venta_id;
+        }
+
     }
 
     public function getMetodoPagoAttribute() {

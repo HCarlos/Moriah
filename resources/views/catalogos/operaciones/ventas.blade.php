@@ -54,6 +54,8 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="#" class="btnBuscarVentaID" id="bvid-0" data-toggle="modal" data-target="#myModal">Buscar Venta por ID</a></li>
                             <li role="separator" class="divider"></li>
+                            <li><a href="#" class="btnBuscarVentaID" id="bvid-4" data-toggle="modal" data-target="#myModal">Buscar Venta por Folio</a></li>
+                            <li role="separator" class="divider"></li>
                             <li><a href="#" class="btnBuscarVentaID" id="bvid-1" data-toggle="modal" data-target="#myModal">Buscar Venta Cliente</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#" class="btnBuscarVentaID" id="bvid-2" data-toggle="modal" data-target="#myModal">Buscar Venta Producto</a></li>

@@ -270,7 +270,6 @@ class VentaController extends Controller
             $items = VentaDetalle::all()->where('venta_id', $venta_id);
             // dd($venta);
             $user = Auth::User();
-
             return view('catalogos.operaciones.venta_detalles',
                 [
                     'tableName' => 'venta_detalles',
@@ -315,8 +314,7 @@ class VentaController extends Controller
         );
     }
 
-    public function pagar_venta_ajax(Request $request)
-    {
+    public function pagar_venta_ajax(Request $request){
         $data          = $request->all();
         $total         = $data['total'];
         $total_pagado  = $data['total_pagado'];
@@ -333,14 +331,20 @@ class VentaController extends Controller
     }
 
     public function llamar_busquedaIndividual($tipo){
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+
         switch ($tipo){
             case 0:
                 $ctipo = 'Venta ID';
-                $ctype = 'Busqueda por Venta ID';
+                $ctype = 'Búsqueda por Venta ID';
                 break;
             case 1:
                 $ctipo = 'Cliente';
-                $ctype = 'Busqueda por Cliente';
+                $ctype = 'Búsqueda por Cliente';
                 break;
             case 2:
                 $ctipo = 'Producto';
@@ -350,6 +354,10 @@ class VentaController extends Controller
                 $ctipo = 'Código';
                 $ctype = 'Búsqueda de Código de Producto';
                 break;
+            case 4:
+                $ctipo = 'Folio de Venta';
+                $ctype = 'Búsqueda por Folio de Venta';
+                break;
         }
         return view (
             'catalogos.operaciones.busquedas.busqueda_individual_1',
@@ -358,8 +366,16 @@ class VentaController extends Controller
     }
 
     public function busquedaIndividual(Request $request){
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+
         $data = $request->all();
         $dato = $data['dato'];
+
+//        dd($data);
 
         $F = (new FuncionesController);
 
@@ -369,14 +385,12 @@ class VentaController extends Controller
         $tipo = $data['type'];
         $user = Auth::User();
         $user = User::find($user->id);
-        switch ($tipo){
+        switch ($tipo) {
             case 0:
+                //dd($this->Empresa_Id);
+                $dato = (int)$dato;
                 $items = Venta::select()
                     ->where('id',$dato)
-//                    ->where(function ($q) use($user) {
-//                        if (!$user->hasRole('administrator|sysop'))
-//                            $q->where('vendedor_id', $user->id);
-//                    })
                     ->where('empresa_id', $this->Empresa_Id)
                     ->orderBy('created_at')
                     ->get();
@@ -389,6 +403,9 @@ class VentaController extends Controller
                 break;
             case 3:
                 $items = Venta::BuscarProductoPorCodigo($dato,$user);
+                break;
+            case 4:
+                $items = Venta::BuscarPorFolioVenta($dato,$user);
                 break;
         }
 
