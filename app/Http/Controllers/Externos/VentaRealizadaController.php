@@ -24,7 +24,7 @@ class VentaRealizadaController extends Controller
         $this->F = (new FuncionesController);
     }
 
-    protected function header($pdf){
+    protected function header($pdf, $tipo_reporte=0){
         $pdf->AddPage();
         $pdf->setY(10);
         $pdf->setX(10);
@@ -50,7 +50,11 @@ class VentaRealizadaController extends Controller
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(25,$this->alto,"","",0,"L");
-        $pdf->Cell(37,$this->alto,"VENTA REALIZADA | ","",0,"L");
+        if ( $tipo_reporte == 0 ){
+            $pdf->Cell(37,$this->alto,"VENTA REALIZADA | ","",0,"L");
+        }else{
+            $pdf->Cell(37,$this->alto,"SALIDA REALIZADA | ","",0,"L");
+        }
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(105,$this->alto,$this->vendedor,"",0,"L");
         $pdf->SetFont('Arial','',7);
@@ -71,7 +75,7 @@ class VentaRealizadaController extends Controller
         $pdf->setX(10);
     }
 
-    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m)
+    public function imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m, $tipo_reporte)
     {
         $this->f1 = $f1;
         $this->f2 = $f2;
@@ -81,7 +85,7 @@ class VentaRealizadaController extends Controller
         $this->timex = Carbon::now()->format('d-m-Y_h:m:s_a');
 
         $pdf->AliasNbPages();
-        $this->header($pdf);
+        $this->header($pdf, $tipo_reporte);
         $pdf->SetFillColor(32,32,32);
         $pdf->SetFont('Arial','',6);
         $total = $abono = $tresta = 0;

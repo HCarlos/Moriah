@@ -44,19 +44,6 @@ class PanelControlOneRequest extends FormRequest
         return [
             'fecha1' => ['required','date'],
             'fecha2' => ['required','date','after_or_equal:fecha1'],
-//            'fecha2' => ['required', 'email', 'unique:users,email'],
-//            'password' => 'required',
-//            'role' => ['nullable', Rule::in(Role::getList())],
-//            'bio' => 'required',
-//            'twitter' => ['nullable', 'present', 'url'],
-//            'profession_id' => [
-//                'nullable', 'present',
-//                Rule::exists('professions', 'id')->whereNull('deleted_at')
-//            ],
-//            'skills' => [
-//                'array',
-//                Rule::exists('skills', 'id'),
-//            ],
         ];
 
     }
@@ -85,11 +72,13 @@ class PanelControlOneRequest extends FormRequest
         $metodo_pago = $this->metodo_pago;
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
+        $arr = [0,1,2,3,4,5,6,7,8,9];
 
         $Movs = Ingreso::query()
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
+            ->whereIn('metodo_pago', $arr)
             ->where(function ($q) use($tipo_venta) {
                 if ($tipo_venta > -1)
                     $q->where('tipoventa', $tipo_venta);
@@ -118,7 +107,7 @@ class PanelControlOneRequest extends FormRequest
         $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa);
     }
 
-    public function ventaRealizada($pdf){
+    public function ventaRealizada($pdf,$tipo_reporte){
 
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($this->Empresa_Id <= 0){
@@ -137,10 +126,17 @@ class PanelControlOneRequest extends FormRequest
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
 
+        if ( $tipo_reporte == 0 ){
+            $arr = [0,1,2,3,4,5,6,7,8,9];
+        }else{
+            $arr = [200,300,400,600];
+        }
+
         $Movs = Venta::query()
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
+            ->whereIn('metodo_pago', $arr)
             ->where(function ($q) use($tipo_venta) {
                 if ($tipo_venta > -1)
                     $q->where('tipoventa', $tipo_venta);
@@ -153,7 +149,7 @@ class PanelControlOneRequest extends FormRequest
             ->get();
         
 
-            // dd($Movs);
+//            dd($Movs);
 
         $m = $Movs->first();
         if ($m){
@@ -164,11 +160,12 @@ class PanelControlOneRequest extends FormRequest
             $empresa = 'none';
             if ( !is_null($m) ){
                 $vendedor = trim($m->vendedor->FullName);
+//                dd( $m );
                 $empresa = trim($m->empresa->rs);
             }
 
             $x = new VentaRealizadaController();
-            $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m);
+            $x->imprimir_Venta($f1,$f2,$vendedor,$pdf,$Movs,$empresa,$m,$tipo_reporte);
 
         }
 
@@ -190,11 +187,15 @@ class PanelControlOneRequest extends FormRequest
         $metodo_pago = $this->metodo_pago;
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
+        $arr = [0,1,2,3,4,5,6,7,8,9];
 
         $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, DATE(fecha) as fecha, descripcion, pc, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
+            ->whereHas('venta', function ($q) use($arr) {
+                $q->whereIn('metodo_pago', $arr);
+            })
             ->groupByRaw('producto_id, DATE(fecha), descripcion, pc, codigo')
             ->orderByRaw('descripcion, fecha' )
             ->get();

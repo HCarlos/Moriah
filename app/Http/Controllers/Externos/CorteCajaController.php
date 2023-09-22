@@ -194,7 +194,7 @@ class CorteCajaController extends Controller{
                 return redirect()->route('show_panel_consulta_1');
                 break;
             case 1:
-                $request->ventaRealizada($pdf);
+                $request->ventaRealizada($pdf,0);
                 break;
             case 2:
                 $request->ventaConsolidadaPorProducto($pdf);
@@ -202,6 +202,9 @@ class CorteCajaController extends Controller{
             case 3:
             case 4:
                 $request->notasDeCreditoList($tipo_reporte);
+                break;
+            case 5:
+                $request->ventaRealizada($pdf,1);
                 break;
         }
     }

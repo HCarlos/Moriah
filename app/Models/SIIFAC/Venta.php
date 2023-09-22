@@ -67,6 +67,10 @@ class Venta extends Model
         return $this->belongsToMany(Empresa::class);
     }
 
+    public function ingreso(){
+        return $this->belongsTo(Ingreso::class);
+    }
+
     public function paquete(){
         return $this->belongsTo(Paquete::class);
     }

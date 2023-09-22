@@ -73,6 +73,7 @@
                                 <select name="tipo_reporte" id="tipo_reporte" class="form-control" size="1">
                                     <option value="0" selected>Reporte de Ingresos</option>
                                     <option value="1">Reporte de Ventas</option>
+                                    <option value="5">Reporte de Salidas a través de Ventas</option>
                                     <option value="2">Informe de Venta Consolidada por Producto</option>
                                     <option value="3">Listado Notas de Crédito (PV)</option>
                                     <option value="4">Listado Notas de Crédito (PC)</option>
