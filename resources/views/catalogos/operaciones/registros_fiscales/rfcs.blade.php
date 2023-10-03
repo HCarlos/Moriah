@@ -40,7 +40,7 @@
                                     <div class="">
 
                                         @if ($user->hasAnyPermission(['consultar','all','sysop']) )
-                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="RFC-{{$rfc->id}}-destroy" title="Eliminar">
+                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="rfc-{{$rfc->id}}-destroy" title="Eliminar">
                                                 <i class="fa fa-trash bigger-110 red" ></i>
                                             </a>
                                             <a href="#" id="/form_rfc_editar_ajax/{{$rfc->id}}"  class="btn btn-link pull-right btnRFCEditar" title="Editar" data-toggle="modal" data-target="#myModal">

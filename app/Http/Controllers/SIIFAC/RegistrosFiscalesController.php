@@ -84,6 +84,9 @@ class RegistrosFiscalesController extends Controller{
         }
 
         $data = $request->all();
+
+//        dd($data);
+
         $data["rfc"]                  = $data["rfc"]                  ===  null ? '' : trim(strtoupper($data["rfc"]));
         $data["razon_social"]         = $data["razon_social"]         ===  null ? '' : trim(strtoupper($data["razon_social"]));
         $data["razon_social_cfdi_40"] = $data["razon_social_cfdi_40"] ===  null ? '' : trim(strtoupper($data["razon_social_cfdi_40"]));
@@ -97,11 +100,12 @@ class RegistrosFiscalesController extends Controller{
         $data["pais"]                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
         $data["cp"]                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
         $data["emails"]               = $data["emails"]               ===  null ? '' : trim($data["emails"]);
-        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"]    ==  null ? 1 : $data["regimen_fiscal_id"];
+        $data["regimen_fiscal_id"]    = $data["regimen_fiscal_id"] ?? 1;
         $data['observaciones']        = "";
-
         $data['idemp']      = $this->Empresa_Id;
         $data['empresa_id'] = $this->Empresa_Id;
+
+//        dd($data);
 
         try {
             $mensaje = "OK";
@@ -162,7 +166,7 @@ class RegistrosFiscalesController extends Controller{
             $rfc->pais                 = $data["pais"]                 ===  null ? '' : trim(strtoupper($data["pais"]));
             $rfc->cp                   = $data["cp"]                   ===  null ? '' : trim(strtoupper($data["cp"]));
             $rfc->emails               = $data["emails"]               ===  null ? '' : trim($data["emails"]);
-            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"]    ==  null ? 1 : $data["regimen_fiscal_id"];
+            $rfc->regimen_fiscal_id    = $data["regimen_fiscal_id"] ?? 1;
 
             $rfc->save();
 
@@ -176,6 +180,9 @@ class RegistrosFiscalesController extends Controller{
     public function destroy($id){
 
         $rfc = Rfc::findOrFail($id);
+
+//        dd($rfc);
+
 //        $Mov  = Movimiento::where('compra_id', $id);
 //        $rfc->forceDelete();
         $rfc->forceDelete();

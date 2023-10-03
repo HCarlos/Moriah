@@ -16,7 +16,7 @@ $(document).ready(function() {
             }
 
             var Url = '/'+aID[2]+'_'+aID[0]+'/'+aID[1];
-
+            // alert(Url);
             $(function() {
                 $.ajax({
                     method: "GET",
