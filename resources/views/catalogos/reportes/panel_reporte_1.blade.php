@@ -92,21 +92,6 @@
 
                     <hr/>
 
-                    {{--<form method="post" action="{{ action('Externos\TwilioSMSController@send_sms_one') }}" target="_self">--}}
-                        {{--{{ csrf_field() }}--}}
-                        {{--<div class="form-group row">--}}
-                            {{--<input name="to" id="to" type="phone" placeholder="To" class="form-inline"/>--}}
-                            {{--<input name="message" id="message" type="text" placeholder="Message" class="form-inline"/>--}}
-                            {{--<label class="form-label">{{$msg}}</label>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group row">--}}
-                            {{--<button type="submit" class="btn btn-mini btn-info">--}}
-                                {{--<i class="fa fa-sms"></i>--}}
-                                {{--Enviar SMS--}}
-                            {{--</button>--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-
                 </div>
 
             </div>

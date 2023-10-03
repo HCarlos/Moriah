@@ -72,7 +72,7 @@ class PanelControlOneRequest extends FormRequest
         $metodo_pago = $this->metodo_pago;
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
-        $arr = [0,1,2,3,4,5,6,7,8,9];
+        $arr = [0,1,2,3,4,5,6,7,8,9,600];
 
         $Movs = Ingreso::query()
             ->where('empresa_id',$this->Empresa_Id)
@@ -127,7 +127,7 @@ class PanelControlOneRequest extends FormRequest
         $empresa_id  = $this->empresa_id;
 
         if ( $tipo_reporte == 0 ){
-            $arr = [0,1,2,3,4,5,6,7,8,9];
+            $arr = [0,1,2,3,4,5,6,7,8,9,600];
         }else{
             $arr = [200,300,400,600];
         }
@@ -187,7 +187,7 @@ class PanelControlOneRequest extends FormRequest
         $metodo_pago = $this->metodo_pago;
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
-        $arr = [0,1,2,3,4,5,6,7,8,9];
+        $arr = [0,1,2,3,4,5,6,7,8,9,600];
 
         $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, DATE(fecha) as fecha, descripcion, pc, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
