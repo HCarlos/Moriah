@@ -218,7 +218,6 @@ class Movimiento extends Model{
 
 
     }
-    
 
     public static function agregarDesdeVentaDetalle($Vd){
         $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
@@ -250,10 +249,10 @@ class Movimiento extends Model{
             'cu'               => $Prod->cu,
             'pu'               => $Prod->pv,
             'haber'            => $Vd->importe,
-            'descto'           =>  $Vd->descto,
-            'importe'          =>  $Vd->subtotal,
-            'iva'              =>  $Vd->iva,
-            'saldo'            =>  $Vd->total,
+            'descto'           => $Vd->descto,
+            'importe'          => $Vd->subtotal,
+            'iva'              => $Vd->iva,
+            'saldo'            => $Vd->total,
             'status'           => 2,
             'idemp'            => $Empresa_Id,
             'ip'               => Request::ip(),
@@ -406,22 +405,7 @@ class Movimiento extends Model{
     }
 
     public static function ActualizarCompraDesdeDetalles($Comp){
-//        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
-//        $Fecha      = Carbon::now();
-//        $user       = Auth::user();
-//        $Movs        = Movimiento::all()->where('compra_id',$Comp->id);
-//        foreach ($Movs as $Mov){
-//            $Prod       = Producto::find($Mov->producto_id);
-//            $cu         = $Mov->cu;
-//            $cantidad   = $Mov->cantidad;
-//            $existencia = $Prod->exist;
-//            $saldo      = $cu * $cantidad;
-//            $iva   = $Prod->isIVA() ? $saldo * 0.160000 : 0;
-//            $total = $saldo + $iva;
-//        }
-//        dd("Hola");
         $Suma = static::where('compra_id',$Comp->id)->sum('saldo');
-//        dd($Suma);
         if ($Suma > 0){
             $Comp->total = $Suma;
             $Comp->save();
@@ -492,6 +476,7 @@ class Movimiento extends Model{
         ->first();
 //        ->where('status',0)
         try{
+//            dd($MovInit);
             if (!is_null($MovInit)){
                 $Movs = static::query()
                 ->where('producto_id',$Prod->id)
@@ -502,50 +487,61 @@ class Movimiento extends Model{
                 $lcSaldoCosteo = 0;
                 $costo_promedio = 0;
                 $costo_anterior = 0;
-                foreach ($Movs as $mov){
-                    if ($costo_promedio == 0) {
-                        $costo_promedio = $mov->cu;
-                        $costo_anterior = $mov->cu;
-                    }else{
-                        if ($mov->Estatus == 1) {
-                            if ($mov->entrada > 0) {
-                                if ($costo_anterior != $mov->cu) {
-                                    $costo_promedio = ($costo_promedio + $mov->cu) / 2;
-                                    $costo_anterior = $mov->cu;
+                if ($Movs->count() > 0){
+                    foreach ($Movs as $mov){
+                        if ($costo_promedio == 0) {
+                            $costo_promedio = $mov->cu;
+                            $costo_anterior = $mov->cu;
+                        }else{
+                            if ($mov->Estatus == 1) {
+                                if ($mov->entrada > 0) {
+                                    if ($costo_anterior != $mov->cu) {
+                                        $costo_promedio = ($costo_promedio + $mov->cu) / 2;
+                                        $costo_anterior = $mov->cu;
+                                    }
                                 }
                             }
                         }
-//                        $costo_anterior = $mov->cu;
+
+                        $mov->costo_promedio = $costo_promedio;
+                        $lcDebe = $mov->entrada * $costo_promedio;
+                        $lcHaber = $mov->salida * $costo_promedio;
+                        $lcsllocal0 = $lcDebe - $lcHaber;
+
+                        $mov->debe = $mov->pu * $mov->entrada;
+                        $mov->haber = $mov->pu * $mov->salida;
+                        $exist0 = $mov->entrada - $mov->salida;
+                        $saldo0 = $mov->debe - $mov->haber;
+                        $mov->existencia   = $exist + $exist0;
+                        $mov->saldo        = $saldo + $saldo0;
+                        $mov->sllocal      = $lcsllocal0;
+                        $mov->debe_costeo  = $lcDebe;
+                        $mov->haber_costeo = $lcHaber;
+                        $mov->saldo_costeo = $lcSaldoCosteo + $lcsllocal0;
+                        $mov->save();
+                        $exist           += $exist0;
+                        $saldo           += $saldo0;
+                        $lcSaldoCosteo   += $lcsllocal0;
                     }
-
-                    $mov->costo_promedio = $costo_promedio;
-                    $lcDebe = $mov->entrada * $costo_promedio;
-                    $lcHaber = $mov->salida * $costo_promedio;
-                    $lcsllocal0 = $lcDebe - $lcHaber;
-
-
-                    $mov->debe = $mov->pu * $mov->entrada;
-                    $mov->haber = $mov->pu * $mov->salida;
-                    $exist0 = $mov->entrada - $mov->salida;
-                    $saldo0 = $mov->debe - $mov->haber;
-                    $mov->existencia   = $exist + $exist0;
-                    $mov->saldo        = $saldo + $saldo0;
-                    $mov->sllocal      = $lcsllocal0;
-                    $mov->debe_costeo  = $lcDebe;
-                    $mov->haber_costeo = $lcHaber;
-                    $mov->saldo_costeo = $lcSaldoCosteo + $lcsllocal0;
-                    $mov->save();
-                    $exist           += $exist0;
-                    $saldo           += $saldo0;
-                    $lcSaldoCosteo   += $lcsllocal0;
+                    $Prod->cu = $costo_promedio;
+                    $Prod->exist = $exist;
+                    $Prod->saldo = $saldo;
+                    $Prod->saldo_costeo = $lcSaldoCosteo;
+                    $Prod->save();
+                }else{
+                    $Prod->cu    = 0;
+                    $Prod->exist = 0;
+                    $Prod->saldo = 0;
+                    $Prod->saldo_costeo = 0;
+                    $Prod->save();
                 }
-                $Prod->cu = $costo_promedio;
-                $Prod->exist = $exist;
-                $Prod->saldo = $saldo;
-                $Prod->saldo_costeo = $lcSaldoCosteo;
-                $Prod->save();
                 return "OK";
             }else{
+                $Prod->cu    = 0;
+                $Prod->exist = 0;
+                $Prod->saldo = 0;
+                $Prod->saldo_costeo = 0;
+                $Prod->save();
                 $errorMovInit = "Es nulo el Product_ID : ".$Prod->id;
                 Log::alert($errorMovInit);
                 return $Prod->id;

@@ -80,7 +80,7 @@ class TarjetaMovtosController extends Controller
     {
         $Prod                = Producto::find($producto_id);
         $Movs                = Movimiento::query()->where('producto_id',$producto_id)->orderBy('id')->get();
-        //dd($Movs);
+        // dd($Movs);
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
         $Emp                 = Empresa::find($Prod->empresa_id);
         $this->empresa       = $Emp->rs;
