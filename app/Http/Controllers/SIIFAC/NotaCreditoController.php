@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\SIIFAC;
 
 use App\Classes\GeneralFunctions;
+use App\Http\Controllers\Externos\NotaCreditoPrintController;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Http\Requests\NotaCreditoRequest;
+use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\NotaCredito;
 use App\Models\SIIFAC\Venta;
 use App\Models\SIIFAC\VentaDetalle;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class NotaCreditoController extends Controller{
     protected $tableName = 'notas_credito';
@@ -22,13 +26,12 @@ class NotaCreditoController extends Controller{
     public function __construct(){
         $this->middleware('auth');
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
-        if ($this->Empresa_Id <= 0){
+        if ($this->Empresa_Id <= 0) {
             return redirect('openEmpresa');
         }
     }
 
-    public function index($fecha)
-    {
+    public function index($fecha, Request $request){
         if (is_null($fecha)){
             abort(500);
         }
@@ -43,23 +46,38 @@ class NotaCreditoController extends Controller{
         $f = $F->getFechaFromNumeric($fecha);
         $f1 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString();
         $f2 =  Carbon::createFromFormat('Y-m-d', $f)->toDateString();
-        $items = NotaCredito::all()
-            ->where('empresa_id',$this->Empresa_Id)
-            ->where('fecha','>=', $f1)
-            ->where('fecha','<=', $f2)
-            ->sortByDesc('id');
+//        $items = NotaCredito::all()
+//            ->where('empresa_id',$this->Empresa_Id)
+//            ->where('fecha','>=', $f1)
+//            ->where('fecha','<=', $f2)
+//            ->sortByDesc('id');
+        $Emp = $this->Empresa_Id;
+        $items = User::whereHas('Notas_Credito',function ($q) use ($Emp, $f1, $f2) {
+                return $q->where('empresa_id',$Emp)
+                            ->where('fecha','>=', $f1)
+                            ->where('fecha','<=', $f2);
+                })
+                ->orderByDesc('id')
+                ->get();
+
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->importe;
         }
 //        dd($items);
+
+        $request->session()->put('items', $items);
+
+
         return view ('catalogos.operaciones.notasdecredito',
             [
-                'tableName' => 'Nota_de_Credito',
-                'notasCredito' => $items,
-                'user' => $user,
-                'totalVentas' => number_format($totalVenta,2,'.',',') ,
-                'fecha' => $F->fechaEspanol($f),
+                'tableName'     => 'Nota_de_Credito',
+                'item_order_id' => 0  ,
+                'item_order'    => "ASC",
+                'notasCredito'  => $items,
+                'user'          => $user,
+                'totalVentas'   => number_format($totalVenta,2,'.',',') ,
+                'fecha'         => $F->fechaEspanol($f),
             ]
         );
     }
@@ -140,6 +158,71 @@ class NotaCreditoController extends Controller{
         }
 
     }
+
+    public function listado_notas_credito(Request $request){
+
+        // $user = Auth::User();
+        $F = (new FuncionesController);
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+        $Emp = $this->Empresa_Id;
+        $items = User::whereHas('Notas_Credito',function ($q) use ($Emp) {
+                    $saldo = 0;
+                    return $q->where('empresa_id',$Emp)
+                   ->where('saldo_utilizado','>',0);
+                })
+                ->orderByRaw("CONCAT(ap_paterno, ' ', ap_materno, ' ', nombre) asc")
+                ->get();
+
+//         dd($items);
+
+        $totalVenta = 0;
+        foreach ($items as $item){
+            foreach ($item->Notas_Credito as $nc) {
+                //dd($nc);
+                if ( $nc->importe == $nc->importe_utilizado ){
+//                    dd($nc->importe_utilizado);
+//                    $nc->delete();
+                }
+            }
+        }
+
+// dd($items);
+        $request->session()->put('items', $items);
+
+        return view ('catalogos.operaciones.notasdecredito',
+            [
+                'tableName'     => 'Nota_de_Credito',
+                'item_order_id' => 4,
+                'item_order'    => "ASC",
+                'notasCredito'  => $items,
+                'user'          => Auth::User(),
+                'totalVentas'   => number_format($totalVenta,2,'.',',') ,
+                'fecha'         => $F->getFechaFromNumeric(now()),
+            ]
+        );
+    }
+
+    public function listado_notas_credito_impreso(Request $request){
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $F = (new FuncionesController);
+
+        $Emp = Empresa::find($this->Empresa_Id);
+        $Items = $request->session()->get('items');
+
+        $x = new NotaCreditoPrintController();
+        $x->listadoClientesSaldoAFavor($Items,$Emp);
+
+    }
+
 
 
 }

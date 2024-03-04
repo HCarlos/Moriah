@@ -19,6 +19,7 @@ class NotaCredito extends Model
         'importe', 'isprint', 'status','tipo','empresa_id',
         'consecutivo',
         'status_nota_credito','idemp','ip','host',
+        'importe_utilizado', 'saldo_utilizado',
     ];
 
     public function user(){

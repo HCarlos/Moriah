@@ -43,7 +43,7 @@
                         {{ Form::date('fecha', \Carbon\Carbon::now(), ['id'=>'fecha','class'=>'col-md-3 form-control']) }}
                     </div>
                 </div>
-                <div class="form-group pull-right">
+                <div class="form-group pull-right ">
                     <div class="dropdown">
                         <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Opciones
@@ -103,6 +103,7 @@
                         <thead>
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
+                            <th aria-label="folio" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >Folio</th>
                             <th aria-label="fecha" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Fecha</th>
                             <th aria-label="cliente" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Cliente</th>
                             <th aria-label="paquete" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Paq. / Ped.</th>
@@ -116,6 +117,7 @@
                         @foreach ($ventas as $venta)
                             <tr class="{{$venta->isPagado() ? 'dark' : 'red'}}">
                                 <td>{{ $venta->id }}</td>
+                                <td>{{ $venta->getFolioImpreso($venta->empresa_id,$venta->id) }}</td>
                                 <td>{{ $venta->FechaImpresa }}</td>
                                 <td>{{ $venta->user->FullName }}</td>
                                 @if($venta->paquete_id > 0)

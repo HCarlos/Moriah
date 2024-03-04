@@ -59,6 +59,8 @@ class NotaCreditoRequest extends FormRequest
                     'empresa_id'       => $Ven->empresa_id,
                     'fecha'            => now(),
                     'consecutivo'      => NotaCredito::getFolio($Ven->empresa_id) + 1,
+                    'importe_utilizado'=> 0,
+                    'saldo_utilizado'  => 0,
                     ];
                 //dd($Item);
                 $NC = NotaCredito::create($Item);
@@ -88,13 +90,14 @@ class NotaCreditoRequest extends FormRequest
                             'pc'               => $vd->pc,
                             'cant'             => $value,
                             'importe'          => $Subtotal,
-                            'empresa_id'       => $Ven->empresa_id
+                            'empresa_id'       => $Ven->empresa_id,
                         ];
 
                         $NCD = NotaCreditoDetalle::create($Item);
                         // dd($NCD);
                         $vd->cantidad_devuelta = $vd->cantidad_devuelta + $value;
                         $xd = $vd->save();
+
 
                         $resp = Movimiento::agregarDesdeNotaCreditoDetalle($NCD);
 //                        dd($resp);

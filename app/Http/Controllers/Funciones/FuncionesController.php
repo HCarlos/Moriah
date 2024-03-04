@@ -89,6 +89,11 @@ class FuncionesController extends Controller
         return $f[2].'-'.$f[1].'-'.$f[0];
     }
 
+    public function getFechaDB($f){
+        $f = explode('-',substr($f,0,10));
+        return $f[0].'-'.$f[1].'-'.$f[2];
+    }
+
     public function fechaEspanolComplete($f,$type=false){
         $f = explode('-',substr($f,0,10));
         $f =  $f[2].'-'.$f[1].'-'.$f[0];

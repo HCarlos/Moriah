@@ -90,41 +90,57 @@ class Ingreso extends Model
     }
 
     public static function pagar($venta_id, $total_pagado, $metodo_pago, $referencia,$nota_credito_id){
-        $user = Auth::user();
-        $user_id = $user->id;
 
-        $Ven = Venta::findOrFail($venta_id);
-        $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($total_pagado > 0) {
 
-        if ( $Empresa_Id > 0){
+            $user = Auth::user();
+            $user_id = $user->id;
 
-            $Ing   =  static::create([
-                'fecha'           => now(),
-                'venta_id'        => $venta_id,
-                'user_id'         => $user_id,
-                'cliente_id'      => $Ven->user_id,
-                'vendedor_id'     => $Ven->vendedor_id,
-                'nota_credito_id' => $nota_credito_id,
-                'empresa_id'      => $Empresa_Id,
-                'f_pagado'        => now(),
-                'metodo_pago'     => $metodo_pago,
-                'referencia'      => $referencia,
-                'subtotal'        => $Ven->subtotal,
-                'iva'             => $Ven->iva,
-                'total'           => $total_pagado,
-                'tipoventa'       => $Ven->TipoDeVenta,
-            ]);
+            $Ven = Venta::findOrFail($venta_id);
+            $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
 
-            $Ing->ventas()->attach($venta_id);
-            $Ing->users()->attach($user_id);
-            $Ing->vendedores()->attach($Ven->vendedor_id);
-            $Ing->clientes()->attach($Ven->user_id);
-            $Ing->empresas()->attach($Empresa_Id);
+            if ( $Empresa_Id > 0){
 
-            return $Ing;
+                $Ing   =  static::create([
+                    'fecha'           => now(),
+                    'venta_id'        => $venta_id,
+                    'user_id'         => $user_id,
+                    'cliente_id'      => $Ven->user_id,
+                    'vendedor_id'     => $Ven->vendedor_id,
+                    'nota_credito_id' => $nota_credito_id,
+                    'empresa_id'      => $Empresa_Id,
+                    'f_pagado'        => now(),
+                    'metodo_pago'     => $metodo_pago,
+                    'referencia'      => $referencia,
+                    'subtotal'        => $Ven->subtotal,
+                    'iva'             => $Ven->iva,
+                    'total'           => $total_pagado,
+                    'tipoventa'       => $Ven->TipoDeVenta,
+                ]);
 
-        } else {
+                $Ing->ventas()->attach($venta_id);
+                $Ing->users()->attach($user_id);
+                $Ing->vendedores()->attach($Ven->vendedor_id);
+                $Ing->clientes()->attach($Ven->user_id);
+                $Ing->empresas()->attach($Empresa_Id);
+
+                if ($nota_credito_id > 0) {
+                    $NC = NotaCredito::find($nota_credito_id);
+                    $NC->importe_utilizado = $NC->SaldoUtilizado;
+                    $NC->saldo_utilizado   = $NC->Saldo;
+                    $NC->save();
+                }
+
+                return $Ing;
+
+            } else {
+                return null;
+            }
+
+        }else{
+
             return null;
+
         }
 
     }

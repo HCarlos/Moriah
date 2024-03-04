@@ -17,8 +17,13 @@
                         </span>
                     </div>
                     <div class="input-group">
-                        <a href="{{ route('nueva_notacredito/',['venta_id'=>0])  }}" class="btn btn-white btn-minier circle marginLeft1em" title="Nueva Nota de Crédito" >
+                        <a href="{{ route('nueva_notacredito/',['venta_id'=>0])  }}" class="btn btn-white btn-mini btn-squared marginLeft1em" title="Nueva Nota de Crédito" >
                             <i class="fa fa-plus purple bigger-150"></i>
+                        </a>
+                    </div>
+                    <div class="input-group">
+                        <a href="{{ route('listado_notas_credito_impreso/')  }}" class="btn btn-white btn-circle marginLeft1em" title="Listado de Notas de Crédito" >
+                            <i class="fa fa-print cafe bigger-150 "></i>
                         </a>
                     </div>
 
@@ -34,8 +39,40 @@
                     <div class="input-group">
                         {{ Form::date('fecha', \Carbon\Carbon::now(), ['id'=>'fecha','class'=>'form-control altoMoz']) }}
                     </div>
-
                 </div>
+                <div class="form-group pull-right marginRight1em">
+                    <div class="dropdown ">
+                        <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Opciones
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="{{ route('listado_notas_credito/') }}" >Listado de clientes con saldo a favor</a></li>
+{{--                            <li role="separator" class="divider"></li>--}}
+{{--                            <li><a href="#" class="btnBuscarVentaID" id="bvid-0" data-toggle="modal" data-target="#myModal">Buscar Venta por ID</a></li>--}}
+{{--                            <li role="separator" class="divider"></li>--}}
+{{--                            <li><a href="#" class="btnBuscarVentaID" id="bvid-4" data-toggle="modal" data-target="#myModal">Buscar Venta por Folio</a></li>--}}
+{{--                            <li role="separator" class="divider"></li>--}}
+{{--                            <li><a href="#" class="btnBuscarVentaID" id="bvid-1" data-toggle="modal" data-target="#myModal">Buscar Venta Cliente</a></li>--}}
+{{--                            <li role="separator" class="divider"></li>--}}
+{{--                            <li><a href="#" class="btnBuscarVentaID" id="bvid-2" data-toggle="modal" data-target="#myModal">Buscar Venta Producto</a></li>--}}
+{{--                            <li><a href="#" class="btnBuscarVentaID" id="bvid-3" data-toggle="modal" data-target="#myModal">Buscar Venta Código de Producto</a></li>--}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group  pull-right">
+                    <div class="col-md-1">
+                        <a id="btnPrintListado"
+                           href="{{ route('listado_notas_credito_impreso/') }}"
+                           class="btn btn-xs btn-cafe btnPrintListado"
+                           data-togle="tooltip" data-placement="top" title="Imprime listado actual"
+                           target="_blank"
+                        >
+                            <i class="fa fa-print default"></i>
+                        </a>
+                    </div>
+                </div>
+
             </form>
         </div>
         <div class="panel-body">
@@ -44,11 +81,12 @@
             </div>
             <div class="dataTables_wrapper" role="grid">
                 @if ($notasCredito)
-                    <table id="tblCal" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable " >
+                    <table id="{{ $tableName }}" aria-describedby="sample-table-2_info"  class="table table-striped table-bordered table-hover dataTable " >
                         <thead>
                         <tr role="row">
                             <th aria-label="id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >ID</th>
-                            <th aria-label="folio" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >Venta ID</th>
+                            <th aria-label="folio" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >Folio</th>
+                            <th aria-label="venta_id" style="width: 10px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="0" role="columnheader" class="sorting" >Venta</th>
                             <th aria-label="fecha" style="width: 50px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="1" role="columnheader" class="sorting">Fecha</th>
                             <th aria-label="cliente" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="2" role="columnheader" class="sorting">Cliente</th>
                             <th aria-label="vendedor" style="width: 100px;" colspan="1" rowspan="1" aria-controls="{{ $tableName}}" tabindex="3" role="columnheader" class="sorting">Vendedor</th>
@@ -60,15 +98,17 @@
                         </thead>
                         <tbody aria-relevant="all" aria-live="polite" role="alert">
                         @foreach ($notasCredito as $nc)
+                            @foreach ($nc->Notas_Credito as $nc)
                             <tr>
                                 <td>{{ $nc->id }}</td>
+                                <td>{{ $nc->consecutivo }}</td>
                                 <td>{{ $nc->venta_id }}</td>
                                 <td>{{ $nc->fecha }}</td>
                                 <td>{{ $nc->Venta->user->FullName }}</td>
                                 <td>{{ $nc->Venta->vendedor->FullName }}</td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $nc->importe}} </td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $nc->SaldoUtilizado}} </td>
-                                <td class="text-right font_Roboto_Mono_400">{{ $nc->Saldo}} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $nc->importe }} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $nc->importe_utilizado }} </td>
+                                <td class="text-right font_Roboto_Mono_400">{{ $nc->saldo }} </td>
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
@@ -87,6 +127,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                         @endforeach
                         </tbody>
                         <tfoot>

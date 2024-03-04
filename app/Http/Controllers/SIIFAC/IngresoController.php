@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SIIFAC;
 use App\Classes\GeneralFunctions;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\Ingreso;
+use App\Models\SIIFAC\NotaCredito;
 use App\Models\SIIFAC\Venta;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -96,12 +97,21 @@ class IngresoController extends Controller
                 $msg = "No se puede eliminar el ingreso de una Nota de Crédito";
             }else{
                 $vID = $Ing->venta_id;
+                $NC_id = $Ing->nota_credito_id;
                 $Ing->forceDelete();
                 $Ven = Venta::find($vID);
                 $Ven->ispagado = false;
                 $Ven->f_pagado = null;
                 $Ven->total_pagado = Venta::getTotalAbonosIngresos($vID);
                 $Ven->save();
+                if ($NC_id > 0) {
+                    $NC = NotaCredito::find($NC_id);
+                    $NC->importe_utilizado = $NC->SaldoUtilizado;
+                    $NC->saldo_utilizado   = $NC->Saldo;
+                    $NC->save();
+                }
+
+
             }
         }catch (Exception $e){
             $msg = $e->getMessage();

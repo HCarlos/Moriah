@@ -11,6 +11,13 @@
 
             $("#preloaderLocal").hide();
             var nombreTabla = "{{ $tableName }}";
+            var item_order_id = {{ isset($item_order_id) ? $item_order_id : 0 }};
+            var item_order = "{{ isset($item_order) ? $item_order : 'desc' }}";
+
+            // alert(item_order);
+
+            // alert(nombreTabla);
+
             $('#{{ $tableName }}').removeClass('hide');
 
             var nCols = $('#{{ $tableName }}').find("tbody > tr:first td").length;
@@ -46,7 +53,7 @@
                     "sInfoEmpty": "No existen datos",
                     "sInfoFiltered": "(De _MAX_ registros)"
                 },
-                "aaSorting": [[ 0, "desc" ]],
+                "aaSorting": [[ item_order_id, item_order ]],
                 "aoColumns": aCol,
                 "aLengthMenu": [arrColGroup1, arrColGroup2],
                 "bRetrieve": true,

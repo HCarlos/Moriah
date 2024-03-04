@@ -225,8 +225,10 @@ class PanelControlOneRequest extends FormRequest
 
         $F = (new FuncionesController);
 
-        $f1          = $F->fechaDateTimeFormat($this->fecha1);
-        $f2          = $F->fechaDateTimeFormat($this->fecha2,true);
+        $f1          = $F->getFechaDB($this->fecha1);
+        $f2          = $F->getFechaDB($this->fecha2);
+
+//        dd($f1,$f2);
 
         $vendedor_id = $this->vendedor_id;
         $metodo_pago = $this->metodo_pago;

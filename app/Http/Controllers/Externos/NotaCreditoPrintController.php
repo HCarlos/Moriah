@@ -91,7 +91,6 @@ class NotaCreditoPrintController extends Controller
         $this->alto  = 6;
         $pdf->setX(10);
     }
-
     public function print_nota_credito($nota_credito_id)
     {
         $Ven               = NotaCredito::find($nota_credito_id);
@@ -165,32 +164,6 @@ class NotaCreditoPrintController extends Controller
         exit;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function header_list_01($pdf){
         $pdf->AddPage();
         $pdf->setY(10);
@@ -227,9 +200,8 @@ class NotaCreditoPrintController extends Controller
         $this->alto  = 6;
         $pdf->setX(10);
     }
+    public function listadoNotaDeCredito($f1,$f2,$Movs,$empresa,$tipo_reporte){
 
-    public function listadoNotaDeCredito($f1,$f2,$Movs,$empresa,$tipo_reporte)
-    {
         $this->timex       = Carbon::now()->format('d-m-Y_H:i:s');
 
         $Emp               = $empresa;
@@ -281,6 +253,94 @@ class NotaCreditoPrintController extends Controller
         exit;
     }
 
+
+    public function header_list_02($pdf){
+        $pdf->AddPage();
+        $pdf->setY(10);
+        $pdf->setX(10);
+        $pdf->SetTextColor(0,0,0);
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Image('assets/img/logo-arji.gif',10,10,20,20);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode($this->empresa),"",0,"L");
+        $pdf->SetFont('Arial','',7);
+        $pdf->SetFillColor(212,212,212);
+        $pdf->Cell(20,$this->alto,$this->timex,"",1,"R");
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(150,$this->alto,utf8_decode("Av. México Núm. 2, Col. Del Bosque, Villahermosa, Tabasco. CP 86160"),"",1,"L");
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(25,$this->alto,"","",0,"L");
+        $pdf->Cell(145,$this->alto,utf8_decode($this->title),"",1,"L",true);
+        $pdf->ln(5);
+        $pdf->setX(10);
+        $this->alto  = 10;
+        $pdf->SetFont('Arial','B',6);
+        $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(10,$this->alto,"FOLIO",1,0,"L",true);
+        $pdf->Cell(20,$this->alto,"FECHA",1,0,"C",true);
+        $pdf->Cell(70,$this->alto,"CLIENTE",1,0,"L",true);
+        $pdf->Cell(25,$this->alto,"IMPORTE",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"UTILIZADO",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"PENDIENTE",1,1,"R",true);
+        $this->alto  = 6;
+        $pdf->setX(10);
+    }
+    public function listadoClientesSaldoAFavor($Movs,$empresa)
+    {
+        $this->timex       = Carbon::now()->format('d-m-Y_H:i:s');
+
+        $Emp               = $empresa;
+        $this->empresa     = trim($empresa->rs);
+        $this->empresa_id  = $Emp->id;
+
+        $this->status      = "";
+        $this->folio       = "";
+        $this->title       = "LISTADO DE CLIENTE CON SALDO A FAVOR " . $this->subtitulo;
+        $pdf               = new FPDF('P','mm','Letter');
+        $pdf->AliasNbPages();
+        $pdf->SetFillColor(192,192,192);
+        $this->header_list_02($pdf);
+        $this->alto  = 10;
+        $total = 0;
+        $pdf->SetFont('Arial','',7);
+        foreach ($Movs as $item){
+            foreach ($item->Notas_Credito as $nc){
+
+//            dd($nc);
+            if ($nc->saldo>0){
+                $lSaldo = number_format($nc->Saldo,2);
+            }else{
+                $lSaldo = "";
+            }
+            $lSaldoUtitlizado = number_format($nc->importe_utilizado,2);
+            $_total = $nc->saldo_utilizado;
+            $total  += $_total;
+            $folio = $nc->consecutivo <= 0 ? $nc->id : $nc->consecutivo;
+            $pdf->Cell(10,$this->alto,$folio,1,0,"R");
+            $pdf->Cell(20,$this->alto,Carbon::parse($nc->fecha)->format('d-m-Y'),1,0,"C");
+            $pdf->Cell(70,$this->alto,$nc->user->FullName,1,0,"L");
+            $pdf->Cell(25,$this->alto,number_format($nc->importe,2),1,0,"R");
+            $pdf->Cell(25,$this->alto,$lSaldoUtitlizado,1,0,"R");
+            $pdf->Cell(25,$this->alto,$lSaldo,1,1,"R");
+            $pdf->setX(10);
+        }
+        }
+        $pdf->SetFont('Arial','B',8);
+        $pdf->SetFillColor(192,192,192);
+        $pdf->Cell(100,$this->alto,"TOTAL",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,number_format($total,2),1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"",1,0,"R",true);
+        $pdf->Cell(25,$this->alto,"",1,1,"R",true);
+
+        $pdf->Ln();
+        $pdf->Output('I','listado-clientes-saldo-favor-'.$this->empresa_id.'-'.$this->timex.'.pdf');
+
+        exit;
+    }
 
 
 

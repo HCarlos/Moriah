@@ -202,6 +202,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/nueva_notacredito/{venta_id}', 'SIIFAC\NotaCreditoController@nueva_nota_credito')->name('nueva_notacredito/');
     Route::put('/nueva_notacredito_put', 'SIIFAC\NotaCreditoController@nueva_nota_credito_put')->name('nueva_notacredito_put/');
     Route::post('/guardar_notacredito', 'SIIFAC\NotaCreditoController@guardar_notacredito')->name('guardar_notacredito/');
+    Route::get('/listado_notas_credito/', 'SIIFAC\NotaCreditoController@listado_notas_credito')->name('listado_notas_credito/');
+    Route::get('/listado_notas_credito_impreso/', 'SIIFAC\NotaCreditoController@listado_notas_credito_impreso')->name('listado_notas_credito_impreso/');
 
     Route::get('/print_nota_credito/{nota_credito_id}', 'Externos\NotaCreditoPrintController@print_nota_credito')->name('printNotaCredito/');
 

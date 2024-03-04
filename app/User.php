@@ -9,6 +9,7 @@ use App\Models\SIIFAC\Empresa;
 use App\Models\SIIFAC\FamiliaCliente;
 use App\Models\SIIFAC\Ingreso;
 use App\Models\SIIFAC\Movimiento;
+use App\Models\SIIFAC\NotaCredito;
 use App\Models\SIIFAC\Paquete;
 use App\Models\SIIFAC\Pedido;
 use App\Models\SIIFAC\PedidoDetalle;
@@ -108,6 +109,10 @@ class User extends Authenticatable
 
     public function ventas(){
         return $this->belongsToMany(Venta::class);
+    }
+
+    public function Notas_Credito(){
+        return $this->hasMany(NotaCredito::class, 'user_id','id');
     }
 
     public function rfcs(){
