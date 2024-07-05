@@ -21,11 +21,11 @@
                             <i class="fa fa-plus purple bigger-150"></i>
                         </a>
                     </div>
-                    <div class="input-group">
-                        <a href="{{ route('listado_notas_credito_impreso/')  }}" class="btn btn-white btn-circle marginLeft1em" title="Listado de Notas de Crédito" >
-                            <i class="fa fa-print cafe bigger-150 "></i>
-                        </a>
-                    </div>
+{{--                    <div class="input-group">--}}
+{{--                        <a href="{{ route('listado_notas_credito_impreso/')  }}" class="btn btn-white btn-circle marginLeft1em" title="Listado de Notas de Crédito" >--}}
+{{--                            <i class="fa fa-print cafe bigger-150 "></i>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
 
                 </div>
                 <div class="form-group pull-right">
@@ -60,7 +60,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="form-group  pull-right">
+                <div class="form-group  pull-right " id="impresoraNaranja">
                     <div class="col-md-1">
                         <a id="btnPrintListado"
                            href="{{ route('listado_notas_credito_impreso/') }}"
@@ -112,7 +112,7 @@
                                 <td >
                                     <div class="visible-desktop action-buttons">
 
-                                        @if ($user->hasAnyPermission(['consultar','all','sysop']) )
+                                        @if ($user->hasAnyPermission(['contadora','consultar','all','sysop']) )
 {{--                                            <a href="#" class="btn btn-link pull-right btnAction2" id ="venta-{{$nc->id}}-destroy" title="Eliminar">--}}
 {{--                                                <i class="fa fa-trash bigger-110 red" ></i>--}}
 {{--                                            </a>--}}

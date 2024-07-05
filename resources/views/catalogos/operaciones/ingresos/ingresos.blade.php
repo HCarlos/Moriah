@@ -65,7 +65,7 @@
                                         <td class="text-right font_Roboto_Mono_400">{{ $ing->total}} </td>
                                         <td >
                                             <div class="visible-desktop action-buttons">
-                                                @if ($user->hasAnyPermission(['all']) )
+                                                @if ( auth()->user()->can('contadora') || auth()->user()->can('all') )
                                                     <a href="#" class="btn btn-link pull-right btnAction2" id ="ingreso-{{$ing->id}}-destroy" title="Eliminar">
                                                         <i class="fa fa-trash bigger-110 red" ></i>
                                                     </a>

@@ -13,7 +13,11 @@
             var nombreTabla = "{{ $tableName }}";
             var item_order_id = {{ isset($item_order_id) ? $item_order_id : 0 }};
             var item_order = "{{ isset($item_order) ? $item_order : 'desc' }}";
-
+            var total_items = {{ isset($notasCredito) ? $notasCredito->count() : 0 }};
+            if ( total_items <= 0 ) {
+                // alert(total_items);
+                $("#impresoraNaranja").hide();
+            }
             // alert(item_order);
 
             // alert(nombreTabla);
