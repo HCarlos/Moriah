@@ -69,9 +69,11 @@ class ExistenciasController extends Controller
             return redirect('openEmpresa');
         }
 
-        $Prod              = Producto::all()
-                                ->where('empresa_id',$this->Empresa_Id)
-                                ->where('status_producto','>',0)->sortBy('descripcion');
+        $Prod = Producto::query()
+              ->where('empresa_id',$this->Empresa_Id)
+              ->where('status_producto','>',0)
+              ->orderBy('descripcion')
+              ->get();
         // dd($Prod);
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $P                 = $Prod->first();

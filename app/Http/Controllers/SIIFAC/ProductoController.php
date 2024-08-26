@@ -88,10 +88,22 @@ class ProductoController extends Controller
         $views       = 'producto_new';
         $user        = Auth::User();
         $oView       = 'catalogos.';
-        $Almacenes   = Almacen::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->where('empresa_id', $this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $FamProds    = FamiliaProducto::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Medidas     = Medida::all()->where('empresa_id', $this->Empresa_Id)->sortBy('desc1')->pluck('desc1', 'id');
+        $Almacenes   = Almacen::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
+        $FamProds    = FamiliaProducto::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Medidas     = Medida::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('desc1')
+                        ->pluck('desc1', 'id');
         $timex       = Carbon::now()->format('ymdHisu');
 
         return view ($oView.$views,
@@ -120,10 +132,22 @@ class ProductoController extends Controller
         $items       = Producto::findOrFail($idItem);
         $user        = Auth::User();
         $oView       = 'catalogos.';
-        $Almacenes   = Almacen::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->where('empresa_id', $this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $FamProds    = FamiliaProducto::all()->where('empresa_id', $this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Medidas     = Medida::all()->where('empresa_id', $this->Empresa_Id)->sortBy('desc1')->pluck('desc1', 'id');
+        $Almacenes   = Almacen::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
+        $FamProds    = FamiliaProducto::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Medidas     = Medida::query()
+                        ->where('empresa_id', $this->Empresa_Id)
+                        ->orderBy('desc1')
+                        ->pluck('desc1', 'id');
         try {
             $generator = new BarcodeGeneratorPlusPNG();
             $img = base64_encode($generator->getBarcode($items->codigo, $generator::TYPE_EAN_13,5.4,150,array(164,92,92)));

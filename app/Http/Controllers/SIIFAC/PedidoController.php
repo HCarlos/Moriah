@@ -80,8 +80,14 @@ class PedidoController extends Controller
         $views    = 'pedido_new';
         $user     = Auth::User();
         $oView    = 'catalogos.';
-        $Paquetes = Paquete::all()->where('empresa_id',$this->Empresa_Id)->sortBy('FullDescription')->pluck('FullDescription', 'id');
-        $Usuarios = User::all()->sortBy('FullName' )->pluck('FullName', 'id');
+        $Paquetes = Paquete::query()
+                    ->where('empresa_id',$this->Empresa_Id)
+                    ->orderBy('FullDescription')
+                    ->pluck('FullDescription', 'id');
+
+        $Usuarios = User::query()
+                    ->orderBy('FullName' )
+                    ->pluck('FullName', 'id');
 
         $timex    = Carbon::now()->format('ymdHisu');
         $timex    = substr($timex,0,16);

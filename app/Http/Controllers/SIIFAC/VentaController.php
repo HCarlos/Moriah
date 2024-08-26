@@ -63,11 +63,12 @@ class VentaController extends Controller
 
         $arr = array(1,$user->id);
 
-        $items = Venta::all()
+        $items = Venta::query()
             ->where('empresa_id', $this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->sortBy('id');
+            ->orderBy('id')
+            ->get();
         
 
             // dd($items);

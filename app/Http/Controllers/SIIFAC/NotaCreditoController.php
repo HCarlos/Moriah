@@ -99,9 +99,10 @@ class NotaCreditoController extends Controller{
             ->get();
 
         if ( $Ven->count() > 0){
-            $items = VentaDetalle::all()
+            $items = VentaDetalle::query()
                 ->where('venta_id',$venta_id)
-                ->sortBy('id');
+                ->orderBy('id')
+                ->get();
 
             $Venta = Venta::find($venta_id);
 

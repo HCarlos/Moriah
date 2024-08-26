@@ -111,9 +111,13 @@ class TicketController extends Controller
         $Ven               = Venta::find($venta_id);
         $IsCompra = str_contains($Ven->MetodoPago,'Compra');
         if ($IsCompra){
-            $VD            = Movimiento::all()->where('venta_id',$venta_id);
+            $VD            = Movimiento::query()
+                            ->where('venta_id',$venta_id)
+                            ->get();
         }else{
-            $VD            = VentaDetalle::all()->where('venta_id',$venta_id);
+            $VD            = VentaDetalle::query()
+                            ->where('venta_id',$venta_id)
+                            ->get();
         }
         $this->venta_id    = $venta_id;
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
@@ -217,9 +221,13 @@ class TicketController extends Controller
         $Ven               = Venta::find($venta_id);
         $IsCompra = str_contains($Ven->MetodoPago,'Compra');
         if ($IsCompra){
-            $VD            = Movimiento::all()->where('venta_id',$venta_id);
+            $VD            = Movimiento::query()
+                            ->where('venta_id',$venta_id)
+                            ->get();
         }else{
-            $VD            = Ingreso::all()->where('venta_id',$venta_id);
+            $VD            = Ingreso::query()
+                            ->where('venta_id',$venta_id)
+                            ->get();
         }
 
         $this->venta_id    = $venta_id;

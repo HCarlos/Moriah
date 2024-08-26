@@ -73,7 +73,9 @@ class AlmacenController extends Controller
         $user           = Auth::User();
         $oView          = 'catalogos.' ;
 //        $Empresas       = Empresa::all()->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
-        $Proveedores    = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Proveedores    = Proveedor::query()
+                            ->orderBy('nombre_proveedor')
+                            ->pluck('nombre_proveedor', 'id');
 
         return view ($oView.$views,
             [
@@ -96,7 +98,9 @@ class AlmacenController extends Controller
 
         $views       = 'almacen_edit';
         $items       = Almacen::findOrFail($idItem);
-        $Proveedores = Proveedor::all()->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Proveedores = Proveedor::query()
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
         $user        = Auth::User();
         $oView       = 'catalogos.' ;
 
@@ -201,7 +205,9 @@ class AlmacenController extends Controller
             return redirect('openEmpresa');
         }
 
-        $prod = Producto::all()->where('almacen_id',$id)->first();
+        $prod = Producto::query()
+                ->where('almacen_id',$id)
+                ->first();
 
         if ( !$prod ){
             $alma = Almacen::findOrFail($id);

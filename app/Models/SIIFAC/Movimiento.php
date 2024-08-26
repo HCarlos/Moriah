@@ -472,8 +472,8 @@ class Movimiento extends Model{
 
     public static function actualizaExistenciasYSaldo($Prod){
         $MovInit = static::query()
-        ->where('producto_id',$Prod->id)
-        ->first();
+                    ->where('producto_id',$Prod->id)
+                    ->first();
 //        ->where('status',0)
         try{
 //            dd($MovInit);

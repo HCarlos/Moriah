@@ -149,7 +149,9 @@ class EmpresaController extends Controller
     }
 
     public function destroy($id=0){
-        $alma = Almacen::all()->where('empresa_id',$id)->first();
+        $alma = Almacen::query()
+                ->where('empresa_id',$id)
+                ->first();
 
         if ( !$alma ){
             $emp = Empresa::findOrFail($id);

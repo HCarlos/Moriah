@@ -42,7 +42,9 @@ class CompraDetalleController extends Controller
         $compra = Compra::find($compra_id);
 
         if ($compra) {
-            $items = Movimiento::all()->where('compra_id', $compra_id);
+            $items = Movimiento::query()
+                    ->where('compra_id', $compra_id)
+                    ->get();
             $total = 0;
             foreach ($items as $item){
                 $total += $item->importe;
@@ -78,9 +80,18 @@ class CompraDetalleController extends Controller
 
         $views       = 'agregar_producto_a_compra_ajax';
         $user        = Auth::User();
-        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $Productos   = Producto::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'codigo');
+        $Almacenes   = Almacen::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
+        $Productos   = Producto::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'codigo');
         $oView = 'catalogos.operaciones.compras.';
 //        dd($oView.$views);
         return view ($oView.$views,
@@ -100,7 +111,9 @@ class CompraDetalleController extends Controller
     {
         $data = $request->all();
         $codigo       = $data['codigo'];
-        $Prod         = Producto::all()->where('codigo',$codigo)->first();
+        $Prod         = Producto::query()
+                        ->where('codigo',$codigo)
+                        ->first();
         $user         = Auth::user();
         if ($Prod !== null){
             try {
@@ -131,9 +144,18 @@ class CompraDetalleController extends Controller
 
         $views       = 'editar_producto_a_compra_ajax';
         $user        = Auth::User();
-        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
-        $Productos   = Producto::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'codigo');
+        $Almacenes   = Almacen::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
+        $Productos   = Producto::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'codigo');
         $oView = 'catalogos.operaciones.compras.';
         $item = Movimiento::find($movimiento_id);
 //        dd($item);
@@ -170,7 +192,9 @@ class CompraDetalleController extends Controller
         $compra_id             = $data['compra_id'];
 
         $Mov  = Movimiento::find($movimiento_id);
-        $P = Producto::query()->where('codigo',$producto_id)->first();
+        $P = Producto::query()
+                        ->where('codigo',$producto_id)
+                        ->first();
         $Prod = Producto::find($P->id);
 
         $user         = Auth::user();

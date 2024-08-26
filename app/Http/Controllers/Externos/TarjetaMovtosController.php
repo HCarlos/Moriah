@@ -79,7 +79,10 @@ class TarjetaMovtosController extends Controller
     public function imprimir_tarjeta_movtos($producto_id,$opt)
     {
         $Prod                = Producto::find($producto_id);
-        $Movs                = Movimiento::query()->where('producto_id',$producto_id)->orderBy('id')->get();
+        $Movs                = Movimiento::query()
+                                ->where('producto_id',$producto_id)
+                                ->orderBy('id')
+                                ->get();
         // dd($Movs);
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
         $Emp                 = Empresa::find($Prod->empresa_id);
@@ -160,7 +163,10 @@ class TarjetaMovtosController extends Controller
 
     public function imprimir_tarjeta_movtos_costeo($producto_id,$opt){
         $Prod                = Producto::find($producto_id);
-        $Movs                = Movimiento::all()->where('producto_id',$producto_id)->sortBy('id');
+        $Movs                = Movimiento::query()
+                                ->where('producto_id',$producto_id)
+                                ->orderBy('id')
+                                ->get();
         $this->timex         = Carbon::now()->format('d-m-Y H:i:s');
         $Emp                 = Empresa::find($Prod->empresa_id);
         $this->empresa       = $Emp->rs;

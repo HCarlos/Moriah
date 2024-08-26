@@ -175,7 +175,7 @@ class ProveedorController extends Controller
             return redirect('openEmpresa');
         }
 
-        $alma = Producto::all()
+        $alma = Producto::query()
             ->where('empresa_id',$this->Empresa_Id)
             ->where('proveedor_id',$id)
             ->first();

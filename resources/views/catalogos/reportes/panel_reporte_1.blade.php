@@ -11,7 +11,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Corte de Caja</div>
                 <div class="panel-body">
-
                     <form method="post" action="{{ route('corteCaja1') }}" target="_blank" >
                         {{ csrf_field() }}
 
@@ -57,7 +56,6 @@
                                     <span class="text-danger">{{ $errors->first('fecha1') }}</span>
                                 @endif
                             </div>
-
                             <label for="fecha2" class="col-md-1 control-label ">Hasta:</label>
                             <div class="col-md-2 {{$errors->has("fecha2") ? "has-error form-error" : ""}}">
                                 {{ Form::date('fecha2', old("fecha2", \Carbon\Carbon::now() ), ['id'=>'fecha2','class'=> $errors->has("fecha2") ? "form-control form-error" :'col-md-2 form-control']) }}
@@ -74,7 +72,8 @@
                                     <option value="0" selected>Reporte de Ingresos</option>
                                     <option value="1">Reporte de Ventas</option>
                                     <option value="5">Reporte de Salidas a través de Ventas</option>
-                                    <option value="2">Informe de Venta Consolidada por Producto</option>
+                                    <option value="2">Informe de Venta Consolidada por Artículos(Individual)</option>
+                                    <option value="6">Informe de Venta Consolidada por Artículos(Grupal)</option>
                                     <option value="3">Listado Notas de Crédito (PV)</option>
                                     <option value="4">Listado Notas de Crédito (PC)</option>
                                 </select>

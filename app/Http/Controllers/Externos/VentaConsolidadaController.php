@@ -102,7 +102,7 @@ class VentaConsolidadaController extends Controller{
         foreach ($Movs as $Mov){
             $f1          = $F->fechaDateTimeFormat($Mov->fecha);
             $f2          = $F->fechaDateTimeFormat($Mov->fecha,true);
-            $Mv = Movimiento::all()
+            $Mv = Movimiento::query()
                 ->where('fecha','>=', $f1)
                 ->where('fecha','<=', $f2)
                 ->where('producto_id',$Mov->producto_id)
@@ -140,6 +140,61 @@ class VentaConsolidadaController extends Controller{
         $pdf->Output('I','venta-consolidada-producto-'.$this->empresa_id.'-'.$this->timex.'.pdf');
     }
 
+
+    public function imprimir_venta_consolidada_por_producto_grupal($f1,$f2,$ff1,$ff2,$pdf,$Movs,$Emp)
+    {
+        $this->f1 = $f1;
+        $this->f2 = $f2;
+        $this->empresa = $Emp->empresa;
+        $this->empresa_id = $Emp->id;
+        $this->timex = Carbon::now()->format('d-m-Y::h:m:s::a');
+
+        $pdf->AliasNbPages();
+        $this->header($pdf);
+        $pdf->SetFillColor(32,32,32);
+        $pdf->SetFont('Arial','',6);
+        $total = 0;
+        $F = (new FuncionesController);
+        foreach ($Movs as $Mov){
+//            $f1          = $F->fechaDateTimeFormat($f1,false,1); // $F->fechaDateTimeFormat($Mov->fecha);
+//            $f2          = $F->fechaDateTimeFormat($f2, true,1); // $F->fechaDateTimeFormat($Mov->fecha,true);
+            $Mv = Movimiento::query()
+                ->where('fecha','>=', $ff1)
+                ->where('fecha','<=', $ff2)
+                ->where('producto_id',$Mov->producto_id)
+                ->where('codigo','=',$Mov->codigo)
+                ->first();
+            if ($Mv){
+                $cp = $Mv->costo_promedio;
+                $hp = $Mv->costo_promedio * $Mov->cantidad;
+            }else{
+                $cp = 0.00;
+                $hp = 0.00;
+            }
+            $pdf->setX(10);
+            $pdf->SetFont('Arial','',7);
+            $pdf->Cell(20, $this->alto, $this->F->fechaEspanol($Mv->fecha), "LTB", 0,"R");
+            $pdf->Cell(20, $this->alto, $Mov->codigo, "LTB", 0,"R");
+            $pdf->SetFont('Arial','',6);
+            $pdf->Cell(100, $this->alto, utf8_decode(trim($Mov->descripcion)), "LTB", 0,"L");
+            $pdf->SetFont('Arial','',7);
+            $pdf->Cell(15, $this->alto, number_format($Mov->cantidad,2), "LRB", 0,"R");
+            $pdf->Cell(25, $this->alto, number_format($cp,2), "LRB", 0,"R");
+            $pdf->Cell(20, $this->alto, number_format($hp,2), "LRB", 1,"R");
+            $total += $Mov->totalimporte;
+            if ($pdf->getY() > 230 ){
+                $this->footer($pdf);
+                $this->header($pdf);
+                $pdf->SetFillColor(32,32,32);
+                $pdf->SetFont('Arial','',6);
+            }
+        }
+        $pdf->setX(10);
+        $pdf->SetFont('Arial','B',7);
+        $pdf->Cell(180, $this->alto, "VENTA TOTAL $", "LRB", 0,"R");
+        $pdf->Cell(20, $this->alto, number_format($total,2), "LRB", 1,"R");
+        $pdf->Output('I','venta-consolidada-producto-grupal-'.$this->empresa_id.'-'.$this->timex.'.pdf');
+    }
 
 
 }

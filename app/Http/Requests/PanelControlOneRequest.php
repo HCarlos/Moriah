@@ -189,7 +189,8 @@ class PanelControlOneRequest extends FormRequest
         $empresa_id  = $this->empresa_id;
         $arr = [0,1,2,3,4,5,6,7,8,9,600];
 
-        $Movs = VentaDetalle::query()->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, DATE(fecha) as fecha, descripcion, pc, codigo'))
+        $Movs = VentaDetalle::query()
+            ->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, DATE(fecha) as fecha, descripcion, pc, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
@@ -216,6 +217,59 @@ class PanelControlOneRequest extends FormRequest
 
     }
 
+    public function ventaConsolidadaPorProductoGrupal($pdf){
+        ini_set('max_execution_time', 180);
+        ini_set('max_input_time', 360);
+//        ini_set('memory_limit', '8M');
+
+        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+        if ($this->Empresa_Id <= 0){
+            return redirect('openEmpresa');
+        }
+
+        $F = (new FuncionesController);
+
+        $f1          = $F->fechaDateTimeFormat($this->fecha1);
+        $f2          = $F->fechaDateTimeFormat($this->fecha2,true);
+
+        $vendedor_id = $this->vendedor_id;
+        $metodo_pago = $this->metodo_pago;
+        $tipo_venta  = $this->tipo_venta;
+        $empresa_id  = $this->empresa_id;
+        $arr = [0,1,2,3,4,5,6,7,8,9,600];
+
+        $Movs = VentaDetalle::query()
+            ->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, descripcion, pc, codigo'))
+            ->where('empresa_id',$this->Empresa_Id)
+            ->where('fecha','>=', $f1)
+            ->where('fecha','<=', $f2)
+            ->whereHas('venta', function ($q) use($arr) {
+                $q->whereIn('metodo_pago', $arr);
+            })
+            ->groupByRaw('producto_id, descripcion, pc, codigo')
+            ->orderByRaw('descripcion' )
+            ->get();
+
+        $m = $Movs->first();
+        $f1 = $F->fechaEspanol($this->fecha1);
+        $f2 = $F->fechaEspanol($this->fecha2);
+        $ff1          = $F->fechaDateTimeFormat($this->fecha1);
+        $ff2          = $F->fechaDateTimeFormat($this->fecha2,true);
+
+        $vendedor = 'none';
+        $empresa = 'none';
+        if ( !is_null($m) ){
+            $vendedor = ""; //trim($m->vendedor->FullName);
+            $Emp = Empresa::find($this->Empresa_Id);
+            $empresa = trim($Emp->rs);
+            $x = new VentaConsolidadaController();
+            $x->imprimir_venta_consolidada_por_producto_grupal($f1,$f2,$ff1,$ff2,$pdf,$Movs,$Emp);
+        }
+
+
+    }
+
+
     public function notasDeCreditoList($tipo_reporte){
 
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
@@ -235,11 +289,12 @@ class PanelControlOneRequest extends FormRequest
         $tipo_venta  = $this->tipo_venta;
         $empresa_id  = $this->empresa_id;
 //        dd($this->Empresa_Id);
-        $Movs = NotaCredito::all()
+        $Movs = NotaCredito::query()
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
-            ->sortByDesc('id');
+            ->orderByDesc('id')
+            ->get();
 
 //        dd($Movs);
 

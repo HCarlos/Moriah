@@ -73,9 +73,9 @@ class PedidoDetalleController extends Controller
         $views  = 'pedido_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::all()
+        $Productos = Producto::query()
             ->where('empresa_id',$this->Empresa_Id)
-            ->sortBy('descripcion')
+            ->orderBy('descripcion')
             ->pluck('FullDescription','id');
         return view ($oView.$views,
             [
@@ -108,9 +108,10 @@ class PedidoDetalleController extends Controller
         try {
             $mensaje = "OK";
             PedidoDetalle::findOrCreatePedidoDetalle($pedido_id,0, $ped->user_id,$ped->empresa_id, $producto_id,$cantidad);
-            $dets = PedidoDetalle::all()
+            $dets = PedidoDetalle::query()
                 ->where('empresa_id', $this->Empresa_Id)
-                ->where('pedido_id', $pedido_id);
+                ->where('pedido_id', $pedido_id)
+                ->get();
             $pq = Pedido::UpdateImporteFromPedidoDetalle($pedido_id);
 //            dd($pq);
         }

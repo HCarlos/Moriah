@@ -33,7 +33,7 @@ class HomeController extends Controller{
     }
 
     public function openViewEmpresa(){
-        $Emp = Empresa::all();
+        $Emp = Empresa::query()->get();
         $this->initEmpresa();
         return view('open_empresa',[
             'Empresa' => $Emp,

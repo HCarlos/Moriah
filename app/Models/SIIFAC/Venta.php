@@ -368,7 +368,9 @@ class Venta extends Model
         $Ven->isimp = true;
         $Ven->status_venta = 2;
         $Ven->save();
-        $Movs = Movimiento::all()->where('venta_id', $venta_id);
+        $Movs = Movimiento::query()
+                ->where('venta_id', $venta_id)
+                ->get();
         foreach ($Movs as $Mov) {
             $Mov->status = $metodo_pago;
             $Mov->save();
@@ -399,15 +401,19 @@ class Venta extends Model
     }
 
     public static function getFolio($empresa_id) {
-        $emp = EmpresaVenta::all()->where('empresa_id',$empresa_id)->sortByDesc('id')->first();
+        $emp = EmpresaVenta::query()
+                ->where('empresa_id',$empresa_id)
+                ->orderByDesc('id')
+                ->first();
         if (is_null($emp)) return 0;
         return (int) $emp->folio;
     }
 
     public static function getFolioImpreso($empresa_id,$venta_id) {
-        $emp = EmpresaVenta::all()
+        $emp = EmpresaVenta::query()
             ->where('empresa_id',$empresa_id)
-            ->where('venta_id',$venta_id)->first();
+            ->where('venta_id',$venta_id)
+            ->first();
         if (is_null($emp)) return 0;
         return (int) $emp->folio;
     }

@@ -60,7 +60,9 @@ class NotaCredito extends Model
 
     public static function totalNotaCreditoFromDetalle($id){
         $NS = static::find($id);
-        $items = NotaCreditoDetalle::all()->where('nota_credito_id',$id);
+        $items = NotaCreditoDetalle::query()
+                    ->where('nota_credito_id',$id)
+                    ->get();
         $total = 0;
         foreach ($items as $ncd){
             $total += $ncd->importe;
@@ -71,7 +73,9 @@ class NotaCredito extends Model
     }
 
     public static function getTotalNotaCreditoFromIngresos($id){
-        $items = Ingreso::all()->where('nota_credito_id',$id);
+        $items = Ingreso::query()
+                ->where('nota_credito_id',$id)
+                ->get();
         $total = 0;
         foreach ($items as $ing){
             $total += $ing->total;
@@ -88,7 +92,9 @@ class NotaCredito extends Model
     }
 
     public static function totalNotaCreditoPorPrecio($nota_credito_id,$tipo_reporte,$tipo_campo){
-        $items = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id);
+        $items = NotaCreditoDetalle::query()
+                ->where('nota_credito_id',$nota_credito_id)
+                ->get();
 
         $subtotal_pv = 0;
         $iva_pv = 0;
@@ -145,7 +151,10 @@ class NotaCredito extends Model
 
 
     public static function getFolio($empresa_id) {
-        $NC = static::all()->where('empresa_id',$empresa_id)->sortByDesc('id')->first();
+        $NC = static::query()
+                    ->where('empresa_id',$empresa_id)
+                    ->orderByDesc('id')
+                    ->first();
         if (is_null($NC)) return 0;
         return (int) $NC->consecutivo;
     }

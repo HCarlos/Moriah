@@ -38,9 +38,10 @@ class VentaDetalleController extends Controller
         $user  = Auth::User();
         $oView = 'catalogos.operaciones.';
 //        $venta = Venta::find($venta_id);
-        $Productos   = Producto::all()
+        $Productos   = Producto::query()
             ->where('empresa_id', $this->Empresa_Id)
-            ->sortBy('descripcion')->pluck('descripcion', 'codigo');
+            ->orderBy('descripcion')
+            ->pluck('descripcion', 'codigo');
 
         //dd($venta);
         return view ($oView.$views,
@@ -59,7 +60,9 @@ class VentaDetalleController extends Controller
         $codigo      = $data['codigo'];
         $venta_id    = $data['venta_id'];
         $cantidad    = $data['cantidad'];
-        $Prod        = Producto::all()->where('codigo',$codigo)->first();
+        $Prod        = Producto::query()
+                        ->where('codigo',$codigo)
+                        ->first();
         //dd($Prod);
         if ($Prod !== null){
             $producto_id = $Prod->id;

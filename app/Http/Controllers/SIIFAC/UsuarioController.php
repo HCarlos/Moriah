@@ -69,7 +69,9 @@ class UsuarioController extends Controller
         $views  = 'usuario_new';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Familia_Cliente = FamiliaCliente::all()->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Familia_Cliente = FamiliaCliente::query()
+                            ->orderBy('descripcion')
+                            ->pluck('descripcion', 'id');
         $timex  = Carbon::now()->format('ymdHisu');
 
         return view ($oView.$views,
@@ -88,7 +90,9 @@ class UsuarioController extends Controller
         $views  = 'usuario_edit';
         $items = User::findOrFail($idItem);
 //        dd($items);
-        $Familia_Cliente = FamiliaCliente::all()->sortBy('descripcion')->pluck('descripcion', 'id');
+        $Familia_Cliente = FamiliaCliente::query()
+                            ->orderBy('descripcion')
+                            ->pluck('descripcion', 'id');
         $user = Auth::User();
         $oView = 'catalogos.' ;
 
@@ -215,10 +219,13 @@ class UsuarioController extends Controller
     public function show_rfc_usuario($user_id){
         $user = Auth::user();
         $usuario = User::findOrFail($user_id);
-        $rfcs= Rfc::query()->orderBy('rfc')->get();
-        $rfcs_asignados = User::query()->whereHas('rfcs',function ($q) use ($user_id){
-            return $q->where('user_id',$user_id);
-        })->get();
+        $rfcs= Rfc::query()
+                    ->orderBy('rfc')
+                    ->get();
+        $rfcs_asignados = User::query()
+                        ->whereHas('rfcs',function ($q) use ($user_id){
+                            return $q->where('user_id',$user_id);
+                        })->get();
 
         return view ('asignaciones.add_rfc_ajax',
             [

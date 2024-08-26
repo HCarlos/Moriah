@@ -71,10 +71,11 @@ class PaqueteController extends Controller
             return redirect('openEmpresa');
         }
 
-        $Empresas   = Empresa::all()
+        $Empresas   = Empresa::query()
             ->where('empresa_id',$this->Empresa_Id)
-            ->sortBy('rs')->sortBy('rs')
+            ->orderBy('rs')
             ->pluck('rs', 'id');
+
         $timex      = Carbon::now()->format('ymdHisu');
 
         return view ($oView.$views,
@@ -99,7 +100,10 @@ class PaqueteController extends Controller
 
         $views      = 'paquete_edit';
         $items      = Paquete::findOrFail($idItem);
-        $Empresas   = Empresa::all()->where('empresa_id',$this->Empresa_Id)->sortBy('rs')->sortBy('rs')->pluck('rs', 'id');
+        $Empresas   = Empresa::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('rs')
+                        ->pluck('rs', 'id');
         $user       = Auth::User();
         $oView      = 'catalogos.' ;
 
@@ -234,7 +238,7 @@ class PaqueteController extends Controller
             return redirect('openEmpresa');
         }
 
-        $mov = Movimiento::all()
+        $mov = Movimiento::query()
             ->where('empresa_id',$this->Empresa_Id)
             ->where('paquete_id',$id)
             ->first();

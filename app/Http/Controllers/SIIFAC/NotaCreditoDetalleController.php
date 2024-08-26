@@ -43,10 +43,11 @@ class NotaCreditoDetalleController extends Controller
         }
 
         $user = Auth::User();
-        $items = NotaCreditoDetalle::all()
+        $items = NotaCreditoDetalle::query()
             ->where('empresa_id',$this->Empresa_Id)
             ->where('nota_credito_id', $nota_credito_id)
-            ->sortBy('id');
+            ->orderBy('id')
+            ->get();
         $totalVenta = 0;
         foreach ($items as $i){
             $totalVenta += $i->importe;
@@ -75,7 +76,10 @@ class NotaCreditoDetalleController extends Controller
 
             $ncd = NotaCreditoDetalle::findOrFail($id);
             $notacredito_id = $ncd->nota_credito_id;
-            $Ing = Ingreso::all()->where('empresa_id',$this->Empresa_Id)->where('nota_credito_id',$notacredito_id);
+            $Ing = Ingreso::query()
+                    ->where('empresa_id',$this->Empresa_Id)
+                    ->where('nota_credito_id',$notacredito_id)
+                    ->get();
             if ( count($Ing) <= 0 ){
                 $venta_detalle_id = $ncd->venta_detalle_id;
                 $vd = VentaDetalle::find($venta_detalle_id);

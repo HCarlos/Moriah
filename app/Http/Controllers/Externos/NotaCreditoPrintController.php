@@ -94,7 +94,9 @@ class NotaCreditoPrintController extends Controller
     public function print_nota_credito($nota_credito_id)
     {
         $Ven               = NotaCredito::find($nota_credito_id);
-        $VD                = NotaCreditoDetalle::all()->where('nota_credito_id',$nota_credito_id);
+        $VD                = NotaCreditoDetalle::query()
+                            ->where('nota_credito_id',$nota_credito_id)
+                            ->get();
         $this->timex       = Carbon::now()->format('d-m-Y H:i:s');
         $this->folio       = $Ven->consecutivo <= 0 ? $nota_credito_id : $Ven->consecutivo;
         $this->IdNC        = $Ven->id;
@@ -126,7 +128,9 @@ class NotaCreditoPrintController extends Controller
         $pdf->Cell(25,$this->alto,number_format($Ven->importe,2),1,1,"R",true);
         $pdf->setX(10);
 
-        $VD = Ingreso::all()->where('nota_credito_id',$nota_credito_id);
+        $VD = Ingreso::query()
+            ->where('nota_credito_id',$nota_credito_id)
+            ->get();
         $pdf->SetFont('Arial','B',14);
         $pdf->Cell(25,$this->alto,"","",0,"L");
         $pdf->Cell(145,$this->alto,utf8_decode("HISTORIAL DE USO"),"",1,"C",false);

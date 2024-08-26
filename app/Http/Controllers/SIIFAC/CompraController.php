@@ -39,9 +39,10 @@ class CompraController extends Controller
         }
 
         $user = Auth::User();
-        $items = Compra::all()
+        $items = Compra::query()
             ->where('empresa_id',$this->Empresa_Id)
-            ->sortByDesc('id');
+            ->orderByDesc('id')
+            ->get();
 
         return view ('catalogos.operaciones.compras.compras',
             [
@@ -62,9 +63,18 @@ class CompraController extends Controller
         $views       = 'compra_nueva_ajax';
         $user        = Auth::User();
         $oView       = 'catalogos.operaciones.compras.';
-        $Empresas    = Empresa::all()->where('id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Empresas    = Empresa::query()
+                        ->where('id',$this->Empresa_Id)
+                        ->orderBy('rs')
+                        ->pluck('rs', 'id');
+        $Almacenes   = Almacen::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
         return view ($oView.$views,
             [
                 'Empresas'    => $Empresas,
@@ -113,9 +123,18 @@ class CompraController extends Controller
         $user        = Auth::User();
         $oView       = 'catalogos.operaciones.compras.';
         $Compra      = Compra::find($compra_id);
-        $Empresas    = Empresa::all()->where('id',$this->Empresa_Id)->sortBy('rs')->pluck('rs', 'id');
-        $Almacenes   = Almacen::all()->where('empresa_id',$this->Empresa_Id)->sortBy('descripcion')->pluck('descripcion', 'id');
-        $Proveedores = Proveedor::all()->where('empresa_id',$this->Empresa_Id)->sortBy('nombre_proveedor')->pluck('nombre_proveedor', 'id');
+        $Empresas    = Empresa::query()
+                        ->where('id',$this->Empresa_Id)
+                        ->orderBy('rs')
+                        ->pluck('rs', 'id');
+        $Almacenes   = Almacen::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('descripcion')
+                        ->pluck('descripcion', 'id');
+        $Proveedores = Proveedor::query()
+                        ->where('empresa_id',$this->Empresa_Id)
+                        ->orderBy('nombre_proveedor')
+                        ->pluck('nombre_proveedor', 'id');
         return view ($oView.$views,
             [
                 'Empresas'    => $Empresas,

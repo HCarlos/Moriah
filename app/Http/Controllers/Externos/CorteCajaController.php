@@ -206,6 +206,9 @@ class CorteCajaController extends Controller{
             case 5:
                 $request->ventaRealizada($pdf,1);
                 break;
+            case 6:
+                $request->ventaConsolidadaPorProductoGrupal($pdf);
+                break;
         }
     }
 

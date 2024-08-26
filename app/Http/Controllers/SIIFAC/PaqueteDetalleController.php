@@ -71,9 +71,9 @@ class PaqueteDetalleController extends Controller
         $views  = 'paquete_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::all()
+        $Productos = Producto::query()
             ->where('empresa_id',$this->Empresa_Id)
-            ->sortBy('descripcion')
+            ->orderBy('descripcion')
             ->pluck('FullDescription','id');
         return view ($oView.$views,
             [
@@ -97,9 +97,9 @@ class PaqueteDetalleController extends Controller
         $user = Auth::User();
         $oView = 'catalogos.' ;
         $items = PaqueteDetalle::find($paquete_detalle_id);
-        $Productos = Producto::all()
+        $Productos = Producto::query()
             ->where('empresa_id',$this->Empresa_Id)
-            ->sortBy('descripcion')
+            ->orderBy('descripcion')
             ->pluck('FullDescription','id');
 
         return view ($oView.$views,

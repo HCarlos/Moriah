@@ -42,8 +42,9 @@ class RegistrosFiscalesController extends Controller{
         }
 
         $user = Auth::User();
-        $items = Rfc::all()
-            ->sortByDesc('id');
+        $items = Rfc::query()
+            ->orderByDesc('id')
+            ->get();
 //        ->where('empresa_id',$this->Empresa_Id)
 
         return view ('catalogos.operaciones.registros_fiscales.rfcs',
@@ -64,7 +65,9 @@ class RegistrosFiscalesController extends Controller{
 
         $views       = 'rfc_nuevo_ajax';
         $user        = Auth::User();
-        $regimenfis  = RegimenesFiscales::query()->get()->sortBy('clave_regimen_fiscal');
+        $regimenfis  = RegimenesFiscales::query()
+                    ->sortBy('clave_regimen_fiscal')
+                    ->get();
         $oView       = 'catalogos.operaciones.registros_fiscales.';
         return view ($oView.$views,
             [
@@ -125,7 +128,9 @@ class RegistrosFiscalesController extends Controller{
 
         $views       = 'rfc_editar_ajax';
         $user        = Auth::User();
-        $regimenfis  = RegimenesFiscales::query()->get()->sortBy('clave_regimen_fiscal');
+        $regimenfis  = RegimenesFiscales::query()
+                    ->sortBy('clave_regimen_fiscal')
+                    ->get();
         $oView       = 'catalogos.operaciones.registros_fiscales.';
         $rfc      = Rfc::find($id);
         return view ($oView.$views,
