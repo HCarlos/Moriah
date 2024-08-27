@@ -239,14 +239,14 @@ class PanelControlOneRequest extends FormRequest
         $arr = [0,1,2,3,4,5,6,7,8,9,600];
 
         $Movs = VentaDetalle::query()
-            ->select('producto_id',DB::raw('sum(cantidad) as cantidad, sum(pc * cantidad) as totalimporte, descripcion, pc, codigo'))
+            ->select('producto_id',DB::raw('sum(cantidad) as cantidad, descripcion, codigo'))
             ->where('empresa_id',$this->Empresa_Id)
             ->where('fecha','>=', $f1)
             ->where('fecha','<=', $f2)
             ->whereHas('venta', function ($q) use($arr) {
                 $q->whereIn('metodo_pago', $arr);
             })
-            ->groupByRaw('producto_id, descripcion, pc, codigo')
+            ->groupByRaw('producto_id, codigo, descripcion')
             ->orderByRaw('descripcion' )
             ->get();
 
