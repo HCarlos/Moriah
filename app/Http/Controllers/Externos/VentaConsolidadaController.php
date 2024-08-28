@@ -176,7 +176,8 @@ class VentaConsolidadaController extends Controller{
         $pdf->Ln(5);
         $pdf->SetFont('Arial','B',7);
         $pdf->SetFillColor(196,196,196);
-        $pdf->Cell(40, $this->alto, utf8_decode('CÓDIGO'), "LTB", 0,"R", true);
+        $pdf->Cell(15, $this->alto, utf8_decode('ID'), "LTB", 0,"R", true);
+        $pdf->Cell(25, $this->alto, utf8_decode('CÓDIGO'), "LTB", 0,"R", true);
         $pdf->Cell(130, $this->alto, utf8_decode('A    R    T    Í    C    U    L    O'), "LTB", 0,"L", true);
         $pdf->Cell(25, $this->alto, 'CANTIDAD', "LTBR", 1,"R", true);
         $pdf->SetFillColor(255,255,255);
@@ -187,12 +188,10 @@ class VentaConsolidadaController extends Controller{
         $pdf->Ln(5);
         $pdf->setX(10);
         $pdf->SetFont('Arial','B',8);
-        $pdf->Cell(040,$this->alto,"","",0,"L");
-        $pdf->Cell(145,$this->alto,"","",0,"L");
-        $pdf->Cell(255,$this->alto,"","",1,"R");
+        $pdf->Cell(200,$this->alto,"","",1,"R");
         $pdf->SetFont('Arial','',7);
         $pdf->SetFillColor(0,212,212);
-        $pdf->Cell(33, $this->alto, utf8_decode("Página " . $pdf->PageNo() . " de {nb}"), "", 1,"R");
+        $pdf->Cell(197, $this->alto, utf8_decode("Página " . $pdf->PageNo() . " de {nb}"), "", 1,"R");
         $pdf->setX(10);
     }
 
@@ -228,7 +227,8 @@ class VentaConsolidadaController extends Controller{
             }
             $pdf->setX(10);
             $pdf->SetFont('Arial','',8);
-            $pdf->Cell(40, $this->alto, $Mov->codigo, "LTB", 0,"R");
+            $pdf->Cell(15, $this->alto, $Mov->producto_id, "LTB", 0,"R");
+            $pdf->Cell(25, $this->alto, $Mov->codigo, "LTB", 0,"R");
             $pdf->Cell(130, $this->alto, utf8_decode(trim($Mov->descripcion)), "LTB", 0,"L");
             $pdf->Cell(25, $this->alto, number_format($Mov->cantidad,2), "LRBR", 1,"R");
             $total += $Mov->cantidad;
