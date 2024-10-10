@@ -92,6 +92,7 @@ class NotaCredito extends Model
     }
 
     public static function totalNotaCreditoPorPrecio($nota_credito_id,$tipo_reporte,$tipo_campo){
+        $vReturn = 0;
         $items = NotaCreditoDetalle::query()
                 ->where('nota_credito_id',$nota_credito_id)
                 ->get();
@@ -121,32 +122,46 @@ class NotaCredito extends Model
         if ( $tipo_reporte == 3 ){
             switch ($tipo_campo){
                 case 0:
-                    return $subtotal_pv;
+                    $vReturn = $subtotal_pv;
                     break;
                 case 1:
-                    return $iva_pv;
+                    $vReturn = $iva_pv;
                     break;
                 case 2:
-                    return $total_pv;
+                    $vReturn = $total_pv;
                     break;
             }
         }else{
             switch ($tipo_campo){
                 case 0:
-                    return $subtotal_pc;
+                    $vReturn = $subtotal_pc;
                     break;
                 case 1:
-                    return $iva_pc;
+                    $vReturn = $iva_pc;
                     break;
                 case 2:
-                    return $total_pc;
+                    $vReturn = $total_pc;
                     break;
             }
         }
 
-        return 0;
+        return $vReturn;
 
     }
+
+    public static function listaArticulos($nota_credito_id){
+        $vReturn = "";
+        $items = NotaCreditoDetalle::query()
+            ->where('nota_credito_id',$nota_credito_id)
+            ->get();
+
+        foreach ($items as $ncd){
+            $vReturn    .= $ncd->producto->shortdesc.", ";
+        }
+        return $vReturn;
+    }
+
+
 
 
 

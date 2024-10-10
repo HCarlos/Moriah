@@ -221,9 +221,8 @@ class NotaCreditoPrintController extends Controller
         $pdf->AliasNbPages();
         $pdf->SetFillColor(192,192,192);
         $this->header_list_01($pdf);
-        $this->alto  = 10;
+        $this->alto  = 8;
         $total = 0;
-        $pdf->SetFont('Arial','',8);
         foreach ($Movs as $nc){
 //            dd($nc);
             if ($nc->Saldo>0){
@@ -234,6 +233,7 @@ class NotaCreditoPrintController extends Controller
             $lSaldoUtitlizado = number_format($nc->SaldoUtilizado,2);
             $_total = $nc::totalNotaCreditoPorPrecio($nc->id,$tipo_reporte,2);
             $total  += $_total;
+            $pdf->SetFont('Arial','',8);
             $folio = $nc->consecutivo <= 0 ? $nc->id : $nc->consecutivo;
             $pdf->Cell(25,$this->alto,$folio,1,0,"R");
             $pdf->Cell(25,$this->alto,Carbon::parse($nc->fecha)->format('d-m-Y'),1,0,"C");
@@ -242,6 +242,10 @@ class NotaCreditoPrintController extends Controller
             $pdf->Cell(25,$this->alto,number_format($_total,2),1,0,"R");
             $pdf->Cell(25,$this->alto,$lSaldoUtitlizado,1,0,"R");
             $pdf->Cell(25,$this->alto,$lSaldo,1,1,"R");
+
+            $pdf->SetFont('Arial','',6);
+            $pdf->Cell(175,6,$nc::listaArticulos($nc->id),1,1,"L");
+
             $pdf->setX(10);
         }
         $pdf->SetFont('Arial','B',8);
