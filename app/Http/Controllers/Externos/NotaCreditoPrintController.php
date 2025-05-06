@@ -248,6 +248,9 @@ class NotaCreditoPrintController extends Controller
 
             $pdf->setX(10);
         }
+
+
+
         $pdf->SetFont('Arial','B',8);
         $pdf->SetFillColor(192,192,192);
         $pdf->Cell(100,$this->alto,"TOTAL",1,0,"R",true);
