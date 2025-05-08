@@ -17,7 +17,7 @@
     <title>{{ config('app.name') }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Raleway|Roboto+Condensed|Tangerine&effect=3d-float" rel="stylesheet">
-    <link href="{{ asset('css/my_style_sheet.css') }}" rel="stylesheet">
+    <link href="https://moriah.mx/css/my_style_sheet.css" rel="stylesheet">
 
     <style>
         html, body {

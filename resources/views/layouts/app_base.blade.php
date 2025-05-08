@@ -11,15 +11,23 @@
     <link href="{{ asset('assets/img/favicon/favicon32x32.png') }}" rel="apple-touch-icon">
     <link href="{{ asset('assets/img/favicon/favicon72x72.ico') }}" rel="apple-touch-icon" sizes="72x72">
     <link href="{{ asset('assets/img/favicon/favicon16x16.ico') }}" rel="shortcut icon" sizes="16x16">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
-    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/ace-fonts.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/my_style_sheet.css') }}" rel="stylesheet">
+
+{{--    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/css/ace-fonts.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('css/my_style_sheet.css') }}" rel="stylesheet">--}}
+
+    <link href="https://moriah.mx/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://moriah.mx/css/app.css" rel="stylesheet">
+    <link href="https://moriah.mx/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://moriah.mx/assets/css/ace-fonts.css" rel="stylesheet">
+    <link href="https://moriah.mx/css/my_style_sheet.css" rel="stylesheet">
 
     @yield('styles')
 </head>

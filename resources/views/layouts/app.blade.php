@@ -6,9 +6,6 @@
     @include('partials.navbar')
 
     <div class="main-container ">
-        {{--<script type="text/javascript">--}}
-            {{--try{ace.settings.check('main-container' , 'fixed')}catch(e){}--}}
-        {{--</script>--}}
 
         @include('partials.sidebar')
 
