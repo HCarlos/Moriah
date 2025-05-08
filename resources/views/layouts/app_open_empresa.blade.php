@@ -27,7 +27,6 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand navbar-light navbar-laravel navbar-moriah">
-        {{--<div class="container">--}}
         <a class="navbar-brand  pull-left"  style="margin-top: 0;" href="{{ url('/') }}">
             <span class="white font-effect-3d-float font_Kaushan_Script_700">Moriah</span>
         </a>
