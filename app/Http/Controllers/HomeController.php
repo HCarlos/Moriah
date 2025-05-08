@@ -48,10 +48,10 @@ class HomeController extends Controller{
                 'Empresa_Id' => (int)$Emp->id,
                 'RS' => $Emp->rs,
             ]);
-            dd($Emp);
+//            dd($Emp);
             return redirect('/home');
         }else{
-            dd("error");
+//            dd("error");
             return redirect('openEmpresa');
         }
         //return view('open_empresa');
