@@ -25,7 +25,7 @@ Route::get('/home_alumno', 'HomeController@index_alumno')->name('home_alumno');
 Route::get('/imagenes/{root}/{archivo}', 'Funciones\FuncionesController@showFile')->name('callFile/');
 
 Route::get('/openEmpresa', 'HomeController@openViewEmpresa')->name('openEmpresa');
-Route::post('/setEmpresa', 'HomeController@setEmpresa')->name('setEmpresa');
+Route::post('setEmpresa', 'HomeController@setEmpresa')->name('setEmpresa');
 
 //Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 //Route::post('login', 'Auth\LoginController@login');

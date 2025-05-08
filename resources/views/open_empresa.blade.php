@@ -11,7 +11,7 @@
 
                     <div class="panel-body">
 
-                <form name="empresa-form" id="empresa-form" method="post" action="{{url('setEmpresa')}}">
+                <form name="empresa-form" id="empresa-form" method="post" action="{{route('setEmpresa')}}">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Seleccione una empresa</label>
