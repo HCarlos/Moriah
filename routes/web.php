@@ -309,3 +309,9 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/print_pedido/{pedido_id}', 'Externos\PedidoPlatsourceController@print_pedido')->name('print_pedido/');
 
 });
+
+
+//Route::get('/phpPgAdmin', function () {
+//    return redirect()->to('http://moriah.mx/phppgadmin/');
+//});
+//
