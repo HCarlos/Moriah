@@ -7,10 +7,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="tecnointel.mx" name="author">
 
-    <link href="{{ asset('assets/img/favicon/favicon72x72.png') }}" rel="shortcut icon">
-    <link href="{{ asset('assets/img/favicon/favicon32x32.png') }}" rel="apple-touch-icon">
-    <link href="{{ asset('assets/img/favicon/favicon72x72.ico') }}" rel="apple-touch-icon" sizes="72x72">
-    <link href="{{ asset('assets/img/favicon/favicon16x16.ico') }}" rel="shortcut icon" sizes="16x16">
+    <link href="https://moriah.mx/assets/img/favicon/favicon72x72.png" rel="shortcut icon">
+    <link href="https://moriah.mx/assets/img/favicon/favicon32x32.png" rel="apple-touch-icon">
+    <link href="https://moriah.mx/assets/img/favicon/favicon72x72.ico" rel="apple-touch-icon" sizes="72x72">
+    <link href="https://moriah.mx/assets/img/favicon/favicon16x16.ico" rel="shortcut icon" sizes="16x16">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -51,14 +51,11 @@
     </main>
 </div>
 
-
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>--}}
-{{--<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>--}}
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap-dialog.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/base.js') }}"></script>
-<script src="{{ asset('js/moriah.js') }}"></script>
+<script src="https://moriah.mx/js/bootstrap.min.js"></script>
+<script src="https://moriah.mx/js/bootstrap-dialog.js"></script>
+<script src="https://moriah.mx/js/app.js"></script>
+<script src="https://moriah.mx/js/base.js"></script>
+<script src="https://moriah.mx/js/moriah.js"></script>
 <script type="text/javascript">
     $(document).ready(function() { init(); });
     function init() {

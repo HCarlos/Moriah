@@ -7,10 +7,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="tecnointel.mx" name="author">
 
-    <link href="{{ asset('assets/img/favicon/favicon72x72.png') }}" rel="shortcut icon">
-    <link href="{{ asset('assets/img/favicon/favicon32x32.png') }}" rel="apple-touch-icon">
-    <link href="{{ asset('assets/img/favicon/favicon72x72.ico') }}" rel="apple-touch-icon" sizes="72x72">
-    <link href="{{ asset('assets/img/favicon/favicon16x16.ico') }}" rel="shortcut icon" sizes="16x16">
+    <link href="https://moriah.mx/assets/img/favicon/favicon72x72.png" rel="shortcut icon">
+    <link href="https://moriah.mx/assets/img/favicon/favicon32x32.png" rel="apple-touch-icon">
+    <link href="https://moriah.mx/assets/img/favicon/favicon72x72.ico" rel="apple-touch-icon" sizes="72x72">
+    <link href="https://moriah.mx/assets/img/favicon/favicon16x16.ico" rel="shortcut icon" sizes="16x16">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
