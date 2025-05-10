@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Funciones\FuncionesController;
 use App\Models\SIIFAC\PaqueteDetalle;
 use App\Models\SIIFAC\PedidoDetalle;
+use PhpParser\Node\Stmt\Continue_;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 use Picqer\Barcode\Exceptions\BarcodeException;
 use Symfony\Component\Console\Input\Input;
@@ -326,22 +327,26 @@ class ProductoController extends Controller
     }
 
     public function actualizar_inventario(){
-        $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
-        if ($this->Empresa_Id <= 0){
-            return redirect('openEmpresa');
-        }
-        $Mods = "";
-        $Prods = Producto::all()->where('empresa_id',$this->Empresa_Id);
-        foreach ($Prods as $Prod){
-            $Mod = Movimiento::actualizaExistenciasYSaldo($Prod);
-            if ($Mod !== "OK"){
-                $Mods .= $Mods == "" ? $Mod : ', '.$Mod;
+        try {
+            $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
+            if ($this->Empresa_Id <= 0){
+                return redirect('openEmpresa');
             }
-        }
-        if ($Mods == ""){
-            return Response::json(['mensaje' => 'Inventario actualizado con éxito', 'data' => $Mod, 'status' => '200'], 200);
-        }else{
-            return Response::json(['mensaje' => 'Inventario actualizado con éxito, pero estos Productos no tienen movimientos: '.$Mods, 'data' => $Mod, 'status' => '200'], 200);
+            $Mods = "";
+            $Prods = Producto::all()->where('empresa_id',$this->Empresa_Id);
+            foreach ($Prods as $Prod){
+                $Mod = Movimiento::actualizaExistenciasYSaldo($Prod);
+                if ($Mod !== "OK"){
+                    $Mods .= $Mods == "" ? $Mod : ', '.$Mod;
+                }
+            }
+            if ($Mods == ""){
+                return Response::json(['mensaje' => 'Inventario actualizado con éxito', 'data' => $Mod, 'status' => '200'], 200);
+            }else{
+                return Response::json(['mensaje' => 'Inventario actualizado con éxito, pero estos Productos no tienen movimientos: '.$Mods, 'data' => $Mod, 'status' => '200'], 200);
+            }
+        }catch (\Exception $e) {
+            return Response::json(['mensaje' => 'Error: '.$e->getMessage(), 'data' => $Mod, 'status' => '200'], 200);
         }
     }
 

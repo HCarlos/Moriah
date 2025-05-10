@@ -474,9 +474,7 @@ class Movimiento extends Model{
         $MovInit = static::query()
                     ->where('producto_id',$Prod->id)
                     ->first();
-//        ->where('status',0)
         try{
-//            dd($MovInit);
             if (!is_null($MovInit)){
                 $Movs = static::query()
                 ->where('producto_id',$Prod->id)
