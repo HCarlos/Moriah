@@ -116,8 +116,10 @@ class GeneralFunctions
         switch ($tieneIVA){
             case 0:
                 $IVA = 0;
+                break;
             case 1:
                 $IVA = $ImporteAplicar / 1.16;
+                break;
         }
         return $ImporteAplicar - $IVA;
     }

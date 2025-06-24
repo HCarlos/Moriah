@@ -36,6 +36,8 @@ class PaqueteController extends Controller
 
     public function index(){
 
+
+//        dd("hola")
         $this->Empresa_Id = GeneralFunctions::Get_Empresa_Id();
         if ($this->Empresa_Id <= 0){
             return redirect('openEmpresa');
@@ -71,8 +73,10 @@ class PaqueteController extends Controller
             return redirect('openEmpresa');
         }
 
+//        dd($this->Empresa_Id);
+
         $Empresas   = Empresa::query()
-            ->where('empresa_id',$this->Empresa_Id)
+            ->where('id',$this->Empresa_Id)
             ->orderBy('rs')
             ->pluck('rs', 'id');
 
@@ -101,7 +105,7 @@ class PaqueteController extends Controller
         $views      = 'paquete_edit';
         $items      = Paquete::findOrFail($idItem);
         $Empresas   = Empresa::query()
-                        ->where('empresa_id',$this->Empresa_Id)
+                        ->where('id',$this->Empresa_Id)
                         ->orderBy('rs')
                         ->pluck('rs', 'id');
         $user       = Auth::User();

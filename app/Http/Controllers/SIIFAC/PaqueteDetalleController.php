@@ -71,10 +71,19 @@ class PaqueteDetalleController extends Controller
         $views  = 'paquete_detalle_new_ajax';
         $user = Auth::User();
         $oView = 'catalogos.';
-        $Productos = Producto::query()
+
+//        $Productos = Producto::select('descripcion','pv','id')
+//            ->where('empresa_id',$this->Empresa_Id)
+//            ->orderBy('descripcion')
+//            ->pluck('FullDescription','id');
+
+        $Productos = Producto::select('descripcion','pv','id')
             ->where('empresa_id',$this->Empresa_Id)
             ->orderBy('descripcion')
-            ->pluck('FullDescription','id');
+            ->get() // Obtener la colección completa de modelos
+            ->pluck('full_description','id'); // Usar el nombre del accesor en snake_case
+
+
         return view ($oView.$views,
             [
                 'paquete_id' => $paquete_id,
@@ -97,10 +106,16 @@ class PaqueteDetalleController extends Controller
         $user = Auth::User();
         $oView = 'catalogos.' ;
         $items = PaqueteDetalle::find($paquete_detalle_id);
-        $Productos = Producto::query()
+//        $Productos = Producto::query()->select(['descripcion','pv','id'])
+//            ->where('empresa_id',$this->Empresa_Id)
+//            ->orderBy('descripcion')
+//            ->pluck('full_description','id');
+
+        $Productos = Producto::select('descripcion','pv','id')
             ->where('empresa_id',$this->Empresa_Id)
             ->orderBy('descripcion')
-            ->pluck('FullDescription','id');
+            ->get() // Obtener la colección completa de modelos
+            ->pluck('full_description','id'); // Usar el nombre del accesor en snake_case
 
         return view ($oView.$views,
             [   'items' => $items,
@@ -126,7 +141,7 @@ class PaqueteDetalleController extends Controller
         $producto_id = $data['producto_id'];
         $cantidad    = $data['cant'];
 
-        //dd($paquete_id.', '.$producto_id);
+//        dd($paquete_id.', '.$producto_id);
 
         try {
             $mensaje = "OK";
