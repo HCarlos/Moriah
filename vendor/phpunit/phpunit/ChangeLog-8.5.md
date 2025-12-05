@@ -2,6 +2,43 @@
 
 All notable changes of the PHPUnit 8.5 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [8.5.49] - 2025-12-01
+
+* No changes; `phpunit.phar` rebuilt with updated dependencies
+
+## [8.5.48] - 2025-09-24
+
+* No changes; `phpunit.phar` rebuilt with updated dependencies
+
+## [8.5.47] - 2025-09-23
+
+* No changes; `phpunit.phar` rebuilt with updated dependencies
+
+## [8.5.46] - 2025-09-14
+
+### Changed
+
+* [#6366](https://github.com/sebastianbergmann/phpunit/issues/6366): Exclude `__sleep()` and `__wakeup()` from test double code generation on PHP >= 8.5
+
+## [8.5.45] - 2025-09-11
+
+### Changed
+
+* Implement `__serialize()` in addition to `__sleep()` (which will be deprecated in PHP 8.5)
+
+## [8.5.44] - 2025-08-20
+
+### Changed
+
+* Do not configure `report_memleaks` setting (which will be deprecated in PHP 8.5) for PHPT processes
+
+## [8.5.43] - 2025-08-10
+
+### Changed
+
+* Do not use `ReflectionProperty::setAccessible()` with PHP >= 8.1
+* Do not use `SplObjectStorage` methods that will be deprecated in PHP 8.5
+
 ## [8.5.42] - 2025-05-02
 
 ### Changed
@@ -327,6 +364,13 @@ All notable changes of the PHPUnit 8.5 release series are documented in this fil
 * [#3967](https://github.com/sebastianbergmann/phpunit/issues/3967): Cannot double interface that extends interface that extends `\Throwable`
 * [#3968](https://github.com/sebastianbergmann/phpunit/pull/3968): Test class run in a separate PHP process are passing when `exit` called inside
 
+[8.5.49]: https://github.com/sebastianbergmann/phpunit/compare/8.5.48...8.5.49
+[8.5.48]: https://github.com/sebastianbergmann/phpunit/compare/8.5.47...8.5.48
+[8.5.47]: https://github.com/sebastianbergmann/phpunit/compare/8.5.46...8.5.47
+[8.5.46]: https://github.com/sebastianbergmann/phpunit/compare/8.5.45...8.5.46
+[8.5.45]: https://github.com/sebastianbergmann/phpunit/compare/8.5.44...8.5.45
+[8.5.44]: https://github.com/sebastianbergmann/phpunit/compare/8.5.43...8.5.44
+[8.5.43]: https://github.com/sebastianbergmann/phpunit/compare/8.5.42...8.5.43
 [8.5.42]: https://github.com/sebastianbergmann/phpunit/compare/8.5.41...8.5.42
 [8.5.41]: https://github.com/sebastianbergmann/phpunit/compare/8.5.40...8.5.41
 [8.5.40]: https://github.com/sebastianbergmann/phpunit/compare/8.5.39...8.5.40

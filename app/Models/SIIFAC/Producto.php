@@ -232,7 +232,23 @@ class Producto extends Model
 
         $Prod->save();
 
-        $Fecha      = Carbon::now();
+        $Comp = Compra::find($compra_id);
+
+        $FechaCompra = Carbon::parse($Comp->fecha)->format('Y-m-d');
+        $FechaMovto = Carbon::parse($Mov->fecha)->format('Y-m-d');
+
+//        dd($FechaCompra.' - '.$FechaMovto);
+
+        if ($FechaMovto > $FechaCompra){
+            $Fecha      = $Comp->fecha ? Carbon::parse($Comp->fecha) : Carbon::now();
+            $FechaCompleta = Carbon::parse($Fecha)->format('Y-m-d'). ' '. Carbon::now()->format('H:i:s');
+        }else{
+            $Fecha      = $Mov->fecha ? Carbon::parse($Mov->fecha) : Carbon::now();
+            $FechaCompleta = $Fecha;
+        }
+
+//        dd($Fecha->month);
+
         $user       = Auth::user();
         $cantidad   = $entrada;
         $existencia = $Prod->exist;
@@ -248,7 +264,7 @@ class Producto extends Model
             'almacen_id'       => $almacen_id,
             'ejercicio'        => $Fecha->year,
             'periodo'          => $Fecha->month,
-            'fecha'            => $Fecha,
+            'fecha'            => $FechaCompleta,
             'entrada'          => $entrada,
             'existencia'       => $existencia,
             'cu'               => $cu,
@@ -264,7 +280,6 @@ class Producto extends Model
             'host'             => Request::getHttpHost(),
         ]);
 
-        $Comp = Compra::find($compra_id);
         $Suma = $Mov->where('compra_id',$compra_id)->sum('saldo');
         $Comp->total = $Suma;
         $Comp->save();

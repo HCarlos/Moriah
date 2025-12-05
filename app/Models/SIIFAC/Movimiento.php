@@ -346,7 +346,8 @@ class Movimiento extends Model{
 
     public static function agregarDesdeCompraDetalle($Comp, $Prod, $data){
         $Empresa_Id = GeneralFunctions::Get_Empresa_Id();
-        $Fecha      = Carbon::now();
+        $Fecha      = $Comp->fecha ? Carbon::parse($Comp->fecha) : Carbon::now();
+        $FechaCompleta = Carbon::parse($Fecha)->format('Y-m-d'). ' '. Carbon::now()->format('H:i:s');
         $user       = Auth::user();
         $cu         = $data['cu'];
         $cantidad   = $data['cantidad'];
@@ -373,7 +374,7 @@ class Movimiento extends Model{
             'nota'             => $Comp->nota_id,
             'ejercicio'        => $Fecha->year,
             'periodo'          => $Fecha->month,
-            'fecha'            => $Fecha,
+            'fecha'            => $FechaCompleta,
             'entrada'          => $cantidad,
             'existencia'       => $existencia,
             'cu'               => $Prod->cu,
